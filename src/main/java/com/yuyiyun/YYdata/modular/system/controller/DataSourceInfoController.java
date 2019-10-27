@@ -1,7 +1,5 @@
 package com.yuyiyun.YYdata.modular.system.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +10,7 @@ import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
 import com.yuyiyun.YYdata.modular.system.model.params.DataSourceInfoParam;
 import com.yuyiyun.YYdata.modular.system.service.DataSourceInfoService;
+
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 
@@ -119,8 +118,8 @@ public class DataSourceInfoController extends BaseController {
 	 * @author duhao
 	 * @Date 2019-03-13
 	 */
-	@ResponseBody
 	@RequestMapping("/list")
+	@ResponseBody
 	public LayuiPageInfo list(DataSourceInfoParam dataSourceInfoParam) {
 		return this.dataSourceInfoService.findPageBySpec(dataSourceInfoParam);
 	}
