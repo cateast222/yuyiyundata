@@ -1,29 +1,22 @@
 package com.yuyiyun.YYdata.modular.system.controller;
 
-import javax.servlet.http.HttpSession;
-import javax.xml.ws.RespectBinding;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
-import com.yuyiyun.YYdata.core.shiro.ShiroKit;
-import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
-import com.yuyiyun.YYdata.modular.system.model.params.DataSourceInfoParam;
 import com.yuyiyun.YYdata.modular.system.service.DataDicInfoService;
-import com.yuyiyun.YYdata.modular.system.service.DataSourceInfoService;
+
 import cn.stylefeng.roses.core.base.controller.BaseController;
-import cn.stylefeng.roses.core.reqres.response.ResponseData;
 
 /**
- * 数据源信息表控制器
+ * 数据字典信息表控制器
  * @author duhao
  *
  */
 @Controller
-@RequestMapping("/datasi")
+@RequestMapping("/datadi")
 public class DataDicInfoController extends BaseController {
 	private String PREFIX = "/modular/system/datadi";
 
@@ -129,8 +122,8 @@ public class DataDicInfoController extends BaseController {
 	
 	@RequestMapping("/config")
 	@ResponseBody
-	public void config() {
-		this.dataDicInfoService.config();
+	public LayuiPageInfo config() {
+		return this.dataDicInfoService.config();
 	}
 	
 	
