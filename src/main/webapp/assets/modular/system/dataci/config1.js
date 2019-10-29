@@ -21,8 +21,8 @@ layui.use([ 'form', 'ax' ], function() {
 	var form = layui.form;
 	
 	// 获取详情信息，填充表单
-//	var ajax = new $ax(Feng.ctxPath + "/dataci/detail?dsiUuid="+$("#dsiUuid").val()+"&key="+$("#key").val();
-//	var result = ajax.start();
+	var ajax = new $ax(Feng.ctxPath + "/dataci/detail?dsiUuid="+$("#dsiUuid").val()+"&key="+$("#key").val();
+	var result = ajax.start();
 //	form.val('datasiForm', result.data);
 
 	// 表单提交事件
