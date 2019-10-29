@@ -1,9 +1,10 @@
 /**
  * 
  */
-layui.use([ 'table', 'ax' ], function() {
+layui.use([ 'table', 'admin', 'ax' ], function() {
 	var $ = layui.$;
 	var table = layui.table;
+	var admin = layui.admin;
 	var $ax = layui.ax;
 
 	var Dataci = {
@@ -33,13 +34,16 @@ layui.use([ 'table', 'ax' ], function() {
 	};
 
 	Dataci.openEditDlg = function(data) {
-		var datasiUuid = $("#datasiUuid").val()
+		var datasiUuid = $("#datasiUuid").val();
 		admin.putTempData('formOk', false);
 		top.layui.admin.open({
 			type : 2,
+			area : [ '820px', '650px' ],
+			offset : 'auto',
+			resize : true,
 			title : '信息配置',
-			content : Feng.ctxPath + '/dataci/edit?key=' + data.key
-					+ '&datasiUuid' + datasiUuid + '&state' + data.state,
+			content : Feng.ctxPath + '/dataci/edit?key=' + data.key+ '&summary=' + data.summary
+					+ '&dsiUuid=' + datasiUuid + '&state=' + data.state,
 			end : function() {
 				admin.getTempData('formOk');
 			}
@@ -52,18 +56,16 @@ layui.use([ 'table', 'ax' ], function() {
 		page : true,
 		height : "full-98",
 		cellMinWidth : 100,
-		limit: 30,
-		limits:[30],
+		limit : 30,
+		limits : [ 30 ],
 		cols : Dataci.initColumn()
 	});
-
-//	Dataci.initTable(Dataci.tableId);
 
 	// 关闭页面
 	$('#btnBack').click(function() {
 		window.location.href = Feng.ctxPath + "/datasi";
 	});
-	
+
 	table.on('tool(' + Dataci.tableId + ')', function(obj) {
 		var data = obj.data;
 		var layEvent = obj.event;
