@@ -17,6 +17,7 @@ import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
 import com.yuyiyun.YYdata.modular.system.mapper.DataSourceInfoMapper;
+import com.yuyiyun.YYdata.modular.system.model.DataConfigdto;
 import com.yuyiyun.YYdata.modular.system.model.params.DataSourceInfoParam;
 import com.yuyiyun.YYdata.modular.system.model.result.DataSourceInfoResult;
 import cn.stylefeng.roses.core.util.ToolUtil;
@@ -147,5 +148,4 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 		ToolUtil.copyProperties(param, entity);
 		return entity;
 	}
-
 }

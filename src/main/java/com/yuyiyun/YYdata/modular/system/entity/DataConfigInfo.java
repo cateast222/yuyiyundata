@@ -42,6 +42,17 @@ public class DataConfigInfo implements Serializable {
 	private Date createTime;
 	@TableField(value = "update_time", fill = FieldFill.UPDATE)
 	private Date updateTime;
+	
+	
+
+	public DataConfigInfo(String ddiKey, String ddiValue, String value) {
+		this.ddiKey = ddiKey;
+		this.ddiValue = ddiValue;
+		this.value = value;
+	}
+
+	public DataConfigInfo() {
+	}
 
 	public String getUuid() {
 		return uuid;

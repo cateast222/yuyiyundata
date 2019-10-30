@@ -1,11 +1,11 @@
-@layout("/common/_container.html",{bg:"bg-white",js:["/assets/modular/system/dataci/config1.js"]}){
+@layout("/common/_container.html",{bg:"bg-white",js:["/assets/modular/system/dataci/config.js"]}){
 
 <div class="layui-fluid " style="">
 	<div class="layui-card">
 		<div class="layui-card-body">
 			<button type="button" class="layui-btn layui-btn-fluid">${summary}</button>
 			<hr>
-			<form id="userForm" lay-filter="userForm"
+			<form id="dataciForm" lay-filter="dataciForm"
 				class="layui-form layui-form-pane">
 				<input name="dsiUuid" id="dsiUuid" type="hidden" value="${dsiUuid}" /> <input
 					name="key" id="key" type="hidden" value="${key}" />
@@ -15,7 +15,7 @@
 					<div class="layui-input-block">
 						<input name="value" id="value"
 							placeholder="采集频率：20(分钟)；采集时间：2019-09-10" type="text"
-							class="layui-input" lay-verify="required" required />
+							class="layui-input"   />
 					</div>
 				</div>
 

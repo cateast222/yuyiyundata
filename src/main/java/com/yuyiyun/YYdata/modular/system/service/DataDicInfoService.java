@@ -22,7 +22,7 @@ import cn.stylefeng.roses.core.util.ToolUtil;
 public class DataDicInfoService extends ServiceImpl<DataDicInfoMapper, DataDicInfo> {
 
 	public LayuiPageInfo config() {
-		QueryWrapper<DataDicInfo> datadiQueryWrapper = new QueryWrapper<>();
+		QueryWrapper<DataDicInfo> datadiQueryWrapper = new QueryWrapper<DataDicInfo>();
 		datadiQueryWrapper.and(i->i.eq("type",201)).and(i->i.eq("state", 1).or().eq("state", 2).or().eq("state", 3)).groupBy("`key`").orderByAsc("state");
 		List<DataDicInfo> list = this.baseMapper.selectList(datadiQueryWrapper);
 		for (DataDicInfo dataDicInfo : list) {
