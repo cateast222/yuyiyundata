@@ -2,9 +2,11 @@ package com.yuyiyun.YYdata.modular.system.service;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -30,6 +32,8 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
  */
 @Service
 public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, DataSourceInfo> {
+	@Autowired
+	private DataConfigInfoService configInfoService;
 	/**
 	 * 新增
 	 *
@@ -60,6 +64,9 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 	 * @Date 2019-03-13
 	 */
 	public void delete(DataSourceInfoParam param) {
+		HashMap<String, Object> configInfoColumnMap = new HashMap<String, Object>();
+		configInfoColumnMap.put("dsi_uuid", param.getUuid());
+		configInfoService.removeByMap(configInfoColumnMap);
 		this.removeById(getKey(param));
 	}
 

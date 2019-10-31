@@ -15,15 +15,20 @@ var DataciInfoDlg = {
 	}
 };
 
-layui.use([ 'form','admin', 'ax' ], function() {
+layui.use([ 'form', 'admin', 'ax' ], function() {
 	var $ = layui.jquery;
 	var $ax = layui.ax;
 	var admin = layui.admin;
 	var form = layui.form;
 
 	// 获取详情信息，填充表单
-	var ajax = new $ax(Feng.ctxPath + "/dataci/detail?dsiUuid="
-			+ $("#dsiUuid").val() + "&key=" + $("#key").val());
+//	var ajax = new $ax(Feng.ctxPath + "/dataci/detail?dsiUuid="
+//			+ $("#dsiUuid").val() + "&key=" + $("#key").val());
+	var ajax = new $ax(Feng.ctxPath + "/dataci/detail");
+	ajax.set({
+		dsiUuid : $("#dsiUuid").val(),
+		key : $("#key").val()
+	});
 	var result = ajax.start();
 	form.val('dataciForm', result.data);
 

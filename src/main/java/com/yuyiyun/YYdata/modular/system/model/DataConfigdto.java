@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import com.yuyiyun.YYdata.modular.system.entity.DataConfigInfo;
 
 public class DataConfigdto implements Serializable {
@@ -319,7 +317,9 @@ public class DataConfigdto implements Serializable {
 	}
 
 	private String replace(String string) {
-		return string.replace("& lt;", "<").replace("& gt;", ">");
+		string = string.replace("& #40;", "(").replace("& #41;", ")");
+		string = string.replace("& lt;", "<").replace("& gt;", ">");
+		return string;
 	}
 
 }

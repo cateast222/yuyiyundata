@@ -47,6 +47,10 @@ public class DataConfigInfoController extends BaseController {
 
 	@RequestMapping("/edit")
 	public String edit(String key, String summary, String dsiUuid, Integer state, Model model) {
+		System.out.println("key1-->"+key);
+		if (key.equals("newspicturesDeion")) {
+			key = "newspicturesDescription";
+		}
 		model.addAttribute("key", key);
 		model.addAttribute("summary", summary);
 		model.addAttribute("dsiUuid", dsiUuid);
@@ -56,6 +60,10 @@ public class DataConfigInfoController extends BaseController {
 	@RequestMapping("/detail")
 	@ResponseBody
 	public ResponseData detail(String dsiUuid, String key) {
+		System.out.println("key2-->"+key);
+		if (key.equals("newspicturesDeion")) {
+			key = "newspicturesDescription";
+		}
 		DataConfigdto dataConfigdto = dataConfigInfoService.detail(dsiUuid, key);
 		return ResponseData.success(dataConfigdto);
 	}
@@ -63,6 +71,9 @@ public class DataConfigInfoController extends BaseController {
 	@RequestMapping("/addAndEdit")
 	@ResponseBody
 	public ResponseData addAndEdit(DataConfigdto dataConfigdto) {
+		if (dataConfigdto.getKey().equals("newspicturesDeion")) {
+			dataConfigdto.setKey("newspicturesDescription");
+		}
 		this.dataConfigInfoService.addAndEdit(dataConfigdto,ShiroKit.getUser().getAccount());
 		return ResponseData.success();
 	}
