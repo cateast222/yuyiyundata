@@ -318,6 +318,7 @@ public class DataConfigdto implements Serializable {
 
 	private String replace(String string) {
 		string = string.replace("& #40;", "(").replace("& #41;", ")");
+		string = string.replace("& #39;", "'");
 		string = string.replace("& lt;", "<").replace("& gt;", ">");
 		return string;
 	}
