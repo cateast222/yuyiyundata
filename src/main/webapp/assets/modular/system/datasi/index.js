@@ -83,9 +83,10 @@ layui.use([ 'table', 'ax' ],
 							templet : function(d) {
 								if (d.state == 1) {
 									return "启用";
-								} else {
-									return "禁用";
-
+								} else if(d.state == 0){
+									return "测试";
+								}else {
+									return "弃用";
 								}
 							}
 						}, {
