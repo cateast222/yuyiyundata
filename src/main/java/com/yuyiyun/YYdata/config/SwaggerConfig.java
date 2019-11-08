@@ -52,10 +52,10 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Guns Doc")
-                .description("Guns Api文档")
-                .termsOfServiceUrl("https://gitee.com/stylefeng/guns")
-                .contact(new Contact("stylefeng", "https://gitee.com/stylefeng/guns", ""))
+                .title("YunYi Doc")
+                .description("YunYiData Api文档")
+                .termsOfServiceUrl("http://www.yuyiyun.net/")
+                .contact(new Contact("duhao", "http://www.yuyiyun.net/", ""))
                 .version("2.0")
                 .build();
     }
