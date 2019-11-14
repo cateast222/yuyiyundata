@@ -59,6 +59,16 @@ public class DataSourceInfoController extends BaseController {
 	}
 
 	/**
+	 * 数据测试页面
+	 * 
+	 * @author duhao
+	 * @return
+	 */
+	@RequestMapping("/datatest")
+	public String datatest() {
+		return PREFIX + "/datatest.html";
+	}
+	/**
 	 * 新增接口
 	 *
 	 * @author duhao
@@ -85,7 +95,46 @@ public class DataSourceInfoController extends BaseController {
 		this.dataSourceInfoService.update(dataSourceInfoParam);
 		return ResponseData.success();
 	}
+	
+	/**
+	 * 加入测试接口
+	 *
+	 * @author duhao
+	 * @Date 2019-11-13
+	 */
+	@RequestMapping("/datatestRun")
+	@ResponseBody
+	public ResponseData datatestRun(DataSourceInfoParam dataSourceInfoParam) {
+		this.dataSourceInfoService.update(dataSourceInfoParam);
+		return ResponseData.success();
+	}
+	
+	/**
+	 * 测试通过接口
+	 *
+	 * @author duhao
+	 * @Date 2019-11-13
+	 */
+	@RequestMapping("/datatestPass")
+	@ResponseBody
+	public ResponseData datatestPass(DataSourceInfoParam dataSourceInfoParam) {
+		this.dataSourceInfoService.update(dataSourceInfoParam);
+		return ResponseData.success();
+	}
 
+	/**
+	 * 测试失败接口
+	 *
+	 * @author duhao
+	 * @Date 2019-11-13
+	 */
+	@RequestMapping("/datatestFail")
+	@ResponseBody
+	public ResponseData datatestFail(DataSourceInfoParam dataSourceInfoParam) {
+		this.dataSourceInfoService.update(dataSourceInfoParam);
+		return ResponseData.success();
+	}
+	
 	/**
 	 * 删除接口
 	 *

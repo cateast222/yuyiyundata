@@ -8,6 +8,10 @@ import cn.stylefeng.roses.kernel.model.exception.AbstractBaseExceptionEnum;
  * @date 2016年11月12日 下午5:04:51
  */
 public enum BizExceptionEnum implements AbstractBaseExceptionEnum {
+	/**
+	 * 数据源
+	 */
+	DSI_EXISTED(400, "该类型的名称或URL已经存在"),
 
 	/**
 	 * 字典

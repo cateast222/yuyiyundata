@@ -13,20 +13,20 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
 import com.yuyiyun.YYdata.modular.system.mapper.DataSourceInfoMapper;
-import com.yuyiyun.YYdata.modular.system.model.DataConfigdto;
 import com.yuyiyun.YYdata.modular.system.model.params.DataSourceInfoParam;
 import com.yuyiyun.YYdata.modular.system.model.result.DataSourceInfoResult;
+
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 
 /**
  * 数据配置信息服务实现类
+ * 
  * @author duhao
  *
  */
@@ -34,6 +34,7 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, DataSourceInfo> {
 	@Autowired
 	private DataConfigInfoService configInfoService;
+
 	/**
 	 * 新增
 	 *
@@ -43,11 +44,13 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 	public void add(DataSourceInfoParam param) {
 
 		// 判断是否已经存在同数据源网站名称或同数据源网站地址
-		QueryWrapper<DataSourceInfo> dictQueryWrapper = new QueryWrapper<>();
-		dictQueryWrapper.eq("website_name", param.getWebsiteName()).or().eq("website_url", param.getWebsiteUrl());
-		List<DataSourceInfo> list = this.list(dictQueryWrapper);
+		QueryWrapper<DataSourceInfo> dsitQueryWrapper = new QueryWrapper<>();
+		dsitQueryWrapper
+				.and(i -> i.eq("website_name", param.getWebsiteName()).or().eq("website_url", param.getWebsiteUrl()))
+				.and(i -> i.eq("platform", param.getPlatform()));
+		List<DataSourceInfo> list = this.list(dsitQueryWrapper);
 		if (list != null && list.size() > 0) {
-			throw new ServiceException(BizExceptionEnum.DICT_EXISTED);
+			throw new ServiceException(BizExceptionEnum.DSI_EXISTED);
 		}
 
 		DataSourceInfo entity = getEntity(param);
@@ -82,12 +85,14 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 		ToolUtil.copyProperties(newEntity, oldEntity);
 
 		// 判断编码是否重复
-		QueryWrapper<DataSourceInfo> wrapper = new QueryWrapper<DataSourceInfo>()
+		QueryWrapper<DataSourceInfo> dsitQueryWrapper = new QueryWrapper<DataSourceInfo>();
+		dsitQueryWrapper
 				.and(i -> i.eq("website_name", newEntity.getWebsiteName()).or().eq("website_url", newEntity.getWebsiteUrl()))
+				.and(i -> i.eq("platform", param.getPlatform()))
 				.and(i -> i.ne("uuid", newEntity.getUuid()));
-		int dicts = this.count(wrapper);
+		int dicts = this.count(dsitQueryWrapper);
 		if (dicts > 0) {
-			throw new ServiceException(BizExceptionEnum.DICT_EXISTED);
+			throw new ServiceException(BizExceptionEnum.DSI_EXISTED);
 		}
 		newEntity.setUpdateTime(new Date());
 		this.updateById(newEntity);
@@ -119,11 +124,13 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 	 * @author stylefeng
 	 * @Date 2019-03-13
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public LayuiPageInfo findPageBySpec(DataSourceInfoParam param) {
 		Page pageContext = getPageContext();
-		QueryWrapper<DataSourceInfo> objectQueryWrapper = new QueryWrapper<>();
+		QueryWrapper<DataSourceInfo> dsitQueryWrapper = new QueryWrapper<>();
 		if (ToolUtil.isNotEmpty(param.getCondition())) {
-			objectQueryWrapper.and(i -> i.like("website_name", param.getCondition()).or().like("website_url", param.getCondition()));
+			dsitQueryWrapper
+						.and(i -> i.like("website_name", param.getCondition()).or().like("website_url", param.getCondition()));
 		}
 //		if (ToolUtil.isNotEmpty(param.getStatus())) {
 //			objectQueryWrapper.and(i -> i.eq("status", param.getStatus()));
@@ -134,7 +141,7 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 
 		pageContext.setAsc("create_time");
 
-		IPage page = this.page(pageContext, objectQueryWrapper);
+		IPage page = this.page(pageContext, dsitQueryWrapper);
 		return LayuiPageFactory.createPageInfo(page);
 	}
 
@@ -142,6 +149,7 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 		return param.getUuid();
 	}
 
+	@SuppressWarnings("rawtypes")
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}

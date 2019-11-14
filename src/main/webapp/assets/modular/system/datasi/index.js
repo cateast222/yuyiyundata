@@ -31,7 +31,7 @@ layui.use([ 'table', 'ax' ],
 							templet : function(d) {
 								var url = Feng.ctxPath + '/dataci?datasiUuid='
 										+ d.uuid;
-								return '<a style="color: #01AAED;" href="'
+								return '<a title="备注：'+d.remark+'" style="color: #01AAED;" href="'
 										+ url + '">' + d.websiteName + '</a>';
 							}
 						}, {
@@ -83,9 +83,15 @@ layui.use([ 'table', 'ax' ],
 							templet : function(d) {
 								if (d.state == 1) {
 									return "启用";
-								} else if(d.state == 0){
+								} else if (d.state == 0) {
 									return "测试";
-								}else {
+								} else if (d.state == 2) {
+									return "配置";
+								} else if (d.state == 3) {
+									return "测试完成";
+								} else if (d.state == 4) {
+									return "测试通过";
+								} else {
 									return "弃用";
 								}
 							}
@@ -156,6 +162,8 @@ layui.use([ 'table', 'ax' ],
 				page : true,
 				height : "full-98",
 				cellMinWidth : 100,
+				limit : 15,
+				limits : [ 15, 30, 50, 100, 200 ],
 				cols : Datasi.initColumn()
 			});
 
