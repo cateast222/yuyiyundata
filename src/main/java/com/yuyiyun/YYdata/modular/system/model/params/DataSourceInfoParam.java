@@ -3,6 +3,8 @@ package com.yuyiyun.YYdata.modular.system.model.params;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
+
 import cn.stylefeng.roses.kernel.model.validator.BaseValidatingParam;
 import lombok.Data;
 
@@ -38,10 +40,8 @@ public class DataSourceInfoParam implements Serializable, BaseValidatingParam {
 	}
 
 	public void setCondition(String condition) {
-		this.condition = condition;
+		this.condition = HtmlTagUtil.convertTag(condition);
 	}
-
-
 
 	public String getUuid() {
 		return uuid;
@@ -56,7 +56,7 @@ public class DataSourceInfoParam implements Serializable, BaseValidatingParam {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = HtmlTagUtil.convertTag(name);
 	}
 
 	public String getWebsiteUrl() {
@@ -64,7 +64,7 @@ public class DataSourceInfoParam implements Serializable, BaseValidatingParam {
 	}
 
 	public void setWebsiteUrl(String websiteUrl) {
-		this.websiteUrl = websiteUrl;
+		this.websiteUrl = HtmlTagUtil.convertTag(websiteUrl);
 	}
 
 	public String getWebsiteName() {
@@ -72,7 +72,7 @@ public class DataSourceInfoParam implements Serializable, BaseValidatingParam {
 	}
 
 	public void setWebsiteName(String websiteName) {
-		this.websiteName = websiteName;
+		this.websiteName = HtmlTagUtil.convertTag(websiteName);
 	}
 
 	public Integer getPlatform() {
@@ -88,7 +88,7 @@ public class DataSourceInfoParam implements Serializable, BaseValidatingParam {
 	}
 
 	public void setCountry(String country) {
-		this.country = country;
+		this.country = HtmlTagUtil.convertTag(country);
 	}
 
 	public String getRegion() {
@@ -96,7 +96,7 @@ public class DataSourceInfoParam implements Serializable, BaseValidatingParam {
 	}
 
 	public void setRegion(String region) {
-		this.region = region;
+		this.region = HtmlTagUtil.convertTag(region);
 	}
 
 	public Integer getProxy() {
@@ -112,7 +112,7 @@ public class DataSourceInfoParam implements Serializable, BaseValidatingParam {
 	}
 
 	public void setLanguage(String language) {
-		this.language = language;
+		this.language = HtmlTagUtil.convertTag(language);
 	}
 
 	public String getRemark() {
@@ -120,7 +120,7 @@ public class DataSourceInfoParam implements Serializable, BaseValidatingParam {
 	}
 
 	public void setRemark(String remark) {
-		this.remark = remark;
+		this.remark = HtmlTagUtil.convertTag(remark);
 	}
 
 	public Integer getState() {

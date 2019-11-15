@@ -31,7 +31,11 @@ layui.use([ 'table', 'ax' ],
 							templet : function(d) {
 								var url = Feng.ctxPath + '/dataci?datasiUuid='
 										+ d.uuid;
-								return '<a title="备注：'+d.remark+'" style="color: #01AAED;" href="'
+								var color = "#01AAED;";
+								if (d.remark!=""&&d.state==2) {
+									color = "#FF3333;";
+								}
+								return '<a title="备注：'+d.remark+'" style="color:'+color+'" href="'
 										+ url + '">' + d.websiteName + '</a>';
 							}
 						}, {
