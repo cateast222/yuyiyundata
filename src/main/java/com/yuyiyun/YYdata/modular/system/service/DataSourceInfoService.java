@@ -76,7 +76,7 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 	/**
 	 * 更新
 	 *
-	 * @author stylefeng
+	 * @author duhao
 	 * @Date 2019-03-13
 	 */
 	public void update(DataSourceInfoParam param) {
@@ -86,10 +86,9 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 
 		// 判断编码是否重复
 		QueryWrapper<DataSourceInfo> dsitQueryWrapper = new QueryWrapper<DataSourceInfo>();
-		dsitQueryWrapper
-				.and(i -> i.eq("website_name", newEntity.getWebsiteName()).or().eq("website_url", newEntity.getWebsiteUrl()))
-				.and(i -> i.eq("platform", param.getPlatform()))
-				.and(i -> i.ne("uuid", newEntity.getUuid()));
+		dsitQueryWrapper.and(
+				i -> i.eq("website_name", newEntity.getWebsiteName()).or().eq("website_url", newEntity.getWebsiteUrl()))
+				.and(i -> i.eq("platform", param.getPlatform())).and(i -> i.ne("uuid", newEntity.getUuid()));
 		int dicts = this.count(dsitQueryWrapper);
 		if (dicts > 0) {
 			throw new ServiceException(BizExceptionEnum.DSI_EXISTED);
@@ -129,8 +128,8 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 		Page pageContext = getPageContext();
 		QueryWrapper<DataSourceInfo> dsitQueryWrapper = new QueryWrapper<>();
 		if (ToolUtil.isNotEmpty(param.getCondition())) {
-			dsitQueryWrapper
-						.and(i -> i.like("website_name", param.getCondition()).or().like("website_url", param.getCondition()));
+			dsitQueryWrapper.and(
+					i -> i.like("website_name", param.getCondition()).or().like("website_url", param.getCondition()));
 		}
 //		if (ToolUtil.isNotEmpty(param.getStatus())) {
 //			objectQueryWrapper.and(i -> i.eq("status", param.getStatus()));
@@ -141,6 +140,25 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 
 		pageContext.setAsc("create_time");
 
+		IPage page = this.page(pageContext, dsitQueryWrapper);
+		return LayuiPageFactory.createPageInfo(page);
+	}
+
+	/**
+	 * 查询分页数据，Specification模式
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public LayuiPageInfo findDataTestPageBySpec(DataSourceInfoParam param) {
+		Page pageContext = getPageContext();
+		QueryWrapper<DataSourceInfo> dsitQueryWrapper = new QueryWrapper<>();
+		if (ToolUtil.isNotEmpty(param.getCondition())) {
+			dsitQueryWrapper.and(
+					i -> i.like("website_name", param.getCondition()).or().like("website_url", param.getCondition()));
+		}
+		dsitQueryWrapper.and(i -> i.eq("state", new Integer(0)).or().eq("state", new Integer(3)));
+		pageContext.setAsc("create_time");
 		IPage page = this.page(pageContext, dsitQueryWrapper);
 		return LayuiPageFactory.createPageInfo(page);
 	}

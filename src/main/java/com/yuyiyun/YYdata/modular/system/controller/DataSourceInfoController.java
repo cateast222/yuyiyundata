@@ -1,5 +1,7 @@
 package com.yuyiyun.YYdata.modular.system.controller;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +12,14 @@ import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
 import com.yuyiyun.YYdata.modular.system.model.params.DataSourceInfoParam;
 import com.yuyiyun.YYdata.modular.system.service.DataSourceInfoService;
+import com.yuyiyun.YYdata.modular.system.service.WgEleNewsDataService;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 
 /**
  * 数据源信息表控制器
+ * 
  * @author duhao
  *
  */
@@ -26,6 +30,8 @@ public class DataSourceInfoController extends BaseController {
 
 	@Autowired
 	private DataSourceInfoService dataSourceInfoService;
+	@Autowired
+	private WgEleNewsDataService wgEleNewsDataService;
 
 	/**
 	 * 跳转到主页面
@@ -68,6 +74,7 @@ public class DataSourceInfoController extends BaseController {
 	public String datatest() {
 		return PREFIX + "/datatest.html";
 	}
+
 	/**
 	 * 新增接口
 	 *
@@ -95,7 +102,7 @@ public class DataSourceInfoController extends BaseController {
 		this.dataSourceInfoService.update(dataSourceInfoParam);
 		return ResponseData.success();
 	}
-	
+
 	/**
 	 * 加入测试接口
 	 *
@@ -105,10 +112,15 @@ public class DataSourceInfoController extends BaseController {
 	@RequestMapping("/datatestRun")
 	@ResponseBody
 	public ResponseData datatestRun(DataSourceInfoParam dataSourceInfoParam) {
+		// 清除之前的测试数据
+		HashMap<String, Object> wgEleNewsDataColumnMap = new HashMap<String, Object>();
+		wgEleNewsDataColumnMap.put("dsi_uuid", dataSourceInfoParam.getUuid());
+		wgEleNewsDataColumnMap.put("state", -2);
+		this.wgEleNewsDataService.removeByMap(wgEleNewsDataColumnMap);
 		this.dataSourceInfoService.update(dataSourceInfoParam);
 		return ResponseData.success();
 	}
-	
+
 	/**
 	 * 测试通过接口
 	 *
@@ -118,6 +130,10 @@ public class DataSourceInfoController extends BaseController {
 	@RequestMapping("/datatestPass")
 	@ResponseBody
 	public ResponseData datatestPass(DataSourceInfoParam dataSourceInfoParam) {
+		// 清除之前的测试数据
+		HashMap<String, Object> wgEleNewsDataColumnMap = new HashMap<String, Object>();
+		wgEleNewsDataColumnMap.put("dsi_uuid", dataSourceInfoParam.getUuid());
+		wgEleNewsDataColumnMap.put("state", -2);
 		this.dataSourceInfoService.update(dataSourceInfoParam);
 		return ResponseData.success();
 	}
@@ -131,10 +147,14 @@ public class DataSourceInfoController extends BaseController {
 	@RequestMapping("/datatestFail")
 	@ResponseBody
 	public ResponseData datatestFail(DataSourceInfoParam dataSourceInfoParam) {
+		// 清除之前的测试数据
+		HashMap<String, Object> wgEleNewsDataColumnMap = new HashMap<String, Object>();
+		wgEleNewsDataColumnMap.put("dsi_uuid", dataSourceInfoParam.getUuid());
+		wgEleNewsDataColumnMap.put("state", -2);
 		this.dataSourceInfoService.update(dataSourceInfoParam);
 		return ResponseData.success();
 	}
-	
+
 	/**
 	 * 删除接口
 	 *
@@ -171,5 +191,17 @@ public class DataSourceInfoController extends BaseController {
 	@ResponseBody
 	public LayuiPageInfo list(DataSourceInfoParam dataSourceInfoParam) {
 		return this.dataSourceInfoService.findPageBySpec(dataSourceInfoParam);
+	}
+
+	/**
+	 * 报纸数据测试查询列表
+	 *
+	 * @author duhao
+	 * @Date 2019-03-13
+	 */
+	@RequestMapping("/datatestlist")
+	@ResponseBody
+	public LayuiPageInfo datatestlist(DataSourceInfoParam dataSourceInfoParam) {
+		return this.dataSourceInfoService.findDataTestPageBySpec(dataSourceInfoParam);
 	}
 }
