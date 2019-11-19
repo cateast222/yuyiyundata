@@ -41,12 +41,30 @@ public class WgEleNewsDataResult implements Serializable {
 	private String number;
 	private String page;
 	private String pageName;
+	private Integer paperCount;
+	private Integer frontPage;
 	private Date insertTime;
 	private String remark;
 	private Integer state;
 	private String creator;
 	private Date createTime;
 	private Date updateTime;
+
+	public Integer getPaperCount() {
+		return paperCount;
+	}
+
+	public void setPaperCount(Integer paperCount) {
+		this.paperCount = paperCount;
+	}
+
+	public Integer getFrontPage() {
+		return frontPage;
+	}
+
+	public void setFrontPage(Integer frontPage) {
+		this.frontPage = frontPage;
+	}
 
 	public String getUuid() {
 		return uuid;

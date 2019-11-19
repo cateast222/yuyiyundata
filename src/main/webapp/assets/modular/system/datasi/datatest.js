@@ -212,4 +212,26 @@ layui.use([ 'table', 'ax' ], function() {
 		DatasiUUID = obj.data.uuid;
 		WgEleNewsData.search();
 	});
+	table.on('row(' + WgEleNewsData.tableId + ')', function(obj) {
+//		 console.log(obj.tr) //得到当前行元素对象
+//		 console.log(obj.data) // 得到当前行数据
+//		 obj.del(); //删除当前行
+//		 obj.update(fields) //修改当前行数据
+		for (var field in obj.data) {
+			switch (field) {
+			case "url":
+				$("#url").attr("href",obj.data[field]);
+				$("#url").attr("title",obj.data[field]);
+				break;
+			case "frontPage":
+				var frontPage = obj.data[field]==1?"是":"否";
+				$("#frontPage").html(frontPage);
+				break;
+			default:
+				$("#" + field).html(obj.data[field]);
+				break;
+			}
+		}
+		
+	});
 });

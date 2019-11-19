@@ -43,6 +43,8 @@ public class WgEleNewsDataParam implements Serializable, BaseValidatingParam {
 	private String number;
 	private String page;
 	private String pageName;
+	private Integer paperCount;
+	private Integer frontPage;
 	private Date insertTime;
 	private String remark;
 	private Integer state;
@@ -53,6 +55,22 @@ public class WgEleNewsDataParam implements Serializable, BaseValidatingParam {
 	 * 查询条件
 	 */
 	private String condition;
+	public Integer getPaperCount() {
+		return paperCount;
+	}
+
+	public void setPaperCount(Integer paperCount) {
+		this.paperCount = paperCount;
+	}
+
+	public Integer getFrontPage() {
+		return frontPage;
+	}
+
+	public void setFrontPage(Integer frontPage) {
+		this.frontPage = frontPage;
+	}
+
 
 	public String getCondition() {
 		return condition;

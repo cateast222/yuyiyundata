@@ -134,6 +134,7 @@ public class DataSourceInfoController extends BaseController {
 		HashMap<String, Object> wgEleNewsDataColumnMap = new HashMap<String, Object>();
 		wgEleNewsDataColumnMap.put("dsi_uuid", dataSourceInfoParam.getUuid());
 		wgEleNewsDataColumnMap.put("state", -2);
+		this.wgEleNewsDataService.removeByMap(wgEleNewsDataColumnMap);
 		this.dataSourceInfoService.update(dataSourceInfoParam);
 		return ResponseData.success();
 	}
@@ -151,6 +152,7 @@ public class DataSourceInfoController extends BaseController {
 		HashMap<String, Object> wgEleNewsDataColumnMap = new HashMap<String, Object>();
 		wgEleNewsDataColumnMap.put("dsi_uuid", dataSourceInfoParam.getUuid());
 		wgEleNewsDataColumnMap.put("state", -2);
+		this.wgEleNewsDataService.removeByMap(wgEleNewsDataColumnMap);
 		this.dataSourceInfoService.update(dataSourceInfoParam);
 		return ResponseData.success();
 	}
