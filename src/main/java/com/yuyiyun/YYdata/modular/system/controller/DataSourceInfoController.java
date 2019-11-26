@@ -16,6 +16,9 @@ import com.yuyiyun.YYdata.modular.system.service.WgEleNewsDataService;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 数据源信息表控制器
@@ -23,6 +26,7 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
  * @author duhao
  *
  */
+@Api(value = "数据源controller", tags = { "数据源操作接口" })
 @Controller
 @RequestMapping("/datasi")
 public class DataSourceInfoController extends BaseController {
@@ -176,6 +180,8 @@ public class DataSourceInfoController extends BaseController {
 	 * @author duhao
 	 * @Date 2019-03-13
 	 */
+	@ApiOperation(value = "获取数据源信息", notes = "根据条件查询数据源")
+//	@ApiImplicitParam(name = "dataSourceInfoParam", value = "查询条件", required = false, paramType = "body", dataType = "DataSourceInfoParam")
 	@RequestMapping("/detail")
 	@ResponseBody
 	public ResponseData detail(DataSourceInfoParam dataSourceInfoParam) {

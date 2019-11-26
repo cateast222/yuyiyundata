@@ -138,7 +138,7 @@ public class UserMgrController extends BaseController {
 	 * @Date 2018/12/24 22:43
 	 */
 	@ApiOperation(value = "获取用户详情", notes = "根据Id关键字查询用户")
-	@ApiImplicitParam(name = "userId", value = "用户Id", required = false, paramType = "path", dataType = "Long")
+	@ApiImplicitParam(name = "userId", value = "用户Id", required = false, paramType = "query", dataType = "Long")
 	@RequestMapping("/getUserInfo")
 	@ResponseBody
 	public Object getUserInfo(@RequestParam Long userId) {
@@ -176,7 +176,7 @@ public class UserMgrController extends BaseController {
 	}
 
 	/**
-	 * 查询管理员列表
+	 * 查询管理员列表 path
 	 * 
 	 * @param name
 	 * @param timeLimit
@@ -185,10 +185,11 @@ public class UserMgrController extends BaseController {
 	 */
 	@ApiOperation(value = "查询user", notes = "根据关键字查询用户")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "name", value = "搜索账号/姓名/手机号", required = false, paramType = "path", dataType = "String"),
-			@ApiImplicitParam(name = "timeLimit", value = "注册时间段", required = false, paramType = "path", dataType = "String"),
-			@ApiImplicitParam(name = "deptId", value = "部门Id", required = false, paramType = "path", dataType = "Long"),
-	})
+			@ApiImplicitParam(name = "name", value = "搜索账号/姓名/手机号", required = false, paramType = "query", dataType = "String"),
+			@ApiImplicitParam(name = "timeLimit", value = "注册时间段", required = false, paramType = "query", dataType = "String"),
+			@ApiImplicitParam(name = "deptId", value = "部门Id", required = false, paramType = "query", dataType = "Long"),
+			@ApiImplicitParam(name = "page", value = "页数", required = false, paramType = "query", dataType = "Integer"),
+			@ApiImplicitParam(name = "limit", value = "数量", required = false, paramType = "query", dataType = "Integer"), })
 	@RequestMapping("/list")
 	@Permission
 	@ResponseBody
@@ -198,7 +199,6 @@ public class UserMgrController extends BaseController {
 		// 拼接查询条件
 		String beginTime = "";
 		String endTime = "";
-
 		if (ToolUtil.isNotEmpty(timeLimit)) {
 			String[] split = timeLimit.split(" - ");
 			beginTime = split[0];
