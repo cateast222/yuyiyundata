@@ -131,9 +131,9 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 			dsitQueryWrapper.and(
 					i -> i.like("website_name", param.getCondition()).or().like("website_url", param.getCondition()));
 		}
-//		if (ToolUtil.isNotEmpty(param.getStatus())) {
-//			objectQueryWrapper.and(i -> i.eq("status", param.getStatus()));
-//		}
+		if (ToolUtil.isNotEmpty(param.getState())) {
+			dsitQueryWrapper.and(i -> i.eq("state", param.getState()));
+		}
 //		if (ToolUtil.isNotEmpty(param.getSystemFlag())) {
 //			objectQueryWrapper.and(i -> i.eq("system_flag", param.getSystemFlag()));
 //		}

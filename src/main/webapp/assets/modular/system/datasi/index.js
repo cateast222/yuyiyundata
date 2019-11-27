@@ -32,11 +32,13 @@ layui.use([ 'table', 'ax' ],
 								var url = Feng.ctxPath + '/dataci?datasiUuid='
 										+ d.uuid;
 								var color = "#01AAED;";
-								if (d.remark!=""&&d.state==2) {
+								if (d.remark != "" && d.state == 2) {
 									color = "#FF3333;";
 								}
-								return '<a title="备注：'+d.remark+'" style="color:'+color+'" href="'
-										+ url + '">' + d.websiteName + '</a>';
+								return '<a title="备注：' + d.remark
+										+ '" style="color:' + color
+										+ '" href="' + url + '">'
+										+ d.websiteName + '</a>';
 							}
 						}, {
 							field : 'websiteUrl',
@@ -112,7 +114,7 @@ layui.use([ 'table', 'ax' ],
 			Datasi.search = function() {
 				var queryData = {};
 				queryData['condition'] = $("#condition").val();
-				// queryData['systemFlag'] = $("#systemFlag").val();
+				queryData['state'] = $("#state").val();
 				// queryData['status'] = $("#status").val();
 				table.reload(Datasi.tableId, {
 					where : queryData

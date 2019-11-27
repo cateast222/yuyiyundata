@@ -217,7 +217,7 @@
 					<useDefaultDelimiters>false</useDefaultDelimiters>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.26.1</version>
@@ -240,7 +240,7 @@
 						</image>
 					</images>
 				</configuration>
-			</plugin>
+			</plugin> -->
 		</plugins>
 		<resources>
 			<resource>
