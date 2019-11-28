@@ -28,7 +28,6 @@ import java.util.Map;
  * @Date 2017/8/25 10:59
  */
 public class JwtTokenUtil {
-
 	/**
 	 * 获取用户名从token中
 	 */

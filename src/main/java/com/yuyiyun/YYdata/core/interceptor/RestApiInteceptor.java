@@ -22,6 +22,7 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		System.out.println("----"+request.getServletPath());
 		if (handler instanceof org.springframework.web.servlet.resource.ResourceHttpRequestHandler) {
 			return true;
 		}

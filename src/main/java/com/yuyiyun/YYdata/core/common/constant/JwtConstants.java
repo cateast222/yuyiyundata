@@ -15,5 +15,8 @@ public interface JwtConstants {
     Long EXPIRATION = 604800L;
 
     String AUTH_PATH = "/yydataApi/auth";
+    
+    String GRANT_TYPE_TOKEN = "token";
+    String GRANT_TYPE_REFRESHTTOKEN = "refreshToken";
 
 }
