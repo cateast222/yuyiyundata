@@ -10,8 +10,7 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
 public class TokenController {
 	
 	@RequestMapping("/auth")
-	public ResponseData token(String grantType,String appId , String appSecret) {
-		
+	public ResponseData token(String grantType,String appId , String appSecret) {		
 		return ResponseData.success();		
 	}
 
