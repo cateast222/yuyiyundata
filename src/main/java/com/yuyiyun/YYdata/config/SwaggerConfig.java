@@ -43,6 +43,7 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
+                .pathMapping("/yydataApi")
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))                         //这里采用包含注解的方式来确定要显示的接口
                 //.apis(RequestHandlerSelectors.basePackage("cn.stylefeng.guns.modular.system.controller"))     //这里采用包扫描的方式来确定要显示的接口
