@@ -66,7 +66,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new RestApiInteceptor()).addPathPatterns("/gunsApi/**");
+        registry.addInterceptor(new RestApiInteceptor()).addPathPatterns("/yydataApi/**");
         registry.addInterceptor(new AttributeSetInteceptor()).excludePathPatterns(NONE_PERMISSION_RES).addPathPatterns("/**");
     }
 

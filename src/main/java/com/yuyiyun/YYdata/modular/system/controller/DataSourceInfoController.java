@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(value = "数据源controller", tags = { "数据源操作接口" })
 @Controller
-@RequestMapping("/datasi")
+@RequestMapping({"/datasi","/yydataApi/datasi"})
 public class DataSourceInfoController extends BaseController {
 	private String PREFIX = "/modular/system/datasi";
 

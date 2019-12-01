@@ -65,7 +65,7 @@ import java.util.UUID;
  */
 @Api(value = "用户controller", tags = { "用户操作接口" })
 @Controller
-@RequestMapping("/mgr")
+@RequestMapping({"/mgr","/yydataApi/mgr"})
 public class UserMgrController extends BaseController {
 
 	private static String PREFIX = "/modular/system/user/";
