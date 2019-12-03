@@ -19,23 +19,26 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 闻歌电子报纸数据表控制器
- * 
+ * @ClassName: WgEleNewsDataController
+ * @Description: 闻歌电子报纸数据表控制器
  * @author duhao
- *
+ * @date 2019年12月4日
  */
 @Api(value = "电子报纸数据controller", tags = { "电子报纸数据操作接口" })
 @Controller
-@RequestMapping({"/wendata","/yydataApi/wendata"})
+@RequestMapping({ "/wendata", "/yydataApi/wendata" })
 public class WgEleNewsDataController extends BaseController {
 	private String PREFIX = "/modular/system/wendata";
 	@Autowired
 	private WgEleNewsDataService wgEleNewsDataService;
-	
+
 	/**
-	 * 查询列表
+	 * @Description: 查询列表
 	 * @author duhao
-	 * @Date 2019-11-18
+	 * @date 2019年12月4日
+	 * @version V1.0
+	 * @param wgEleNewsDataParam
+	 * @return
 	 */
 	@RequestMapping("/list")
 	@ResponseBody
@@ -43,9 +46,12 @@ public class WgEleNewsDataController extends BaseController {
 		System.out.println(wgEleNewsDataParam);
 		return this.wgEleNewsDataService.findPageBySpec(wgEleNewsDataParam);
 	}
-	
+
 	/**
-	 * API添加数据
+	 * @Description: API添加数据
+	 * @author duhao
+	 * @date 2019年12月4日
+	 * @version V1.0
 	 * @param wgEleNewsDataParam
 	 * @return
 	 */
@@ -55,9 +61,9 @@ public class WgEleNewsDataController extends BaseController {
 	@ResponseBody
 	public ResponseData addByApi(@RequestBody() WgEleNewsDataParam wgEleNewsDataParam) {
 		WgEleNewsData add = this.wgEleNewsDataService.add(wgEleNewsDataParam);
-		if (add!=null) {
+		if (add != null) {
 			return ResponseData.success(add);
-		}else {
+		} else {
 			return ResponseData.error("数据添加异常！");
 		}
 	}

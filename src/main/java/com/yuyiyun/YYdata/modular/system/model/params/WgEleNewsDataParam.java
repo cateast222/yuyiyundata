@@ -9,11 +9,13 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 闻歌电子报纸新闻类
  * 
  * @describe 关联wg_ele_news_data
+ * @ClassName: WgEleNewsDataParam
+ * @Description: 闻歌电子报纸新闻类
  * @author duhao
- * @date 2019年9月12日下午4:33:49
+ * @date 2019年12月4日
+ *
  */
 @Data
 @ApiModel(value = "WgEleNewsDataParam", description = "闻歌电子报纸新闻数据输入实体")
@@ -93,6 +95,15 @@ public class WgEleNewsDataParam implements Serializable, BaseValidatingParam {
 	@ApiModelProperty(value = "查询条件")
 	private String condition;
 
+	/**
+	 * 
+	 * <p>Title: toString</p>
+	 * <p>Description: 这里用一句话描述这个类的作用</p>
+	 * @author duhao
+	 * @date 2019年12月4日
+	 * @return
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "WgEleNewsDataParam [uuid=" + uuid + ", dsiUuid=" + dsiUuid + ", dsiName=" + dsiName + ", title=" + title
@@ -106,6 +117,14 @@ public class WgEleNewsDataParam implements Serializable, BaseValidatingParam {
 				+ createTime + ", updateTime=" + updateTime + ", condition=" + condition + "]";
 	}
 
+	/**
+	 * 
+	 * @Description: TODO(用一句话描述该文件做什么)
+	 * @author duhao
+	 * @date 2019年12月4日
+	 * @version V1.0
+	 * @return
+	 */
 	public String allString() {
 		return "WgEleNewsDataParam [uuid=" + uuid + ", dsiUuid=" + dsiUuid + ", dsiName=" + dsiName + ", title=" + title
 				+ ", url=" + url + ", pretitlt=" + pretitlt + ", subtitle=" + subtitle + ", pubtime=" + pubtime
@@ -119,6 +138,15 @@ public class WgEleNewsDataParam implements Serializable, BaseValidatingParam {
 				+ updateTime + ", condition=" + condition + "]";
 	}
 
+	/**
+	 * 
+	 * <p>Title: checkParam</p>
+	 * <p>Description: 这里用一句话描述这个类的作用</p>
+	 * @author duhao
+	 * @date 2019年12月4日
+	 * @return
+	 * @see cn.stylefeng.roses.kernel.model.validator.BaseValidatingParam#checkParam()
+	 */
 	@Override
 	public String checkParam() {
 		return null;
