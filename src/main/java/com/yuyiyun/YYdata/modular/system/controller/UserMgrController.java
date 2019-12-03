@@ -63,9 +63,8 @@ import java.util.UUID;
  * @author fengshuonan
  * @Date 2017年1月11日 下午1:08:17
  */
-@Api(value = "用户controller", tags = { "用户操作接口" })
 @Controller
-@RequestMapping({"/mgr","/yydataApi/mgr"})
+@RequestMapping({ "/mgr", "/yydataApi/mgr" })
 public class UserMgrController extends BaseController {
 
 	private static String PREFIX = "/modular/system/user/";
@@ -137,8 +136,6 @@ public class UserMgrController extends BaseController {
 	 * @author fengshuonan
 	 * @Date 2018/12/24 22:43
 	 */
-	@ApiOperation(value = "获取用户详情", notes = "根据Id关键字查询用户")
-	@ApiImplicitParam(name = "userId", value = "用户Id", required = false, paramType = "query", dataType = "Long")
 	@RequestMapping("/getUserInfo")
 	@ResponseBody
 	public Object getUserInfo(@RequestParam Long userId) {
@@ -183,13 +180,6 @@ public class UserMgrController extends BaseController {
 	 * @param deptId
 	 * @return
 	 */
-	@ApiOperation(value = "查询user", notes = "根据关键字查询用户")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "name", value = "搜索账号/姓名/手机号", required = false, paramType = "query", dataType = "String"),
-			@ApiImplicitParam(name = "timeLimit", value = "注册时间段", required = false, paramType = "query", dataType = "String"),
-			@ApiImplicitParam(name = "deptId", value = "部门Id", required = false, paramType = "query", dataType = "Long"),
-			@ApiImplicitParam(name = "page", value = "页数", required = false, paramType = "query", dataType = "Integer"),
-			@ApiImplicitParam(name = "limit", value = "数量", required = false, paramType = "query", dataType = "Integer"), })
 	@RequestMapping("/list")
 	@Permission
 	@ResponseBody

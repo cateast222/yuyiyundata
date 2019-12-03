@@ -6,157 +6,51 @@ import java.util.Date;
 import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
 
 import cn.stylefeng.roses.kernel.model.validator.BaseValidatingParam;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
+@ApiModel(value = "DataSourceInfoParam", description = "数据源输入实体")
 public class DataSourceInfoParam implements Serializable, BaseValidatingParam {
 	private static final long serialVersionUID = 1L;
+	@ApiModelProperty(value = "UUID")
 	private String uuid;
+	@ApiModelProperty(value = "数据源名称")
 	private String name;
+	@ApiModelProperty(value = "数据源网站地址")
 	private String websiteUrl;
+	@ApiModelProperty(value = "数据源网站名称")
 	private String websiteName;
+	@ApiModelProperty(value = "数据源所属平台")
 	private Integer platform;
+	@ApiModelProperty(value = "数据源所属国家")
 	private String country;
+	@ApiModelProperty(value = "数据源所属地址")
 	private String region;
+	@ApiModelProperty(value = "数据源所属境区")
 	private Integer proxy;
+	@ApiModelProperty(value = "数据源语种")
 	private String language;
+	@ApiModelProperty(value = "备注")
 	private String remark;
+	@ApiModelProperty(value = "状态")
 	private Integer state;
+	@ApiModelProperty(value = "创建者")
 	private String creator;
+	@ApiModelProperty(value = "创建时间")
 	private Date createTime;
+	@ApiModelProperty(value = "更新时间")
 	private Date updateTime;
 	/**
 	 * 查询条件
 	 */
+	@ApiModelProperty(value = "查询条件")
 	private String condition;
 
 	@Override
 	public String checkParam() {
 		return null;
-	}
-
-	public String getCondition() {
-		return condition;
-	}
-
-	public void setCondition(String condition) {
-		this.condition = HtmlTagUtil.convertTag(condition);
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = HtmlTagUtil.convertTag(name);
-	}
-
-	public String getWebsiteUrl() {
-		return websiteUrl;
-	}
-
-	public void setWebsiteUrl(String websiteUrl) {
-		this.websiteUrl = HtmlTagUtil.convertTag(websiteUrl);
-	}
-
-	public String getWebsiteName() {
-		return websiteName;
-	}
-
-	public void setWebsiteName(String websiteName) {
-		this.websiteName = HtmlTagUtil.convertTag(websiteName);
-	}
-
-	public Integer getPlatform() {
-		return platform;
-	}
-
-	public void setPlatform(Integer platform) {
-		this.platform = platform;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = HtmlTagUtil.convertTag(country);
-	}
-
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = HtmlTagUtil.convertTag(region);
-	}
-
-	public Integer getProxy() {
-		return proxy;
-	}
-
-	public void setProxy(Integer proxy) {
-		this.proxy = proxy;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = HtmlTagUtil.convertTag(language);
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = HtmlTagUtil.convertTag(remark);
-	}
-
-	public Integer getState() {
-		return state;
-	}
-
-	public void setState(Integer state) {
-		this.state = state;
-	}
-
-	public String getCreator() {
-		return creator;
-	}
-
-	public void setCreator(String creator) {
-		this.creator = creator;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	@Override
@@ -166,7 +60,5 @@ public class DataSourceInfoParam implements Serializable, BaseValidatingParam {
 				+ proxy + ", language=" + language + ", remark=" + remark + ", state=" + state + ", creator=" + creator
 				+ ", createTime=" + createTime + ", updateTime=" + updateTime + ", condition=" + condition + "]";
 	}
-	
-	
 
 }

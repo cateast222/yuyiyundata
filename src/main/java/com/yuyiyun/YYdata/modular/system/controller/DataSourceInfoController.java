@@ -17,7 +17,6 @@ import com.yuyiyun.YYdata.modular.system.service.WgEleNewsDataService;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -28,7 +27,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(value = "数据源controller", tags = { "数据源操作接口" })
 @Controller
-@RequestMapping({"/datasi","/yydataApi/datasi"})
+@RequestMapping({ "/datasi", "/yydataApi/datasi" })
 public class DataSourceInfoController extends BaseController {
 	private String PREFIX = "/modular/system/datasi";
 

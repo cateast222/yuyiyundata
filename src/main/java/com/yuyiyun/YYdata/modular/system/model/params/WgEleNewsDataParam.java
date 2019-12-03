@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import cn.stylefeng.roses.kernel.model.validator.BaseValidatingParam;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * 闻歌电子报纸新闻类
@@ -12,333 +15,83 @@ import cn.stylefeng.roses.kernel.model.validator.BaseValidatingParam;
  * @author duhao
  * @date 2019年9月12日下午4:33:49
  */
+@Data
+@ApiModel(value = "WgEleNewsDataParam", description = "闻歌电子报纸新闻数据输入实体")
 public class WgEleNewsDataParam implements Serializable, BaseValidatingParam {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	@ApiModelProperty(value = "UUID")
 	private String uuid;
+	@ApiModelProperty(value = "新闻所属数据源")
 	private String dsiUuid;
+	@ApiModelProperty(value = "新闻所属数据源名称")
 	private String dsiName;
+	@ApiModelProperty(value = "新闻标题")
 	private String title;
+	@ApiModelProperty(value = "新闻源链接")
 	private String url;
+	@ApiModelProperty(value = "新闻前置标题")
 	private String pretitlt;
+	@ApiModelProperty(value = "新闻副标题")
 	private String subtitle;
+	@ApiModelProperty(value = "新闻发布时间")
 	private Date pubtime;
+	@ApiModelProperty(value = "新闻作者")
 	private String author;
+	@ApiModelProperty(value = "新闻编辑")
 	private String editor;
+	@ApiModelProperty(value = "新闻描述")
 	private String abstracts;
+	@ApiModelProperty(value = "新闻正文")
 	private String content;
+	@ApiModelProperty(value = "新闻内容")
 	private String tagContent;
+	@ApiModelProperty(value = "新闻图片源链接")
 	private String websitePictures;
+	@ApiModelProperty(value = "新闻图片本地链接")
 	private String localPictures;
+	@ApiModelProperty(value = "新闻图片描述")
 	private String picturesDescription;
+	@ApiModelProperty(value = "新闻语种")
 	private String language;
+	@ApiModelProperty(value = "新闻缩略图源链接")
 	private String websiteThumbnail;
+	@ApiModelProperty(value = "新闻缩略图本地链接")
 	private String localThumbnail;
+	@ApiModelProperty(value = "新闻PDF源链接")
 	private String websitePdf;
+	@ApiModelProperty(value = "新闻PDF本地链接")
 	private String localPdf;
+	@ApiModelProperty(value = "新闻所属位置")
 	private String ha;
+	@ApiModelProperty(value = "新闻所属频道")
 	private String channel;
+	@ApiModelProperty(value = "新闻所属页码")
 	private String number;
+	@ApiModelProperty(value = "新闻所属版面")
 	private String page;
+	@ApiModelProperty(value = "新闻版面名称")
 	private String pageName;
+	@ApiModelProperty(value = "新闻频道排序")
 	private Integer paperCount;
+	@ApiModelProperty(value = "新闻头版头条")
 	private Integer frontPage;
+	@ApiModelProperty(value = "新闻采集时间")
 	private Date insertTime;
+	@ApiModelProperty(value = "新闻备注")
 	private String remark;
+	@ApiModelProperty(value = "新闻状态")
 	private Integer state;
+	@ApiModelProperty(value = "创建者")
 	private String creator;
+	@ApiModelProperty(value = "创建时间")
 	private Date createTime;
+	@ApiModelProperty(value = "更新时间")
 	private Date updateTime;
 	/**
 	 * 查询条件
 	 */
+	@ApiModelProperty(value = "查询条件")
 	private String condition;
-	public Integer getPaperCount() {
-		return paperCount;
-	}
-
-	public void setPaperCount(Integer paperCount) {
-		this.paperCount = paperCount;
-	}
-
-	public Integer getFrontPage() {
-		return frontPage;
-	}
-
-	public void setFrontPage(Integer frontPage) {
-		this.frontPage = frontPage;
-	}
-
-
-	public String getCondition() {
-		return condition;
-	}
-
-	public void setCondition(String condition) {
-		this.condition = condition;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public String getDsiUuid() {
-		return dsiUuid;
-	}
-
-	public void setDsiUuid(String dsiUuid) {
-		this.dsiUuid = dsiUuid;
-	}
-
-	public String getDsiName() {
-		return dsiName;
-	}
-
-	public void setDsiName(String dsiName) {
-		this.dsiName = dsiName;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getPretitlt() {
-		return pretitlt;
-	}
-
-	public void setPretitlt(String pretitlt) {
-		this.pretitlt = pretitlt;
-	}
-
-	public String getSubtitle() {
-		return subtitle;
-	}
-
-	public void setSubtitle(String subtitle) {
-		this.subtitle = subtitle;
-	}
-
-	public Date getPubtime() {
-		return pubtime;
-	}
-
-	public void setPubtime(Date pubtime) {
-		this.pubtime = pubtime;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getEditor() {
-		return editor;
-	}
-
-	public void setEditor(String editor) {
-		this.editor = editor;
-	}
-
-	public String getAbstracts() {
-		return abstracts;
-	}
-
-	public void setAbstracts(String abstracts) {
-		this.abstracts = abstracts;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public String getTagContent() {
-		return tagContent;
-	}
-
-	public void setTagContent(String tagContent) {
-		this.tagContent = tagContent;
-	}
-
-	public String getWebsitePictures() {
-		return websitePictures;
-	}
-
-	public void setWebsitePictures(String websitePictures) {
-		this.websitePictures = websitePictures;
-	}
-
-	public String getLocalPictures() {
-		return localPictures;
-	}
-
-	public void setLocalPictures(String localPictures) {
-		this.localPictures = localPictures;
-	}
-
-	public String getPicturesDescription() {
-		return picturesDescription;
-	}
-
-	public void setPicturesDescription(String picturesDescription) {
-		this.picturesDescription = picturesDescription;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public String getWebsiteThumbnail() {
-		return websiteThumbnail;
-	}
-
-	public void setWebsiteThumbnail(String websiteThumbnail) {
-		this.websiteThumbnail = websiteThumbnail;
-	}
-
-	public String getLocalThumbnail() {
-		return localThumbnail;
-	}
-
-	public void setLocalThumbnail(String localThumbnail) {
-		this.localThumbnail = localThumbnail;
-	}
-
-	public String getWebsitePdf() {
-		return websitePdf;
-	}
-
-	public void setWebsitePdf(String websitePdf) {
-		this.websitePdf = websitePdf;
-	}
-
-	public String getLocalPdf() {
-		return localPdf;
-	}
-
-	public void setLocalPdf(String localPdf) {
-		this.localPdf = localPdf;
-	}
-
-	public String getHa() {
-		return ha;
-	}
-
-	public void setHa(String ha) {
-		this.ha = ha;
-	}
-
-	public String getChannel() {
-		return channel;
-	}
-
-	public void setChannel(String channel) {
-		this.channel = channel;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public String getPage() {
-		return page;
-	}
-
-	public void setPage(String page) {
-		this.page = page;
-	}
-
-	public String getPageName() {
-		return pageName;
-	}
-
-	public void setPageName(String pageName) {
-		this.pageName = pageName;
-	}
-
-	public Date getInsertTime() {
-		return insertTime;
-	}
-
-	public void setInsertTime(Date insertTime) {
-		this.insertTime = insertTime;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	public Integer getState() {
-		return state;
-	}
-
-	public void setState(Integer state) {
-		this.state = state;
-	}
-
-	public String getCreator() {
-		return creator;
-	}
-
-	public void setCreator(String creator) {
-		this.creator = creator;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	@Override
 	public String toString() {

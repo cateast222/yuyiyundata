@@ -12,6 +12,10 @@ public enum BizExceptionEnum implements AbstractBaseExceptionEnum {
 	 * 数据源
 	 */
 	DSI_EXISTED(400, "该类型的名称或URL已经存在"),
+	/**
+	 * 闻歌电子报纸数据
+	 */
+	WEN_EXISTED(400, "该类型的URL已经存在"),
 
 	/**
 	 * 字典
