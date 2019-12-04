@@ -60,6 +60,7 @@ public class WgEleNewsDataService extends ServiceImpl<WgEleNewsDataMapper, WgEle
 		WgEleNewsData entity = getEntity(param);
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 		entity.setUuid(uuid);
+		entity.setCreateTime(new Date());
 		entity.setUpdateTime(new Date());
 		entity.setInsertTime(new Date());
 		this.save(entity);

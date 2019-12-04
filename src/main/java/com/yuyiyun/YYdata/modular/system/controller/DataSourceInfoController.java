@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,6 +18,7 @@ import com.yuyiyun.YYdata.modular.system.service.WgEleNewsDataService;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -179,7 +181,7 @@ public class DataSourceInfoController extends BaseController {
 	 * @author duhao
 	 * @Date 2019-03-13
 	 */
-	@ApiOperation(value = "获取数据源信息", notes = "根据条件查询数据源")
+//	@ApiOperation(value = "获取数据源信息", notes = "根据条件查询数据源")
 //	@ApiImplicitParam(name = "dataSourceInfoParam", value = "查询条件", required = false, paramType = "body", dataType = "DataSourceInfoParam")
 	@RequestMapping("/detail")
 	@ResponseBody
@@ -210,5 +212,19 @@ public class DataSourceInfoController extends BaseController {
 	@ResponseBody
 	public LayuiPageInfo datatestlist(DataSourceInfoParam dataSourceInfoParam) {
 		return this.dataSourceInfoService.findDataTestPageBySpec(dataSourceInfoParam);
+	}
+	
+	/**
+	 * 查看详情接口	 *
+	 * @author duhao
+	 * @Date 2019-03-13
+	 */
+	@ApiOperation(value = "获取数据源信息", notes = "根据UUID查询数据源")
+	@ApiImplicitParam(name = "uuid", value = "uuid", required = true, paramType = "query", dataType = "String")
+	@GetMapping("/detail")
+	@ResponseBody
+	public ResponseData detailByApi(String uuid) {
+		DataSourceInfo detail = this.dataSourceInfoService.getById(uuid);
+		return ResponseData.success(detail);
 	}
 }
