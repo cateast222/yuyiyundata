@@ -94,6 +94,7 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 			throw new ServiceException(BizExceptionEnum.DSI_EXISTED);
 		}
 		newEntity.setUpdateTime(new Date());
+		newEntity.setName(newEntity.getWebsiteName());
 		this.updateById(newEntity);
 	}
 

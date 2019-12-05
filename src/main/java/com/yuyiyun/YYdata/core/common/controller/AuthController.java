@@ -23,6 +23,7 @@ public class AuthController {
 
 	@RequestMapping("/auth")
 	public ResponseData token(String type, String username, String password, String refreshToken) {
+//		System.out.println(type+"-"+username);
 		// 判断type是否为空
 		if (type == null || type.trim() == "") {
 			return ResponseData.error(701, "参数异常！");
