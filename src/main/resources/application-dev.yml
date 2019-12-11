@@ -9,6 +9,7 @@ spring:
     password: MySQL@2018
     filters: wall,mergeStat
     data-source-name: gunsdb
+  
 
 # 多数据源情况的配置
 yydata:

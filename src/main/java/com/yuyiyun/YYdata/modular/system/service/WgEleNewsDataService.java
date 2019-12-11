@@ -53,8 +53,8 @@ public class WgEleNewsDataService extends ServiceImpl<WgEleNewsDataMapper, WgEle
 		// 判断是否已经存在同数据源网站名称或同数据源网站地址
 		QueryWrapper<WgEleNewsData> dsitQueryWrapper = new QueryWrapper<>();
 		dsitQueryWrapper.and(i -> i.eq("url", param.getUrl()));
-		List<WgEleNewsData> list = this.list(dsitQueryWrapper);
-		if (list != null && list.size() > 0) {
+		int count = this.count(dsitQueryWrapper);
+		if ( count > 0) {
 			throw new ServiceException(BizExceptionEnum.WEN_EXISTED);
 		}
 		WgEleNewsData entity = getEntity(param);
@@ -67,6 +67,7 @@ public class WgEleNewsDataService extends ServiceImpl<WgEleNewsDataMapper, WgEle
 		return entity;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}
