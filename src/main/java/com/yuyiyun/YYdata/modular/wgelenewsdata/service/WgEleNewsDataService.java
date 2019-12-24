@@ -93,6 +93,13 @@ public class WgEleNewsDataService extends ServiceImpl<WgEleNewsDataMapper, WgEle
 
 	}
 
+	/**
+	 * :获取某份报纸归档的新闻数据
+	 * @param dsiUuid
+	 * @param pubTime
+	 * @param condition
+	 * @return
+	 */
 	public LayuiPageInfo getDateNewslist(String dsiUuid, String pubTime, String condition) {
 		Page pageContext = getPageContext();
 		QueryWrapper<WgEleNewsData> wendQueryWrapper = new QueryWrapper<>();

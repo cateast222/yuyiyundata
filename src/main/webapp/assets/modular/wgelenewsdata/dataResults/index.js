@@ -32,15 +32,19 @@ layui
 						}, {
 							field : 'dsiName',
 							sort : true,
-							title : '名称',
+							title : '名称'
+						}, {
+							field : 'pubtime',
+							sort : true,
+							title : '发布时间'
 						}, {
 							field : 'dataVolume',
 							sort : true,
 							title : '数据量'
 						}, {
-							field : 'pubtime',
+							field : 'creator',
 							sort : true,
-							title : '发布时间'
+							title : '采集人'
 						} ] ];
 					};
 					WgEleNewsData.initColumn = function() {

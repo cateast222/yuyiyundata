@@ -171,7 +171,7 @@ public class WgEleNewsDataController extends BaseController {
 	}
 	
 	/**
-	 * :根据日期获取分类归档的数据
+	 * :获取某份报纸归档的新闻数据
 	 * @param pubTime
 	 * @param condition
 	 * @return
