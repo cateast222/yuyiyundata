@@ -1,4 +1,4 @@
-package com.yuyiyun.YYdata.modular.system.model.params;
+package com.yuyiyun.YYdata.modular.wgelenewsdata.model.param;
 
 import java.io.Serializable;
 import java.util.Date;

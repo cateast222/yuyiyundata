@@ -64,7 +64,7 @@ public class LogController extends BaseController {
     }
 
     /**
-     * 查询操作日志列表
+     * :查询操作日志列表
      *
      * @author fengshuonan
      * @Date 2018/12/23 5:34 PM

@@ -1,9 +1,11 @@
-package com.yuyiyun.YYdata.modular.system.service;
+package com.yuyiyun.YYdata.modular.wgelenewsdata.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -14,10 +16,10 @@ import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
-import com.yuyiyun.YYdata.modular.system.entity.WgEleNewsData;
-import com.yuyiyun.YYdata.modular.system.mapper.WgEleNewsDataMapper;
 import com.yuyiyun.YYdata.modular.system.model.params.DataSourceInfoParam;
-import com.yuyiyun.YYdata.modular.system.model.params.WgEleNewsDataParam;
+import com.yuyiyun.YYdata.modular.wgelenewsdata.entity.WgEleNewsData;
+import com.yuyiyun.YYdata.modular.wgelenewsdata.mapper.WgEleNewsDataMapper;
+import com.yuyiyun.YYdata.modular.wgelenewsdata.model.param.WgEleNewsDataParam;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
@@ -54,7 +56,7 @@ public class WgEleNewsDataService extends ServiceImpl<WgEleNewsDataMapper, WgEle
 		QueryWrapper<WgEleNewsData> dsitQueryWrapper = new QueryWrapper<>();
 		dsitQueryWrapper.and(i -> i.eq("url", param.getUrl()));
 		int count = this.count(dsitQueryWrapper);
-		if ( count > 0) {
+		if (count > 0) {
 			throw new ServiceException(BizExceptionEnum.WEN_EXISTED);
 		}
 		WgEleNewsData entity = getEntity(param);
@@ -71,10 +73,38 @@ public class WgEleNewsDataService extends ServiceImpl<WgEleNewsDataMapper, WgEle
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}
-	
+
 	private WgEleNewsData getEntity(WgEleNewsDataParam param) {
 		WgEleNewsData entity = new WgEleNewsData();
 		ToolUtil.copyProperties(param, entity);
 		return entity;
+	}
+
+	/**
+	 * :根据日期获取分类归档的数据
+	 * 
+	 * @param pubTime
+	 * @param condition
+	 * @return
+	 */
+	public List<Map<String, Object>> getDateArchive(Page page, String pubTime, String condition) {
+		return this.baseMapper.getDateArchive(page, pubTime, condition);
+		// TODO Auto-generated method stub
+
+	}
+
+	public LayuiPageInfo getDateNewslist(String dsiUuid, String pubTime, String condition) {
+		Page pageContext = getPageContext();
+		QueryWrapper<WgEleNewsData> wendQueryWrapper = new QueryWrapper<>();
+		wendQueryWrapper.and(i -> i.eq("dsi_uuid", dsiUuid));
+		if (ToolUtil.isNotEmpty(condition)) {
+			wendQueryWrapper.and(i -> i.like("title", condition));
+		}
+		if (ToolUtil.isNotEmpty(pubTime)) {
+			wendQueryWrapper.and(i -> i.between("pubtime", pubTime + " 00:00:00", pubTime + " 23:59:59"));
+		}
+		pageContext.setAsc("paper_count");
+		IPage page = this.page(pageContext, wendQueryWrapper);
+		return LayuiPageFactory.createPageInfo(page);
 	}
 }

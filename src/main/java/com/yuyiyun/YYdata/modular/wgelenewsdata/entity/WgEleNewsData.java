@@ -1,4 +1,4 @@
-package com.yuyiyun.YYdata.modular.system.entity;
+package com.yuyiyun.YYdata.modular.wgelenewsdata.entity;
 
 import java.io.Serializable;
 import java.util.Date;

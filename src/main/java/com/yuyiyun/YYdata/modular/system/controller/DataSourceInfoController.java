@@ -1,7 +1,5 @@
 package com.yuyiyun.YYdata.modular.system.controller;
 
-import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +11,6 @@ import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
 import com.yuyiyun.YYdata.modular.system.model.params.DataSourceInfoParam;
 import com.yuyiyun.YYdata.modular.system.service.DataSourceInfoService;
-import com.yuyiyun.YYdata.modular.system.service.WgEleNewsDataService;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
@@ -35,9 +32,7 @@ public class DataSourceInfoController extends BaseController {
 
 	@Autowired
 	private DataSourceInfoService dataSourceInfoService;
-	@Autowired
-	private WgEleNewsDataService wgEleNewsDataService;
-
+	
 	/**
 	 * 跳转到主页面
 	 * 
@@ -70,17 +65,6 @@ public class DataSourceInfoController extends BaseController {
 	}
 
 	/**
-	 * 数据测试页面
-	 * 
-	 * @author duhao
-	 * @return
-	 */
-	@RequestMapping("/datatest")
-	public String datatest() {
-		return PREFIX + "/datatest.html";
-	}
-
-	/**
 	 * 新增接口
 	 *
 	 * @author duhao
@@ -108,59 +92,7 @@ public class DataSourceInfoController extends BaseController {
 		return ResponseData.success();
 	}
 
-	/**
-	 * 加入测试接口
-	 *
-	 * @author duhao
-	 * @Date 2019-11-13
-	 */
-	@RequestMapping("/datatestRun")
-	@ResponseBody
-	public ResponseData datatestRun(DataSourceInfoParam dataSourceInfoParam) {
-		// 清除之前的测试数据
-		HashMap<String, Object> wgEleNewsDataColumnMap = new HashMap<String, Object>();
-		wgEleNewsDataColumnMap.put("dsi_uuid", dataSourceInfoParam.getUuid());
-		wgEleNewsDataColumnMap.put("state", -2);
-		this.wgEleNewsDataService.removeByMap(wgEleNewsDataColumnMap);
-		this.dataSourceInfoService.update(dataSourceInfoParam);
-		return ResponseData.success();
-	}
-
-	/**
-	 * 测试通过接口
-	 *
-	 * @author duhao
-	 * @Date 2019-11-13
-	 */
-	@RequestMapping("/datatestPass")
-	@ResponseBody
-	public ResponseData datatestPass(DataSourceInfoParam dataSourceInfoParam) {
-		// 清除之前的测试数据
-		HashMap<String, Object> wgEleNewsDataColumnMap = new HashMap<String, Object>();
-		wgEleNewsDataColumnMap.put("dsi_uuid", dataSourceInfoParam.getUuid());
-		wgEleNewsDataColumnMap.put("state", -2);
-		this.wgEleNewsDataService.removeByMap(wgEleNewsDataColumnMap);
-		this.dataSourceInfoService.update(dataSourceInfoParam);
-		return ResponseData.success();
-	}
-
-	/**
-	 * 测试失败接口
-	 *
-	 * @author duhao
-	 * @Date 2019-11-13
-	 */
-	@RequestMapping("/datatestFail")
-	@ResponseBody
-	public ResponseData datatestFail(DataSourceInfoParam dataSourceInfoParam) {
-		// 清除之前的测试数据
-		HashMap<String, Object> wgEleNewsDataColumnMap = new HashMap<String, Object>();
-		wgEleNewsDataColumnMap.put("dsi_uuid", dataSourceInfoParam.getUuid());
-		wgEleNewsDataColumnMap.put("state", -2);
-		this.wgEleNewsDataService.removeByMap(wgEleNewsDataColumnMap);
-		this.dataSourceInfoService.update(dataSourceInfoParam);
-		return ResponseData.success();
-	}
+	
 
 	/**
 	 * 删除接口
