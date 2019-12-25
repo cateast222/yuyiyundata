@@ -143,13 +143,13 @@
 	</div>
 </div>
 <script type="text/html" id="tableBar">
-	@if(shiro.hasPermission("/datasi/datatestRun")){
+	@if(shiro.hasPermission("/wendata/datatestRun")){
     <a title="测试" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-xs" lay-event="testRun"><i class="layui-icon layui-icon-play"/></a>
     @}
-    @if(shiro.hasPermission("/datasi/datatestPass")){
+    @if(shiro.hasPermission("/wendata/datatestPass")){
     <a title="通过" class="layui-btn layui-btn-radius layui-btn-warm layui-btn-xs" lay-event="testPass"><i class="layui-icon layui-icon-ok-circle"/></a>
     @}
-	@if(shiro.hasPermission("/datasi/datatestFail")){
+	@if(shiro.hasPermission("/wendata/datatestFail")){
     <a title="失败" class="layui-btn layui-btn-radius layui-btn-danger layui-btn-xs" lay-event="testFail"><i class="layui-icon layui-icon-close"/></a>
     @}
 </script>

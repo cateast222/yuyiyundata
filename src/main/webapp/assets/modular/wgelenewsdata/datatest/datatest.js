@@ -1,6 +1,6 @@
 var WgEleNewsDataUUID = 0;
 var DatasiUUID = 0;
-layui.use([ 'table', 'ax' ], function() {
+layui.use(['table', 'ax'], function() {
 	var $ = layui.$;
 	var table = layui.table;
 	var $ax = layui.ax;
@@ -9,74 +9,78 @@ layui.use([ 'table', 'ax' ], function() {
 	 * 数据源信息表管理
 	 */
 	var Datasi = {
-		tableId : "datasiTable"
+		tableId: "datasiTable"
 	};
 	var WgEleNewsData = {
-		tableId : "wgEleNewsDataTable"
+		tableId: "wgEleNewsDataTable"
 	};
 
 	/**
 	 * 初始化表格的列
 	 */
 	Datasi.initColumn = function() {
-		return [ [
-				{
-					type : 'checkbox'
+		return [
+			[{
+					type: 'checkbox'
 				},
 				{
-					field : 'uuid',
-					hide : true,
-					title : '数据源信息id'
+					field: 'uuid',
+					hide: true,
+					title: '数据源信息id'
 				},
 				{
-					field : 'websiteName',
-					sort : true,
-					title : '名称',
-					templet : function(d) {
-						return '<a title="备注：' + d.remark
-								+ '" style="color: #01AAED;" href="'
-								+ d.websiteUrl + '" target="_blank">'
-								+ d.websiteName + '</a>';
+					field: 'websiteName',
+					sort: true,
+					title: '名称',
+					templet: function(d) {
+						return '<a title="备注：' + d.remark +
+							'" style="color: #01AAED;" href="' +
+							d.websiteUrl + '" target="_blank">' +
+							d.websiteName + '</a>';
 					}
 				}, {
-					align : 'center',
-					toolbar : '#tableBar',
-					title : '操作'
-				} ] ];
+					align: 'center',
+					toolbar: '#tableBar',
+					title: '操作'
+				}
+			]
+		];
 	};
 	WgEleNewsData.initColumn = function() {
-		return [ [
-				{
-					field : 'uuid',
-					hide : true,
-					title : '电子报纸新闻id'
+		return [
+			[{
+					field: 'uuid',
+					hide: true,
+					title: '电子报纸新闻id'
 				},
 				{
-					field : 'title',
-					sort : true,
-					title : '新闻标题',
-					templet : function(d) {
+					field: 'title',
+					sort: true,
+					title: '新闻标题',
+					templet: function(d) {
 						var title = "-";
 						if (d.title != "") {
 							title = d.title;
 						}
-						return '<a title="' + title
-								+ '" style="color: #01AAED;" href="' + d.url
-								+ '" target="_blank">' + title + '</a>';
+						return '<a title="' + title +
+							'" style="color: #01AAED;" href="' + d.url +
+							'" target="_blank">' + title + '</a>';
 					}
 				}, {
-					field : 'page',
-					sort : true,
-					title : '所属版面',
+					field: 'page',
+					sort: true,
+					title: '所属版面',
 				}, {
-					field : 'pageName',
-					sort : true,
-					title : '版面名称',
+					field: 'pageName',
+					sort: true,
+					title: '版面名称',
 				}, {
-					field : 'pubtime',
-					sort : true,
-					title : '发布时间',
-				} ] ];
+					field: 'pubtime',
+					sort: true,
+					title: '发布时间',
+				}
+			]
+		];
 	};
 
 	/**
@@ -86,7 +90,7 @@ layui.use([ 'table', 'ax' ], function() {
 		var queryData = {};
 		queryData['condition'] = $("#datasiCondition").val();
 		table.reload(Datasi.tableId, {
-			where : queryData
+			where: queryData
 		});
 	};
 	WgEleNewsData.search = function() {
@@ -95,7 +99,7 @@ layui.use([ 'table', 'ax' ], function() {
 		queryData['dsiUuid'] = DatasiUUID;
 		queryData['state'] = -2;
 		table.reload(WgEleNewsData.tableId, {
-			where : queryData
+			where: queryData
 		});
 	};
 
@@ -107,12 +111,13 @@ layui.use([ 'table', 'ax' ], function() {
 	 */
 	Datasi.onTestRun = function(data) {
 		var ajax = new $ax(Feng.ctxPath + "/wendata/datatestRun",
-				function(data) {
-					Feng.success("数据开始采集！将在10份中内出结果，请等待稍后查看！");
-					table.reload(Datasi.tableId);
-				}, function(data) {
-					Feng.error("数据测试失败!" + data.responseJSON.message + "!");
-				});
+			function(data) {
+				Feng.success("数据开始采集！将在10份中内出结果，请等待稍后查看！");
+				table.reload(Datasi.tableId);
+			},
+			function(data) {
+				Feng.error("数据测试失败!" + data.responseJSON.message + "!");
+			});
 		ajax.set("uuid", data.uuid);
 		ajax.set("state", 0);
 		ajax.start();
@@ -126,7 +131,7 @@ layui.use([ 'table', 'ax' ], function() {
 	 */
 	Datasi.onTestPass = function(data) {
 		var ajax = new $ax(Feng.ctxPath + "/wendata/datatestPass", function(
-				data) {
+			data) {
 			Feng.success("数据测试通过成功！");
 			table.reload(Datasi.tableId);
 		}, function(data) {
@@ -146,12 +151,13 @@ layui.use([ 'table', 'ax' ], function() {
 	Datasi.onTestFail = function(data) {
 		var operation = function() {
 			var ajax = new $ax(Feng.ctxPath + "/wendata/datatestFail",
-					function(data) {
-						Feng.success("数据测试失败，退回成功!");
-						table.reload(Datasi.tableId);
-					}, function(data) {
-						Feng.error("退回失败!" + data.responseJSON.message + "!");
-					});
+				function(data) {
+					Feng.success("数据测试失败，退回成功!");
+					table.reload(Datasi.tableId);
+				},
+				function(data) {
+					Feng.error("退回失败!" + data.responseJSON.message + "!");
+				});
 			ajax.set("uuid", data.uuid);
 			ajax.set("state", 2);
 			ajax.start();
@@ -161,24 +167,24 @@ layui.use([ 'table', 'ax' ], function() {
 
 	// 渲染表格
 	var datasiTableResult = table.render({
-		elem : '#' + Datasi.tableId,
-		url : Feng.ctxPath + '/datasi/datatestlist',
-		page : true,
-		height : "full-98",
-		cellMinWidth : 100,
-		limit : 15,
-		limits : [ 15, 30, 50, 100, 200 ],
-		cols : Datasi.initColumn()
+		elem: '#' + Datasi.tableId,
+		url: Feng.ctxPath + '/datasi/datatestlist',
+		page: true,
+		height: "full-98",
+		cellMinWidth: 100,
+		limit: 15,
+		limits: [15, 30, 50, 100, 200],
+		cols: Datasi.initColumn()
 	});
 	var wgEleNewsDataTableResult = table.render({
-		elem : '#' + WgEleNewsData.tableId,
-		url : Feng.ctxPath + '/wendata/list',
-		page : true,
-		height : "full-98",
-		cellMinWidth : 100,
-		limit : 15,
-		limits : [ 15, 30, 50, 100, 200 ],
-		cols : WgEleNewsData.initColumn()
+		elem: '#' + WgEleNewsData.tableId,
+		url: Feng.ctxPath + '/wendata/list',
+		page: true,
+		height: "full-98",
+		cellMinWidth: 100,
+		limit: 15,
+		limits: [15, 30, 50, 100, 200],
+		cols: WgEleNewsData.initColumn()
 	});
 
 	// 搜索按钮点击事件
@@ -216,19 +222,19 @@ layui.use([ 'table', 'ax' ], function() {
 		// console.log(obj.data) // 得到当前行数据
 		// obj.del(); //删除当前行
 		// obj.update(fields) //修改当前行数据
-		for ( var field in obj.data) {
+		for (var field in obj.data) {
 			switch (field) {
-			case "url":
-				$("#url").attr("href", obj.data[field]);
-				$("#url").attr("title", obj.data[field]);
-				break;
-			case "frontPage":
-				var frontPage = obj.data[field] == 1 ? "是" : "否";
-				$("#frontPage").html(frontPage);
-				break;
-			default:
-				$("#" + field).html(obj.data[field]);
-				break;
+				case "url":
+					$("#url").attr("href", obj.data[field]);
+					$("#url").attr("title", obj.data[field]);
+					break;
+				case "frontPage":
+					var frontPage = obj.data[field] == 1 ? "是" : "否";
+					$("#frontPage").html(frontPage);
+					break;
+				default:
+					$("#" + field).html(obj.data[field]);
+					break;
 			}
 		}
 

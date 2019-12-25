@@ -128,7 +128,6 @@ public class WgEleNewsDataController extends BaseController {
 	@RequestMapping("/list")
 	@ResponseBody
 	public LayuiPageInfo list(WgEleNewsDataParam wgEleNewsDataParam) {
-		System.out.println(wgEleNewsDataParam);
 		return this.wgEleNewsDataService.findPageBySpec(wgEleNewsDataParam);
 	}
 
@@ -162,7 +161,6 @@ public class WgEleNewsDataController extends BaseController {
 	@RequestMapping("/getDateArchive")
 	@ResponseBody
 	public LayuiPageInfo getDateArchive(String pubTime,String condition) {
-		System.out.println(pubTime+":"+condition);
 		 //获取分页参数
         Page page = LayuiPageFactory.defaultPage();
 		List<Map<String,Object>> dateArchive = wgEleNewsDataService.getDateArchive(page,pubTime,condition);
@@ -179,7 +177,6 @@ public class WgEleNewsDataController extends BaseController {
 	@RequestMapping("/getDateNewslist")
 	@ResponseBody
 	public LayuiPageInfo getDateNewslist(String pubTime,String condition,String dsiUuid) {
-		System.out.println(pubTime+":"+condition+":"+dsiUuid);
 		return wgEleNewsDataService.getDateNewslist(dsiUuid,pubTime,condition);
 	}
 }
