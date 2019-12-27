@@ -101,7 +101,8 @@
 			CONCAT(#{pubTime},' 23:59:59'))
 		</if>
 		<if test="condition != null and condition !=''">
-			and dsi_name like CONCAT('%',#{condition},'%')
+			<!-- and dsi_name like CONCAT('%',#{condition},'%') -->
+			and dsi_name = #{condition}
 		</if>
 		GROUP BY date_format( pubtime, '%Y-%m-%d' ),dsi_name
 	</select>
