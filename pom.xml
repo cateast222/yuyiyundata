@@ -181,6 +181,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -248,10 +249,10 @@
 			<id>local</id>
 			<properties>
 				<spring.active>local</spring.active>
-			</properties>	
+			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
-			</activation>		
+			</activation>
 		</profile>
 		<profile>
 			<id>dev</id>

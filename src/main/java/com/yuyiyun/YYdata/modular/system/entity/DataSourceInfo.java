@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import lombok.Data;
+
 /**
  * 数据配置信息类
  * 
@@ -16,6 +18,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @author duhao
  * @date 2019年9月12日下午4:34:06
  */
+@Data
 @TableName(value = "data_source_info")
 public class DataSourceInfo implements Serializable {
 	/**
@@ -50,130 +53,6 @@ public class DataSourceInfo implements Serializable {
 	private Date createTime;
 	@TableField(value = "update_time", fill = FieldFill.UPDATE)
 	private Date updateTime;
-
-	/**
-	 * @Description 数据源ID
-	 * @Author duhao
-	 * @Date 2019年9月13日下午8:12:13
-	 * @return 数据源ID
-	 */
-	public String getUuid() {
-		return uuid;
-	}
-
-	/**
-	 * @Description 数据源ID
-	 * @Author duhao
-	 * @Date 2019年9月13日下午8:12:34
-	 * @param uuid 数据源ID
-	 */
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getWebsiteUrl() {
-		return websiteUrl;
-	}
-
-	public void setWebsiteUrl(String websiteUrl) {
-		this.websiteUrl = websiteUrl;
-	}
-
-	public String getWebsiteName() {
-		return websiteName;
-	}
-
-	public void setWebsiteName(String websiteName) {
-		this.websiteName = websiteName;
-	}
-
-	public Integer getPlatform() {
-		return platform;
-	}
-
-	public void setPlatform(Integer platform) {
-		this.platform = platform;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = region;
-	}
-
-	public Integer getProxy() {
-		return proxy;
-	}
-
-	public void setProxy(Integer proxy) {
-		this.proxy = proxy;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	public Integer getState() {
-		return state;
-	}
-
-	public void setState(Integer state) {
-		this.state = state;
-	}
-
-	public String getCreator() {
-		return creator;
-	}
-
-	public void setCreator(String creator) {
-		this.creator = creator;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
 
 	@Override
 	public String toString() {
