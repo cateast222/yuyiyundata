@@ -117,6 +117,7 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		return newEntity;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public LayuiPageInfo findPageBySpec(DataSourceParam param) {
 		// 1、获取分页对象
 		Page pageContext = getPageContext();

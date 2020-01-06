@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -15,8 +14,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
-import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
-import com.yuyiyun.YYdata.modular.system.model.params.DataSourceInfoParam;
 import com.yuyiyun.YYdata.modular.wgelenewsdata.entity.WgEleNewsData;
 import com.yuyiyun.YYdata.modular.wgelenewsdata.mapper.WgEleNewsDataMapper;
 import com.yuyiyun.YYdata.modular.wgelenewsdata.model.param.WgEleNewsDataParam;
@@ -33,6 +30,7 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 @Service
 public class WgEleNewsDataService extends ServiceImpl<WgEleNewsDataMapper, WgEleNewsData> {
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public LayuiPageInfo findPageBySpec(WgEleNewsDataParam param) {
 		Page pageContext = getPageContext();
 		QueryWrapper<WgEleNewsData> dsitQueryWrapper = new QueryWrapper<>();
@@ -87,6 +85,7 @@ public class WgEleNewsDataService extends ServiceImpl<WgEleNewsDataMapper, WgEle
 	 * @param condition
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	public List<Map<String, Object>> getDateArchive(Page page, String pubTime, String condition) {
 		return this.baseMapper.getDateArchive(page, pubTime, condition);
 		// TODO Auto-generated method stub
@@ -100,6 +99,7 @@ public class WgEleNewsDataService extends ServiceImpl<WgEleNewsDataMapper, WgEle
 	 * @param condition
 	 * @return
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public LayuiPageInfo getDateNewslist(String dsiUuid, String pubTime, String condition) {
 		Page pageContext = getPageContext();
 		QueryWrapper<WgEleNewsData> wendQueryWrapper = new QueryWrapper<>();

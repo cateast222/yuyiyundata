@@ -86,6 +86,7 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		return newEntity;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public LayuiPageInfo findPageBySpec(DataNewspaperParam param) {
 		// 1、获取分页对象
 		Page pageContext = getPageContext();

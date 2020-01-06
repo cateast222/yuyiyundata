@@ -1,7 +1,6 @@
 package com.yuyiyun.YYdata.modular.newspaper.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;

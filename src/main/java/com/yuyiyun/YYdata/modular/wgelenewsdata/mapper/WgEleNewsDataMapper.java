@@ -26,6 +26,7 @@ public interface WgEleNewsDataMapper extends BaseMapper<WgEleNewsData> {
 	 * @param condition
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	List<Map<String, Object>> getDateArchive(@Param("page") Page page, @Param("pubTime") String pubTime,
 			@Param("condition") String condition);
 

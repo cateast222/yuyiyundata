@@ -1,5 +1,7 @@
 package com.yuyiyun.YYdata.modular.newspaper.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,9 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
-import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewsParam;
-import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewspaperParam;
 import com.yuyiyun.YYdata.modular.newspaper.service.DataNewsService;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
@@ -18,9 +18,6 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>

@@ -158,6 +158,7 @@ public class WgEleNewsDataController extends BaseController {
 	 * @param condition
 	 * @return
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/getDateArchive")
 	@ResponseBody
 	public LayuiPageInfo getDateArchive(String pubTime,String condition) {

@@ -1,7 +1,6 @@
 package com.yuyiyun.YYdata.modular.newspaper.model.param;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import cn.stylefeng.roses.kernel.model.validator.BaseValidatingParam;
