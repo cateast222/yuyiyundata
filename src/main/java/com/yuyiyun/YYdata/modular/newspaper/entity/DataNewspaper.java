@@ -94,7 +94,7 @@ public class DataNewspaper implements Serializable {
 	/**
 	 * 创建者
 	 */
-	@TableField(value = "creator",fill = FieldFill.INSERT)
+	@TableField(value = "creator")
 	private String creator;
 
 	/**

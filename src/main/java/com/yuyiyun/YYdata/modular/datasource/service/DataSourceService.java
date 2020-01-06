@@ -137,7 +137,7 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 			queryWrapper.and(i -> i.eq("state", param.getState()));
 		}
 		// 6、根据创建时间进行排序
-		pageContext.setAsc("create_time");
+		pageContext.setDesc("update_time");
 		// 7、封装分页数据
 		IPage page = this.page(pageContext, queryWrapper);
 		return LayuiPageFactory.createPageInfo(page);
