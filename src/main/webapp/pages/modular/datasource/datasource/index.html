@@ -1,0 +1,70 @@
+@layout("/common/_container.html",{js:["/assets/modular/datasource/datasource/index.js"]}){
+<div class="layui-body-header">
+	<span class="layui-body-header-title">数据源管理</span>
+</div>
+
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-form toolbar">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<input id="condition" class="layui-input" type="text"
+									placeholder="名称" autocomplete="off" />
+							</div>
+							<div class="layui-inline">
+								<select id="state" name="state">
+									<option value="">状态</option>
+									<option value="2">配置</option>
+									<option value="0">测试</option>
+									<option value="3">测试完成</option>
+									<option value="4">测试通过</option>
+									<option value="1">启用</option>
+									<option value="-1">弃用</option>
+								</select>
+							</div>
+							<div class="layui-inline">
+								<select id="platform" name="platform">
+									<option value="">平台</option>
+									<option value="1">电子报纸</option>
+									<option value="2">新闻网站</option>
+									<option value="3">APP</option>
+									<option value="4">国内QQ</option>
+									<option value="5">国内微信</option>
+									<option value="6">国内微博</option>
+									<option value="7">国外Facebook</option>
+									<option value="8">国外Twitter</option>
+									<option value="9">其他</option>
+								</select>
+							</div>
+							<div class="layui-inline">
+								<button id="btnSearch" class="layui-btn icon-btn">
+									<i class="layui-icon">&#xe615;</i>搜索
+								</button>
+								@if(shiro.hasPermission("/datasource/addItem")){
+								<button id="btnAdd" class="layui-btn icon-btn">
+									<i class="layui-icon">&#xe654;</i>新增
+								</button>
+								@}
+							</div>
+						</div>
+					</div>
+					<table class="layui-table" id="datasourceTable"
+						lay-filter="datasourceTable"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/html" id="tableBar">
+    @if(shiro.hasPermission("/datasource/editItem")){
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    @}
+    @if(shiro.hasPermission("/datasource/delete")){
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+    @}
+</script>
+@}

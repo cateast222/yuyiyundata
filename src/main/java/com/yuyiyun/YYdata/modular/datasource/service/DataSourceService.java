@@ -39,6 +39,22 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 	@Autowired
 	DataNewsService dataNewsService;
 
+	public DataSource addOrEdit(DataSourceParam param) {
+		DataSource byId = this.getById(param.getUuid());
+		DataSource dataSource = ToolUtil.isEmpty(byId) ? add(param) : update(param);
+		return dataSource;
+		/*
+		 * if (ToolUtil.isEmpty(byId)) { System.out.println("新增"); add(param); } else {
+		 * System.out.println("更新"); update(param); }
+		 *
+		 * DataSource entity = getEntity(param); if
+		 * (ToolUtil.isEmpty(entity.getChsName())) {
+		 * entity.setChsName(entity.getWebsiteName()); } if
+		 * (ToolUtil.isEmpty(entity.getOrgName())) {
+		 * entity.setOrgName(entity.getOrgName()); } this.saveOrUpdate(entity);
+		 */
+	}
+
 	public DataSource add(DataSourceParam param) {
 		// 1、创建排重查询对象
 		QueryWrapper<DataSource> queryWrapper = new QueryWrapper<DataSource>()
@@ -84,7 +100,7 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 				.or(i -> i.eq("platform", param.getPlatform()).eq("website_url", param.getWebsiteUrl()));
 		// 4、判断电子报纸是否重复
 		int count = this.count(queryWrapper);
-		if (count > 0) {
+		if (count > 1) {
 			throw new ServiceException(BizExceptionEnum.DS_EXISTED);
 		}
 		// 5、更新数据
@@ -145,5 +161,4 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}
-
 }
