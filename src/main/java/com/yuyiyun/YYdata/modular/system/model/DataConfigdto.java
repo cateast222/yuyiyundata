@@ -7,7 +7,7 @@ import java.util.List;
 import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
 import com.yuyiyun.YYdata.modular.system.entity.DataConfigInfo;
 
-public class    implements Serializable {
+public class DataConfigdto implements Serializable {
 	/**
 	 * 
 	 */
