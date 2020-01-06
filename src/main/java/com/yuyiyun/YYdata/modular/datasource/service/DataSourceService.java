@@ -67,11 +67,11 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		}
 		// 3、对象转换
 		DataSource entity = getEntity(param);
-		if (ToolUtil.isEmpty(entity.getChsName())) {
-			entity.setChsName(entity.getWebsiteName());
+		if (ToolUtil.isEmpty(entity.getWebsiteName())) {
+			entity.setWebsiteName(entity.getChsName());
 		}
 		if (ToolUtil.isEmpty(entity.getOrgName())) {
-			entity.setOrgName(entity.getOrgName());
+			entity.setOrgName(entity.getChsName());
 		}
 		// 4、数据存储
 		this.save(entity);
@@ -105,11 +105,11 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		}
 		// 5、更新数据
 		newEntity.setUpdateTime(new Date());
-		if (ToolUtil.isEmpty(newEntity.getChsName())) {
-			newEntity.setChsName(newEntity.getWebsiteName());
+		if (ToolUtil.isEmpty(newEntity.getWebsiteName())) {
+			newEntity.setWebsiteName(newEntity.getChsName());
 		}
 		if (ToolUtil.isEmpty(newEntity.getOrgName())) {
-			newEntity.setOrgName(newEntity.getOrgName());
+			newEntity.setOrgName(newEntity.getChsName());
 		}
 		// 6、数据存储
 		this.updateById(newEntity);

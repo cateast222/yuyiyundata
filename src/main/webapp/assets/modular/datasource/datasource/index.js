@@ -27,12 +27,16 @@ layui.use([ 'table', 'ax' ],
 				{
 					field: 'chsName',
 					sort: true,
-					title: '中文名称'
+					title: '中文名称',
+					align: 'center',
+					width: 120
 				},
 				{
 					field: 'orgName',
 					sort: true,
-					title: '原名称'
+					title: '原名称',
+					align: 'center',
+					width: 120
 				},
 				{
 					field: 'platform',
@@ -49,7 +53,9 @@ layui.use([ 'table', 'ax' ],
 												platform == 7 ? '国外Facebook' :
 													platform == 8 ? '国外Twitter' :
 														'其他';
-					}
+					},
+					align: 'center',
+					width: 120
 				},
 				{
 					field: 'websiteUrl',
@@ -65,12 +71,16 @@ layui.use([ 'table', 'ax' ],
 				{
 					field: 'websiteName',
 					sort: true,
-					title: '网站名称'
+					title: '网站名称',
+					align: 'center',
+					width: 120
 				},
 				{
 					field: 'country',
 					sort: true,
-					title: '国家'
+					title: '国家',
+					align: 'center',
+					width: 80
 				}, {
 					field: 'region',
 					sort: true,
@@ -87,15 +97,21 @@ layui.use([ 'table', 'ax' ],
 						} else {
 							return "其他";
 						}
-					}
+					},
+					align: 'center',
+					width: 80
 				}, {
 					field: 'language',
 					sort: true,
-					title: '语种'
+					title: '语种',
+					align: 'center',
+					width: 80
 				}, {
 					field: 'encoded',
 					sort: true,
-					title: '编码'
+					title: '编码',
+					align: 'center',
+					width: 90
 				}, {
 					field: 'state',
 					sort: true,
@@ -114,11 +130,14 @@ layui.use([ 'table', 'ax' ],
 						} else {
 							return "弃用";
 						}
-					}
-				}, {
+					},
 					align: 'center',
+					width: 90
+				}, {
 					toolbar: '#tableBar',
-					title: '操作'
+					title: '操作',
+					align: 'center',
+					width: 120
 				}
 			]];
 		};
