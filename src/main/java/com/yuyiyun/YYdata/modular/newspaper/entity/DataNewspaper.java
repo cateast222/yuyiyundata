@@ -108,7 +108,4 @@ public class DataNewspaper implements Serializable {
 	 */
 	@TableField(value = "update_time", fill = FieldFill.UPDATE)
 	private Date updateTime;
-	
-	
-
 }

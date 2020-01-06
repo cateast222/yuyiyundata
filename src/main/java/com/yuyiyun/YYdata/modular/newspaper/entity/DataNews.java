@@ -2,7 +2,12 @@ package com.yuyiyun.YYdata.modular.newspaper.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
@@ -24,181 +29,216 @@ public class DataNews implements Serializable {
 	/**
 	 * 主键
 	 */
+	@TableId(value = "uuid",type = IdType.ID_WORKER)
 	private String uuid;
 
 	/**
 	 * 原名称
 	 */
+	@TableField("org_name")
 	private String orgName;
 
 	/**
 	 * 中文名称
 	 */
+	@TableField("chs_name")
 	private String chsName;
 
 	/**
 	 * 数据源
 	 */
+	@TableField("data_source")
 	private String dataSource;
 
 	/**
 	 * 数据源
 	 */
+	@TableField("data_newspaper")
 	private String dataNewspaper;
 
 	/**
 	 * 新闻发布时间
 	 */
-	private LocalDateTime pubtime;
+	@TableField("pubtime")
+	private Date pubtime;
 
 	/**
 	 * 新闻标题
 	 */
+	@TableField("title")
 	private String title;
 
 	/**
 	 * 新闻源链接
 	 */
+	@TableField("url")
 	private String url;
 
 	/**
 	 * 新闻前置标题
 	 */
-	private String pretitlt;
+	@TableField("pretitle")
+	private String pretitle;
 
 	/**
 	 * 新闻副标题
 	 */
+	@TableField("subtitle")
 	private String subtitle;
 
 	/**
 	 * 新闻作者
 	 */
+	@TableField("author")
 	private String author;
 
 	/**
 	 * 新闻编辑
 	 */
+	@TableField("editor")
 	private String editor;
 
 	/**
 	 * 新闻描述
 	 */
+	@TableField("abstracts")
 	private String abstracts;
 
 	/**
 	 * 新闻正文
 	 */
+	@TableField("content")
 	private String content;
 
 	/**
 	 * 新闻内容
 	 */
+	@TableField("tag_content")
 	private String tagContent;
 
 	/**
 	 * 新闻图片源链接
 	 */
+	@TableField("website_pictures")
 	private String websitePictures;
 
 	/**
 	 * 新闻图片本地链接
 	 */
+	@TableField("local_pictures")
 	private String localPictures;
 
 	/**
 	 * 新闻图片描述
 	 */
+	@TableField("pictures_description")
 	private String picturesDescription;
 
 	/**
 	 * 新闻语种
 	 */
+	@TableField("language")
 	private String language;
 
 	/**
 	 * 新闻缩略图源链接
 	 */
+	@TableField("website_thumbnail")
 	private String websiteThumbnail;
 
 	/**
 	 * 新闻缩略图本地链接
 	 */
+	@TableField("local_thumbnail")
 	private String localThumbnail;
 
 	/**
 	 * 新闻PDF源链接
 	 */
+	@TableField("website_pdf")
 	private String websitePdf;
 
 	/**
 	 * 新闻PDF本地链接
 	 */
+	@TableField("local_pdf")
 	private String localPdf;
 
 	/**
 	 * 新闻所属位置
 	 */
+	@TableField("ha")
 	private String ha;
 
 	/**
 	 * 新闻所属频道
 	 */
+	@TableField("number")
 	private String channel;
 
 	/**
 	 * 新闻所属页码
 	 */
+	@TableField("number")
 	private String number;
 
 	/**
 	 * 新闻所属版面
 	 */
+	@TableField("page")
 	private String page;
 
 	/**
 	 * 新闻版面名称
 	 */
+	@TableField("page_name")
 	private String pageName;
 
 	/**
 	 * 新闻频道排序
 	 */
+	@TableField("paper_count")
 	private Integer paperCount;
 
 	/**
 	 * 新闻头版头条
 	 */
+	@TableField("front_page")
 	private Integer frontPage;
 
 	/**
 	 * 新闻采集时间
 	 */
-	private LocalDateTime insertTime;
+	@TableField("insert_time")
+	private Date insertTime;
 
 	/**
 	 * 新闻备注
 	 */
+	@TableField("remark")
 	private String remark;
 
 	/**
 	 * 新闻状态（-2：系统测试数据；-1：测试数据；0：无；1：正常数据；2：已归档数据）
 	 */
+	@TableField("state")
 	private Integer state;
 
 	/**
 	 * 创建者
 	 */
+	@TableField(value = "creator",fill = FieldFill.INSERT)
 	private String creator;
 
 	/**
 	 * 创建时间
 	 */
-	private LocalDateTime createTime;
+	@TableField(value = "create_time", fill = FieldFill.INSERT)
+	private Date createTime;
 
 	/**
 	 * 更新时间
 	 */
-	private LocalDateTime updateTime;
-
+	@TableField(value = "update_time", fill = FieldFill.UPDATE)
+	private Date updateTime;
 }

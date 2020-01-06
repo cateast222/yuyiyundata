@@ -2,210 +2,132 @@ package com.yuyiyun.YYdata.modular.newspaper.model.param;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import com.baomidou.mybatisplus.annotation.TableName;
+import java.util.Date;
 
 import cn.stylefeng.roses.kernel.model.validator.BaseValidatingParam;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author duhao
- * @since 2020-01-03
- */
 @Data
 @ApiModel(value = "DataNewsParam", description = "电子报纸输入实体")
 public class DataNewsParam implements Serializable, BaseValidatingParam {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键
-	 */
+	@ApiModelProperty(value = "主键")
 	private String uuid;
 
-	/**
-	 * 原名称
-	 */
+	@ApiModelProperty(value = "原名称")
 	private String orgName;
 
-	/**
-	 * 中文名称
-	 */
+	@ApiModelProperty(value = "中文名称")
 	private String chsName;
 
-	/**
-	 * 数据源
-	 */
+	@ApiModelProperty(value = "数据源")
 	private String dataSource;
 
-	/**
-	 * 数据源
-	 */
+	@ApiModelProperty(value = "电子报纸")
 	private String dataNewspaper;
 
-	/**
-	 * 新闻发布时间
-	 */
-	private LocalDateTime pubtime;
+	@ApiModelProperty(value = "发布时间")
+	private Date pubtime;
 
-	/**
-	 * 新闻标题
-	 */
+	@ApiModelProperty(value = "标题")
 	private String title;
 
-	/**
-	 * 新闻源链接
-	 */
+	@ApiModelProperty(value = "源链接")
 	private String url;
 
-	/**
-	 * 新闻前置标题
-	 */
-	private String pretitlt;
+	@ApiModelProperty(value = "前置标题")
+	private String pretitle;
 
-	/**
-	 * 新闻副标题
-	 */
+	@ApiModelProperty(value = "副标题")
 	private String subtitle;
 
-	/**
-	 * 新闻作者
-	 */
+	@ApiModelProperty(value = "作者")
 	private String author;
 
-	/**
-	 * 新闻编辑
-	 */
+	@ApiModelProperty(value = "编辑")
 	private String editor;
 
-	/**
-	 * 新闻描述
-	 */
+	@ApiModelProperty(value = "描述")
 	private String abstracts;
 
-	/**
-	 * 新闻正文
-	 */
+	@ApiModelProperty(value = "正文")
 	private String content;
 
-	/**
-	 * 新闻内容
-	 */
+	@ApiModelProperty(value = "内容")
 	private String tagContent;
 
-	/**
-	 * 新闻图片源链接
-	 */
+	@ApiModelProperty(value = "图片源链接")
 	private String websitePictures;
 
-	/**
-	 * 新闻图片本地链接
-	 */
+	@ApiModelProperty(value = "图片本地链接")
 	private String localPictures;
 
-	/**
-	 * 新闻图片描述
-	 */
+	@ApiModelProperty(value = "图片描述")
 	private String picturesDescription;
 
-	/**
-	 * 新闻语种
-	 */
+	@ApiModelProperty(value = "语种")
 	private String language;
 
-	/**
-	 * 新闻缩略图源链接
-	 */
+	@ApiModelProperty(value = "缩略图源链接")
 	private String websiteThumbnail;
 
-	/**
-	 * 新闻缩略图本地链接
-	 */
+	@ApiModelProperty(value = "缩略图本地链接")
 	private String localThumbnail;
 
-	/**
-	 * 新闻PDF源链接
-	 */
+	@ApiModelProperty(value = "PDF源链接")
 	private String websitePdf;
 
-	/**
-	 * 新闻PDF本地链接
-	 */
+	@ApiModelProperty(value = "PDF本地链接")
 	private String localPdf;
 
-	/**
-	 * 新闻所属位置
-	 */
+	@ApiModelProperty(value = "所属位置")
 	private String ha;
 
-	/**
-	 * 新闻所属频道
-	 */
+	@ApiModelProperty(value = "所属频道")
 	private String channel;
 
-	/**
-	 * 新闻所属页码
-	 */
+	@ApiModelProperty(value = "所属页码")
 	private String number;
 
-	/**
-	 * 新闻所属版面
-	 */
+	@ApiModelProperty(value = "所属版面")
 	private String page;
 
-	/**
-	 * 新闻版面名称
-	 */
+	@ApiModelProperty(value = "版面名称")
 	private String pageName;
 
-	/**
-	 * 新闻频道排序
-	 */
+	@ApiModelProperty(value = "频道排序")
 	private Integer paperCount;
 
-	/**
-	 * 新闻头版头条
-	 */
+	@ApiModelProperty(value = "头版头条")
 	private Integer frontPage;
 
-	/**
-	 * 新闻采集时间
-	 */
-	private LocalDateTime insertTime;
+	@ApiModelProperty(value = "采集时间")
+	private Date insertTime;
 
-	/**
-	 * 新闻备注
-	 */
+	@ApiModelProperty(value = "备注")
 	private String remark;
 
-	/**
-	 * 新闻状态（-2：系统测试数据；-1：测试数据；0：无；1：正常数据；2：已归档数据）
-	 */
+	@ApiModelProperty(value = "状态")
 	private Integer state;
 
-	/**
-	 * 创建者
-	 */
+	@ApiModelProperty(value = "创建者")
 	private String creator;
 
-	/**
-	 * 创建时间
-	 */
-	private LocalDateTime createTime;
+	@ApiModelProperty(value = "创建时间")
+	private Date createTime;
 
-	/**
-	 * 更新时间
-	 */
-	private LocalDateTime updateTime;
+	@ApiModelProperty(value = "更新时间")
+	private Date updateTime;
+	
+	@ApiModelProperty(value = "查询条件")
+	private String condition;
 
 	@Override
 	public String checkParam() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

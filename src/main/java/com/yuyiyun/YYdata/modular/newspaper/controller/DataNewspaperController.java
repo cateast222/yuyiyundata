@@ -1,6 +1,5 @@
 package com.yuyiyun.YYdata.modular.newspaper.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +12,6 @@ import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewspaperParam;
 import com.yuyiyun.YYdata.modular.newspaper.service.DataNewspaperService;
-import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
-import com.yuyiyun.YYdata.modular.system.model.params.DataSourceInfoParam;
-import com.yuyiyun.YYdata.modular.wgelenewsdata.entity.WgEleNewsData;
-import com.yuyiyun.YYdata.modular.wgelenewsdata.model.param.WgEleNewsDataParam;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
@@ -27,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author duhao
@@ -37,13 +32,14 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RequestMapping({ "/newspaper", "/yydataApi/newspaper" })
 public class DataNewspaperController extends BaseController {
-	
+
 	private String PREFIX = "/modular/newspaper";
 	@Autowired
 	DataNewspaperService dataNewspaperService;
 
 	/**
-	 * :数据测试页面
+	 * :数据页面
+	 * 
 	 * @author duhao
 	 * @return
 	 */
@@ -51,9 +47,10 @@ public class DataNewspaperController extends BaseController {
 	public String index() {
 		return PREFIX + "/newspaper/index.html";
 	}
-	
+
 	/**
 	 * :新增接口
+	 * 
 	 * @author duhao
 	 * @param dataNewspaper
 	 * @return
@@ -65,9 +62,10 @@ public class DataNewspaperController extends BaseController {
 		this.dataNewspaperService.add(param);
 		return ResponseData.success();
 	}
-	
+
 	/**
 	 * :删除接口
+	 * 
 	 * @author duhao
 	 * @param dataSourceInfoParam
 	 * @return
@@ -78,9 +76,10 @@ public class DataNewspaperController extends BaseController {
 		this.dataNewspaperService.delete(param);
 		return ResponseData.success();
 	}
-	
+
 	/**
 	 * :编辑接口
+	 * 
 	 * @author duhao
 	 * @param param
 	 * @return
@@ -91,9 +90,10 @@ public class DataNewspaperController extends BaseController {
 		this.dataNewspaperService.update(param);
 		return ResponseData.success();
 	}
-	
+
 	/**
 	 * :查看详情接口
+	 * 
 	 * @author duhao
 	 * @param dataSourceInfoParam
 	 * @return
@@ -104,9 +104,10 @@ public class DataNewspaperController extends BaseController {
 		DataNewspaper detail = this.dataNewspaperService.getById(param.getUuid());
 		return ResponseData.success(detail);
 	}
-	
+
 	/**
 	 * :查询列表
+	 * 
 	 * @author duhao
 	 * @param dataSourceInfoParam
 	 * @return
@@ -116,7 +117,7 @@ public class DataNewspaperController extends BaseController {
 	public LayuiPageInfo list(DataNewspaperParam param) {
 		return this.dataNewspaperService.findPageBySpec(param);
 	}
-	
+
 	/**
 	 * @Description: API添加数据
 	 * @author duhao
@@ -137,9 +138,10 @@ public class DataNewspaperController extends BaseController {
 			return ResponseData.error("数据添加异常！");
 		}
 	}
-	
+
 	/**
 	 * Description: API数据排重
+	 * 
 	 * @author duhao
 	 * @param pubTime
 	 * @param dsiUuid
@@ -147,12 +149,11 @@ public class DataNewspaperController extends BaseController {
 	 */
 	@ApiOperation(value = "数据排重", notes = "排重电子报纸")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "pubTime", value = "发布日期", required = true, paramType = "query", dataType = "String"),
-		@ApiImplicitParam(name = "dsiUuid", value = "数据源", required = true, paramType = "query", dataType = "String")
-	})
+			@ApiImplicitParam(name = "pubTime", value = "发布日期", required = true, paramType = "query", dataType = "String"),
+			@ApiImplicitParam(name = "dsiUuid", value = "数据源", required = true, paramType = "query", dataType = "String") })
 	@PostMapping("/isExistByApi")
 	@ResponseBody
-	public ResponseData isExist(String pubTime,String dsiUuid) {
-		return dataNewspaperService.isExist(dsiUuid,pubTime);
+	public ResponseData isExist(String pubTime, String dsiUuid) {
+		return dataNewspaperService.isExist(dsiUuid, pubTime);
 	}
 }

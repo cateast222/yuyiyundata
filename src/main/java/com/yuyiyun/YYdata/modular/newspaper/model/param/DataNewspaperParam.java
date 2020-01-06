@@ -12,9 +12,6 @@ import lombok.Data;
 @ApiModel(value = "DataNewspaperParam", description = "电子报纸输入实体")
 public class DataNewspaperParam implements Serializable, BaseValidatingParam {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "主键")

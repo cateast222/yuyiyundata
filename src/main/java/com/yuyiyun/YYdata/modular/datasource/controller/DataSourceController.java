@@ -35,7 +35,7 @@ public class DataSourceController {
 	DataSourceService dataSourceService;
 	
 	/**
-	 * :数据测试页面
+	 * :数据源主页面
 	 * @author duhao
 	 * @return
 	 */
@@ -109,6 +109,15 @@ public class DataSourceController {
 		return this.dataSourceService.findPageBySpec(param);
 	}
 	
+	/**
+	 * 
+	 * @Description: API获取详情
+	 * @author duhao
+	 * @date 2020年1月5日
+	 * @version V1.0
+	 * @param uuid
+	 * @return
+	 */
 	@ApiOperation(value = "获取数据源", notes = "根据UUID查询数据源")
 	@ApiImplicitParam(name = "uuid", value = "uuid", required = true, paramType = "query", dataType = "String")
 	@GetMapping("/detail")

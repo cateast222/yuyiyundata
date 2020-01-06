@@ -9,6 +9,11 @@ import cn.stylefeng.roses.kernel.model.exception.AbstractBaseExceptionEnum;
  */
 public enum BizExceptionEnum implements AbstractBaseExceptionEnum {
 	/**
+	 * 报纸新闻
+	 */
+	DN_EXISTED(400, "该报纸新闻URL已经存在已经存在"),
+	
+	/**
 	 * 电子报纸
 	 */
 	DNP_EXISTED(400, "该日期的报纸已经存在"),

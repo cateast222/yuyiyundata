@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,6 +14,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.mapper.DataNewspaperMapper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewspaperParam;
@@ -31,47 +33,57 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
  */
 @Service
 public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataNewspaper> {
+	@Autowired
+	DataNewsService dataNewsService;
 
 	public DataNewspaper add(DataNewspaperParam param) {
+		// 1、创建查询对象，根据数据源、发布时间和URL
 		QueryWrapper<DataNewspaper> queryWrapper = new QueryWrapper<DataNewspaper>()
 				.and(i -> i.eq("data_source", param.getDataSource()).eq("publish", param.getPublish()))
 				.or(i -> i.eq("data_source", param.getDataSource()).eq("url", param.getUrl()));
+		// 2、判断是否重复
 		int count = this.count(queryWrapper);
 		if (count > 0) {
 			throw new ServiceException(BizExceptionEnum.DNP_EXISTED);
 		}
+		// 3、对象转换
 		DataNewspaper entity = getEntity(param);
 		entity.setFullName(new SimpleDateFormat(entity.getChsName() + "-yyyy-MM-dd").format(entity.getPublish()));
+		// 4、数据存储
 		this.save(entity);
+		// 5、回调数据
 		return entity;
 	}
 
 	public void delete(DataNewspaperParam param) {
 		// 1、删除对应新闻数据
-
+		dataNewsService.remove(new QueryWrapper<DataNews>().eq("data_newspaper", param.getUuid()));
 		// 2、删除电子报纸
 		this.removeById(getKey(param));
 	}
 
-	public void update(DataNewspaperParam param) {
+	public DataNewspaper update(DataNewspaperParam param) {
 		// 1、转换得到旧对象
 		DataNewspaper oldEntity = getOldEntity(param);
 		// 2、转换得到新对象
 		DataNewspaper newEntity = getEntity(param);
 		ToolUtil.copyProperties(newEntity, oldEntity);
-		// 3、判断电子报纸是否重复
+		// 3、创建查询对象，根据数据源、发布时间和URL
 		QueryWrapper<DataNewspaper> queryWrapper = new QueryWrapper<DataNewspaper>()
 				.and(i -> i.eq("data_source", param.getDataSource()).eq("publish", param.getPublish()))
 				.or(i -> i.eq("data_source", param.getDataSource()).eq("url", param.getUrl()));
+		// 4、判断电子报纸是否重复
 		int count = this.count(queryWrapper);
 		if (count > 0) {
 			throw new ServiceException(BizExceptionEnum.DNP_EXISTED);
 		}
-		// 4、更新数据
+		// 5、更新数据
 		newEntity.setUpdateTime(new Date());
 		newEntity.setFullName(
 				new SimpleDateFormat(newEntity.getChsName() + "-yyyy-MM-dd").format(newEntity.getPublish()));
 		this.updateById(newEntity);
+		// 6、数据回调
+		return newEntity;
 	}
 
 	public LayuiPageInfo findPageBySpec(DataNewspaperParam param) {
@@ -95,8 +107,10 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	}
 
 	public ResponseData isExist(String dsiUuid, String pubTime) {
+		// 1、创建查询对象，根据数据源和发布时间
 		QueryWrapper<DataNewspaper> queryWrapper = new QueryWrapper<DataNewspaper>()
-				.and(i -> i.eq("data_source", dsiUuid).eq("publish", pubTime+" 00:00:00"));
+				.and(i -> i.eq("data_source", dsiUuid).eq("publish", pubTime + " 00:00:00"));
+		// 2、判断电子报纸是否重复
 		int count = this.count(queryWrapper);
 		if (count > 0) {
 			return ResponseData.success(0, "该日期发布的电子报纸已经存在！", false);

@@ -16,7 +16,9 @@ import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.mapper.DataSourceMapper;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
+import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
+import com.yuyiyun.YYdata.modular.newspaper.service.DataNewsService;
 import com.yuyiyun.YYdata.modular.newspaper.service.DataNewspaperService;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
@@ -34,6 +36,8 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource> {
 	@Autowired
 	DataNewspaperService dataNewspaperService;
+	@Autowired
+	DataNewsService dataNewsService;
 
 	public DataSource add(DataSourceParam param) {
 		// 1、创建排重查询对象
@@ -61,14 +65,14 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 
 	public void delete(DataSourceParam param) {
 		// 1、删除对应新闻数据
-
+		dataNewsService.remove(new QueryWrapper<DataNews>().eq("data_source", param.getUuid()));
 		// 2、删除电子报纸
 		dataNewspaperService.remove(new QueryWrapper<DataNewspaper>().eq("data_source", param.getUuid()));
 		// 3、删除数据源
 		this.removeById(getKey(param));
 	}
 
-	public void update(DataSourceParam param) {
+	public DataSource update(DataSourceParam param) {
 		// 1、转换得到旧对象
 		DataSource oldEntity = getOldEntity(param);
 		// 2、转换得到新对象
@@ -93,6 +97,8 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		}
 		// 6、数据存储
 		this.updateById(newEntity);
+		// 7、数据回调
+		return newEntity;
 	}
 
 	public LayuiPageInfo findPageBySpec(DataSourceParam param) {
