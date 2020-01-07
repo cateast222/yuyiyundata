@@ -63,7 +63,8 @@ layui.use([ 'table', 'admin', 'ax' ], function() {
 
 	// 关闭页面
 	$('#btnBack').click(function() {
-		window.location.href = Feng.ctxPath + "/datasi";
+		window.history.back(-1);
+		// window.location.href = Feng.ctxPath + "/datasi";
 	});
 
 	table.on('tool(' + Dataci.tableId + ')', function(obj) {

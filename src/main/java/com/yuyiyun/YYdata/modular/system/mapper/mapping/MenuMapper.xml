@@ -28,11 +28,16 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		menu_id AS "menuId", code AS "code", pcode AS "pcode", pcodes AS "pcodes",
-		name AS "name", icon AS "icon", url AS "url", sort AS "sort", levels
-		AS "levels", menu_flag AS "menuFlag", description AS "description",
-		status AS "status", new_page_flag AS "newPageFlag", open_flag AS
-		"openFlag", create_time AS "createTime", update_time AS "updateTime",
+		menu_id AS "menuId", code AS "code", pcode AS "pcode",
+		pcodes AS "pcodes",
+		name AS "name", icon AS "icon", url AS "url", sort
+		AS "sort", levels
+		AS "levels", menu_flag AS "menuFlag", description AS
+		"description",
+		status AS "status", new_page_flag AS "newPageFlag",
+		open_flag AS
+		"openFlag", create_time AS "createTime", update_time AS
+		"updateTime",
 		create_user AS "createUser", update_user AS "updateUser"
 	</sql>
 
@@ -49,8 +54,10 @@
 			and levels = #{level}
 		</if>
 		<if test="menuId != null and menuId != 0">
-			and (menu_id = #{menuId} or menu_id in ( select menu_id from sys_menu
-			where pcodes like CONCAT('%$[', #{code}, '$]%') escape '$' ))
+			and (menu_id = #{menuId} or menu_id in ( select menu_id
+			from sys_menu
+			where pcodes like CONCAT('%$[', #{code}, '$]%') escape
+			'$' ))
 		</if>
 	</select>
 
@@ -63,9 +70,11 @@
 		resultType="com.yuyiyun.YYdata.core.common.node.ZTreeNode">
 		SELECT
 		m1.menu_id AS id,
+		m1.icon AS iconSkin,
 		(
 		CASE
-		WHEN (m2.menu_id = 0 OR m2.menu_id IS NULL) THEN
+		WHEN (m2.menu_id = 0 OR
+		m2.menu_id IS NULL) THEN
 		0
 		ELSE
 		m2.menu_id
@@ -83,7 +92,8 @@
 		) as "open"
 		FROM
 		sys_menu m1
-		LEFT join sys_menu m2 ON m1.pcode = m2.code
+		LEFT join sys_menu m2 ON m1.pcode =
+		m2.code
 		ORDER BY
 		m1.menu_id ASC
 	</select>
@@ -94,7 +104,8 @@
 		m1.menu_id AS id,
 		(
 		CASE
-		WHEN (m2.menu_id = 0 OR m2.menu_id IS NULL) THEN
+		WHEN (m2.menu_id = 0 OR m2.menu_id IS
+		NULL) THEN
 		0
 		ELSE
 		m2.menu_id
@@ -103,13 +114,15 @@
 		m1.name AS name,
 		(
 		CASE
-		WHEN (m2.menu_id = 0 OR m2.menu_id IS
+		WHEN
+		(m2.menu_id = 0 OR m2.menu_id IS
 		NULL) THEN
 		'true'
 		ELSE
 		'false'
 		END
-		) as "open",
+		) as
+		"open",
 		(
 		CASE
 		WHEN (m3.menu_id = 0 OR m3.menu_id
@@ -123,7 +136,8 @@
 		sys_menu m1
 		LEFT JOIN
 		sys_menu m2
-		ON m1.pcode = m2.code
+		ON
+		m1.pcode = m2.code
 		left join (
 		SELECT
 		menu_id
@@ -148,7 +162,8 @@
 		select URL from
 		sys_relation rel
 		inner join sys_menu m on rel.menu_id = m.menu_id
-		where rel.role_id = #{roleId}
+		where
+		rel.role_id = #{roleId}
 	</select>
 
 	<select id="getMenusByRoleIds"
@@ -158,21 +173,25 @@
 		m1.icon AS icon,
 		(
 		CASE
-		WHEN (m2.menu_id = 0 OR m2.menu_id IS NULL) THEN
+		WHEN (m2.menu_id = 0 OR
+		m2.menu_id IS NULL) THEN
 		0
 		ELSE
 		m2.menu_id
 		END
 		) AS "parentId",
-		m1.name as name,
+		m1.name as
+		name,
 		m1.url as url,
 		m1.levels as levels,
 		m1.menu_flag as ismenu,
-		m1.sort as num
+		m1.sort
+		as num
 		FROM
 		sys_menu m1
 		LEFT join sys_menu m2 ON m1.pcode = m2.code
-		INNER JOIN (
+		INNER
+		JOIN (
 		SELECT
 		menu_id
 		FROM
@@ -192,7 +211,8 @@
 		)
 		) m3 ON m1.menu_id = m3.menu_id
 		where m1.menu_flag = 'Y'
-		order by levels,m1.sort asc
+		order by
+		levels,m1.sort asc
 	</select>
 
 	<select id="selectMenuTree" resultType="java.util.Map">

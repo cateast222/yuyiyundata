@@ -45,9 +45,9 @@ public class DataSourceController {
 	public String index() {
 		return PREFIX + "/datasource/index.html";
 	}
-
+	
 	/**
-	 * :新增更新页面
+	 * :新增更新(数据源)页面
 	 * 
 	 * @param uuid
 	 * @param model
@@ -64,6 +64,37 @@ public class DataSourceController {
 		}
 		return PREFIX + "/datasource/add_edit.html";
 	}
+
+	/**
+	 * :电子报纸数据源主页面
+	 * 
+	 * @author duhao
+	 * @return
+	 */
+	@RequestMapping("/newspaper")
+	public String newspaper() {
+		return PREFIX + "/newspaper/index.html";
+	}
+	
+	/**
+	 * :新增更新(电子报纸数据源)页面
+	 * 
+	 * @param uuid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/addAndEditNewspaper")
+	public String addAndEditNewspaper(Long uuid, Model model) {
+		if (ToolUtil.isEmpty(uuid)) {
+			model.addAttribute("uuid", null);
+			model.addAttribute("title", "新增");
+		} else {
+			model.addAttribute("uuid", uuid);
+			model.addAttribute("title", "编辑");
+		}
+		return PREFIX + "/newspaper/add_edit.html";
+	}
+
 
 	/**
 	 * :新增更新接口

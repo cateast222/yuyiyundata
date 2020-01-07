@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
+import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
 import com.yuyiyun.YYdata.modular.system.model.DataConfigdto;
 import com.yuyiyun.YYdata.modular.system.model.params.DataSourceInfoParam;
@@ -17,6 +19,7 @@ import com.yuyiyun.YYdata.modular.system.service.DataSourceInfoService;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
 
 @Controller
@@ -28,9 +31,11 @@ public class DataConfigInfoController extends BaseController {
 	private DataSourceInfoService dataSourceInfoService;
 	@Autowired
 	private DataConfigInfoService dataConfigInfoService;
+	@Autowired
+	private DataSourceService dataSourceService;
 
 	/**
-	 * 跳转到主页面
+	 * :跳转到主页面
 	 * 
 	 * @return
 	 */
@@ -45,9 +50,26 @@ public class DataConfigInfoController extends BaseController {
 		return PREFIX + "/index.html";
 	}
 
+	/**
+	 * :电子报纸数据源配置页面
+	 * @param datasiUuid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/newspaper")
+	public String newspaper(@RequestParam("uuid") String uuid, Model model) {
+		model.addAttribute("datasiUuid", uuid);
+		DataSource dataSource = dataSourceService.getById(uuid);
+		if (ToolUtil.isEmpty(dataSource)) {
+			throw new RequestEmptyException();
+		}
+		model.addAttribute("websiteName", dataSource.getChsName());
+		return PREFIX + "/index.html";
+	}
+
 	@RequestMapping("/edit")
 	public String edit(String key, String summary, String dsiUuid, Integer state, Model model) {
-		System.out.println("key1-->"+key);
+		System.out.println("key1-->" + key);
 		if (key.equals("newspicturesDeion")) {
 			key = "newspicturesDescription";
 		}
@@ -56,25 +78,25 @@ public class DataConfigInfoController extends BaseController {
 		model.addAttribute("dsiUuid", dsiUuid);
 		return PREFIX + "/config" + state + ".html";
 	}
-	
+
 	@RequestMapping("/detail")
 	@ResponseBody
 	public ResponseData detail(String dsiUuid, String key) {
-		System.out.println("key2-->"+key);
+		System.out.println("key2-->" + key);
 		if (key.equals("newspicturesDeion")) {
 			key = "newspicturesDescription";
 		}
 		DataConfigdto dataConfigdto = dataConfigInfoService.detail(dsiUuid, key);
 		return ResponseData.success(dataConfigdto);
 	}
-	
+
 	@RequestMapping("/addAndEdit")
 	@ResponseBody
 	public ResponseData addAndEdit(DataConfigdto dataConfigdto) {
 		if (dataConfigdto.getKey().equals("newspicturesDeion")) {
 			dataConfigdto.setKey("newspicturesDescription");
 		}
-		this.dataConfigInfoService.addAndEdit(dataConfigdto,ShiroKit.getUser().getAccount());
+		this.dataConfigInfoService.addAndEdit(dataConfigdto, ShiroKit.getUser().getAccount());
 		return ResponseData.success();
 	}
 
