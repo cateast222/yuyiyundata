@@ -2,6 +2,7 @@ package com.yuyiyun.YYdata.modular.newspaper.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +10,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
+import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
+import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewspaperParam;
 import com.yuyiyun.YYdata.modular.newspaper.service.DataNewspaperService;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import cn.stylefeng.roses.core.util.ToolUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -36,6 +41,8 @@ public class DataNewspaperController extends BaseController {
 	private String PREFIX = "/modular/newspaper";
 	@Autowired
 	DataNewspaperService dataNewspaperService;
+	@Autowired
+	DataSourceService dataSourceService;
 
 	/**
 	 * :数据页面
@@ -46,6 +53,26 @@ public class DataNewspaperController extends BaseController {
 	@RequestMapping("")
 	public String index() {
 		return PREFIX + "/newspaper/index.html";
+	}
+
+	/**
+	 * :新增更新页面
+	 * 
+	 * @param uuid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/addAndEdit")
+	public String addAndEdit(Long uuid, Long dataSource, Model model) {
+		if (ToolUtil.isEmpty(uuid)) {
+			model.addAttribute("uuid", null);
+			model.addAttribute("title", "新增");
+		} else {
+			model.addAttribute("uuid", uuid);
+			model.addAttribute("title", "编辑");
+		}
+		model.addAttribute("dataSource", dataSource);
+		return PREFIX + "/newspaper/add_edit.html";
 	}
 
 	/**
@@ -92,6 +119,21 @@ public class DataNewspaperController extends BaseController {
 	}
 
 	/**
+	 * :新增更新接口
+	 * 
+	 * @author duhao
+	 * @param param
+	 * @return
+	 */
+	@RequestMapping("/addAndEditItem")
+	@ResponseBody
+	public ResponseData addAndEditItem(DataNewspaperParam param) {
+		param.setCreator(ShiroKit.getUser().getAccount());
+		this.dataNewspaperService.addOrEdit(param);
+		return ResponseData.success();
+	}
+	
+	/**
 	 * :查看详情接口
 	 * 
 	 * @author duhao
@@ -102,6 +144,12 @@ public class DataNewspaperController extends BaseController {
 	@ResponseBody
 	public ResponseData detail(DataNewspaperParam param) {
 		DataNewspaper detail = this.dataNewspaperService.getById(param.getUuid());
+		if (ToolUtil.isEmpty(detail) || ToolUtil.isNotEmpty(param.getDataSource())) {
+			DataSource dataSource = dataSourceService.getById(param.getDataSource());
+			detail.setDataSource(dataSource.getUuid());
+			detail.setChsName(dataSource.getChsName());
+			detail.setOrgName(dataSource.getOrgName());
+		}
 		return ResponseData.success(detail);
 	}
 

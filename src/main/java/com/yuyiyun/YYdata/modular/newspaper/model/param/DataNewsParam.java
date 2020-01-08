@@ -24,10 +24,10 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 	private String chsName;
 
 	@ApiModelProperty(value = "数据源")
-	private String dataSource;
+	private Long dataSource;
 
 	@ApiModelProperty(value = "电子报纸")
-	private String dataNewspaper;
+	private Long dataNewspaper;
 
 	@ApiModelProperty(value = "发布时间")
 	private Date pubtime;

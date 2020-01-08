@@ -35,6 +35,15 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataNewspaper> {
 	@Autowired
 	DataNewsService dataNewsService;
+	
+	public DataNewspaper addOrEdit(DataNewspaperParam param) {
+		//1、根据UUID检索判断是否存在
+		DataNewspaper byId = this.getById(param.getUuid());
+		//2、若存在执行更新，不存在执行新增
+		DataNewspaper dataNewspaper = ToolUtil.isEmpty(byId) ? add(param) : update(param);
+		//3、数据返回
+		return dataNewspaper;
+	}
 
 	public DataNewspaper add(DataNewspaperParam param) {
 		// 1、创建查询对象，根据数据源、发布时间和URL
@@ -74,7 +83,7 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 				.or(i -> i.eq("data_source", param.getDataSource()).eq("url", param.getUrl()));
 		// 4、判断电子报纸是否重复
 		int count = this.count(queryWrapper);
-		if (count > 0) {
+		if (count > 1) {
 			throw new ServiceException(BizExceptionEnum.DNP_EXISTED);
 		}
 		// 5、更新数据
@@ -138,5 +147,7 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}
+
+	
 
 }

@@ -88,8 +88,6 @@ public class WgEleNewsDataService extends ServiceImpl<WgEleNewsDataMapper, WgEle
 	@SuppressWarnings("rawtypes")
 	public List<Map<String, Object>> getDateArchive(Page page, String pubTime, String condition) {
 		return this.baseMapper.getDateArchive(page, pubTime, condition);
-		// TODO Auto-generated method stub
-
 	}
 
 	/**

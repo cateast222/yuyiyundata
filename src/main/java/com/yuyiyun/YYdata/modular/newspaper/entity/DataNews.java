@@ -47,13 +47,13 @@ public class DataNews implements Serializable {
 	 * 数据源
 	 */
 	@TableField("data_source")
-	private String dataSource;
+	private Long dataSource;
 
 	/**
-	 * 数据源
+	 * 电子报纸
 	 */
 	@TableField("data_newspaper")
-	private String dataNewspaper;
+	private Long dataNewspaper;
 
 	/**
 	 * 新闻发布时间

@@ -6,7 +6,6 @@ layui.use(['layer', 'table', 'ax', 'laydate'], function() {
 	var layer = layui.layer;
 	var table = layui.table;
 	var laydate = layui.laydate;
-	var date = new Date();
 
 	// 渲染时间选择框
 	laydate.render({

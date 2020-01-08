@@ -77,7 +77,7 @@ public class DataNewspaper implements Serializable {
 	 * 数据源
 	 */
 	@TableField("data_source")
-	private String dataSource;
+	private Long dataSource;
 
 	/**
 	 * 备注

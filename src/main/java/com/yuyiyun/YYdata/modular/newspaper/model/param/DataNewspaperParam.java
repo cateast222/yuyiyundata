@@ -39,7 +39,7 @@ public class DataNewspaperParam implements Serializable, BaseValidatingParam {
 	private String cover;
 
 	@ApiModelProperty(value = "数据源")
-	private String dataSource;
+	private Long dataSource;
 
 	@ApiModelProperty(value = "备注")
 	private String remark;

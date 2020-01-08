@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
@@ -179,6 +181,19 @@ public class DataSourceController {
 	@ResponseBody
 	public LayuiPageInfo list(DataSourceParam param) {
 		return this.dataSourceService.findPageBySpec(param);
+	}
+	
+	/**
+	 * :电子报纸主页获取数据源列表
+	 * @param condition
+	 * @return
+	 */
+	@RequestMapping("/listFromNewspaper")
+	@ResponseBody
+	public LayuiPageInfo listFromNewspaper(String condition) {
+		Page page = LayuiPageFactory.defaultPage();
+		this.dataSourceService.listFromNewspaper(condition);
+		return LayuiPageFactory.createPageInfo(page);
 	}
 
 	/**
