@@ -1,5 +1,8 @@
 package com.yuyiyun.YYdata.modular.datasource.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +50,7 @@ public class DataSourceController {
 	public String index() {
 		return PREFIX + "/datasource/index.html";
 	}
-	
+
 	/**
 	 * :新增更新(数据源)页面
 	 * 
@@ -77,7 +80,7 @@ public class DataSourceController {
 	public String newspaper() {
 		return PREFIX + "/newspaper/index.html";
 	}
-	
+
 	/**
 	 * :新增更新(电子报纸数据源)页面
 	 * 
@@ -96,7 +99,6 @@ public class DataSourceController {
 		}
 		return PREFIX + "/newspaper/add_edit.html";
 	}
-
 
 	/**
 	 * :新增更新接口
@@ -182,17 +184,20 @@ public class DataSourceController {
 	public LayuiPageInfo list(DataSourceParam param) {
 		return this.dataSourceService.findPageBySpec(param);
 	}
-	
+
 	/**
 	 * :电子报纸主页获取数据源列表
+	 * 
 	 * @param condition
 	 * @return
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/listFromNewspaper")
 	@ResponseBody
 	public LayuiPageInfo listFromNewspaper(String condition) {
 		Page page = LayuiPageFactory.defaultPage();
-		this.dataSourceService.listFromNewspaper(condition);
+		List<Map<String, Object>> list = this.dataSourceService.listFromNewspaper(page, condition);
+		page.setRecords(list);
 		return LayuiPageFactory.createPageInfo(page);
 	}
 

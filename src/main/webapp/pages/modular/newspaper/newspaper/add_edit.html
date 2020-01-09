@@ -3,66 +3,65 @@
 <div class="layui-fluid " style="">
 	<div class="layui-card">
 		<div class="layui-card-body">
-			<button type="button" class="layui-btn layui-btn-fluid">${summary}</button>
-			<hr>
 			<form id="newspaperForm" lay-filter="newspaperForm" class="layui-form layui-form-pane">
-				<input name="uuid" id="uuid" type="hidden" value="${uuid}" />
-				<input name="dataSource" id="dataSource" type="hidden" value="${dataSource}" />
+				<input name="uuid" id="uuid" type="hidden" value="${uuid}" /> <input name="dataSource" id="dataSource"
+					type="hidden" value="${dataSource}" />
 				<div class="layui-form-item">
-					<label class="layui-form-label">ÖÐÎÄÃû³Æ<span style="color: red;">*</span></label>
+					<label class="layui-form-label">ä¸­æ–‡åç§°<span style="color: red;">*</span></label>
 					<div class="layui-input-block">
-						<input name="chsName" id="chsName" placeholder="ÖÐÎÄÃû³Æ" type="text" class="layui-input"
+						<input name="chsName" id="chsName" placeholder="ä¸­æ–‡åç§°" type="text" class="layui-input"
 							readonly />
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label">Ô­Ãû³Æ<span style="color: red;">*</span></label>
+					<label class="layui-form-label">åŽŸåç§°<span style="color: red;">*</span></label>
 					<div class="layui-input-block">
-						<input name="orgName" id="orgName" placeholder="Ô­Ãû³Æ" type="text" class="layui-input" readonly />
+						<input name="orgName" id="orgName" placeholder="åŽŸåç§°" type="text" class="layui-input"
+							readonly />
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label">·¢²¼ÈÕÆÚ<span style="color: red;">*</span></label>
+					<label class="layui-form-label">å‘å¸ƒæ—¥æœŸ<span style="color: red;">*</span></label>
 					<div class="layui-input-block">
-						<input name="publish" id="publish" placeholder="ÇëÑ¡Ôñ·¢²¼ÈÕÆÚ" type="text" class="layui-input"
+						<input name="publish" id="publish" placeholder="è¯·é€‰æ‹©å‘å¸ƒæ—¥æœŸ" type="text" class="layui-input"
 							lay-verify="required" required />
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">URL<span style="color: red;"></span></label>
 					<div class="layui-input-block">
-						<input name="url" id="url" placeholder="ÇëÊäÈëURL" type="text" class="layui-input" />
+						<input name="url" id="url" placeholder="è¯·è¾“å…¥URL" type="text" class="layui-input" />
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label">·âÃæ<span style="color: red;"></span></label>
+					<label class="layui-form-label">å°é¢<span style="color: red;"></span></label>
 					<div class="layui-input-block">
-						<input name="cover" id="cover" placeholder="ÇëÊäÈë·âÃæ" type="text" class="layui-input" />
+						<input name="cover" id="cover" placeholder="è¯·è¾“å…¥å°é¢" type="text" class="layui-input" />
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label">×´Ì¬<span style="color: red;"></span></label>
+					<label class="layui-form-label">çŠ¶æ€<span style="color: red;"></span></label>
 					<div class="layui-input-block">
 						<select id="state" name="state">
-							<option value="0">Õý³£</option>
-							<option value="1">²âÊÔ</option>
-							<option value="2">ÉÏ´«</option>
-							<option value="3">Í¬²½</option>
-							<option value="4">Íê³É</option>
-							<option value="5">·ÏÆú</option>
-							<option value="6">ÆäËû</option>
+							<option value="0">æ­£å¸¸</option>
+							<option value="1">æµ‹è¯•</option>
+							<option value="2">ä¸Šä¼ </option>
+							<option value="3">åŒæ­¥</option>
+							<option value="4">åºŸå¼ƒ</option>
+							<option value="5">å®Œæˆ</option>
+							<option value="6">å…¶ä»–</option>
 						</select>
 					</div>
 				</div>
 				<div class="layui-form-item layui-form-text">
-					<label class="layui-form-label">±¸×¢</label>
+					<label class="layui-form-label">å¤‡æ³¨</label>
 					<div class="layui-input-block">
-						<textarea id="remark" name="remark" placeholder="ÇëÊäÈë±¸×¢" class="layui-textarea"></textarea>
+						<textarea id="remark" name="remark" placeholder="è¯·è¾“å…¥å¤‡æ³¨" class="layui-textarea"></textarea>
 					</div>
 				</div>
 				<div class="layui-form-item text-center">
-					<button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">È¡Ïû</button>
-					<button class="layui-btn" lay-filter="btnSubmit" lay-submit>±£´æ</button>
+					<button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">å–æ¶ˆ</button>
+					<button class="layui-btn" lay-filter="btnSubmit" lay-submit>ä¿å­˜</button>
 				</div>
 			</form>
 		</div>

@@ -8,7 +8,7 @@ layui.use(['form', 'admin', 'ax', 'laydate'], function () {
 	// 渲染时间选择框
 	laydate.render({
 		elem: '#publish',
-		isInitValue: true
+		type: 'datetime'
 	});
 
 	// 获取详情信息，填充表单

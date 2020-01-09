@@ -3346,11 +3346,16 @@ hr {
 }
 
 .layui-table-cell {
-	height: 28px;
+	/* height: 28px; */
 	line-height: 28px;
 	padding: 0 15px;
 	position: relative;
-	box-sizing: border-box
+	box-sizing: border-box,
+	/* height:auto;
+    overflow:visible;
+    text-overflow:inherit;
+    white-space:normal;
+    word-break: break-all; */
 }
 
 .layui-table-cell .layui-form-checkbox[lay-skin=primary] {

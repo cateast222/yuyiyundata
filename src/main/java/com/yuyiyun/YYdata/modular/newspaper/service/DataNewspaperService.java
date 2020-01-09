@@ -3,6 +3,8 @@ package com.yuyiyun.YYdata.modular.newspaper.service;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,13 +37,18 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataNewspaper> {
 	@Autowired
 	DataNewsService dataNewsService;
-	
+
+	@SuppressWarnings("rawtypes")
+	public List<Map<String, Object>> listFromNewspaper(Page page, Long dataSource, String condition) {
+		return this.baseMapper.listFromNewspaper(page, dataSource, condition);
+	}
+
 	public DataNewspaper addOrEdit(DataNewspaperParam param) {
-		//1、根据UUID检索判断是否存在
+		// 1、根据UUID检索判断是否存在
 		DataNewspaper byId = this.getById(param.getUuid());
-		//2、若存在执行更新，不存在执行新增
+		// 2、若存在执行更新，不存在执行新增
 		DataNewspaper dataNewspaper = ToolUtil.isEmpty(byId) ? add(param) : update(param);
-		//3、数据返回
+		// 3、数据返回
 		return dataNewspaper;
 	}
 
@@ -147,7 +154,4 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}
-
-	
-
 }

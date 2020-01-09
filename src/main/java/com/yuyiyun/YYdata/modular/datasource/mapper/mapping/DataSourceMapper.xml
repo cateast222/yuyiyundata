@@ -36,35 +36,24 @@
 		a.chs_name AS 'chsName',
 		a.website_url AS 'websiteUrl',
 		a.remark AS 'remark',
-		COUNT( b.uuid ) 'newpaperCount',
-		MAX( b.publish ) 'lastAcquTime'
+		( SELECT COUNT( b.uuid ) FROM data_newspaper b WHERE a.uuid =
+		b.data_source ) AS 'newpaperCount',
+		( SELECT date_format( MAX( b.publish ), '%Y-%m-%d' ) FROM
+		data_newspaper b WHERE a.uuid = b.data_source ) AS 'lastAcquTime'
 		FROM
 		data_source a
-		JOIN data_newspaper b ON a.uuid = b.data_source
-		AND a.platform = 1
-		GROUP BY
-		a.uuid
-
-		select uuid,chs_name,website_url,remark,
-		() ,()
-		date_format( pubtime,
-		'%Y-%m-%d' ) AS 'pubtime',
-		dsi_uuid AS
-		'dsiUuid',
-		dsi_name AS 'dsiName',
-		creator AS 'creator',
-		count(*) AS
-		'dataVolume'
-		from wg_ele_news_data
-		where 1 = 1
-		<if test="pubTime != null and pubTime !=''">
-			and (pubtime between CONCAT(#{pubTime},' 00:00:00') and
-			CONCAT(#{pubTime},' 23:59:59'))
-		</if>
+		WHERE
+		a.platform = 1
 		<if test="condition != null and condition !=''">
-			<!-- and dsi_name like CONCAT('%',#{condition},'%') -->
-			and dsi_name = #{condition}
+			AND a.chs_name like CONCAT('%',#{condition},'%')
+			<!-- AND a.chs_name = #{condition} -->
 		</if>
-		GROUP BY date_format( pubtime, '%Y-%m-%d' ),dsi_name
+
+	<!-- SELECT a.uuid AS 'uuid', a.chs_name AS 'chsName', a.website_url AS 
+		'websiteUrl', a.remark AS 'remark', COUNT( b.uuid ) 'newpaperCount', date_format( 
+		MAX( b.publish ), '%Y-%m-%d' ) 'lastAcquTime' FROM data_source a JOIN data_newspaper 
+		b ON a.uuid = b.data_source AND a.platform = 1 <if test="condition != null 
+		and condition !=''"> AND a.chs_name like CONCAT('%',#{condition},'%') </if> 
+		GROUP BY a.uuid -->
 	</select>
 </mapper>

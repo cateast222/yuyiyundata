@@ -1,9 +1,10 @@
 var DatasourecUUID = null;
-layui.use(['layer','table', 'ax'], function () {
+layui.use(['admin', 'layer', 'table', 'ax'], function () {
 	var $ = layui.$;
 	var table = layui.table;
 	var $ax = layui.ax;
 	var layer = layui.layer;
+	var admin = layui.admin;
 
 	/**
 	 * 数据源信息表管理
@@ -20,16 +21,21 @@ layui.use(['layer','table', 'ax'], function () {
 	 */
 	Datasourec.initColumn = function () {
 		return [
-			[
-				{
-					field: 'uuid',
-					hide: true,
-					title: '数据源id'
-				}, {
-					field: 'chsName',
-					sort: true,
-					title: '名称'
-				}, /* {
+			[{
+				type: "radio"
+			}, {
+				title: '序号',
+				type: "numbers"
+			}, {
+				field: 'uuid',
+				hide: true,
+				title: '数据源id'
+			}, {
+				field: 'chsName',
+				sort: true,
+				align: 'center',
+				title: '名称'
+			}, /* {
 					field: 'websiteUrl',
 					sort: true,
 					title: '网址',
@@ -40,20 +46,29 @@ layui.use(['layer','table', 'ax'], function () {
 							d.websiteUrl + '</a>';
 					}
 				}, */ {
-					field: 'newpaperCount',
-					sort: true,
-					title: '电子报纸数'
-				}, {
-					field: 'lastAcquTime',
-					sort: true,
-					title: '最近采集时间'
-				}
+				field: 'newpaperCount',
+				sort: true,
+				width: 120,
+				align: 'center',
+				title: '电子报纸数'
+			}, {
+				field: 'lastAcquTime',
+				sort: true,
+				width: 140,
+				align: 'center',
+				title: '最新采集时间'
+			}
 			]
 		];
 	};
 	Newspaper.initColumn = function () {
 		return [
 			[{
+				type: "checkbox"
+			}, {
+				title: '序号',
+				type: "numbers"
+			}, {
 				field: 'uuid',
 				hide: true,
 				title: '电子报纸id'
@@ -61,23 +76,32 @@ layui.use(['layer','table', 'ax'], function () {
 			{
 				field: 'chsName',
 				sort: true,
+				width: 180,
+				align: 'center',
 				title: '名称',
 				templet: function (d) {
-					var title = "-";
-					if (d.title != "") {
-						title = d.title;
-					}
-					return '<a title="' + title +
+					return '<a title="' + d.fullName +
 						'" style="color: #01AAED;" href="' + d.url +
-						'" target="_blank">' + title + '</a>';
+						'" target="_blank">' + d.fullName + '</a>';
 				}
 			}, {
 				field: 'publish',
 				sort: true,
+				width: 110,
+				align: 'center',
 				title: '发布时间',
+			}, {
+				field: 'cover',
+				align: 'center',
+				title: '封面',
+				width: 110,
+				align: 'center',
+				templet: "#coverImg"
 			}, {
 				field: 'url',
 				sort: true,
+				// width:180,
+				align: 'center',
 				title: 'URL',
 				templet: function (d) {
 					return '<a title="' + d.url +
@@ -85,22 +109,19 @@ layui.use(['layer','table', 'ax'], function () {
 						'" target="_blank">' + d.url + '</a>';
 				}
 			}, {
-				field: 'cover',
-				align: 'center',
-				title: '封面',
-				templet: function (d) {
-					return '<a title = "' + d.fullName + '"><img src = "'
-						+ d.cover + '" style = "width:60px;height:100px;"/></a>';
-				}
-			}, {
 				field: 'newsCount',
 				sort: true,
+				width: 120,
+				align: 'center',
 				title: '报纸新闻数'
 			}, {
 				field: 'state',
 				sort: true,
+				width: 80,
+				align: 'center',
 				title: '状态'
 			}, {
+				width: 150,
 				align: 'center',
 				toolbar: '#tableBar',
 				title: '操作'
@@ -114,7 +135,7 @@ layui.use(['layer','table', 'ax'], function () {
 	 */
 	var datasourecTableResult = table.render({
 		elem: '#' + Datasourec.tableId,
-		url: Feng.ctxPath + '/datasourec/listFromNewspaper',
+		url: Feng.ctxPath + '/datasource/listFromNewspaper',
 		page: true,
 		height: "full-98",
 		cellMinWidth: 100,
@@ -128,8 +149,8 @@ layui.use(['layer','table', 'ax'], function () {
 		page: true,
 		height: "full-98",
 		cellMinWidth: 100,
-		limit: 10,
-		limits: [10, 20, 50, 100, 200],
+		limit: 5,
+		limits: [5, 10, 20, 50, 100],
 		cols: Newspaper.initColumn()
 	});
 
@@ -138,7 +159,7 @@ layui.use(['layer','table', 'ax'], function () {
 	 */
 	Datasourec.search = function () {
 		var queryData = {};
-		queryData['condition'] = $("#datasourecBtnSearch").val();
+		queryData['condition'] = $("#datasourecCondition").val();
 		table.reload(Datasourec.tableId, {
 			where: queryData
 		});
@@ -166,6 +187,8 @@ layui.use(['layer','table', 'ax'], function () {
 			content: Feng.ctxPath + '/newspaper/addAndEdit?dataSource=' + DatasourecUUID + '&uuid=',
 			end: function () {
 				admin.getTempData('formOk');
+				Datasourec.search();
+				Newspaper.search();
 			}
 		});
 	};
@@ -188,6 +211,8 @@ layui.use(['layer','table', 'ax'], function () {
 				+ DatasourecUUID + '&uuid=' + data.uuid,
 			end: function () {
 				admin.getTempData('formOk');
+				Datasourec.search();
+				Newspaper.search();
 			}
 		});
 	};
@@ -202,6 +227,7 @@ layui.use(['layer','table', 'ax'], function () {
 			var ajax = new $ax(Feng.ctxPath + "/newspaper/delete",
 				function (data) {
 					Feng.success("删除成功!");
+					table.reload(Datasourec.tableId);
 					table.reload(Newspaper.tableId);
 				}, function (data) {
 					Feng.error("删除失败!" + data.responseJSON.message);
@@ -216,10 +242,10 @@ layui.use(['layer','table', 'ax'], function () {
 
 	// 添加按钮点击事件
 	$('#newspaperBtnAdd').click(function () {
-		if (DatasourecUUID = null) {
+		if (DatasourecUUID == null) {
 			layer.open({
 				title: '提示',
-				content: '请先双击信息源进行选中，再新增电子报纸！'
+				content: '请先双击数据源进行选中，再新增电子报纸！'
 			});
 		} else {
 			Newspaper.openAddDlg();
@@ -237,12 +263,17 @@ layui.use(['layer','table', 'ax'], function () {
 	table.on('tool(' + Newspaper.tableId + ')', function (obj) {
 		var data = obj.data;
 		var layEvent = obj.event;
-		if (layEvent === 'testRun') {
-			Datasi.onTestRun(data);
-		} else if (layEvent === 'testPass') {
-			Datasi.onTestPass(data);
-		} else if (layEvent === 'testFail') {
-			Datasi.onTestFail(data);
+		if (layEvent === 'edit') {
+			if (DatasourecUUID == null) {
+				layer.open({
+					title: '提示',
+					content: '请先双击数据源进行选中，再修改电子报纸！'
+				});
+			} else {
+				Newspaper.openEditDlg(data);
+			}
+		} else if (layEvent === 'delete') {
+			Newspaper.onDeleteItem(data);
 		}
 	});
 
@@ -270,3 +301,5 @@ layui.use(['layer','table', 'ax'], function () {
 
 	}); */
 });
+
+

@@ -5,7 +5,10 @@ import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
  * <p>
@@ -22,6 +25,7 @@ public interface DataSourceMapper extends BaseMapper<DataSource> {
 	 * @param condition
 	 * @return
 	 */
-	List<Map<String, Object>> listFromNewspaper(String condition);
+	@SuppressWarnings("rawtypes")
+	List<Map<String, Object>> listFromNewspaper(@Param("page") Page page,@Param("condition") String condition);
 
 }

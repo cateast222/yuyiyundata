@@ -1,5 +1,8 @@
 package com.yuyiyun.YYdata.modular.newspaper.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
-import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewspaperParam;
@@ -132,7 +136,7 @@ public class DataNewspaperController extends BaseController {
 		this.dataNewspaperService.addOrEdit(param);
 		return ResponseData.success();
 	}
-	
+
 	/**
 	 * :查看详情接口
 	 * 
@@ -143,9 +147,13 @@ public class DataNewspaperController extends BaseController {
 	@RequestMapping("/detail")
 	@ResponseBody
 	public ResponseData detail(DataNewspaperParam param) {
+		System.out.println("1--"+param);
 		DataNewspaper detail = this.dataNewspaperService.getById(param.getUuid());
-		if (ToolUtil.isEmpty(detail) || ToolUtil.isNotEmpty(param.getDataSource())) {
+		System.out.println("2--"+detail);
+		if (ToolUtil.isEmpty(detail) && ToolUtil.isNotEmpty(param.getDataSource())) {
 			DataSource dataSource = dataSourceService.getById(param.getDataSource());
+			System.out.println("3--"+dataSource);
+			detail = new DataNewspaper();
 			detail.setDataSource(dataSource.getUuid());
 			detail.setChsName(dataSource.getChsName());
 			detail.setOrgName(dataSource.getOrgName());
@@ -164,6 +172,22 @@ public class DataNewspaperController extends BaseController {
 	@ResponseBody
 	public LayuiPageInfo list(DataNewspaperParam param) {
 		return this.dataNewspaperService.findPageBySpec(param);
+	}
+
+	/**
+	 * :电子报纸主页获取电子报纸列表
+	 * 
+	 * @param condition
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/listFromNewspaper")
+	@ResponseBody
+	public LayuiPageInfo listFromNewspaper(Long dataSource, String condition) {
+		Page page = LayuiPageFactory.defaultPage();
+		List<Map<String,Object>> list = this.dataNewspaperService.listFromNewspaper(page, dataSource, condition);
+		page.setRecords(list);
+		return LayuiPageFactory.createPageInfo(page);
 	}
 
 	/**

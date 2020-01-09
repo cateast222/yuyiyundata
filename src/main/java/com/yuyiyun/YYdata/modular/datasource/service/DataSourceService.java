@@ -40,17 +40,18 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 	DataNewspaperService dataNewspaperService;
 	@Autowired
 	DataNewsService dataNewsService;
-	
-	public List<Map<String, Object>> listFromNewspaper(String condition) {
-		return this.baseMapper.listFromNewspaper(condition);
+
+	@SuppressWarnings("rawtypes")
+	public List<Map<String, Object>> listFromNewspaper(Page page, String condition) {
+		return this.baseMapper.listFromNewspaper(page, condition);
 	}
 
 	public DataSource addOrEdit(DataSourceParam param) {
-		//1、根据UUID检索判断是否存在
+		// 1、根据UUID检索判断是否存在
 		DataSource byId = this.getById(param.getUuid());
-		//2、若存在执行更新，不存在执行新增
+		// 2、若存在执行更新，不存在执行新增
 		DataSource dataSource = ToolUtil.isEmpty(byId) ? add(param) : update(param);
-		//3、数据返回
+		// 3、数据返回
 		return dataSource;
 		/*
 		 * if (ToolUtil.isEmpty(byId)) { System.out.println("新增"); add(param); } else {

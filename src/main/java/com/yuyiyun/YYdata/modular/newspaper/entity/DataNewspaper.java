@@ -1,13 +1,17 @@
 package com.yuyiyun.YYdata.modular.newspaper.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -28,7 +32,7 @@ public class DataNewspaper implements Serializable {
 	/**
 	 * 主键
 	 */
-	@TableId(value = "uuid",type = IdType.ID_WORKER)
+	@TableId(value = "uuid", type = IdType.ID_WORKER)
 	private Long uuid;
 
 	/**
@@ -53,6 +57,8 @@ public class DataNewspaper implements Serializable {
 	 * 发布日期
 	 */
 	@TableField("publish")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date publish;
 
 	/**
@@ -108,4 +114,8 @@ public class DataNewspaper implements Serializable {
 	 */
 	@TableField(value = "update_time", fill = FieldFill.UPDATE)
 	private Date updateTime;
+	
+//	public String getPublish() {
+//		return new SimpleDateFormat("yyyy-MM-dd").format(publish);
+//	}
 }
