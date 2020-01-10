@@ -119,7 +119,24 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 				sort: true,
 				width: 80,
 				align: 'center',
-				title: '状态'
+				title: '状态',
+				templet: function (d) {
+					if (d.state == 0) {
+						return "正常";
+					} else if (d.state == 1) {
+						return "测试";
+					} else if (d.state == 2) {
+						return "上传";
+					} else if (d.state == 3) {
+						return "同步";
+					} else if (d.state == 4) {
+						return "完成";
+					} else if (d.state == 5) {
+						return "废弃";
+					} else {
+						return "其他";
+					}
+				}
 			}, {
 				width: 150,
 				align: 'center',

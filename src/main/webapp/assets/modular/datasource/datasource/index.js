@@ -1,23 +1,26 @@
-layui.use([ 'table', 'ax' ],
-		function() {
-			var $ = layui.$;
-			var table = layui.table;
-			var $ax = layui.ax;
+layui.use(['table', 'ax'],
+	function () {
+		var $ = layui.$;
+		var table = layui.table;
+		var $ax = layui.ax;
 
 		/**
 		 * 数据源信息表管理
 		 */
 		var Datasource = {
-			tableId : "datasourceTable"
+			tableId: "datasourceTable"
 		};
 
 		/**
 		 * 初始化表格
-		 */	
+		 */
 		Datasource.initColumn = function () {
 			return [[
 				{
 					type: 'checkbox'
+				}, {
+					title: '序号',
+					type: "numbers"
 				},
 				{
 					field: 'uuid',
@@ -105,7 +108,7 @@ layui.use([ 'table', 'ax' ],
 					sort: true,
 					title: '语种',
 					align: 'center',
-					width: 80
+					width: 90
 				}, {
 					field: 'encoded',
 					sort: true,

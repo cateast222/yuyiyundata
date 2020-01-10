@@ -18,6 +18,9 @@ layui.use(['table', 'ax'],
 			return [[
 				{
 					type: 'checkbox'
+				}, {
+					title: '序号',
+					type: "numbers"
 				},
 				{
 					field: 'uuid',
@@ -117,7 +120,7 @@ layui.use(['table', 'ax'],
 					sort: true,
 					title: '语种',
 					align: 'center',
-					width: 80
+					width: 90
 				}, {
 					field: 'encoded',
 					sort: true,

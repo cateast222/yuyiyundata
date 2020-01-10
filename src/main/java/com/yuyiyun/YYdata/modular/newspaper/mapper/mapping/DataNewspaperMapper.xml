@@ -54,5 +54,6 @@
 			AND a.full_name like CONCAT('%',#{condition},'%')
 			<!-- AND a.chs_name = #{condition} -->
 		</if>
+		ORDER BY a.publish DESC
 	</select>
 </mapper>
