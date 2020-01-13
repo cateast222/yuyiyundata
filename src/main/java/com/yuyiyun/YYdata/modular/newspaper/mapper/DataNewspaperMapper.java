@@ -2,6 +2,7 @@ package com.yuyiyun.YYdata.modular.newspaper.mapper;
 
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,17 @@ public interface DataNewspaperMapper extends BaseMapper<DataNewspaper> {
 	 */
 	@SuppressWarnings("rawtypes")
 	List<Map<String, Object>> listFromNewspaper(@Param("page") Page page, @Param("dataSource") Long dataSource,
+			@Param("condition") String condition);
+
+	/**
+	 * :报纸新闻主页获取电子报纸列表
+	 * @param page
+	 * @param publish
+	 * @param condition
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	List<Map<String, Object>> listFromNews(@Param("page") Page page, @Param("publish") String publish,
 			@Param("condition") String condition);
 
 }

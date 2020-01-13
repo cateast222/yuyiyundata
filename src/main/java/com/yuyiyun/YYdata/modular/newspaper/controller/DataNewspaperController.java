@@ -1,5 +1,6 @@
 package com.yuyiyun.YYdata.modular.newspaper.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -147,12 +148,9 @@ public class DataNewspaperController extends BaseController {
 	@RequestMapping("/detail")
 	@ResponseBody
 	public ResponseData detail(DataNewspaperParam param) {
-		System.out.println("1--"+param);
 		DataNewspaper detail = this.dataNewspaperService.getById(param.getUuid());
-		System.out.println("2--"+detail);
 		if (ToolUtil.isEmpty(detail) && ToolUtil.isNotEmpty(param.getDataSource())) {
 			DataSource dataSource = dataSourceService.getById(param.getDataSource());
-			System.out.println("3--"+dataSource);
 			detail = new DataNewspaper();
 			detail.setDataSource(dataSource.getUuid());
 			detail.setChsName(dataSource.getChsName());
@@ -186,6 +184,22 @@ public class DataNewspaperController extends BaseController {
 	public LayuiPageInfo listFromNewspaper(Long dataSource, String condition) {
 		Page page = LayuiPageFactory.defaultPage();
 		List<Map<String,Object>> list = this.dataNewspaperService.listFromNewspaper(page, dataSource, condition);
+		page.setRecords(list);
+		return LayuiPageFactory.createPageInfo(page);
+	}
+	
+	/**
+	 * :报纸新闻主页获取电子报纸列表
+	 * 
+	 * @param condition
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/listFromNews")
+	@ResponseBody
+	public LayuiPageInfo listFromNews(String publish , String condition) {
+		Page page = LayuiPageFactory.defaultPage();
+		List<Map<String,Object>> list = this.dataNewspaperService.listFromNews(page, publish, condition);
 		page.setRecords(list);
 		return LayuiPageFactory.createPageInfo(page);
 	}

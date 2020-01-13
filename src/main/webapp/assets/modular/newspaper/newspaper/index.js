@@ -298,6 +298,13 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 	table.on('rowDouble(' + Datasourec.tableId + ')', function (obj) {
 		DatasourecUUID = obj.data.uuid;
 		Newspaper.search();
+
+		// (layui—table单击行选中radio与点击 radio选中行	https://blog.csdn.net/zyg1515330502/article/details/94554059)
+		selected = obj.data;
+		//选中行样式
+		obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+		//选中radio样式
+		obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
 	});
 	/* table.on('row(' + WgEleNewsData.tableId + ')', function (obj) {
 		for (var field in obj.data) {

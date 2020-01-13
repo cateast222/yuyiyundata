@@ -117,6 +117,19 @@ public class DataNewsController extends BaseController {
 	public LayuiPageInfo list(DataNewsParam param) {
 		return this.dataNewsService.findPageBySpec(param);
 	}
+	
+	/**
+	 * :报纸新闻主页获取报纸新闻列表
+	 * 
+	 * @author duhao
+	 * @param dataSourceInfoParam
+	 * @return
+	 */
+	@RequestMapping("/listFromNews")
+	@ResponseBody
+	public LayuiPageInfo listFromNews(DataNewsParam param) {
+		return this.dataNewsService.findPageBySpec(param);
+	}
 
 	/**
 	 * 

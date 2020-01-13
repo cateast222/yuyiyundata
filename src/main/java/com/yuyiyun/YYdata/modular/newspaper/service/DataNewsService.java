@@ -112,4 +112,7 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	private Serializable getKey(DataNewsParam param) {
 		return param.getUuid();
 	}
+
+	
+
 }

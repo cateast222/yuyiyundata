@@ -56,4 +56,30 @@
 		</if>
 		ORDER BY a.publish DESC
 	</select>
+
+	<select id="listFromNews" resultType="map">
+		SELECT
+		a.uuid AS 'uuid',
+		a.chs_name AS 'chsName',
+		date_format( a.publish,
+		'%Y-%m-%d' ) AS 'publish',
+		a.url AS 'url',
+		a.creator AS 'creator',
+		a.state AS 'state',
+		(
+		SELECT COUNT( uuid ) FROM data_news b WHERE a.uuid
+		= b.data_newspaper
+		) AS 'newsCount'
+		FROM
+		data_newspaper a
+		WHERE 1 = 1
+		<if test="publish != null and publish !=''">
+			AND a.publish = #{publish}
+		</if>
+		<if test="condition != null and condition !=''">
+			AND a.full_name like CONCAT('%',#{condition},'%')
+			<!-- AND a.chs_name = #{condition} -->
+		</if>
+		ORDER BY a.publish DESC
+	</select>
 </mapper>

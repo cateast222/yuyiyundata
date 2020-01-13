@@ -38,6 +38,14 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	@Autowired
 	DataNewsService dataNewsService;
 
+	@SuppressWarnings({ "rawtypes", "null" })
+	public List<Map<String, Object>> listFromNews(Page page, String publish, String condition) {
+		if (!(publish == null || publish.equals(""))) {
+			publish += " 00:00:00";
+		}
+		return this.baseMapper.listFromNews(page, publish, condition);
+	}
+
 	@SuppressWarnings("rawtypes")
 	public List<Map<String, Object>> listFromNewspaper(Page page, Long dataSource, String condition) {
 		return this.baseMapper.listFromNewspaper(page, dataSource, condition);
@@ -154,4 +162,5 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}
+
 }
