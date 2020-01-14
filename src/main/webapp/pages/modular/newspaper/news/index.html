@@ -65,13 +65,13 @@
 						<div class="layui-form-item">
 							<div class="layui-inline">
 								@if(shiro.hasPermission("/news/delete")){
-								<button id="newsBtnDelete" class="layui-btn layui-btn-radius layui-btn-sm layui-btn-danger">
-									<i class="layui-icon layui-icon-delete"></i>删除
+								<button id="newsBtnDelete" class="layui-btn layui-btn-radius layui-btn-sm layui-btn-danger" title="删除">
+									<i class="layui-icon layui-icon-delete"></i>
 								</button>
 								@}
 								@if(shiro.hasPermission("/news/editItem")){
-								<button id="newsBtnEdit" class="layui-btn layui-btn-radius layui-btn-sm layui-btn-normal">
-									<i class="layui-icon layui-icon-edit"></i>修改
+								<button id="newsBtnEdit" class="layui-btn layui-btn-radius layui-btn-sm layui-btn-normal" title="修改">
+									<i class="layui-icon layui-icon-edit"></i>
 								</button>
 								@} 
 							</div>
@@ -92,7 +92,7 @@
 						</h4>
 						<h4 class="layui-timeline-title">
 							<b>报纸媒体：</b> <span title="报纸媒体" class="layui-badge-rim"
-								style="color: #393D49" id="dsiName">辽沈晚报</span>&emsp; <b>语种：</b>
+								style="color: #393D49" id="chsName">辽沈晚报</span>&emsp; <b>语种：</b>
 							<span title="语种" class="layui-badge-rim" style="color: #FFB800"
 								id="language">中文</span>&emsp; <b>地区：</b> <span title="地区"
 								class="layui-badge-rim" style="color: #c2c2c2" id="region">中国</span>&emsp;

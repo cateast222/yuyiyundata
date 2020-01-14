@@ -3,6 +3,8 @@ package com.yuyiyun.YYdata.modular.newspaper.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -29,7 +31,7 @@ public class DataNews implements Serializable {
 	 * 主键
 	 */
 	@TableId(value = "uuid",type = IdType.ID_WORKER)
-	private String uuid;
+	private Long uuid;
 
 	/**
 	 * 原名称
@@ -172,7 +174,7 @@ public class DataNews implements Serializable {
 	/**
 	 * 新闻所属频道
 	 */
-	@TableField("number")
+	@TableField("channel")
 	private String channel;
 
 	/**
@@ -240,4 +242,13 @@ public class DataNews implements Serializable {
 	 */
 	@TableField(value = "update_time", fill = FieldFill.UPDATE)
 	private Date updateTime;
+	
+//	public void setContent(String content) {
+//		this.content = content.replace("& ", "&");
+//	}
+	
+	public void setTagContent(String tagContent) {
+		tagContent = tagContent.replace("& ", "&");
+		this.tagContent = StringEscapeUtils.unescapeHtml4(tagContent);
+	}
 }

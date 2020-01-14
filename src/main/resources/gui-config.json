@@ -1,0 +1,13 @@
+{
+	"configs": [
+		{
+			"server": "159.138.39.103",
+			"server_port": 447,
+			"password": "isi%2019",
+			"method": "aes-256-cfb",
+			"remarks": "",
+			"group": 1,
+			"localport": 12101
+		}
+	]
+}

@@ -1,10 +1,12 @@
 var NewspaperUUID = null;
-layui.use(['layer', 'table', 'ax', 'laydate'], function () {
+var NewsUUID = null;
+layui.use(['layer', 'table', 'ax', 'laydate','admin'], function () {
 	var $ = layui.$;
 	var $ax = layui.ax;
 	var layer = layui.layer;
 	var table = layui.table;
 	var laydate = layui.laydate;
+	var admin = layui.admin;
 
 	// 渲染时间选择框
 	laydate.render({
@@ -165,6 +167,79 @@ layui.use(['layer', 'table', 'ax', 'laydate'], function () {
 		News.search();
 	});
 
+	//新增报纸新闻信息
+	$('#newsBtnAdd').click(function () {
+		if (NewspaperUUID != null) {
+			admin.putTempData('formOk', false);
+			top.layui.admin.open({
+				type: 2,
+				area: ['1000px', '800px'],
+				offset: 'auto',
+				resize: true,
+				title: '新增电子报纸',
+				content: Feng.ctxPath + '/datanews/addAndEdit?dataNewspaper=' + NewspaperUUID,
+				end: function () {
+					admin.getTempData('formOk');
+					News.search();
+					Newspaper.search();
+				}
+			});
+		} else {
+			layer.open({
+				title: '提示',
+				content: '请先双击电子报纸进行选中，再新增报纸新闻！'
+			});
+		}
+	});
+	//修改报纸新闻信息
+	$('#newsBtnEdit').click(function () {
+		if (NewsUUID != null) {
+			admin.putTempData('formOk', false);
+			top.layui.admin.open({
+				type: 2,
+				area: ['1000px', '800px'],
+				offset: 'auto',
+				resize: true,
+				title: ' 修改电子报纸',
+				content: Feng.ctxPath + '/datanews/addAndEdit?uuid=' + NewsUUID,
+				end: function () {
+					admin.getTempData('formOk');
+					News.search();
+					Newspaper.search();
+				}
+			});
+		} else {
+			layer.open({
+				title: '提示',
+				content: '请先点击报纸新闻进行选中，再修改报纸新闻！'
+			});
+		}
+	});
+	//删除报纸新闻信息
+	$('#newsBtnDelete').click(function () {
+		if (NewsUUID != null) {
+			var operation = function () {
+				var ajax = new $ax(Feng.ctxPath + "/datanews/delete",
+					function (data) {
+						Feng.success("删除成功!");
+						var NewsUUID = null;
+						News.search();
+						Newspaper.search();
+					}, function (data) {
+						Feng.error("删除失败!" + data.responseJSON.message);
+					});
+				ajax.set("uuid", NewsUUID);
+				ajax.start();
+			};
+			Feng.confirm("是否删除?", operation);
+		} else {
+			layer.open({
+				title: '提示',
+				content: '请先点击报纸新闻进行选中，再删除报纸新闻！'
+			});
+		}
+	});
+
 	// 监听行单击事件
 	table.on('rowDouble(' + Newspaper.tableId + ')', function (obj) { // 双击事件
 		NewspaperUUID = obj.data.uuid;
@@ -178,6 +253,8 @@ layui.use(['layer', 'table', 'ax', 'laydate'], function () {
 		obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
 	});
 	table.on('row(' + News.tableId + ')', function (obj) { // 点击事件
+		NewsUUID = obj.data.uuid;
+
 		for (var field in obj.data) {
 			switch (field) {
 				case "url":

@@ -1,7 +1,10 @@
 package com.yuyiyun.YYdata.modular.newspaper.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +12,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
+import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
+import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewsParam;
+import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewspaperParam;
 import com.yuyiyun.YYdata.modular.newspaper.service.DataNewsService;
+import com.yuyiyun.YYdata.modular.newspaper.service.DataNewspaperService;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import cn.stylefeng.roses.core.util.ToolUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -34,7 +43,11 @@ public class DataNewsController extends BaseController {
 
 	private String PREFIX = "/modular/newspaper";
 	@Autowired
+	DataSourceService dataSourceService;
+	@Autowired
 	DataNewsService dataNewsService;
+	@Autowired
+	DataNewspaperService dataNewspaperService;
 
 	/**
 	 * @Description: 数据页面
@@ -46,6 +59,28 @@ public class DataNewsController extends BaseController {
 	@RequestMapping("")
 	public String index() {
 		return PREFIX + "/news/index.html";
+	}
+
+	/**
+	 * :新增更新页面
+	 * 
+	 * @param uuid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/addAndEdit")
+	public String addAndEdit(Long dataNewspaper, Long uuid, Model model) {
+		if (ToolUtil.isEmpty(uuid)) {
+			model.addAttribute("uuid", null);
+			model.addAttribute("dataNewspaper", dataNewspaper);
+			model.addAttribute("title", "新增");
+		}
+		if (ToolUtil.isEmpty(dataNewspaper)) {
+			model.addAttribute("uuid", uuid);
+			model.addAttribute("dataNewspaper", null);
+			model.addAttribute("title", "编辑");
+		}
+		return PREFIX + "/news/add_edit.html";
 	}
 
 	/**
@@ -90,6 +125,21 @@ public class DataNewsController extends BaseController {
 		this.dataNewsService.update(param);
 		return ResponseData.success();
 	}
+	
+	/**
+	 * :新增更新接口
+	 * 
+	 * @author duhao
+	 * @param param
+	 * @return
+	 */
+	@RequestMapping("/addAndEditItem")
+	@ResponseBody
+	public ResponseData addAndEditItem(DataNewsParam param) {
+		param.setCreator(ShiroKit.getUser().getAccount());
+		this.dataNewsService.addOrEdit(param);
+		return ResponseData.success();
+	}
 
 	/**
 	 * :查看详情接口
@@ -102,6 +152,17 @@ public class DataNewsController extends BaseController {
 	@ResponseBody
 	public ResponseData detail(DataNewsParam param) {
 		DataNews detail = this.dataNewsService.getById(param.getUuid());
+		if (ToolUtil.isEmpty(detail) && ToolUtil.isNotEmpty(param.getDataNewspaper())) {
+			DataNewspaper dataNewspaper = dataNewspaperService.getById(param.getDataNewspaper());
+			DataSource dataSource = dataSourceService.getById(dataNewspaper.getDataSource());
+			detail = new DataNews();
+			detail.setChsName(dataNewspaper.getChsName());
+			detail.setDataNewspaper(dataNewspaper.getUuid());
+			detail.setDataSource(dataNewspaper.getDataSource());
+			detail.setOrgName(dataNewspaper.getOrgName());
+			detail.setPubtime(dataNewspaper.getPublish());
+			detail.setLanguage(dataSource.getLanguage());
+		}
 		return ResponseData.success(detail);
 	}
 
@@ -117,7 +178,7 @@ public class DataNewsController extends BaseController {
 	public LayuiPageInfo list(DataNewsParam param) {
 		return this.dataNewsService.findPageBySpec(param);
 	}
-	
+
 	/**
 	 * :报纸新闻主页获取报纸新闻列表
 	 * 

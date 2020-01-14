@@ -231,7 +231,7 @@ layui.use(['table', 'ax'],
 		$('#btnAdd').click(function () {
 			Datasource.openAddDlg();
 		});
-
+		
 		// 工具条点击事件
 		table.on('tool(' + Datasource.tableId + ')', function (obj) {
 			var data = obj.data;
@@ -242,5 +242,10 @@ layui.use(['table', 'ax'],
 			} else if (layEvent === 'delete') {
 				Datasource.onDeleteItem(data);
 			}
+		});
+
+		// 添加按钮点击事件
+		$('#btnMigration').click(function () {
+			window.location.href = Feng.ctxPath + '/datasource/migration';
 		});
 	});

@@ -15,7 +15,7 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "主键")
-	private String uuid;
+	private Long uuid;
 
 	@ApiModelProperty(value = "原名称")
 	private String orgName;

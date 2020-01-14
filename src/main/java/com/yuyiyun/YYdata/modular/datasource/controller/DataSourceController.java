@@ -1,5 +1,6 @@
 package com.yuyiyun.YYdata.modular.datasource.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,9 +15,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.core.util.PostRequest;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
+import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
+import com.yuyiyun.YYdata.modular.system.service.DataSourceInfoService;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
@@ -39,6 +43,9 @@ public class DataSourceController {
 	private String PREFIX = "/modular/datasource";
 	@Autowired
 	DataSourceService dataSourceService;
+	
+	@Autowired
+	DataSourceInfoService dataSourceInfoService;
 
 	/**
 	 * :数据源主页面
@@ -217,5 +224,38 @@ public class DataSourceController {
 	public ResponseData detailByApi(String uuid) {
 		DataSource dataSource = this.dataSourceService.getById(uuid);
 		return ResponseData.success(dataSource);
+	}
+	
+	/**
+	 * :新增更新(数据源)页面
+	 * 
+	 * @param uuid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/migration")
+	public String migration() {
+		List<DataSourceInfo> list = dataSourceInfoService.list();
+		System.out.println(list.size());
+		int i=0;
+		for (DataSourceInfo dataSourceInfo : list) {
+			DataSourceParam dataSource = new DataSourceParam();
+			dataSource.setChsName(dataSourceInfo.getWebsiteName());
+			dataSource.setCountry(dataSourceInfo.getCountry());
+			dataSource.setCreateTime(dataSourceInfo.getCreateTime());
+			dataSource.setCreator(dataSourceInfo.getCreator());
+			dataSource.setEncoded(PostRequest.getEncoded(dataSourceInfo.getWebsiteUrl()));
+			dataSource.setLanguage(dataSourceInfo.getLanguage());
+			dataSource.setPlatform(1);
+			dataSource.setProxy(dataSourceInfo.getProxy());
+			dataSource.setRegion(dataSourceInfo.getRegion());
+			dataSource.setRemark(dataSourceInfo.getRemark()+"\n*^*\n"+dataSourceInfo.getUuid());
+			dataSource.setState(dataSourceInfo.getState());
+			dataSource.setUpdateTime(new Date());
+			dataSource.setWebsiteUrl(dataSourceInfo.getWebsiteUrl());
+			System.out.println("完成："+(++i));
+			this.dataSourceService.add(dataSource);
+		}
+		return PREFIX + "";
 	}
 }

@@ -3,6 +3,7 @@ package com.yuyiyun.YYdata.modular.newspaper.service;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -12,7 +13,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
+import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
+import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.mapper.DataNewsMapper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewsParam;
 
@@ -29,6 +33,22 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
  */
 @Service
 public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
+	@Autowired
+	DataNewspaperService dataNewspaperService;
+	@Autowired
+	DataSourceService dataSourceService;
+
+	public DataNews addOrEdit(DataNewsParam param) {
+		DataNewspaper dataNewspaper = dataNewspaperService.getById(param.getDataNewspaper());
+		DataSource dataSource = dataSourceService.getById(dataNewspaper.getDataSource());
+		param.setChsName(dataSource.getChsName());
+		param.setDataSource(dataSource.getUuid());
+		param.setLanguage(dataSource.getLanguage());
+		param.setOrgName(dataSource.getOrgName());
+		DataNews byId = this.getById(param.getUuid());
+		DataNews dataNews = ToolUtil.isEmpty(byId) ? add(param) : update(param);
+		return dataNews;
+	}
 
 	public DataNews add(DataNewsParam param) {
 		// 1、创建查询对象，根据电子报纸和URL
@@ -63,7 +83,7 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 				.and(i -> i.eq("data_newspaper", param.getDataNewspaper()).eq("url", param.getUrl()));
 		// 4、判断是否重复
 		int count = this.count(queryWrapper);
-		if (count > 0) {
+		if (count > 1) {
 			throw new ServiceException(BizExceptionEnum.DN_EXISTED);
 		}
 		// 5、更新数据
@@ -112,7 +132,5 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	private Serializable getKey(DataNewsParam param) {
 		return param.getUuid();
 	}
-
-	
 
 }

@@ -3,68 +3,206 @@
 <div class="layui-fluid " style="">
 	<div class="layui-card">
 		<div class="layui-card-body">
-			<form id="newspaperForm" lay-filter="newspaperForm" class="layui-form layui-form-pane">
-				<input name="uuid" id="uuid" type="hidden" value="${uuid}" /> <input name="dataSource" id="dataSource"
-					type="hidden" value="${dataSource}" />
+			<form id="newsForm" lay-filter="newsForm"
+				class="layui-form layui-form-pane">
+				<input name="uuid" id="uuid" type="hidden" value="${uuid}" /> <input
+					name="dataNewspaper" id="dataNewspaper" type="hidden"
+					value="${dataNewspaper}" />
 				<div class="layui-form-item">
-					<label class="layui-form-label">中文名称<span style="color: red;">*</span></label>
+					<label class="layui-form-label">标题<span style="color: red;">*</span></label>
 					<div class="layui-input-block">
-						<input name="chsName" id="chsName" placeholder="中文名称" type="text" class="layui-input"
-							readonly />
+						<input name="title" id="title" placeholder="新闻标题" type="text"
+							class="layui-input" lay-verify="required" required/>
+					</div>
+					<label class="layui-form-label">URL<span
+						style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="url" id="url" placeholder="新闻源链接" type="text"
+							class="layui-input" />
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label">原名称<span style="color: red;">*</span></label>
-					<div class="layui-input-block">
-						<input name="orgName" id="orgName" placeholder="原名称" type="text" class="layui-input"
-							readonly />
+					<div class="layui-row layui-col-space15">
+						<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+							<label class="layui-form-label">前置标题<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="pretitle" id="pretitle" placeholder="新闻前置标题"
+									type="text" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+							<label class="layui-form-label">后置标题<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="subtitle" id="subtitle" placeholder="新闻后置标题"
+									type="text" class="layui-input" />
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label">发布日期<span style="color: red;">*</span></label>
-					<div class="layui-input-block">
-						<input name="publish" id="publish" placeholder="请选择发布日期" type="text" class="layui-input"
-							lay-verify="required" required />
+					<div class="layui-row layui-col-space15">
+						<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+							<label class="layui-form-label">语种<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="language" id="language" placeholder="新闻语种"
+									type="text" class="layui-input" readonly />
+							</div>
+						</div>
+						<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+							<label class="layui-form-label">数据源<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="chsName" id="chsName" placeholder="新闻数据源"
+									type="text" class="layui-input" readonly />
+							</div>
+						</div>
+						<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+							<label class="layui-form-label">发布时间<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="pubtime" id="pubtime" placeholder="新闻发布时间"
+									type="text" class="layui-input" readonly />
+							</div>
+						</div>
+						<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+							<label class="layui-form-label">所属页面<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="number" id="number" placeholder="新闻所属页面"
+									type="text" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+							<label class="layui-form-label">所属频道<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="channel" id="channel" placeholder="新闻所属频道"
+									type="text" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+							<label class="layui-form-label">频道排序<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="paperCount" id="paperCount" placeholder="新闻频道排序"
+									type="number" class="layui-input" />
+							</div>
+						</div>
+
+						<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+							<label class="layui-form-label">所属版面<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="page" id="page" placeholder="新闻所属版面" type="text"
+									class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+							<label class="layui-form-label">版面名称<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="pageName" id="pageName" placeholder="新闻版面名称"
+									type="text" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+							<label class="layui-form-label">头条头版<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input type="radio" name="frontPage" value="1" title="是">
+								<input type="radio" name="frontPage" value="0" title="否" checked>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label">URL<span style="color: red;"></span></label>
-					<div class="layui-input-block">
-						<input name="url" id="url" placeholder="请输入URL" type="text" class="layui-input" />
+					<div class="layui-row layui-col-space15">
+						<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+							<label class="layui-form-label">新闻记者<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="author" id="author" placeholder="新闻记者" type="text"
+									class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+							<label class="layui-form-label">新闻编辑<span
+								style="color: red;"></span></label>
+							<div class="layui-input-block">
+								<input name="editor" id="editor" placeholder="新闻编辑" type="text"
+									class="layui-input" />
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label">封面<span style="color: red;"></span></label>
+					<label class="layui-form-label">所属位置<span
+						style="color: red;"></span></label>
 					<div class="layui-input-block">
-						<input name="cover" id="cover" placeholder="请输入封面" type="text" class="layui-input" />
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">状态<span style="color: red;"></span></label>
-					<div class="layui-input-block">
-						<select id="state" name="state">
-							<option value="0">正常</option>
-							<option value="1">测试</option>
-							<option value="2">上传</option>
-							<option value="3">同步</option>
-							<option value="4">完成</option>
-							<option value="5">废弃</option>
-							<option value="6">其他</option>
-						</select>
+						<input name="ha" id="ha" placeholder="新闻所属位置" type="text"
+							class="layui-input" />
 					</div>
 				</div>
 				<div class="layui-form-item layui-form-text">
-					<label class="layui-form-label">备注</label>
+					<label class="layui-form-label">新闻描述</label>
 					<div class="layui-input-block">
-						<textarea id="remark" name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+						<textarea id="abstracts" name="abstracts" placeholder="新闻描述"
+							class="layui-textarea"></textarea>
 					</div>
 				</div>
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">新闻正文</label>
+					<div class="layui-input-block">
+						<textarea id="tagContent" name="tagContent" placeholder="新闻描述"
+							class="layui-textarea" style="display: none;"></textarea>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">缩略图<span
+						style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<input name="websiteThumbnail" id="websiteThumbnail"
+							placeholder="新闻缩略图" type="text" class="layui-input" />
+					</div>
+					<label class="layui-form-label">PDF<span
+						style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<input name="websitePdf" id="websitePdf" placeholder="新闻PDF"
+							type="text" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-row layui-col-space15">
+					<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+						<div class="layui-form-item layui-form-text">
+							<label class="layui-form-label">新闻图片</label>
+							<div class="layui-input-block">
+								<textarea id="websitePictures" name="websitePictures"
+									placeholder="新闻图片" class="layui-textarea"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+						<div class="layui-form-item layui-form-text">
+							<label class="layui-form-label">图片描述</label>
+							<div class="layui-input-block">
+								<textarea id="picturesDescription" name="picturesDescription"
+									placeholder="图片描述" class="layui-textarea"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<div class="layui-form-item text-center">
-					<button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+					<button class="layui-btn layui-btn-primary" type="button"
+						ew-event="closeDialog">取消</button>
 					<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
 				</div>
-			</form>
 		</div>
+		</form>
 	</div>
+</div>
 </div>
 @}
