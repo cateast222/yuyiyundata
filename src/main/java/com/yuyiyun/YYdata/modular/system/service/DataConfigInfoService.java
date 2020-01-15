@@ -13,6 +13,8 @@ import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
 import com.yuyiyun.YYdata.modular.system.mapper.DataConfigInfoMapper;
 import com.yuyiyun.YYdata.modular.system.model.DataConfigdto;
 
+import cn.stylefeng.roses.core.util.ToolUtil;
+
 /**
  * 数据配置信息服务实现类
  * 
@@ -22,6 +24,26 @@ import com.yuyiyun.YYdata.modular.system.model.DataConfigdto;
 @Service
 public class DataConfigInfoService extends ServiceImpl<DataConfigInfoMapper, DataConfigInfo> {
 
+	public List<DataConfigInfo> list(DataConfigInfo dataConfigInfo) {
+		QueryWrapper<DataConfigInfo> wrapper = new QueryWrapper<DataConfigInfo>();
+		if (ToolUtil.isNotEmpty(dataConfigInfo.getDsiUuid())) {
+			wrapper.and(i -> i.eq("dsi_uuid", dataConfigInfo.getDsiUuid()));
+		}
+		List<DataConfigInfo> list = this.baseMapper.selectList(wrapper);
+		return list;
+	}
+	
+	public void add(DataConfigInfo dataConfigInfo) {
+		QueryWrapper<DataConfigInfo> wrapper = new QueryWrapper<DataConfigInfo>()
+				.and(i -> i.eq("dsi_uuid", dataConfigInfo.getDsiUuid())).and(i -> i.eq("ddi_value", dataConfigInfo.getDdiValue()));
+		int count = this.count(wrapper);
+		if (count == 0) {
+			dataConfigInfo.setUuid(UUID.randomUUID().toString().replaceAll("-", "").toUpperCase());
+			this.save(dataConfigInfo);
+		}
+		
+	}
+	
 	public DataConfigdto detail(String dsiUuid, String key) {
 		QueryWrapper<DataConfigInfo> wrapper = new QueryWrapper<DataConfigInfo>();
 		wrapper.and(i -> i.eq("dsi_uuid", dsiUuid)).and(i -> i.eq("ddi_key", key));

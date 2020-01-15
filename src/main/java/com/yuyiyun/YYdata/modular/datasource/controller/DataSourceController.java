@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
@@ -19,7 +20,9 @@ import com.yuyiyun.YYdata.core.util.PostRequest;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
+import com.yuyiyun.YYdata.modular.system.entity.DataConfigInfo;
 import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
+import com.yuyiyun.YYdata.modular.system.service.DataConfigInfoService;
 import com.yuyiyun.YYdata.modular.system.service.DataSourceInfoService;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
@@ -43,9 +46,11 @@ public class DataSourceController {
 	private String PREFIX = "/modular/datasource";
 	@Autowired
 	DataSourceService dataSourceService;
-	
+
 	@Autowired
 	DataSourceInfoService dataSourceInfoService;
+	@Autowired
+	DataConfigInfoService dataConfigInfoService;
 
 	/**
 	 * :数据源主页面
@@ -225,10 +230,8 @@ public class DataSourceController {
 		DataSource dataSource = this.dataSourceService.getById(uuid);
 		return ResponseData.success(dataSource);
 	}
-	
+
 	/**
-	 * :新增更新(数据源)页面
-	 * 
 	 * @param uuid
 	 * @param model
 	 * @return
@@ -237,7 +240,7 @@ public class DataSourceController {
 	public String migration() {
 		List<DataSourceInfo> list = dataSourceInfoService.list();
 		System.out.println(list.size());
-		int i=0;
+		int i = 0;
 		for (DataSourceInfo dataSourceInfo : list) {
 			DataSourceParam dataSource = new DataSourceParam();
 			dataSource.setChsName(dataSourceInfo.getWebsiteName());
@@ -249,12 +252,65 @@ public class DataSourceController {
 			dataSource.setPlatform(1);
 			dataSource.setProxy(dataSourceInfo.getProxy());
 			dataSource.setRegion(dataSourceInfo.getRegion());
-			dataSource.setRemark(dataSourceInfo.getRemark()+"\n*^*\n"+dataSourceInfo.getUuid());
+			dataSource.setRemark(dataSourceInfo.getRemark() + "\n*^*\n" + dataSourceInfo.getUuid());
 			dataSource.setState(dataSourceInfo.getState());
 			dataSource.setUpdateTime(new Date());
 			dataSource.setWebsiteUrl(dataSourceInfo.getWebsiteUrl());
-			System.out.println("完成："+(++i));
+			System.out.println("完成：" + (++i));
 			this.dataSourceService.add(dataSource);
+		}
+		return PREFIX + "";
+	}
+
+	/**
+	 * @param uuid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/config")
+	public String config() {
+		List<DataSource> list = dataSourceService.list(new QueryWrapper<DataSource>().ne("state", 0));
+		System.out.println(list.size());
+		int i = 0;
+		for (DataSource dataSourceInfo : list) {
+			System.out.println("~~~~~开始迁移："+dataSourceInfo.getChsName());
+			DataConfigInfo dataConfigInfo = new DataConfigInfo();
+			dataConfigInfo.setDsiUuid(dataSourceInfo.getRemark().split("\n\\*\\^\\*\n")[1]);
+			List<DataConfigInfo> configInfos = dataConfigInfoService.list(dataConfigInfo);
+			for (DataConfigInfo configInfo : configInfos) {
+				System.out.println("~~~~~~~~~~开始迁移配置："+configInfo.getDdiValue());
+				configInfo.setDsiUuid(dataSourceInfo.getUuid().toString());
+				configInfo.setUpdateTime(new Date());
+				dataConfigInfoService.add(configInfo);
+				System.out.println("~~~~~~~~~~完成迁移配置："+configInfo.getDdiValue());
+			}
+			System.out.println("~~~~~完成迁移（剩余"+(list.size()-(++i))+"）："+dataSourceInfo.getChsName());
+		}
+		return PREFIX + "";
+	}
+	/**
+	 * @param uuid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/news")
+	public String news() {
+		List<DataSource> list = dataSourceService.list(new QueryWrapper<DataSource>().ne("state", 0));
+		System.out.println(list.size());
+		int i = 0;
+		for (DataSource dataSourceInfo : list) {
+			System.out.println("~~~~~开始迁移："+dataSourceInfo.getChsName());
+			DataConfigInfo dataConfigInfo = new DataConfigInfo();
+			dataConfigInfo.setDsiUuid(dataSourceInfo.getRemark().split("\n\\*\\^\\*\n")[1]);
+			List<DataConfigInfo> configInfos = dataConfigInfoService.list(dataConfigInfo);
+			for (DataConfigInfo configInfo : configInfos) {
+				System.out.println("~~~~~~~~~~开始迁移配置："+configInfo.getDdiValue());
+				configInfo.setDsiUuid(dataSourceInfo.getUuid().toString());
+				configInfo.setUpdateTime(new Date());
+				dataConfigInfoService.add(configInfo);
+				System.out.println("~~~~~~~~~~完成迁移配置："+configInfo.getDdiValue());
+			}
+			System.out.println("~~~~~完成迁移（剩余"+(list.size()-(++i))+"）："+dataSourceInfo.getChsName());
 		}
 		return PREFIX + "";
 	}

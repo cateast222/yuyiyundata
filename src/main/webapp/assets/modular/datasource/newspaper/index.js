@@ -139,11 +139,13 @@ layui.use(['table', 'ax'],
 						} else if (d.state == 2) {
 							return "配置";
 						} else if (d.state == 3) {
-							return "测试完成";
+							return "完成";
 						} else if (d.state == 4) {
-							return "测试通过";
-						} else {
+							return "通过";
+						} else if (d.state == -1) {
 							return "弃用";
+						} else {
+							return "其他";
 						}
 					},
 					align: 'center',
@@ -231,7 +233,7 @@ layui.use(['table', 'ax'],
 		$('#btnAdd').click(function () {
 			Datasource.openAddDlg();
 		});
-		
+
 		// 工具条点击事件
 		table.on('tool(' + Datasource.tableId + ')', function (obj) {
 			var data = obj.data;
@@ -246,6 +248,6 @@ layui.use(['table', 'ax'],
 
 		// 添加按钮点击事件
 		$('#btnMigration').click(function () {
-			window.location.href = Feng.ctxPath + '/datasource/migration';
+			window.location.href = Feng.ctxPath + '/datasource/news';
 		});
 	});

@@ -127,11 +127,13 @@ layui.use(['table', 'ax'],
 						} else if (d.state == 2) {
 							return "配置";
 						} else if (d.state == 3) {
-							return "测试完成";
+							return "完成";
 						} else if (d.state == 4) {
-							return "测试通过";
-						} else {
+							return "通过";
+						} else if (d.start == -1) {
 							return "弃用";
+						} else {
+							return "其他";
 						}
 					},
 					align: 'center',
