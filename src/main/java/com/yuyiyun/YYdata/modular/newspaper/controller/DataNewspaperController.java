@@ -217,7 +217,9 @@ public class DataNewspaperController extends BaseController {
 	@PostMapping("/addByApi")
 	@ResponseBody
 	public ResponseData addByApi(@RequestBody() DataNewspaperParam param) {
-		DataNewspaper add = this.dataNewspaperService.add(param);
+		System.out.println("param-->:"+param);
+//		param.setCreator(ShiroKit.getUser().getAccount());
+		DataNewspaper add = this.dataNewspaperService.addOrEdit(param);
 		if (add != null) {
 			return ResponseData.success(add);
 		} else {
@@ -236,10 +238,11 @@ public class DataNewspaperController extends BaseController {
 	@ApiOperation(value = "数据排重", notes = "排重电子报纸")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "pubTime", value = "发布日期", required = true, paramType = "query", dataType = "String"),
+			@ApiImplicitParam(name = "url", value = "URL", required = true, paramType = "query", dataType = "String"),
 			@ApiImplicitParam(name = "dsiUuid", value = "数据源", required = true, paramType = "query", dataType = "String") })
 	@PostMapping("/isExistByApi")
 	@ResponseBody
-	public ResponseData isExist(String pubTime, String dsiUuid) {
-		return dataNewspaperService.isExist(dsiUuid, pubTime);
+	public ResponseData isExist(String pubTime,String url, String dsiUuid) {
+		return dataNewspaperService.isExist(dsiUuid, url, pubTime);
 	}
 }

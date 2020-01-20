@@ -16,7 +16,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
-import com.yuyiyun.YYdata.core.util.PostRequest;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
@@ -247,7 +246,7 @@ public class DataSourceController {
 			dataSource.setCountry(dataSourceInfo.getCountry());
 			dataSource.setCreateTime(dataSourceInfo.getCreateTime());
 			dataSource.setCreator(dataSourceInfo.getCreator());
-			dataSource.setEncoded(PostRequest.getEncoded(dataSourceInfo.getWebsiteUrl()));
+//			dataSource.setEncoded(PostRequest.getEncoded(dataSourceInfo.getWebsiteUrl()));
 			dataSource.setLanguage(dataSourceInfo.getLanguage());
 			dataSource.setPlatform(1);
 			dataSource.setProxy(dataSourceInfo.getProxy());

@@ -16,6 +16,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
+import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.mapper.DataNewspaperMapper;
@@ -37,6 +39,8 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataNewspaper> {
 	@Autowired
 	DataNewsService dataNewsService;
+	@Autowired
+	DataSourceService dataSourceService;
 
 	@SuppressWarnings({ "rawtypes", "null" })
 	public List<Map<String, Object>> listFromNews(Page page, String publish, String condition) {
@@ -52,6 +56,9 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	}
 
 	public DataNewspaper addOrEdit(DataNewspaperParam param) {
+		DataSource dataSource = dataSourceService.getById(param.getDataSource());
+		param.setChsName(dataSource.getChsName());
+		param.setOrgName(dataSource.getOrgName());
 		// 1、根据UUID检索判断是否存在
 		DataNewspaper byId = this.getById(param.getUuid());
 		// 2、若存在执行更新，不存在执行新增
@@ -131,10 +138,11 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		return LayuiPageFactory.createPageInfo(page);
 	}
 
-	public ResponseData isExist(String dsiUuid, String pubTime) {
+	public ResponseData isExist(String dsiUuid, String url, String pubTime) {
 		// 1、创建查询对象，根据数据源和发布时间
 		QueryWrapper<DataNewspaper> queryWrapper = new QueryWrapper<DataNewspaper>()
-				.and(i -> i.eq("data_source", dsiUuid).eq("publish", pubTime + " 00:00:00"));
+				.and(i -> i.eq("data_source", dsiUuid).eq("publish", pubTime + " 00:00:00"))
+				.or(i -> i.eq("data_source", dsiUuid).eq("url", url));
 		// 2、判断电子报纸是否重复
 		int count = this.count(queryWrapper);
 		if (count > 0) {

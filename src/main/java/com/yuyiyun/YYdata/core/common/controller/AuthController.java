@@ -51,8 +51,18 @@ public class AuthController {
 			}
 
 		} else if (type.equals(JwtConstants.GRANT_TYPE_REFRESHTTOKEN)) {
-			if (password == null || password.trim() == "") {
+			if (refreshToken == null || refreshToken.trim() == "") {
 				return ResponseData.error(704, "refreshToken参数缺失！");
+			}else {
+				String usernameFromToken = JwtTokenUtil.getUsernameFromToken(refreshToken);
+				String token = JwtTokenUtil.generateToken(usernameFromToken);
+				HashMap<String, Object> data = new HashMap<String, Object>();
+				data.put("access_token", token);
+				data.put("token_type", "Bearer ");
+				data.put("usernameFromToken", usernameFromToken);
+				data.put("suedAtDateFromToken", JwtTokenUtil.getIssuedAtDateFromToken(token));
+				data.put("sxpirationDateFromToken", JwtTokenUtil.getExpirationDateFromToken(token));
+				return ResponseData.success(data);
 			}
 		}
 		return ResponseData.error("You Silly!☺");
