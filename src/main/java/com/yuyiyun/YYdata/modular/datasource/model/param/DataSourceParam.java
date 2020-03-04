@@ -33,7 +33,10 @@ public class DataSourceParam implements Serializable,BaseValidatingParam{
 	private String websiteName;
 
 	@ApiModelProperty(value = "所属平台")
-	private Integer platform;
+	private String platform;
+	
+	@ApiModelProperty(value = "数据提供方")
+	private String provider;
 
 	@ApiModelProperty(value = "国家")
 	private String country;
@@ -48,13 +51,13 @@ public class DataSourceParam implements Serializable,BaseValidatingParam{
 	private String encoded;
 
 	@ApiModelProperty(value = "所属境区")
-	private Integer proxy;
+	private String proxy;
 
 	@ApiModelProperty(value = "备注")
 	private String remark;
 
 	@ApiModelProperty(value = "状态")
-	private Integer state;
+	private String state;
 
 	@ApiModelProperty(value = " 创建者")
 	private String creator;

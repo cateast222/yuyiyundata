@@ -12,6 +12,7 @@
         <result column="website_url" property="websiteUrl" />
         <result column="website_name" property="websiteName" />
         <result column="platform" property="platform" />
+        <result column="provider" property="provider" />
         <result column="country" property="country" />
         <result column="region" property="region" />
         <result column="language" property="language" />
@@ -47,7 +48,7 @@
         FROM
         data_source a
         WHERE
-        a.platform = 1
+        a.platform = '1'
         <if test="condition != null and condition !=''">
             AND a.chs_name like CONCAT('%',#{condition},'%')
             <!-- AND a.chs_name = #{condition} -->

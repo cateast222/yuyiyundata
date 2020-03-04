@@ -56,6 +56,12 @@ public class DataNews implements Serializable {
 	 */
 	@TableField("data_newspaper")
 	private Long dataNewspaper;
+	
+	/**
+	 * 数据提供方
+	 */
+	@TableField("provider")
+	private String provider;
 
 	/**
 	 * 新闻发布时间
@@ -124,11 +130,23 @@ public class DataNews implements Serializable {
 	private String websitePictures;
 
 	/**
-	 * 新闻图片本地链接
+	 * 新闻音频源链接
 	 */
-	@TableField("local_pictures")
-	private String localPictures;
+	@TableField("website_audios")
+	private String websiteAudios;
+	
+	/**
+	 * 新闻视频源链接
+	 */
+	@TableField("website_videos")
+	private String websiteVideos;
 
+	/**
+	 * 新闻文件源链接
+	 */
+	@TableField("website_files")
+	private String websiteFiles;
+	
 	/**
 	 * 新闻图片描述
 	 */
@@ -148,22 +166,11 @@ public class DataNews implements Serializable {
 	private String websiteThumbnail;
 
 	/**
-	 * 新闻缩略图本地链接
-	 */
-	@TableField("local_thumbnail")
-	private String localThumbnail;
-
-	/**
 	 * 新闻PDF源链接
 	 */
 	@TableField("website_pdf")
 	private String websitePdf;
 
-	/**
-	 * 新闻PDF本地链接
-	 */
-	@TableField("local_pdf")
-	private String localPdf;
 
 	/**
 	 * 新闻所属位置
@@ -223,7 +230,7 @@ public class DataNews implements Serializable {
 	 * 新闻状态（-2：系统测试数据；-1：测试数据；0：无；1：正常数据；2：已归档数据）
 	 */
 	@TableField("state")
-	private Integer state;
+	private String state;
 
 	/**
 	 * 创建者

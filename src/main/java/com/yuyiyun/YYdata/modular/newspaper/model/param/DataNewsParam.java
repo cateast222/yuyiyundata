@@ -28,6 +28,9 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 
 	@ApiModelProperty(value = "电子报纸")
 	private Long dataNewspaper;
+	
+	@ApiModelProperty(value = "数据提供方")
+	private String provider;
 
 	@ApiModelProperty(value = "发布时间")
 	private Date pubtime;
@@ -62,9 +65,15 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 	@ApiModelProperty(value = "图片源链接")
 	private String websitePictures;
 
-	@ApiModelProperty(value = "图片本地链接")
-	private String localPictures;
+	@ApiModelProperty(value = "音频源链接")
+	private String websiteAudios;
+	
+	@ApiModelProperty(value = "视频源链接")
+	private String websiteVideos;
 
+	@ApiModelProperty(value = "文件源链接")
+	private String websiteFiles;
+	
 	@ApiModelProperty(value = "图片描述")
 	private String picturesDescription;
 
@@ -74,14 +83,8 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 	@ApiModelProperty(value = "缩略图源链接")
 	private String websiteThumbnail;
 
-	@ApiModelProperty(value = "缩略图本地链接")
-	private String localThumbnail;
-
 	@ApiModelProperty(value = "PDF源链接")
 	private String websitePdf;
-
-	@ApiModelProperty(value = "PDF本地链接")
-	private String localPdf;
 
 	@ApiModelProperty(value = "所属位置")
 	private String ha;
@@ -111,7 +114,7 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 	private String remark;
 
 	@ApiModelProperty(value = "状态")
-	private Integer state;
+	private String state;
 
 	@ApiModelProperty(value = "创建者")
 	private String creator;

@@ -59,8 +59,14 @@ public class DataSource implements Serializable {
 	 * 所属平台
 	 */
 	@TableField("platform")
-	private Integer platform;
+	private String platform;
 
+	/**
+	 * 数据提供方
+	 */
+	@TableField("provider")
+	private String provider;
+	
 	/**
 	 * 国家
 	 */
@@ -89,7 +95,7 @@ public class DataSource implements Serializable {
 	 * 所属境区
 	 */
 	@TableField("proxy")
-	private Integer proxy;
+	private String proxy;
 
 	/**
 	 * 备注
@@ -98,10 +104,10 @@ public class DataSource implements Serializable {
 	private String remark;
 
 	/**
-	 * 状态：-1.弃用、0.测试数据、1.启用、2.配置、3.测试完成、4.测试通过
+	 * 状态(数据源状态字典)：-1.弃用、0.测试数据、1.启用、2.配置、3.测试完成、4.测试通过
 	 */
 	@TableField("state")
-	private Integer state;
+	private String state;
 
 	/**
 	 * 创建者

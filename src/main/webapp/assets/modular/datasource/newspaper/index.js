@@ -166,7 +166,7 @@ layui.use(['table', 'ax'],
 			var queryData = {};
 			queryData['condition'] = $("#condition").val();
 			queryData['state'] = $("#state").val();
-			queryData['platform'] = 1;
+//			queryData['platform'] = 1;
 			table.reload(Datasource.tableId, {
 				where: queryData
 			});

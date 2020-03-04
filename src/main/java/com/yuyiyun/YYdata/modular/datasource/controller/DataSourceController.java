@@ -248,11 +248,11 @@ public class DataSourceController {
 			dataSource.setCreator(dataSourceInfo.getCreator());
 //			dataSource.setEncoded(PostRequest.getEncoded(dataSourceInfo.getWebsiteUrl()));
 			dataSource.setLanguage(dataSourceInfo.getLanguage());
-			dataSource.setPlatform(1);
-			dataSource.setProxy(dataSourceInfo.getProxy());
+			dataSource.setPlatform("1");
+			dataSource.setProxy(dataSourceInfo.getProxy().toString());
 			dataSource.setRegion(dataSourceInfo.getRegion());
 			dataSource.setRemark(dataSourceInfo.getRemark() + "\n*^*\n" + dataSourceInfo.getUuid());
-			dataSource.setState(dataSourceInfo.getState());
+			dataSource.setState(dataSourceInfo.getState().toString());
 			dataSource.setUpdateTime(new Date());
 			dataSource.setWebsiteUrl(dataSourceInfo.getWebsiteUrl());
 			System.out.println("完成：" + (++i));

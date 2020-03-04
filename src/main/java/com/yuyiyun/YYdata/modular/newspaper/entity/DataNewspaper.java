@@ -84,6 +84,12 @@ public class DataNewspaper implements Serializable {
 	 */
 	@TableField("data_source")
 	private Long dataSource;
+	
+	/**
+	 * 数据提供方
+	 */
+	@TableField("provider")
+	private String provider;
 
 	/**
 	 * 备注
@@ -95,7 +101,7 @@ public class DataNewspaper implements Serializable {
 	 * 状态
 	 */
 	@TableField("state")
-	private Integer state;
+	private String state;
 
 	/**
 	 * 创建者

@@ -40,12 +40,15 @@ public class DataNewspaperParam implements Serializable, BaseValidatingParam {
 
 	@ApiModelProperty(value = "数据源")
 	private Long dataSource;
+	
+	@ApiModelProperty(value = "数据提供方")
+	private String provider;
 
 	@ApiModelProperty(value = "备注")
 	private String remark;
 
 	@ApiModelProperty(value = "状态")
-	private Integer state;
+	private String state;
 
 	@ApiModelProperty(value = "创建者")
 	private String creator;
