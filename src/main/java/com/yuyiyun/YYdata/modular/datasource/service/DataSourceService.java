@@ -18,6 +18,7 @@ import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.mapper.DataSourceMapper;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
+import com.yuyiyun.YYdata.modular.datasource.wrapper.DataSourceWrapper;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.service.DataNewsService;
@@ -127,7 +128,6 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		return newEntity;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public LayuiPageInfo findPageBySpec(DataSourceParam param) {
 		// 1、获取分页对象
 		Page pageContext = getPageContext();
@@ -150,8 +150,10 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		// 6、根据创建时间进行排序
 		pageContext.setDesc("update_time");
 		// 7、封装分页数据
-		IPage page = this.page(pageContext, queryWrapper);
-		return LayuiPageFactory.createPageInfo(page);
+		Page<Map<String, Object>> pageMaps = (Page<Map<String, Object>>) this.pageMaps(pageContext, queryWrapper);
+//		IPage page = this.page(pageContext, queryWrapper);
+		Page<Map<String, Object>> wrap = new DataSourceWrapper(pageMaps).wrap();
+		return LayuiPageFactory.createPageInfo(wrap);
 	}
 
 	private DataSource getOldEntity(DataSourceParam param) {

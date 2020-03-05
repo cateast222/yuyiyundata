@@ -108,6 +108,11 @@ public interface IConstantFactory {
      * 查询字典
      */
     List<Dict> findInDict(Long id);
+    
+    /**
+     * 查询字典
+     */
+    List<Dict> findInDict(String name);
 
     /**
      * 获取被缓存的对象(用户删除业务)

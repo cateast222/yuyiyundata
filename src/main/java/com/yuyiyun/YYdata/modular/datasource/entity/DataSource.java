@@ -56,19 +56,19 @@ public class DataSource implements Serializable {
 	private String websiteName;
 
 	/**
-	 * 所属平台
+	 * 所属平台（数据源平台字典）
 	 */
 	@TableField("platform")
 	private String platform;
 
 	/**
-	 * 数据提供方
+	 * 数据提供方（数据源提供方字典）
 	 */
 	@TableField("provider")
 	private String provider;
 	
 	/**
-	 * 国家
+	 * 国家（国家字典）
 	 */
 	@TableField("country")
 	private String country;
@@ -80,19 +80,19 @@ public class DataSource implements Serializable {
 	private String region;
 
 	/**
-	 * 语种
+	 * 语种（语种字典）
 	 */
 	@TableField("language")
 	private String language;
 
 	/**
-	 * 编码
+	 * 编码（编码字典）
 	 */
 	@TableField("encoded")
 	private String encoded;
 
 	/**
-	 * 所属境区
+	 * 所属境区（境区字典）
 	 */
 	@TableField("proxy")
 	private String proxy;
@@ -104,7 +104,7 @@ public class DataSource implements Serializable {
 	private String remark;
 
 	/**
-	 * 状态(数据源状态字典)：-1.弃用、0.测试数据、1.启用、2.配置、3.测试完成、4.测试通过
+	 * 状态(数据源状态字典)：-2.弃用、-1.测试、0.正常、1.配置、2.提测、3.完成、4.通过、5.启用
 	 */
 	@TableField("state")
 	private String state;

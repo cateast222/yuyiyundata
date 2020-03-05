@@ -47,16 +47,21 @@
 					<label class="layui-form-label">所属平台<span
 						style="color: red;"></span></label>
 					<div class="layui-input-block">
-						<select id="platform" name="platform">
-							<option value="1">电子报纸</option>
-							<option value="2">新闻网站</option>
-							<option value="3">APP</option>
-							<option value="4">国内QQ</option>
-							<option value="5">国内微信</option>
-							<option value="6">国内微博</option>
-							<option value="7">国外Facebook</option>
-							<option value="8">国外Twitter</option>
-							<option value="9">其他</option>
+						<select id="platform" name="platform" lay-search="">
+							@for(item in dataSourcePlatform){
+							<option value="${item.code}">${item.name}</option> 
+							@}
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">提供方<span
+						style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<select id="provider" name="provider" lay-search="">
+							@for(item in dataSourceProvider){
+							<option value="${item.code}">${item.name}</option> 
+							@}
 						</select>
 					</div>
 				</div>
@@ -64,8 +69,11 @@
 					<label class="layui-form-label">所属国家<span
 						style="color: red;"></span></label>
 					<div class="layui-input-block">
-						<input id="country" name="country" placeholder="请输入国家" type="text"
-							class="layui-input" />
+						<select id="country" name="country" lay-search="">
+							@for(item in dataSourceNationalArea){
+							<option value="${item.code}">${item.name}</option> 
+							@}
+						</select>
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -79,36 +87,40 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">语种<span style="color: red;"></span></label>
 					<div class="layui-input-block">
-						<input id="language" name="language" placeholder="请输入语种"
-							type="text" class="layui-input" />
+						<select id="language" name="language" lay-search="">
+							@for(item in dataSourceLanguage){
+							<option value="${item.code}">${item.name}</option> 
+							@}
+						</select>
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">编码<span style="color: red;"></span></label>
 					<div class="layui-input-block">
-						<input id="encoded" name="encoded" placeholder="请输入编码" type="text"
-							class="layui-input" />
+						<select id="encoded" name="encoded" lay-search="">
+							@for(item in dataSourceEncoded){
+							<option value="${item.code}">${item.name}</option> 
+							@}
+						</select>
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">境区<span style="color: red;"></span></label>
 					<div class="layui-input-block">
-						<select id="proxy" name="proxy">
-							<option value="0">境内</option>
-							<option value="1">境外</option>
+						<select id="proxy" name="proxy" lay-search="">
+							@for(item in dataSourceProxy){
+							<option value="${item.code}">${item.name}</option> 
+							@}
 						</select>
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">状态<span style="color: red;"></span></label>
 					<div class="layui-input-block">
-						<select id="state" name="state">
-							<option value="2">配置</option>
-							<option value="0">测试</option>
-							<option value="3">完成</option>
-							<option value="4">通过</option>
-							<option value="1">启用</option>
-							<option value="-1">弃用</option>
+						<select id="state" name="state" lay-search="">
+							@for(item in dataSourceState){
+							<option value="${item.code}">${item.name}</option> 
+							@}
 						</select>
 					</div>
 				</div>

@@ -28,7 +28,7 @@ layui.use(['table', 'ax'],
 					title: "数据源id"
 				},
 				{
-					field: 'chsName',
+					field: 'chs_name',
 					sort: true,
 					title: '中文名称',
 					templet: function (d) {
@@ -41,115 +41,77 @@ layui.use(['table', 'ax'],
 						return '<a title="备注：' + d.remark
 							+ '" style="color:' + color
 							+ '" href="' + url + '">'
-							+ d.chsName + '</a>';
+							+ d.chs_name + '</a>';
 					},
 					align: 'center',
 					width: 120
 				},
 				{
-					field: 'orgName',
+					field: 'org_name',
 					sort: true,
 					title: '原名称',
 					align: 'center',
 					width: 120
 				},
 				{
-					field: 'platform',
+					field: 'providerName',
 					sort: true,
-					title: '平台',
-					templet: function (d) {
-						var platform = d.platform;
-						return platform == 1 ? '电子报纸' :
-							platform == 2 ? '新闻网站' :
-								platform == 3 ? 'APP' :
-									platform == 4 ? '国内QQ' :
-										platform == 5 ? '国内微信' :
-											platform == 6 ? '国内微博' :
-												platform == 7 ? '国外Facebook' :
-													platform == 8 ? '国外Twitter' :
-														'其他';
-					},
+					title: '提供方',
 					align: 'center',
-					width: 120
+					width: 140
 				},
 				{
-					field: 'websiteUrl',
+					field: 'website_url',
 					sort: true,
 					title: '网站地址',
 					templet: function (d) {
-						return '<a title="' + d.websiteUrl +
+						return '<a title="' + d.website_url +
 							'" style="color: #01AAED;" href="' +
-							d.websiteUrl + '" target="_blank">' +
-							d.websiteUrl + '</a>';
+							d.website_url + '" target="_blank">' +
+							d.website_url + '</a>';
 					}
 				},
 				{
-					field: 'websiteName',
+					field: 'website_name',
 					sort: true,
 					title: '网站名称',
 					align: 'center',
 					width: 120
 				},
 				{
-					field: 'country',
+					field: 'countryName',
 					sort: true,
 					title: '国家',
 					align: 'center',
-					width: 80
+					width: 100
 				}, {
 					field: 'region',
 					sort: true,
 					title: '地区'
 				}, {
-					field: 'proxy',
+					field: 'proxyName',
 					sort: true,
 					title: '境区',
-					templet: function (d) {
-						if (d.proxy == 0) {
-							return "境内";
-						} else if (d.proxy == 1) {
-							return "境外";
-						} else {
-							return "其他";
-						}
-					},
 					align: 'center',
-					width: 80
+					width: 70
 				}, {
-					field: 'language',
+					field: 'languageName',
 					sort: true,
 					title: '语种',
 					align: 'center',
-					width: 90
+					width: 100
 				}, {
-					field: 'encoded',
+					field: 'encodedName',
 					sort: true,
 					title: '编码',
 					align: 'center',
 					width: 90
 				}, {
-					field: 'state',
+					field: 'stateName',
 					sort: true,
 					title: '状态',
-					templet: function (d) {
-						if (d.state == 1) {
-							return "启用";
-						} else if (d.state == 0) {
-							return "测试";
-						} else if (d.state == 2) {
-							return "配置";
-						} else if (d.state == 3) {
-							return "完成";
-						} else if (d.state == 4) {
-							return "通过";
-						} else if (d.state == -1) {
-							return "弃用";
-						} else {
-							return "其他";
-						}
-					},
 					align: 'center',
-					width: 90
+					width: 65
 				}, {
 					toolbar: '#tableBar',
 					title: '操作',
