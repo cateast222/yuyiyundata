@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.mapper.DataSourceMapper;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
@@ -54,16 +55,6 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		DataSource dataSource = ToolUtil.isEmpty(byId) ? add(param) : update(param);
 		// 3、数据返回
 		return dataSource;
-		/*
-		 * if (ToolUtil.isEmpty(byId)) { System.out.println("新增"); add(param); } else {
-		 * System.out.println("更新"); update(param); }
-		 *
-		 * DataSource entity = getEntity(param); if
-		 * (ToolUtil.isEmpty(entity.getChsName())) {
-		 * entity.setChsName(entity.getWebsiteName()); } if
-		 * (ToolUtil.isEmpty(entity.getOrgName())) {
-		 * entity.setOrgName(entity.getOrgName()); } this.saveOrUpdate(entity);
-		 */
 	}
 
 	public DataSource add(DataSourceParam param) {
@@ -83,6 +74,9 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		}
 		if (ToolUtil.isEmpty(entity.getOrgName())) {
 			entity.setOrgName(entity.getChsName());
+		}
+		if (ToolUtil.isEmpty(entity.getCreator())) {
+			entity.setCreator(ShiroKit.getUser().getAccount());
 		}
 		// 4、数据存储
 		this.save(entity);

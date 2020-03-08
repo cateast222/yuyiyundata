@@ -155,7 +155,6 @@ public class DataSourceController {
 	@RequestMapping("/addAndEditItem")
 	@ResponseBody
 	public ResponseData addAndEditItem(DataSourceParam param) {
-		param.setCreator(ShiroKit.getUser().getAccount());
 		this.dataSourceService.addOrEdit(param);
 		return ResponseData.success();
 	}
@@ -170,7 +169,6 @@ public class DataSourceController {
 	@RequestMapping("/addItem")
 	@ResponseBody
 	public ResponseData addItem(DataSourceParam param) {
-		param.setCreator(ShiroKit.getUser().getAccount());
 		this.dataSourceService.add(param);
 		return ResponseData.success();
 	}

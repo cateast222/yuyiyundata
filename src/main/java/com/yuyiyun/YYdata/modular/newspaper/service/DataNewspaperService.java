@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
@@ -42,7 +43,7 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	@Autowired
 	DataSourceService dataSourceService;
 
-	@SuppressWarnings({ "rawtypes", "null" })
+	@SuppressWarnings({ "rawtypes" })
 	public List<Map<String, Object>> listFromNews(Page page, String publish, String condition) {
 		if (!(publish == null || publish.equals(""))) {
 			publish += " 00:00:00";
@@ -59,6 +60,7 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		DataSource dataSource = dataSourceService.getById(param.getDataSource());
 		param.setChsName(dataSource.getChsName());
 		param.setOrgName(dataSource.getOrgName());
+		param.setProvider(dataSource.getProvider());
 		// 1、根据UUID检索判断是否存在
 		DataNewspaper byId = this.getById(param.getUuid());
 		// 2、若存在执行更新，不存在执行新增
@@ -79,6 +81,8 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		}
 		// 3、对象转换
 		DataNewspaper entity = getEntity(param);
+		entity.setCreator(
+				ToolUtil.isEmpty(entity.getCreator()) ? ShiroKit.getUser().getAccount() : entity.getCreator());
 		entity.setFullName(new SimpleDateFormat(entity.getChsName() + "-yyyy-MM-dd").format(entity.getPublish()));
 		// 4、数据存储
 		this.save(entity);

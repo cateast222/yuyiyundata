@@ -93,7 +93,6 @@ public class DataNewsController extends BaseController {
 	@RequestMapping("/addItem")
 	@ResponseBody
 	public ResponseData addItem(DataNewsParam param) {
-		param.setCreator(ShiroKit.getUser().getAccount());
 		this.dataNewsService.add(param);
 		return ResponseData.success();
 	}
@@ -136,7 +135,6 @@ public class DataNewsController extends BaseController {
 	@RequestMapping("/addAndEditItem")
 	@ResponseBody
 	public ResponseData addAndEditItem(DataNewsParam param) {
-		param.setCreator(ShiroKit.getUser().getAccount());
 		this.dataNewsService.addOrEdit(param);
 		return ResponseData.success();
 	}
@@ -159,7 +157,6 @@ public class DataNewsController extends BaseController {
 			detail.setChsName(dataNewspaper.getChsName());
 			detail.setDataNewspaper(dataNewspaper.getUuid());
 			detail.setDataSource(dataNewspaper.getDataSource());
-			detail.setOrgName(dataNewspaper.getOrgName());
 			detail.setPubtime(dataNewspaper.getPublish());
 			detail.setLanguage(dataSource.getLanguage());
 		}
@@ -206,7 +203,7 @@ public class DataNewsController extends BaseController {
 	@PostMapping("/addByApi")
 	@ResponseBody
 	public ResponseData addByApi(@RequestBody() DataNewsParam param) {
-		DataNews add = this.dataNewsService.add(param);
+		DataNews add = this.dataNewsService.addOrEdit(param);
 		if (add != null) {
 			return ResponseData.success(add);
 		} else {

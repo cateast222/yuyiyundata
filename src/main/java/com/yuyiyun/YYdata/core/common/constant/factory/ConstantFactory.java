@@ -325,6 +325,7 @@ public class ConstantFactory implements IConstantFactory {
 		} else {
 			QueryWrapper<Dict> wrapper = new QueryWrapper<>();
 			wrapper = wrapper.eq("dict_type_id", dictType.getDictTypeId());
+			wrapper.orderByAsc("sort","create_time");
 			List<Dict> dicts = dictMapper.selectList(wrapper);
 			if (dicts == null || dicts.size() == 0) {
 				return null;

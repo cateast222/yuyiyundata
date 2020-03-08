@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
@@ -41,10 +42,12 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	public DataNews addOrEdit(DataNewsParam param) {
 		DataNewspaper dataNewspaper = dataNewspaperService.getById(param.getDataNewspaper());
 		DataSource dataSource = dataSourceService.getById(dataNewspaper.getDataSource());
-		param.setChsName(dataSource.getChsName());
+		param.setPubtime(dataNewspaper.getPublish());
+		param.setChsName(dataNewspaper.getChsName());
+		param.setOrgName(dataNewspaper.getOrgName());
+		param.setProvider(dataNewspaper.getProvider());
 		param.setDataSource(dataSource.getUuid());
 		param.setLanguage(dataSource.getLanguage());
-		param.setOrgName(dataSource.getOrgName());
 		DataNews byId = this.getById(param.getUuid());
 		DataNews dataNews = ToolUtil.isEmpty(byId) ? add(param) : update(param);
 		return dataNews;
@@ -61,6 +64,8 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		}
 		// 3、对象转换
 		DataNews entity = getEntity(param);
+		entity.setCreator(
+				ToolUtil.isEmpty(entity.getCreator()) ? ShiroKit.getUser().getAccount() : entity.getCreator());
 		// 4、数据存储
 		this.save(entity);
 		// 5、数据回调

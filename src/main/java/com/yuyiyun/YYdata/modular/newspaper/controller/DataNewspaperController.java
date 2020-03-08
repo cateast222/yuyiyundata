@@ -90,7 +90,6 @@ public class DataNewspaperController extends BaseController {
 	@RequestMapping("/addItem")
 	@ResponseBody
 	public ResponseData addItem(DataNewspaperParam param) {
-		param.setCreator(ShiroKit.getUser().getAccount());
 		this.dataNewspaperService.add(param);
 		return ResponseData.success();
 	}
@@ -133,7 +132,6 @@ public class DataNewspaperController extends BaseController {
 	@RequestMapping("/addAndEditItem")
 	@ResponseBody
 	public ResponseData addAndEditItem(DataNewspaperParam param) {
-		param.setCreator(ShiroKit.getUser().getAccount());
 		this.dataNewspaperService.addOrEdit(param);
 		return ResponseData.success();
 	}
@@ -218,7 +216,6 @@ public class DataNewspaperController extends BaseController {
 	@ResponseBody
 	public ResponseData addByApi(@RequestBody() DataNewspaperParam param) {
 		System.out.println("param-->:"+param);
-//		param.setCreator(ShiroKit.getUser().getAccount());
 		DataNewspaper add = this.dataNewspaperService.addOrEdit(param);
 		if (add != null) {
 			return ResponseData.success(add);
