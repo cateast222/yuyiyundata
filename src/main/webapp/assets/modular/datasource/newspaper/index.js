@@ -116,7 +116,7 @@ layui.use(['table', 'ax'],
 					toolbar: '#tableBar',
 					title: '操作',
 					align: 'center',
-					width: 120
+					width: 130
 				}
 			]];
 		};

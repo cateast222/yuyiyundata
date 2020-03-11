@@ -138,7 +138,7 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 					}
 				}
 			}, {
-				width: 150,
+				width: 160,
 				align: 'center',
 				toolbar: '#tableBar',
 				title: '操作'
