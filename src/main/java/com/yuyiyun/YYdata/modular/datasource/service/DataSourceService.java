@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
@@ -122,6 +121,7 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		return newEntity;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public LayuiPageInfo findPageBySpec(DataSourceParam param) {
 		// 1、获取分页对象
 		Page pageContext = getPageContext();

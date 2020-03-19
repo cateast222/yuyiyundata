@@ -3,7 +3,6 @@ package com.yuyiyun.YYdata.modular.newspaper.service;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.mapper.DataNewspaperMapper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewspaperParam;
+import com.yuyiyun.YYdata.modular.newspaper.wrapper.DataNewspaperWrapper;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
@@ -44,16 +44,22 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	DataSourceService dataSourceService;
 
 	@SuppressWarnings({ "rawtypes" })
-	public List<Map<String, Object>> listFromNews(Page page, String publish, String condition) {
+	public LayuiPageInfo listFromNews(String publish, String condition) {
+		Page pageContext = getPageContext();
 		if (!(publish == null || publish.equals(""))) {
 			publish += " 00:00:00";
 		}
-		return this.baseMapper.listFromNews(page, publish, condition);
+		Page<Map<String, Object>> page = this.baseMapper.listFromNews(pageContext, publish, condition);
+		Page<Map<String, Object>> wrap = new DataNewspaperWrapper(page).wrap();
+		return LayuiPageFactory.createPageInfo(wrap);
 	}
 
 	@SuppressWarnings("rawtypes")
-	public List<Map<String, Object>> listFromNewspaper(Page page, Long dataSource, String condition) {
-		return this.baseMapper.listFromNewspaper(page, dataSource, condition);
+	public LayuiPageInfo listFromNewspaper(Long dataSource, String condition) {
+		Page pageContext = LayuiPageFactory.defaultPage();
+		Page<Map<String, Object>> page = this.baseMapper.listFromNewspaper(pageContext, dataSource, condition);
+		Page<Map<String, Object>> wrap = new DataNewspaperWrapper(page).wrap();
+		return LayuiPageFactory.createPageInfo(wrap);
 	}
 
 	public DataNewspaper addOrEdit(DataNewspaperParam param) {

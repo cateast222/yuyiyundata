@@ -1,8 +1,6 @@
 package com.yuyiyun.YYdata.modular.newspaper.controller;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,15 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
+import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
-import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewspaperParam;
 import com.yuyiyun.YYdata.modular.newspaper.service.DataNewspaperService;
+import com.yuyiyun.YYdata.modular.system.entity.Dict;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
@@ -69,6 +66,8 @@ public class DataNewspaperController extends BaseController {
 	 */
 	@RequestMapping("/addAndEdit")
 	public String addAndEdit(Long uuid, Long dataSource, Model model) {
+		List<Dict> newsState = ConstantFactory.me().findInDict("新闻状态");
+		model.addAttribute("newsState", newsState);
 		if (ToolUtil.isEmpty(uuid)) {
 			model.addAttribute("uuid", null);
 			model.addAttribute("title", "新增");
@@ -153,6 +152,7 @@ public class DataNewspaperController extends BaseController {
 			detail.setDataSource(dataSource.getUuid());
 			detail.setChsName(dataSource.getChsName());
 			detail.setOrgName(dataSource.getOrgName());
+			detail.setState(null);
 		}
 		return ResponseData.success(detail);
 	}
@@ -176,30 +176,22 @@ public class DataNewspaperController extends BaseController {
 	 * @param condition
 	 * @return
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/listFromNewspaper")
 	@ResponseBody
 	public LayuiPageInfo listFromNewspaper(Long dataSource, String condition) {
-		Page page = LayuiPageFactory.defaultPage();
-		List<Map<String,Object>> list = this.dataNewspaperService.listFromNewspaper(page, dataSource, condition);
-		page.setRecords(list);
-		return LayuiPageFactory.createPageInfo(page);
+		return this.dataNewspaperService.listFromNewspaper(dataSource, condition);
 	}
-	
+
 	/**
 	 * :报纸新闻主页获取电子报纸列表
 	 * 
 	 * @param condition
 	 * @return
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/listFromNews")
 	@ResponseBody
-	public LayuiPageInfo listFromNews(String publish , String condition) {
-		Page page = LayuiPageFactory.defaultPage();
-		List<Map<String,Object>> list = this.dataNewspaperService.listFromNews(page, publish, condition);
-		page.setRecords(list);
-		return LayuiPageFactory.createPageInfo(page);
+	public LayuiPageInfo listFromNews(String publish, String condition) {
+		return this.dataNewspaperService.listFromNews(publish, condition);
 	}
 
 	/**
@@ -215,7 +207,7 @@ public class DataNewspaperController extends BaseController {
 	@PostMapping("/addByApi")
 	@ResponseBody
 	public ResponseData addByApi(@RequestBody() DataNewspaperParam param) {
-		System.out.println("param-->:"+param);
+		System.out.println("param-->:" + param);
 		DataNewspaper add = this.dataNewspaperService.addOrEdit(param);
 		if (add != null) {
 			return ResponseData.success(add);
@@ -239,7 +231,7 @@ public class DataNewspaperController extends BaseController {
 			@ApiImplicitParam(name = "dsiUuid", value = "数据源", required = true, paramType = "query", dataType = "String") })
 	@PostMapping("/isExistByApi")
 	@ResponseBody
-	public ResponseData isExist(String pubTime,String url, String dsiUuid) {
+	public ResponseData isExist(String pubTime, String url, String dsiUuid) {
 		return dataNewspaperService.isExist(dsiUuid, url, pubTime);
 	}
 }

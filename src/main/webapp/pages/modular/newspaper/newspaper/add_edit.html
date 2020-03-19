@@ -42,14 +42,10 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">状态<span style="color: red;"></span></label>
 					<div class="layui-input-block">
-						<select id="state" name="state">
-							<option value="0">正常</option>
-							<option value="1">测试</option>
-							<option value="2">上传</option>
-							<option value="3">同步</option>
-							<option value="4">完成</option>
-							<option value="5">废弃</option>
-							<option value="6">其他</option>
+						<select id="state" name="state" lay-search="">
+							@for(item in newsState){
+							<option value="${item.code}">${item.name}</option> 
+							@}
 						</select>
 					</div>
 				</div>

@@ -12,9 +12,10 @@ import java.net.URI;
 import java.net.URL;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -33,7 +34,7 @@ public class Test {
 			File configfile = new File(fileName);
 			config_json = JSON.parseObject(Files.toString(configfile, Charsets.UTF_8));
 			JSONObject contentTypes_json = config_json.getJSONObject("ContentTypes");
-			fileExt = fileExt.contains(".") ? fileExt.substring(fileExt.indexOf(".")) : "anno";
+			fileExt = fileExt.contains(".") ? fileExt.substring(fileExt.lastIndexOf(".")) : "anno";
 			result = contentTypes_json.getString(fileExt.toLowerCase());
 			if (result == null) {
 				result = contentTypes_json.getString("anno");
@@ -54,33 +55,39 @@ public class Test {
 	}
 
 	/**
+	 * :爬取网络资源
 	 * 
-	 * @Description: TODO(用一句话描述该文件做什么)
-	 * @author duhao
-	 * @date 2020年3月19日
-	 * @version V1.0
-	 * @param downloadUrl
-	 * @param uploadUrl
-	 * @param saveLocalPath
+	 * @param downloadUrl      资源地址
+	 * @param isProxy          代理
+	 * @param uploadUrl        文件服务器地址
+	 * @param saveLocalPath    本地保存路径
+	 * @param originalFilename 文件及扩展名
 	 * @return
 	 * @throws Exception
 	 */
-	public static String downloadFile(String downloadUrl, String uploadUrl, String saveLocalPath) throws Exception {
+	public static String downloadFile(String downloadUrl, boolean isProxy, String uploadUrl, String saveLocalPath,
+			String originalFilename) throws Exception {
 		String result = "";
 		HttpClient client = HttpClients.createDefault();
 		HttpGet httpget = new HttpGet();
 		httpget.setURI(URI.create(downloadUrl));
+		if (isProxy) {
+			RequestConfig config = RequestConfig.custom().setProxy(new HttpHost("127.0.0.1", 1080))
+					.setConnectTimeout(8000).setSocketTimeout(8000).build();
+			httpget.setConfig(config);
+		}
 		HttpResponse response = client.execute(httpget);
 		HttpEntity entity = response.getEntity();
 		if (entity != null) {
 			byte[] byteArray = EntityUtils.toByteArray(entity);
-			String originalFilename = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1);
-
-			if (uploadUrl != null && uploadUrl.equals("")) {
+			originalFilename = originalFilename != null && !originalFilename.equals("") ? originalFilename
+					: downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1);
+			if (uploadUrl != null && !uploadUrl.equals("")) {
+				System.out.println("ok");
 				result += "upload:" + uploadFile(uploadUrl, byteArray, originalFilename);
 			}
 
-			if (saveLocalPath != null && saveLocalPath.equals("")) {
+			if (saveLocalPath != null && !saveLocalPath.equals("")) {
 				result += "saveLocal:" + saveLocalFile(saveLocalPath, byteArray, originalFilename);
 			}
 		}
@@ -88,14 +95,11 @@ public class Test {
 	}
 
 	/**
+	 * :资源本地保存
 	 * 
-	 * @Description: TODO(用一句话描述该文件做什么)
-	 * @author duhao
-	 * @date 2020年3月19日
-	 * @version V1.0
-	 * @param saveLocalPath
-	 * @param byteArray
-	 * @param originalFilename
+	 * @param saveLocalPath    本地保存路径
+	 * @param byteArray        资源数据
+	 * @param originalFilename 文件及扩展名
 	 * @return
 	 */
 	public static String saveLocalFile(String saveLocalPath, byte[] byteArray, String originalFilename) {
@@ -121,14 +125,11 @@ public class Test {
 	}
 
 	/**
+	 * :资源上传服务器
 	 * 
-	 * @Description: TODO(用一句话描述该文件做什么)
-	 * @author duhao
-	 * @date 2020年3月19日
-	 * @version V1.0
-	 * @param uploadUrl
-	 * @param byteArray
-	 * @param originalFilename
+	 * @param uploadUrl        文件服务器地址
+	 * @param byteArray        资源数据
+	 * @param originalFilename 文件及扩展名
 	 * @return
 	 */
 	public static String uploadFile(String uploadUrl, byte[] byteArray, String originalFilename) {
@@ -214,46 +215,7 @@ public class Test {
 
 	public static void main(String[] args) throws Exception, Throwable {
 //		System.out.println(getContentTypes("6370555030261494447433236.JPG"));
-		downloadFile("http://perb.puernews.com/page/1/2020-03/18/01/2020031801_pdf.pdf",
-				"http://47.92.121.230:9100/document/fileupload/yunyidata", "D:/");
-		// TODO Auto-generated method stub
-//		String uploadUrl = "http://47.92.121.230:9100/document/fileupload/qycode";
-//        String result = "";
-//        Setting boundary = "----------" + DateTime.Now.Ticks.ToString("x");
-//        HttpWebRequest webrequest = (HttpWebRequest)WebRequest.Create(uploadUrl);
-//        webrequest.ContentType = "multipart/form-data; boundary=" + boundary;                
-//        webrequest.Method = "POST";
-//        StringBuilder sb = new StringBuilder();                
-//        sb.append("--");
-//        sb.append(boundary);                
-//        sb.append("\r\n");
-//        sb.append("Content-Disposition: form-data; name=\"file");
-//        sb.Append("\"; filename=\"" + fileName + "\"");
-//        sb.append("\"");
-//        sb.append("\r\n");
-//        sb.append("Content-Type: application/octet-stream");
-//        sb.append("\r\n");
-//        sb.append("\r\n");
-//        String postHeader = sb.toString();
-//        byte[] postHeaderBytes = Encoding.UTF8.GetBytes(postHeader);
-//        byte[] boundaryBytes = Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
-//        webrequest.ContentLength = uploadFile.InputStream.Length + postHeaderBytes.Length + boundaryBytes.Length;                
-//        Stream requestStream = webrequest.GetRequestStream();
-//        requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
-//        byte[] buffer = new Byte[(int)uploadFile.InputStream.Length]; //声明文件长度的二进制类型
-//        uploadFile.InputStream.Read(buffer, 0, buffer.Length); //将文件转成二进制
-//        requestStream.Write(buffer, 0, buffer.Length); //赋值二进制数据 
-//        requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);                
-//        webrequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)";
-//        WebResponse responce = webrequest.GetResponse();
-//        requestStream.Close();
-//        using (Stream s = responce.GetResponseStream())
-//        {
-//            using (StreamReader sr = new StreamReader(s))                    {
-//                result = sr.ReadToEnd();
-//            }
-//        }
-//        responce.Close();
+		downloadFile("http://120.25.235.181:51213/%E7%A8%8B%E5%93%8D%20-%20%E4%B8%96%E7%95%8C%E8%BF%99%E4%B9%88%E5%A4%A7%E8%BF%98%E6%98%AF%E9%81%87%E8%A7%81%E4%BD%A0.mp3", true, "", "D:/", "333.mp3");
 	}
 
 }
