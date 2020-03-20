@@ -29,13 +29,9 @@ public class DataNewsWrapper extends BaseControllerWrapper {
 
 	@Override
 	protected void wrapTheMap(Map<String, Object> map) {
-		map.put("stateName", ConstantFactory.me().getDictsByName("数据源状态",(String) map.get("state")));
-		map.put("platformName", ConstantFactory.me().getDictsByName("数据源平台",(String) map.get("platform")));
-		map.put("countryName", ConstantFactory.me().getDictsByName("国家地区",(String) map.get("country")));
-		map.put("proxyName", ConstantFactory.me().getDictsByName("境区",(String) map.get("proxy")));
-		map.put("languageName", ConstantFactory.me().getDictsByName("语种",(String) map.get("language")));
-		map.put("encodedName", ConstantFactory.me().getDictsByName("字符集",(String) map.get("encoded")));
-		map.put("providerName", ConstantFactory.me().getDictsByName("数据源提供方",(String) map.get("provider")));
+		map.put("state_name", ConstantFactory.me().getDictsByName("新闻状态",(String) map.get("state")));
+		map.put("language_name", ConstantFactory.me().getDictsByName("语种",(String) map.get("language")));
+		map.put("provider_name", ConstantFactory.me().getDictsByName("数据源提供方",(String) map.get("provider")));
 	}
 
 }

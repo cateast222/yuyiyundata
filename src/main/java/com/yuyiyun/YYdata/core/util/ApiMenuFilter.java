@@ -16,7 +16,12 @@ import java.util.List;
  */
 public class ApiMenuFilter extends MenuNode {
 
-    public static List<MenuNode> build(List<MenuNode> nodes) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static List<MenuNode> build(List<MenuNode> nodes) {
 
         //如果关闭了接口文档,则不显示接口文档菜单
     	YYdataProperties gunsProperties = SpringContextHolder.getBean(YYdataProperties.class);

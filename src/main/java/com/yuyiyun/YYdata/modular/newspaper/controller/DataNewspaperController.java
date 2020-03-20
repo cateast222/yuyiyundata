@@ -152,7 +152,7 @@ public class DataNewspaperController extends BaseController {
 			detail.setDataSource(dataSource.getUuid());
 			detail.setChsName(dataSource.getChsName());
 			detail.setOrgName(dataSource.getOrgName());
-			detail.setState(null);
+			detail.setState("1");
 		}
 		return ResponseData.success(detail);
 	}

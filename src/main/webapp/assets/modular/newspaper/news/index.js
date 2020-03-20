@@ -95,25 +95,18 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin'], function () {
 				title: '版面',
 			},
 			{
-				field: 'pageName',
+				field: 'page_name',
 				sort: true,
 				width: 100,
 				align: 'center',
 				title: '频道',
 			},
 			{
-				field: 'state',
+				field: 'state_name',
 				sort: true,
 				width: 80,
 				align: 'center',
-				title: '状态',
-				templet: function (d) {
-					return d.state == -2 ? '测试' :
-						d.state == -1 ? '废弃' :
-							d.state == 1 ? '正常' :
-								d.state == 2 ? '归档' :
-									'其他';
-				}
+				title: '状态'
 			}
 			]
 		];
@@ -263,10 +256,10 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin'], function () {
 					$("#url").attr("title",
 						obj.data[field]);
 					break;
-				case "frontPage":
+				case "front_page":
 					var frontPage = obj.data[field] == 1 ? "是" :
 						"否";
-					$("#frontPage").html(frontPage);
+					$("#front_page").html(frontPage);
 					break;
 				default:
 					$("#" + field).html(

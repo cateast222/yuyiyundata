@@ -2,6 +2,7 @@ package com.yuyiyun.YYdata.modular.newspaper.service;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.mapper.DataNewsMapper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewsParam;
+import com.yuyiyun.YYdata.modular.newspaper.wrapper.DataNewsWrapper;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
@@ -115,8 +117,10 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		// 5、根据创建时间进行排序
 		pageContext.setAsc("paper_count");
 		// 6、封装分页数据
-		IPage page = this.page(pageContext, queryWrapper);
-		return LayuiPageFactory.createPageInfo(page);
+		Page<Map<String,Object>> pageMaps = (Page<Map<String, Object>>) this.pageMaps(pageContext, queryWrapper);
+//		IPage page = this.page(pageContext, queryWrapper);
+		Page<Map<String,Object>> wrap = new DataNewsWrapper(pageMaps).wrap();
+		return LayuiPageFactory.createPageInfo(wrap);
 	}
 
 	@SuppressWarnings("rawtypes")

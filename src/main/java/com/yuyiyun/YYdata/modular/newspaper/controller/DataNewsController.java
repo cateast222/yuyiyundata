@@ -1,6 +1,8 @@
 package com.yuyiyun.YYdata.modular.newspaper.controller;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.core.util.DateTimeUtil;
+import com.yuyiyun.YYdata.core.util.TranUtil;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
@@ -124,7 +131,7 @@ public class DataNewsController extends BaseController {
 		this.dataNewsService.update(param);
 		return ResponseData.success();
 	}
-	
+
 	/**
 	 * :新增更新接口
 	 * 
@@ -146,6 +153,7 @@ public class DataNewsController extends BaseController {
 	 * @param dataSourceInfoParam
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/detail")
 	@ResponseBody
 	public ResponseData detail(DataNewsParam param) {
@@ -160,7 +168,10 @@ public class DataNewsController extends BaseController {
 			detail.setPubtime(dataNewspaper.getPublish());
 			detail.setLanguage(dataSource.getLanguage());
 		}
-		return ResponseData.success(detail);
+		JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(detail));
+		jsonObject.put("pubtime", DateTimeUtil.dateToString(detail.getPubtime()));
+		jsonObject.put("languageName", ConstantFactory.me().getDictsByName("语种", detail.getLanguage()));
+		return ResponseData.success(jsonObject);
 	}
 
 	/**
