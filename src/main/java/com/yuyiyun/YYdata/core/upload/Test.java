@@ -215,7 +215,7 @@ public class Test {
 
 	public static void main(String[] args) throws Exception, Throwable {
 //		System.out.println(getContentTypes("6370555030261494447433236.JPG"));
-		downloadFile("https://app.nytimes.com/images/full-images/login-img.jpg", true, "", "D:/", "");
+		downloadFile("http://paper.zjjnews.cn:8081/zjjrbpc/attachment/202003/20/8486beae-bc87-473e-b383-370edcabf370.pdf", false, "", "D:/", "");
 	}
 
 }
