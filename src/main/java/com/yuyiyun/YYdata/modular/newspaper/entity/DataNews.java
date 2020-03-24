@@ -21,6 +21,7 @@ import lombok.Data;
  * @author duhao
  * @since 2020-01-03
  */
+@SuppressWarnings("deprecation")
 @Data
 @TableName("data_news")
 public class DataNews implements Serializable {

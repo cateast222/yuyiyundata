@@ -15,6 +15,7 @@ import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.core.upload.DamsApiUpload;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
@@ -44,14 +45,25 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	public DataNews addOrEdit(DataNewsParam param) {
 		DataNewspaper dataNewspaper = dataNewspaperService.getById(param.getDataNewspaper());
 		DataSource dataSource = dataSourceService.getById(dataNewspaper.getDataSource());
+		param.setDataSource(dataSource.getUuid());
+		param.setLanguage(dataSource.getLanguage());
 		param.setPubtime(dataNewspaper.getPublish());
 		param.setChsName(dataNewspaper.getChsName());
 		param.setOrgName(dataNewspaper.getOrgName());
 		param.setProvider(dataNewspaper.getProvider());
-		param.setDataSource(dataSource.getUuid());
-		param.setLanguage(dataSource.getLanguage());
+		param.setState(dataNewspaper.getState());
 		DataNews byId = this.getById(param.getUuid());
 		DataNews dataNews = ToolUtil.isEmpty(byId) ? add(param) : update(param);
+		// 数据上传至DAMS
+		System.out.println("数据准备上传！UUID为：" + dataNews.getUuid());
+		DataNews byId2 = this.getById(dataNews.getUuid());
+		boolean b = DamsApiUpload.dataOnLineToDAMS(byId2);
+		if (!b) {
+			System.out.println("数据上传异常！UUID为：" + byId2.getUuid());
+			byId2.setState("-1");
+			DataNewsParam dataNewsParam = getEntity(byId2);
+			dataNews = update(dataNewsParam);
+		}
 		return dataNews;
 	}
 
@@ -66,8 +78,13 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		}
 		// 3、对象转换
 		DataNews entity = getEntity(param);
-		entity.setCreator(
-				ToolUtil.isEmpty(entity.getCreator()) ? ShiroKit.getUser().getAccount() : entity.getCreator());
+		
+		if (ToolUtil.isEmpty(entity.getCreator())) {
+			entity.setCreator(ShiroKit.getUser().getAccount());
+		}
+		if (ToolUtil.isEmpty(entity.getInsertTime())) {
+			entity.setInsertTime(new Date());
+		}
 		// 4、数据存储
 		this.save(entity);
 		// 5、数据回调
@@ -117,9 +134,9 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		// 5、根据创建时间进行排序
 		pageContext.setAsc("paper_count");
 		// 6、封装分页数据
-		Page<Map<String,Object>> pageMaps = (Page<Map<String, Object>>) this.pageMaps(pageContext, queryWrapper);
+		Page<Map<String, Object>> pageMaps = (Page<Map<String, Object>>) this.pageMaps(pageContext, queryWrapper);
 //		IPage page = this.page(pageContext, queryWrapper);
-		Page<Map<String,Object>> wrap = new DataNewsWrapper(pageMaps).wrap();
+		Page<Map<String, Object>> wrap = new DataNewsWrapper(pageMaps).wrap();
 		return LayuiPageFactory.createPageInfo(wrap);
 	}
 
@@ -135,6 +152,12 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	private DataNews getEntity(DataNewsParam param) {
 		DataNews entity = new DataNews();
 		ToolUtil.copyProperties(param, entity);
+		return entity;
+	}
+
+	private DataNewsParam getEntity(DataNews dataNews) {
+		DataNewsParam entity = new DataNewsParam();
+		ToolUtil.copyProperties(dataNews, entity);
 		return entity;
 	}
 

@@ -25,7 +25,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
-public class Test {
+/**
+ * 资源下载、保存及上传
+ * @author duhao
+ *
+ */
+public class ResourceUpload {
 	private static String getContentTypes(String fileExt) {
 		String fileName = "src/main/resources/config.json";
 		JSONObject config_json;
@@ -81,7 +86,7 @@ public class Test {
 		if (entity != null) {
 			byte[] byteArray = EntityUtils.toByteArray(entity);
 			originalFilename = originalFilename != null && !originalFilename.equals("") ? originalFilename
-					: downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1);
+					: downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1).replaceAll("\\?.*", "");
 			if (uploadUrl != null && !uploadUrl.equals("")) {
 				System.out.println("ok");
 				result += "upload:" + uploadFile(uploadUrl, byteArray, originalFilename);
@@ -215,7 +220,12 @@ public class Test {
 
 	public static void main(String[] args) throws Exception, Throwable {
 //		System.out.println(getContentTypes("6370555030261494447433236.JPG"));
-		downloadFile("http://paper.zjjnews.cn:8081/zjjrbpc/attachment/202003/20/8486beae-bc87-473e-b383-370edcabf370.pdf", false, "", "D:/", "");
+//		https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNNEX_5541198.jpg?itok=12Alnawf&timestamp=1584728847
+//		https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNLAWRENCEFTR7_5541276.jpg?itok=jCsbmDmq&timestamp=1584728796
+//		https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNLAWRENCE_5541269.jpg?itok=wRCuHjny&timestamp=1584728782
+//		http://yuyiyun.net:8093/document/fileupload/yunyidata
+//		http://yuyiyun.net:8093/yunyidata/document/image/49a7429acaef43b782a12fe55ae047be
+		downloadFile("http://yuyiyun.net:8093/yunyidata/document/image/62c7ceb0a4d34571a1d67022baa8c2cb", false, "", "D:/", "");
 	}
 
 }
