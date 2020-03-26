@@ -139,7 +139,7 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		return newEntity;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	public LayuiPageInfo findPageBySpec(DataNewsParam param) {
 		// 1、获取分页对象
 		Page<DataNews> pageContext = getPageContext();

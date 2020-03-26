@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyiyun.YYdata.modular.dataconfig.mapper.DataDictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict">
+        <id column="uuid" property="uuid" />
+        <result column="type" property="type" />
+        <result column="parent_uuid" property="parentUuid" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="summary" property="summary" />
+        <result column="datas" property="datas" />
+        <result column="sort" property="sort" />
+        <result column="remark" property="remark" />
+        <result column="state" property="state" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        uuid as uuid,
+        type as type,
+        parent_uuid as parentUuid,
+        code as code,
+        name as name,
+        summary as summary,
+        datas as datas,
+        sort as sort,
+        remark as remark,
+        state as state,
+        creator as creator,
+        create_time as createTime,
+        update_time as updateTime
+    </sql>
+
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="dataDict.uuid != null and dataDict.uuid != ''">
+                and uuid = #{dataDict.uuid}
+            </if>
+            <if test="dataDict.type != null and dataDict.type != ''">
+                and type = #{dataDict.type}
+            </if>
+            <if test="dataDict.parentUuid != null and dataDict.parentUuid != ''">
+                and parent_uuid = #{dataDict.parentUuid}
+            </if>
+            <if test="dataDict.code != null and dataDict.code != ''">
+                and code like CONCAT('%',#{dataDict.code},'%')
+            </if>
+            <if test="dataDict.name != null and dataDict.name != ''">
+                and name like CONCAT('%',#{dataDict.name},'%')
+            </if>
+            <if test="dataDict.summary != null and dataDict.summary != ''">
+                and summary = #{dataDict.summary}
+            </if>
+            <if test="dataDict.datas != null and dataDict.datas != ''">
+                and datas = #{dataDict.datas}
+            </if>
+            <if test="dataDict.sort != null and dataDict.sort != ''">
+                and sort = #{dataDict.sort}
+            </if>
+            <if test="dataDict.remark != null and dataDict.remark != ''">
+                and remark = #{dataDict.remark}
+            </if>
+            <if test="dataDict.state != null and dataDict.state != ''">
+                and state = #{dataDict.state}
+            </if>
+            <if test="dataDict.creator != null and dataDict.creator != ''">
+                and creator = #{dataDict.creator}
+            </if>
+            <if test="dataDict.createTime != null and dataDict.createTime != ''">
+                and create_time = #{dataDict.createTime}
+            </if>
+            <if test="dataDict.updateTime != null and dataDict.updateTime != ''">
+                and update_time = #{dataDict.updateTime}
+            </if>
+        </trim>
+    </sql>
+
+
+    <!-- 分页查询 -->
+    <select id="selectPage" resultType="com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict">
+        select <include refid="BaseColumnList"/>
+        from data_dict
+        <include refid="BaseWhere"/>
+    </select>
+
+</mapper>
