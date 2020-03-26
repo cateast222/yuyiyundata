@@ -110,21 +110,29 @@ public class DamsApiUpload {
 	}
 
 	/**
-	 * 
-	 * @describe 数据上线至DAMS
-	 * @author duhao
-	 * @date 2019年9月24日下午4:58:24
+	 * 数据上传至DAMS
+	 * @param dataNews 新闻数据
+	 * @return 上传成功T，上传失败F
 	 */
 	public static boolean dataOnLineToDAMS(DataNews dataNews) {
-		dataNews.setState("-1");
+		//返回值初始化
+		boolean b = false;
 		try {
+			//修改数据上传状态
+			dataNews.setState("-1");
+			//装换数据上传类型
 			Map<String, String> wg_Ele_News_Data = dataNews2Wg_Ele_News_Data(dataNews);
-			new DamsApiUpload("dh", "321").createWg_Ele_News_Data(wg_Ele_News_Data);
-			return true;
+			//数据上传
+			JSONObject j = new DamsApiUpload("dh", "321").createWg_Ele_News_Data(wg_Ele_News_Data);
+			//上传成功处理
+			if (j != null) {
+				b = true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
 		}
+		//返回
+		return b;
 	}
 
 	private static Map<String, String> dataNews2Wg_Ele_News_Data(DataNews dataNews) {

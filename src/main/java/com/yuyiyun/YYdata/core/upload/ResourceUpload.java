@@ -225,7 +225,7 @@ public class ResourceUpload {
 //		https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNLAWRENCE_5541269.jpg?itok=wRCuHjny&timestamp=1584728782
 //		http://yuyiyun.net:8093/document/fileupload/yunyidata
 //		http://yuyiyun.net:8093/yunyidata/document/image/49a7429acaef43b782a12fe55ae047be
-		downloadFile("http://yuyiyun.net:8093/yunyidata/document/image/62c7ceb0a4d34571a1d67022baa8c2cb", false, "", "D:/", "");
+		downloadFile("https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNNEX_5541198.jpg?itok=12Alnawf&timestamp=1584728847", false, "", "D:/", "");
 	}
 
 }

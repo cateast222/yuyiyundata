@@ -42,9 +42,18 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	@Autowired
 	DataSourceService dataSourceService;
 
+	/**
+	 * 新闻数据新增和修改服务
+	 * 
+	 * @param param 新闻数据输入
+	 * @return 更新后的新闻数据
+	 */
 	public DataNews addOrEdit(DataNewsParam param) {
+		// 获取对应的电子报纸
 		DataNewspaper dataNewspaper = dataNewspaperService.getById(param.getDataNewspaper());
+		// 获取对应的报刊数据源
 		DataSource dataSource = dataSourceService.getById(dataNewspaper.getDataSource());
+		// 修改属性值
 		param.setDataSource(dataSource.getUuid());
 		param.setLanguage(dataSource.getLanguage());
 		param.setPubtime(dataNewspaper.getPublish());
@@ -52,18 +61,31 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		param.setOrgName(dataNewspaper.getOrgName());
 		param.setProvider(dataNewspaper.getProvider());
 		param.setState(dataNewspaper.getState());
+		// 通过UUID查询是否存在数据
 		DataNews byId = this.getById(param.getUuid());
+		// 数据存在进行更新操作，不存在进行新增操作
 		DataNews dataNews = ToolUtil.isEmpty(byId) ? add(param) : update(param);
-		// 数据上传至DAMS
-		System.out.println("数据准备上传！UUID为：" + dataNews.getUuid());
-		DataNews byId2 = this.getById(dataNews.getUuid());
-		boolean b = DamsApiUpload.dataOnLineToDAMS(byId2);
-		if (!b) {
-			System.out.println("数据上传异常！UUID为：" + byId2.getUuid());
-			byId2.setState("-1");
-			DataNewsParam dataNewsParam = getEntity(byId2);
-			dataNews = update(dataNewsParam);
+		
+		// 数据上传至DAMS,在数据新增和修改时上传
+		// 判断数据状态，对状态为"1"的数据进行上传
+		if (dataNews.getState().equals("1")) {
+			System.out.println("数据准备上传！UUID为：" + dataNews.getUuid());
+			// 通过数据UUID获取最新的数据信息
+			DataNews byId2 = this.getById(dataNews.getUuid());
+			// 数据上传操作
+			boolean b = DamsApiUpload.dataOnLineToDAMS(byId2);
+			// 判断是否上传成功
+			if (!b) {
+				System.out.println("数据上传异常！UUID为：" + byId2.getUuid());
+				// 上传失败，数据存在异常，修改标记状态为"-1"
+				byId2.setState("-1");
+				// 数据对象装换（DataNews --> DataNewsParam）
+				DataNewsParam dataNewsParam = getEntity(byId2);
+				// 更新异常数据并返回
+				dataNews = update(dataNewsParam);
+			}
 		}
+		
 		return dataNews;
 	}
 
@@ -78,7 +100,7 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		}
 		// 3、对象转换
 		DataNews entity = getEntity(param);
-		
+
 		if (ToolUtil.isEmpty(entity.getCreator())) {
 			entity.setCreator(ShiroKit.getUser().getAccount());
 		}
