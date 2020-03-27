@@ -4,70 +4,62 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
-import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
-import com.yuyiyun.YYdata.modular.dataconfig.mapper.DataDictMapper;
+import com.yuyiyun.YYdata.modular.dataconfig.entity.DataConfig;
+import com.yuyiyun.YYdata.modular.dataconfig.mapper.DataConfigMapper;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
 
 /**
  * <p>
- * 数据字典表 服务实现类
+ * 数据配置表 服务类
  * </p>
  *
  * @author duhao
  * @since 2020-03-26
  */
-@Service
-public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
+public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig> {
 
 	/**
 	 * 分页查询列表
 	 * 
-	 * @param dict
+	 * @param dataConfig
 	 * @return
 	 */
-	public LayuiPageInfo selectPageList(DataDict DataDict, int limit, int page) {
-		//封装Page对象
+	public LayuiPageInfo selectPageList(DataConfig dataConfig, int limit, int page) {
 		Page<Map<String, Object>> pageContext = new Page<Map<String, Object>>(page, limit);
-		//设置排序
 		pageContext.setAsc("sort");
-		//获取分页数据
-		List<Map<String, Object>> list = this.baseMapper.selectPage(pageContext, DataDict);
-		//结果数据封装
+		List<Map<String, Object>> list = this.baseMapper.selectPage(pageContext, dataConfig);
 		pageContext.setRecords(list);
-		//返回数据
 		return LayuiPageFactory.createPageInfo(pageContext);
 	}
 
 	/**
 	 * 新增数据
 	 * 
-	 * @param DataDict
+	 * @param dataConfig
 	 */
-	public int addDataDict(DataDict dataDict) {
-		//判断创建者是否存在并且设定
-		if (ToolUtil.isEmpty(dataDict.getCreator())) {
-			dataDict.setCreator(ShiroKit.getUser().getAccount());
+	public int addDataConfig(DataConfig dataConfig) {
+		// 判断创建者是否存在并且设定
+		if (ToolUtil.isEmpty(dataConfig.getCreator())) {
+			dataConfig.setCreator(ShiroKit.getUser().getAccount());
 		}
-		return baseMapper.insert(dataDict);
+		return baseMapper.insert(dataConfig);
 	}
 
 	/**
 	 * 修改数据
 	 * 
-	 * @param DataDict
+	 * @param dataConfig
 	 */
-	public int editDataDict(DataDict dataDict) {
-		//设定更新时间
-		dataDict.setUpdateTime(new Date());
-		return baseMapper.updateById(dataDict);
+	public int editDataConfig(DataConfig dataConfig) {
+		// 设定更新时间
+		dataConfig.setUpdateTime(new Date());
+		return baseMapper.updateById(dataConfig);
 	}
 
 	/**
@@ -76,7 +68,7 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 	 * @param uuid
 	 * @return
 	 */
-	public DataDict getDetailsById(String uuid) {
+	public DataConfig getDetailsById(String uuid) {
 		return baseMapper.selectById(uuid);
 	}
 

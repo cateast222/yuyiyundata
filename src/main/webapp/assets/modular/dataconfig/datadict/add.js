@@ -6,7 +6,7 @@ layui.use(['layer', 'jquery', 'form', 'fast'], function() {
 
     	//监听提交
     	form.on('submit(formBtn)', function(data) {
-    		data.field.type = '101';
+    		data.field.type = $('#type').val();
     		$.ajax({
     			type: 'post',
     			url: fast.ctxPath + '/datadict/addItem',

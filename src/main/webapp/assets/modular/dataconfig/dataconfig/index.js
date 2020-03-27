@@ -1,116 +1,99 @@
-layui.use(['form','table', 'layer', 'jquery','fast'], function() {
+layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 	var layer = layui.layer,
 		table = layui.table,
 		$ = layui.jquery,
 		fast = layui.fast;
-	
+
 	var tableIns = table.render({
-		elem: '#dataDictTable',
+		elem: '#dataConfigTable',
 		method: 'post',
-		where: {'type':$("#type").val()},
-		url: Feng.ctxPath + '/datadict/list', // 数据接口
-		page: true, // 开启分页
-		toolbar: '#toolBar', // 开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+		where: {
+			'dataSource': fast.getUrlParam('dataSource')
+		},
+		url: fast.ctxPath + '/dataconfig/list', //数据接口
+		page: true, //开启分页
+		toolbar: '#toolBar', //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
 		cols: [
-			[ // 表头
+			[ //表头
 				{
 					type: 'checkbox',
+					align: 'center',
 					fixed: 'left'
-				},
+				}, 
 				{
 					field: 'uuid',
 					hide: true,
-					sort: true,
 					align: 'center',
 					title: 'uuid'
-				},
-				/*{
-					field: 'type',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: '类型'
-				},
+				}, 
 				{
-					field: 'parentUuid',
+					field: 'dataSource',
 					hide: true,
-					sort: true,
 					align: 'center',
-					title: '上级uuid'
-				},*/
+					title: '数据源'
+				}, 
 				{
-					field: 'code',
-					sort: true,
+					field: 'dataDict',
+					hide: true,
 					align: 'center',
-					title: '编号',
-					templet : function(d) {
-						var url = Feng.ctxPath + '/datadictconf?parentUuid=' + d.uuid;
-						return '<a style="color:#01AAED;" href="' + url + '">' + d.code + '</a>';
-					}
-				},
+					title: '数据字典'
+				}, 
 				{
 					field: 'name',
-					sort: true,
 					align: 'center',
-					title: '名称',
-					templet : function(d) {
-						var url = Feng.ctxPath + '/datadictconf?parentUuid=' + d.uuid;
-						return '<a style="color:#01AAED;" href="' + url + '">' + d.name + '</a>';
-					}
-				},
+					title: '名称'
+				}, 
+				{
+					field: 'key',
+					align: 'center',
+					title: '配置K值'
+				}, 
+				{
+					field: 'value',
+					align: 'center',
+					title: '配置V值'
+				}, 
 				{
 					field: 'summary',
-					sort: true,
+					hide: true,
 					align: 'center',
 					title: '描述'
-				},
-				{
-					field: 'datas',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: '数据'
-				},
+				}, 
 				{
 					field: 'sort',
-					sort: true,
 					align: 'center',
 					title: '排序'
-				},
+				}, 
 				{
 					field: 'remark',
 					hide: true,
-					sort: true,
 					align: 'center',
 					title: '备注'
-				},
+				}, 
 				{
 					field: 'state',
-					sort: true,
+					hide: true,
 					align: 'center',
 					title: '状态'
-				},
+				}, 
 				{
 					field: 'creator',
 					hide: true,
-					sort: true,
 					align: 'center',
 					title: '创建者'
-				},
+				}, 
 				{
 					field: 'createTime',
 					hide: true,
-					sort: true,
 					align: 'center',
 					title: '创建时间'
-				},
+				}, 
 				{
 					field: 'updateTime',
 					hide: true,
-					sort: true,
 					align: 'center',
 					title: '更新时间'
-				},
+				}, 
 				{
 					fixed: 'right',
 					width: 150,
@@ -123,19 +106,19 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 	});
 
 	// 监听头工具栏事件
-	table.on('toolbar(dataDictTable)', function(obj) {
+	table.on('toolbar(dataConfigTable)', function(obj) {
 		var checkStatus = table.checkStatus(obj.config.id),
-			data = checkStatus.data; // 获取选中的数据
+			data = checkStatus.data; //获取选中的数据
 
 		if (obj.event === 'add') {
 			// 新增数据
 			layer.open({
 				type: 2,
-				title: "新增数据字典",
+				title: "新增配置数据",
 				shadeClose: false,
 				shade: 0.3,
-				area: ["45%", "75%"],
-				content: Feng.ctxPath + '/datadict/add'
+				area: ["80%", "80%"],
+				content: fast.ctxPath + '/dataconfig/add'
 			});
 		} else if (obj.event === 'delete') {
 			// 批量删除
@@ -153,16 +136,16 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 					// 异步请求
 					$.ajax({
 						type: 'post',
-						url: Feng.ctxPath + '/datadict/deleteBatch',
+						url: fast.ctxPath + '/dataconfig/deleteBatch',
 						data: {
 							ids: ids
 						},
 						dataType: 'json',
 						success: function(res) {
 							layer.msg(res.message, {
-									icon: 1
-								});
-							table.reload('dataDictTable', {
+								icon: 1
+							});
+							table.reload('dataConfigTable', {
 								page: {
 									curr: 1
 								}
@@ -174,21 +157,18 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 		}
 	});
 
-	// 监听行工具事件
-	table.on('tool(dataDictTable)', function(obj) { // 注：tool
-		// 是工具条事件名，test
-		// 是 table
-		// 原始容器的属性
-		// lay-filter="对应的值"
-		var data = obj.data, // 获得当前行数据
-			layEvent = obj.event; // 获得 lay-event 对应的值
+	//监听行工具事件
+	table.on('tool(dataConfigTable)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+		var data = obj.data //获得当前行数据
+			,
+			layEvent = obj.event; //获得 lay-event 对应的值
 
 		if (layEvent === 'del') {
 			// 单记录删除
 			layer.confirm('确定要删除吗？', function() {
 				$.ajax({
 					type: 'post',
-					url: Feng.ctxPath + '/datadict/delete',
+					url: fast.ctxPath + '/dataconfig/delete',
 					data: {
 						uuid: data.uuid
 					},
@@ -197,7 +177,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 						layer.msg(res.message, {
 							icon: 1
 						});
-						table.reload('dataDictTable', {
+						table.reload('dataConfigTable', {
 							page: {
 								curr: 1
 							}
@@ -209,11 +189,11 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 			// 修改
 			layer.open({
 				type: 2,
-				title: "修改字典数据",
+				title: "修改配置数据",
 				shadeClose: false,
 				shade: 0.3,
-				area: ["45%", "75%"],
-				content: Feng.ctxPath + '/datadict/edit?uuid=' + obj.data.uuid
+				area: ["80%", "80%"],
+				content: fast.ctxPath + '/dataconfig/edit?uuid=' + obj.data.uuid
 			});
 		}
 	});
@@ -221,7 +201,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 	// 搜索
 	$('#searchBtn').on('click', function() {
 		tableIns.reload({
-			where: fast.getFormData('dataDictForm'),
+			where: fast.getFormData('dataConfigForm'),
 			page: {
 				curr: 1
 			}
@@ -230,12 +210,13 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 
 	// 重置搜索条件
 	$('#resetBtn').on('click', function() {
-		document.getElementById('dataDictForm').reset();
+		document.getElementById('dataConfigForm').reset();
 		tableIns.reload({
-			where: fast.getFormData('dataDictForm'),
+			where: fast.getFormData('dataConfigForm'),
 			page: {
 				curr: 1
 			}
 		});
-	});	
+	});
+
 });

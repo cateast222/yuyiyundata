@@ -4,29 +4,13 @@ layui.use(['layer', 'jquery', 'form', 'fast'], function() {
     		layer = layui.layer,
     		fast = layui.fast;
 
-    	//获取详情信息，填充表单
-    	$.ajax({
-    		type: 'post',
-    		url: fast.ctxPath + '/datadict/detail',
-    		data: {
-    			uuid: fast.getUrlParam('uuid')
-    		},
-    		dataType: 'json',
-    		success: function(res) {
-    			form.val('dataDictForm', res.data);
-    		},
-    		error: function(XMLHttpRequest, textStatus) {
-    			layer.msg('获取数据失败', {
-    				icon: 2
-    			});
-    		}
-    	});
-
     	//监听提交
     	form.on('submit(formBtn)', function(data) {
+    		data.field.type = $('#type').val();
+    		data.field.parentUuid = fast.getUrlParam('parentUuid');
     		$.ajax({
     			type: 'post',
-    			url: fast.ctxPath + '/datadict/editItem',
+    			url: fast.ctxPath + '/datadictconf/addItem',
     			data: data.field,
     			dataType: 'json',
     			success: function(data) {
@@ -39,7 +23,7 @@ layui.use(['layer', 'jquery', 'form', 'fast'], function() {
     				// 关闭弹窗
     				parent.layer.close(index);
     				// 重载表格
-    				parent.layui.table.reload('dataDictTable', {
+    				parent.layui.table.reload('dataDictConfTable', {
     					page: {
     						curr: 1
     					}
@@ -54,5 +38,4 @@ layui.use(['layer', 'jquery', 'form', 'fast'], function() {
     		});
     		return false;
     	});
-
     });

@@ -1,13 +1,14 @@
-@layout("/common/_container.html",{js:["/assets/modular/dataconfig/datadict/edit.js"]}){
+@layout("/common/_container.html",{js:["/assets/modular/dataconfig/datadictconf/add.js"]}){
 
 <div class="layui-body-header">
-	<span class="layui-body-header-title">修改数据字典</span>
+	<span class="layui-body-header-title">新增数据字典配置</span>
+	<input name="type" id="type" type="hidden" value="${type}" />
 </div>
 
 <div class="layui-fluid " style="">
         <div class="layui-card"  style="margin: 10px;">
             <div class="layui-card-body">
-                <form class="layui-form layui-form-pane" action="" lay-filter="dataDictForm">
+                <form class="layui-form layui-form-pane" action="">
                     <input name="uuid" id="uuid" type="text" style="display: none">
                     <!-- <div class="layui-form-item">
                         <label class="layui-form-label">类型<span style="color: red;">*</span></label>

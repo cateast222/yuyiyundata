@@ -7,13 +7,13 @@ layui.use(['layer', 'jquery', 'form', 'fast'], function() {
     	//获取详情信息，填充表单
     	$.ajax({
     		type: 'post',
-    		url: fast.ctxPath + '/datadict/detail',
+    		url: fast.ctxPath + '/datadictconf/detail',
     		data: {
     			uuid: fast.getUrlParam('uuid')
     		},
     		dataType: 'json',
     		success: function(res) {
-    			form.val('dataDictForm', res.data);
+    			form.val('dataDictConfForm', res.data);
     		},
     		error: function(XMLHttpRequest, textStatus) {
     			layer.msg('获取数据失败', {
@@ -26,7 +26,7 @@ layui.use(['layer', 'jquery', 'form', 'fast'], function() {
     	form.on('submit(formBtn)', function(data) {
     		$.ajax({
     			type: 'post',
-    			url: fast.ctxPath + '/datadict/editItem',
+    			url: fast.ctxPath + '/datadictconf/editItem',
     			data: data.field,
     			dataType: 'json',
     			success: function(data) {
@@ -39,7 +39,7 @@ layui.use(['layer', 'jquery', 'form', 'fast'], function() {
     				// 关闭弹窗
     				parent.layer.close(index);
     				// 重载表格
-    				parent.layui.table.reload('dataDictTable', {
+    				parent.layui.table.reload('dataDictConfTable', {
     					page: {
     						curr: 1
     					}

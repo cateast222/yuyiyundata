@@ -18,17 +18,17 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
 
 /**
  * <p>
- * 数据字典表前端控制器
+ * 数据字典配置表前端控制器
  * </p>
  *
  * @author duhao
  * @since 2020-03-26
  */
 @Controller
-@RequestMapping("/datadict")
-public class DataDictController {
+@RequestMapping("/datadictconf")
+public class DataDictConfController {
 
-	private static final String PREFIX = "/modular/dataconfig/datadict";
+	private static final String PREFIX = "/modular/dataconfig/datadictconf";
 
 	@Autowired
 	private DataDictService dataDictService;
@@ -38,7 +38,7 @@ public class DataDictController {
 	 */
 	@GetMapping
 	public String index(Model model) {
-		model.addAttribute("type", "101");
+		model.addAttribute("type", "102");
 		return PREFIX + "/index.html";
 	}
 
@@ -47,7 +47,7 @@ public class DataDictController {
 	 */
 	@GetMapping("/add")
 	public String add(Model model) {
-		model.addAttribute("type", "101");
+		model.addAttribute("type", "102");
 		return PREFIX + "/add.html";
 	}
 

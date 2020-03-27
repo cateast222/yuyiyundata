@@ -1,14 +1,17 @@
-layui.use(['form','table', 'layer', 'jquery','fast'], function() {
+layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 	var layer = layui.layer,
 		table = layui.table,
 		$ = layui.jquery,
 		fast = layui.fast;
-	
+
 	var tableIns = table.render({
-		elem: '#dataDictTable',
+		elem: '#dataDictConfTable',
 		method: 'post',
-		where: {'type':$("#type").val()},
-		url: Feng.ctxPath + '/datadict/list', // 数据接口
+		where: {
+			'type': $("#type").val(),
+			'parentUuid': fast.getUrlParam('parentUuid')
+		},
+		url: Feng.ctxPath + '/datadictconf/list', // 数据接口
 		page: true, // 开启分页
 		toolbar: '#toolBar', // 开启工具栏，此处显示默认图标，可以自定义模板，详见文档
 		cols: [
@@ -42,21 +45,13 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 					field: 'code',
 					sort: true,
 					align: 'center',
-					title: '编号',
-					templet : function(d) {
-						var url = Feng.ctxPath + '/datadictconf?parentUuid=' + d.uuid;
-						return '<a style="color:#01AAED;" href="' + url + '">' + d.code + '</a>';
-					}
+					title: '编号'
 				},
 				{
 					field: 'name',
 					sort: true,
 					align: 'center',
-					title: '名称',
-					templet : function(d) {
-						var url = Feng.ctxPath + '/datadictconf?parentUuid=' + d.uuid;
-						return '<a style="color:#01AAED;" href="' + url + '">' + d.name + '</a>';
-					}
+					title: '名称'
 				},
 				{
 					field: 'summary',
@@ -86,6 +81,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 				},
 				{
 					field: 'state',
+					hide: true,
 					sort: true,
 					align: 'center',
 					title: '状态'
@@ -123,7 +119,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 	});
 
 	// 监听头工具栏事件
-	table.on('toolbar(dataDictTable)', function(obj) {
+	table.on('toolbar(dataDictConfTable)', function(obj) {
 		var checkStatus = table.checkStatus(obj.config.id),
 			data = checkStatus.data; // 获取选中的数据
 
@@ -131,11 +127,11 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 			// 新增数据
 			layer.open({
 				type: 2,
-				title: "新增数据字典",
+				title: "新增数据字典配置",
 				shadeClose: false,
 				shade: 0.3,
 				area: ["45%", "75%"],
-				content: Feng.ctxPath + '/datadict/add'
+				content: Feng.ctxPath + '/datadictconf/add?parentUuid=' + fast.getUrlParam('parentUuid')
 			});
 		} else if (obj.event === 'delete') {
 			// 批量删除
@@ -153,16 +149,16 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 					// 异步请求
 					$.ajax({
 						type: 'post',
-						url: Feng.ctxPath + '/datadict/deleteBatch',
+						url: Feng.ctxPath + '/datadictconf/deleteBatch',
 						data: {
 							ids: ids
 						},
 						dataType: 'json',
 						success: function(res) {
 							layer.msg(res.message, {
-									icon: 1
-								});
-							table.reload('dataDictTable', {
+								icon: 1
+							});
+							table.reload('dataDictConfTable', {
 								page: {
 									curr: 1
 								}
@@ -175,7 +171,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 	});
 
 	// 监听行工具事件
-	table.on('tool(dataDictTable)', function(obj) { // 注：tool
+	table.on('tool(dataDictConfTable)', function(obj) { // 注：tool
 		// 是工具条事件名，test
 		// 是 table
 		// 原始容器的属性
@@ -188,7 +184,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 			layer.confirm('确定要删除吗？', function() {
 				$.ajax({
 					type: 'post',
-					url: Feng.ctxPath + '/datadict/delete',
+					url: Feng.ctxPath + '/datadictconf/delete',
 					data: {
 						uuid: data.uuid
 					},
@@ -197,7 +193,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 						layer.msg(res.message, {
 							icon: 1
 						});
-						table.reload('dataDictTable', {
+						table.reload('dataDictConfTable', {
 							page: {
 								curr: 1
 							}
@@ -209,11 +205,11 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 			// 修改
 			layer.open({
 				type: 2,
-				title: "修改字典数据",
+				title: "修改字典配置数据",
 				shadeClose: false,
 				shade: 0.3,
 				area: ["45%", "75%"],
-				content: Feng.ctxPath + '/datadict/edit?uuid=' + obj.data.uuid
+				content: Feng.ctxPath + '/datadictconf/edit?uuid=' + obj.data.uuid
 			});
 		}
 	});
@@ -221,7 +217,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 	// 搜索
 	$('#searchBtn').on('click', function() {
 		tableIns.reload({
-			where: fast.getFormData('dataDictForm'),
+			where: fast.getFormData('dataDictConfForm'),
 			page: {
 				curr: 1
 			}
@@ -230,12 +226,18 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 
 	// 重置搜索条件
 	$('#resetBtn').on('click', function() {
-		document.getElementById('dataDictForm').reset();
+		document.getElementById('dataDictConfForm').reset();
 		tableIns.reload({
-			where: fast.getFormData('dataDictForm'),
+			where: fast.getFormData('dataDictConfForm'),
 			page: {
 				curr: 1
 			}
 		});
-	});	
+	});
+	
+	// 关闭页面
+	$('#backBtn').click(function() {
+		window.history.back(-1);
+		// window.location.href = Feng.ctxPath + "/datasi";
+	});
 });
