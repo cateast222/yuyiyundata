@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
@@ -22,6 +24,7 @@ import cn.stylefeng.roses.core.util.ToolUtil;
  * @author duhao
  * @since 2020-03-26
  */
+@Service
 public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig> {
 
 	/**
