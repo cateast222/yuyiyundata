@@ -129,9 +129,9 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 	}
 
 	/**
-	 * 根据tye查询
+	 * 根据精确查询
 	 * 
-	 * @param tyep
+	 * @param dataDict
 	 * @return
 	 */
 	public List<Map<String, Object>> selectListByEQ(DataDict dataDict) {

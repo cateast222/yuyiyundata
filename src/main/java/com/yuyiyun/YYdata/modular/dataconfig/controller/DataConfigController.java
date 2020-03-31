@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,11 @@ import com.yuyiyun.YYdata.modular.dataconfig.service.DataConfigService;
 import com.yuyiyun.YYdata.modular.dataconfig.service.DataDictService;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import cn.stylefeng.roses.core.util.ToolUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 
 /**
@@ -28,8 +34,9 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
  * @author duhao
  * @since 2020-03-26
  */
+@Api(value = "数据配置controller", tags = { "数据配置操作接口" })
 @Controller
-@RequestMapping("/dataconfig")
+@RequestMapping({"/dataconfig","/yydataApi/dataconfig"})
 public class DataConfigController {
 
     private static final String PREFIX = "/modular/dataconfig/dataconfig";
@@ -136,5 +143,21 @@ public class DataConfigController {
         dataConfigService.deleteBatch(ids);
         return ResponseData.success();
     }
+    
+    @ApiOperation(value = "获取配置值", notes = "获取数据配置值")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "key", value = "Key值", required = true, paramType = "query", dataType = "String"),
+			@ApiImplicitParam(name = "dsUuid", value = "数据源", required = true, paramType = "query", dataType = "Long") })
+	@PostMapping("/getValuesByApi")
+	@ResponseBody
+    public ResponseData getValuesByApi(Long dsUuid,String key) {
+    	if (ToolUtil.isNotEmpty(dsUuid)) {
+    		Map<String, String> map = dataConfigService.getValues(dsUuid, key);
+    		return ResponseData.success(map);
+		}else {
+			return ResponseData.error("参数异常，请检查！");
+		}
+    }
+    
 
 }

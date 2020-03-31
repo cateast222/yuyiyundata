@@ -1,6 +1,7 @@
 package com.yuyiyun.YYdata.modular.dataconfig.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,6 @@ import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.dataconfig.entity.DataConfig;
 import com.yuyiyun.YYdata.modular.dataconfig.mapper.DataConfigMapper;
-import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
@@ -38,10 +38,19 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 	 * @return
 	 */
 	public LayuiPageInfo selectPageList(DataConfig dataConfig, int limit, int page) {
+		// 创建分页查询对象
 		Page<Map<String, Object>> pageContext = new Page<Map<String, Object>>(page, limit);
+
+		// 设置排序
 		pageContext.setAsc("sort");
+
+		// 分页查询数据
 		List<Map<String, Object>> list = this.baseMapper.selectPage(pageContext, dataConfig);
+
+		// 设置分页数据
 		pageContext.setRecords(list);
+
+		// 封装并返回结果
 		return LayuiPageFactory.createPageInfo(pageContext);
 	}
 
@@ -51,10 +60,11 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 	 * @param dataConfig
 	 */
 	public int addDataConfig(DataConfig dataConfig) {
-		// 1、创建排重查询对象
+		// 创建排重查询对象
 		QueryWrapper<DataConfig> queryWrapper = new QueryWrapper<DataConfig>()
 				.and(i -> i.eq("`key`", dataConfig.getKey()).eq("data_source", dataConfig.getDataSource()));
-		// 2、判断是否重复
+
+		// 判断是否重复
 		int count = this.count(queryWrapper);
 		if (count > 0) {
 			throw new ServiceException(BizExceptionEnum.DC_EXISTED);
@@ -64,6 +74,8 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 		if (ToolUtil.isEmpty(dataConfig.getCreator())) {
 			dataConfig.setCreator(ShiroKit.getUser().getAccount());
 		}
+
+		// 返回插入结果
 		return baseMapper.insert(dataConfig);
 	}
 
@@ -75,6 +87,8 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 	public int editDataConfig(DataConfig dataConfig) {
 		// 设定更新时间
 		dataConfig.setUpdateTime(new Date());
+
+		// 返回更新结果
 		return baseMapper.updateById(dataConfig);
 	}
 
@@ -106,6 +120,60 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 	 */
 	public int deleteBatch(List<Long> ids) {
 		return baseMapper.deleteBatchIds(ids);
+	}
+
+	/**
+	 * 根据精确查询
+	 * 
+	 * @param dataConfig
+	 * @return
+	 */
+	public List<Map<String, Object>> selectListByEQ(DataConfig dataConfig) {
+		// 创建查询对象
+		QueryWrapper<DataConfig> queryWrapper = new QueryWrapper<DataConfig>();
+
+		// 设置查询条件
+		if (ToolUtil.isNotEmpty(dataConfig.getDataSource())) {
+			queryWrapper.eq("data_source", dataConfig.getDataSource());
+		}
+		if (ToolUtil.isNotEmpty(dataConfig.getKey())) {
+			queryWrapper.eq("`key`", dataConfig.getKey());
+		}
+
+		// 设置排序
+		queryWrapper.orderByAsc("sort", "update_time", "create_time");
+
+		// 返回查询结果
+		return this.listMaps(queryWrapper);
+	}
+
+	/**
+	 * 
+	 * @param dsUuid
+	 * @param key
+	 * @return
+	 */
+	public Map<String, String> getValues(Long dsUuid, String key) {
+		// 封装查询条件
+		DataConfig dataConfig = new DataConfig();
+		dataConfig.setDataSource(dsUuid);
+		dataConfig.setKey(key);
+
+		// 获取查询结果
+		List<Map<String, Object>> list = this.selectListByEQ(dataConfig);
+
+		// 创建返回对象
+		Map<String, String> retMap = new HashMap<String, String>();
+
+		// 循环处理数据
+		for (Map<String, Object> map : list) {
+			// 存储Key，Value数据
+			retMap.put((String) map.get("key"), (String) map.get("value"));
+		}
+
+		// 返回结果
+		return retMap;
+
 	}
 
 }

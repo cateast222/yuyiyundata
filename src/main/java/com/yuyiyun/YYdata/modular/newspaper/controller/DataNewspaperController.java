@@ -207,7 +207,6 @@ public class DataNewspaperController extends BaseController {
 	@PostMapping("/addByApi")
 	@ResponseBody
 	public ResponseData addByApi(@RequestBody() DataNewspaperParam param) {
-		System.out.println("param-->:" + param);
 		DataNewspaper add = this.dataNewspaperService.addOrEdit(param);
 		if (add != null) {
 			return ResponseData.success(add);
@@ -231,7 +230,7 @@ public class DataNewspaperController extends BaseController {
 			@ApiImplicitParam(name = "dsiUuid", value = "数据源", required = true, paramType = "query", dataType = "String") })
 	@PostMapping("/isExistByApi")
 	@ResponseBody
-	public ResponseData isExist(String pubTime, String url, String dsiUuid) {
+	public ResponseData isExistByApi(String pubTime, String url, String dsiUuid) {
 		return dataNewspaperService.isExist(dsiUuid, url, pubTime);
 	}
 }
