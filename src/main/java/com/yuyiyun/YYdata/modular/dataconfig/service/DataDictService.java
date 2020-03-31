@@ -115,6 +115,7 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 	 * @return
 	 */
 	public int deleteById(String uuid) {
+		this.remove(new QueryWrapper<DataDict>().eq("parent_uuid", uuid));
 		return baseMapper.deleteById(uuid);
 	}
 

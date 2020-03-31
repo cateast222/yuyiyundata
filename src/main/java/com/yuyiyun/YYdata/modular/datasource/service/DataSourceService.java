@@ -1,9 +1,14 @@
 package com.yuyiyun.YYdata.modular.datasource.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.tools.Tool;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,7 @@ import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.mapper.DataSourceMapper;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
@@ -60,8 +66,7 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		// 1、创建排重查询对象
 		QueryWrapper<DataSource> queryWrapper = new QueryWrapper<DataSource>()
 				.and(i -> i.eq("platform", param.getPlatform()))
-				.and(i -> i.eq("website_name", param.getWebsiteName()).or().eq("website_url",
-						param.getWebsiteUrl()));
+				.and(i -> i.eq("website_name", param.getWebsiteName()).or().eq("website_url", param.getWebsiteUrl()));
 		// 2、判断是否重复
 		int count = this.count(queryWrapper);
 		if (count > 0) {
@@ -101,8 +106,6 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		ToolUtil.copyProperties(newEntity, oldEntity);
 		// 3、创建排重查询对象
 		QueryWrapper<DataSource> queryWrapper = new QueryWrapper<DataSource>()
-//				.and(i -> i.eq("platform", param.getPlatform()).eq("website_name", param.getWebsiteName()))
-//				.or(i -> i.eq("platform", param.getPlatform()).eq("website_url", param.getWebsiteUrl()));
 				.and(i -> i.eq("platform", newEntity.getPlatform()))
 				.and(i -> i.eq("website_name", newEntity.getWebsiteName()).or().eq("website_url",
 						newEntity.getWebsiteUrl()))
@@ -154,6 +157,78 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		Page<Map<String, Object>> wrap = new DataSourceWrapper(pageMaps).wrap();
 		return LayuiPageFactory.createPageInfo(wrap);
 	}
+	
+	public List<Map<String, Object>> get2PpsByApi(String provider, String platform, String state) {
+		DataSource dataSource = new DataSource();
+		dataSource.setProvider(provider);
+		dataSource.setPlatform(platform);
+		dataSource.setState(state);
+		List<Map<String,Object>> list = this.selectListByEQ(dataSource);
+		return list;
+	}
+
+	/**
+	 * 精确查询
+	 * @param dataSource
+	 * @return
+	 */
+	public List<Map<String, Object>> selectListByEQ(DataSource dataSource) {
+		// 创建查询对象
+		QueryWrapper<DataSource> queryWrapper = new QueryWrapper<DataSource>();
+
+		// 设置查询条件
+		if (ToolUtil.isNotEmpty(dataSource.getChsName())) {
+			queryWrapper.eq("chs_name", dataSource.getChsName());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getCountry())) {
+			queryWrapper.eq("country", dataSource.getCountry());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getCreator())) {
+			queryWrapper.eq("creator", dataSource.getCreator());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getEncoded())) {
+			queryWrapper.eq("encoded", dataSource.getEncoded());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getLanguage())) {
+			queryWrapper.eq("language", dataSource.getLanguage());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getOrgName())) {
+			queryWrapper.eq("org_name", dataSource.getOrgName());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getPlatform())) {
+			queryWrapper.eq("platform", dataSource.getPlatform());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getProvider())) {
+			queryWrapper.eq("provider", dataSource.getProvider());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getProxy())) {
+			queryWrapper.eq("proxy", dataSource.getProxy());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getRegion())) {
+			queryWrapper.eq("region", dataSource.getRegion());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getRemark())) {
+			queryWrapper.eq("remark", dataSource.getRemark());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getState())) {
+			queryWrapper.eq("state", dataSource.getState());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getUuid())) {
+			queryWrapper.eq("uuid", dataSource.getUuid());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getWebsiteName())) {
+			queryWrapper.eq("website_name", dataSource.getWebsiteName());
+		}
+		if (ToolUtil.isNotEmpty(dataSource.getWebsiteUrl())) {
+			queryWrapper.eq("website_url", dataSource.getWebsiteUrl());
+		}
+
+		// 设置排序
+		queryWrapper.orderByAsc("create_time", "uuid");
+
+		// 返回查询结果
+		return this.listMaps(queryWrapper);
+	}
 
 	private DataSource getOldEntity(DataSourceParam param) {
 		return this.getById(getKey(param));
@@ -173,4 +248,6 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}
+
+
 }

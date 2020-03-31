@@ -29,6 +29,7 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -254,11 +255,36 @@ public class DataSourceController {
 	 */
 	@ApiOperation(value = "获取数据源", notes = "根据UUID查询数据源")
 	@ApiImplicitParam(name = "uuid", value = "uuid", required = true, paramType = "query", dataType = "String")
-	@GetMapping("/detail")
+	@GetMapping("/detailByApi")
 	@ResponseBody
 	public ResponseData detailByApi(String uuid) {
 		DataSource dataSource = this.dataSourceService.getById(uuid);
 		return ResponseData.success(dataSource);
+	}
+	
+	/**
+	 * 
+	 * @Description: API获取详情
+	 * @author duhao
+	 * @date 2020年1月5日
+	 * @version V1.0
+	 * @param uuid
+	 * @return
+	 */
+	@ApiOperation(value = "获取数据源", notes = "根据p-p-s查询数据源")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "provider", value = "数据提供方", required = true, paramType = "query", dataType = "String"),
+		@ApiImplicitParam(name = "state", value = "数据状态", required = false, paramType = "query", dataType = "String"),
+		@ApiImplicitParam(name = "platform", value = "数据源", required = false, paramType = "query", dataType = "String") })
+	@GetMapping("/get2PpsByApi")
+	@ResponseBody
+	public ResponseData get2PpsByApi(String provider,String platform,String state) {
+		if (ToolUtil.isNotEmpty(provider)) {
+			List<Map<String,Object>> list = this.dataSourceService.get2PpsByApi(provider,platform,state);
+			return ResponseData.success(list);
+		}else {
+			return ResponseData.error("参数异常，请检查！");
+		}
 	}
 
 	/**

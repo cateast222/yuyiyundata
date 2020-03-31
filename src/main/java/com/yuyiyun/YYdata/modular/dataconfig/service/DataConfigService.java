@@ -122,30 +122,7 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 		return baseMapper.deleteBatchIds(ids);
 	}
 
-	/**
-	 * 根据精确查询
-	 * 
-	 * @param dataConfig
-	 * @return
-	 */
-	public List<Map<String, Object>> selectListByEQ(DataConfig dataConfig) {
-		// 创建查询对象
-		QueryWrapper<DataConfig> queryWrapper = new QueryWrapper<DataConfig>();
-
-		// 设置查询条件
-		if (ToolUtil.isNotEmpty(dataConfig.getDataSource())) {
-			queryWrapper.eq("data_source", dataConfig.getDataSource());
-		}
-		if (ToolUtil.isNotEmpty(dataConfig.getKey())) {
-			queryWrapper.eq("`key`", dataConfig.getKey());
-		}
-
-		// 设置排序
-		queryWrapper.orderByAsc("sort", "update_time", "create_time");
-
-		// 返回查询结果
-		return this.listMaps(queryWrapper);
-	}
+	
 
 	/**
 	 * 
@@ -173,7 +150,55 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 
 		// 返回结果
 		return retMap;
+	}
+	
+	/**
+	 * 根据精确查询
+	 * 
+	 * @param dataConfig
+	 * @return
+	 */
+	public List<Map<String, Object>> selectListByEQ(DataConfig dataConfig) {
+		// 创建查询对象
+		QueryWrapper<DataConfig> queryWrapper = new QueryWrapper<DataConfig>();
 
+		// 设置查询条件
+		if (ToolUtil.isNotEmpty(dataConfig.getDataSource())) {
+			queryWrapper.eq("data_source", dataConfig.getDataSource());
+		}
+		if (ToolUtil.isNotEmpty(dataConfig.getKey())) {
+			queryWrapper.eq("`key`", dataConfig.getKey());
+		}
+		if (ToolUtil.isNotEmpty(dataConfig.getCreator())) {
+			queryWrapper.eq("creator", dataConfig.getCreator());
+		}
+		if (ToolUtil.isNotEmpty(dataConfig.getDataDict())) {
+			queryWrapper.eq("data_dict", dataConfig.getDataDict());
+		}
+		if (ToolUtil.isNotEmpty(dataConfig.getName())) {
+			queryWrapper.eq("name", dataConfig.getName());
+		}
+		if (ToolUtil.isNotEmpty(dataConfig.getRemark())) {
+			queryWrapper.eq("remark", dataConfig.getRemark());
+		}
+		if (ToolUtil.isNotEmpty(dataConfig.getState())) {
+			queryWrapper.eq("state", dataConfig.getState());
+		}
+		if (ToolUtil.isNotEmpty(dataConfig.getSummary())) {
+			queryWrapper.eq("summary", dataConfig.getSummary());
+		}
+		if (ToolUtil.isNotEmpty(dataConfig.getUuid())) {
+			queryWrapper.eq("uuid", dataConfig.getUuid());
+		}
+		if (ToolUtil.isNotEmpty(dataConfig.getValue())) {
+			queryWrapper.eq("`value`", dataConfig.getValue());
+		}
+
+		// 设置排序
+		queryWrapper.orderByAsc("sort", "update_time", "create_time");
+
+		// 返回查询结果
+		return this.listMaps(queryWrapper);
 	}
 
 }
