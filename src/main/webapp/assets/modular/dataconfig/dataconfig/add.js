@@ -21,19 +21,23 @@ layui.use(['layer', 'jquery', 'form', 'fast'], function() {
 				$(e.data).each(function(v, k) {
 					html += "<option value='" + k.uuid + "'>" + k.name + "</option>";
 				});
-				$("#dictConf").html('<option value="0">自定义</option>' + html);//把遍历的数据放到select表里面
-				form.render('select');//从新刷新了一下下拉框,重新渲染
-				dict = e.data;//将数据进行转存
+				$("#dictConf").html('<option value="0">自定义</option>' + html); //把遍历的数据放到select表里面
+				form.render('select'); //从新刷新了一下下拉框,重新渲染
+				dict = e.data; //将数据进行转存
 			}
 		});
-	});	
+	});
 	form.on('select(dictConf)', function(data) {
-		$("#dataDict").val("");$("#key").val("");$("#name").val("");
+		$('#dataDict').val('');
+		$('#key').val('');
+		$('#name').val('');
+		$('#summary').attr('title', '');
 		$(dict).each(function(v, k) {
-			if(data.value==k.uuid){
-				$("#dataDict").val(k.uuid);
-				$("#key").val(k.code);
-				$("#name").val(k.name);
+			if (data.value == k.uuid) {
+				$('#dataDict').val(k.uuid);
+				$('#key').val(k.code);
+				$('#name').val(k.name);
+				$('#summary').attr('title', k.summary);
 			}
 		});
 	});

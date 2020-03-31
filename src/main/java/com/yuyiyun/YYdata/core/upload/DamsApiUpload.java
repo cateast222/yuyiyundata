@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.util.ApiHttpClientUtil;
 import com.yuyiyun.YYdata.core.util.DateTimeUtil;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
@@ -153,7 +154,7 @@ public class DamsApiUpload {
 		wg_Ele_News_Data.put("paper_Picture", dataNews.getWebsitePictures());
 //			wg_Ele_News_Data.put("local_Pictures", dataNews.getLocalPictures());
 		wg_Ele_News_Data.put("pictures_Description", dataNews.getPicturesDescription());
-		wg_Ele_News_Data.put("language", dataNews.getLanguage());
+		wg_Ele_News_Data.put("language", ConstantFactory.me().getDictsByName("语种",dataNews.getLanguage()));
 		wg_Ele_News_Data.put("layoutSource", dataNews.getWebsiteThumbnail());
 //			wg_Ele_News_Data.put("local_Thumbnail", dataNews.getLocalThumbnail());
 		wg_Ele_News_Data.put("pdf_Url", dataNews.getWebsitePdf());

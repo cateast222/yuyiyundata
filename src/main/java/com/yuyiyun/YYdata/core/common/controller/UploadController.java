@@ -13,7 +13,7 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
 public class UploadController {
 
 	@GetMapping("/upload/image")
-	public ResponseData images(String urls, boolean proxy) {
+	public ResponseData images(String urls, String fileName, boolean proxy) {
 		if (urls == null || urls.equals("")) {
 			return ResponseData.error(401,"urls不能为空！");
 		}else {
@@ -21,7 +21,7 @@ public class UploadController {
 				String[] urlArray = urls.split("#");
 				StringBuffer bf = new StringBuffer();
 				for (String url : urlArray) {
-					String file = ResourceUpload.downloadFile(url, proxy, "http://yuyiyun.net:8093/document/fileupload/yunyidata", "", "");
+					String file = ResourceUpload.downloadFile(url, proxy, "http://yuyiyun.net:8093/document/fileupload/yunyidata", "", fileName);
 					bf.append("http://yuyiyun.net:8093/yunyidata/document/image/"+file.replaceAll(".*,", "")+"#");
 				}
 				bf.deleteCharAt(bf.length()-1);

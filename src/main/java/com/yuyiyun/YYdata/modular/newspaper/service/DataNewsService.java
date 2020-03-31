@@ -67,7 +67,7 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 
 		// 数据上传至DAMS,在数据新增和修改时上传
 		// 判断数据状态，对状态为"1"的数据进行上传
-		if (dataNews.getState().equals("1")) {
+		if (dataNews.getState().equals("1")&&dataNews.getState().equals("5")) {
 			System.out.println("数据准备上传！UUID为：" + dataNews.getUuid());
 			// 通过数据UUID获取最新的数据信息
 			DataNews byId2 = this.getById(dataNews.getUuid());

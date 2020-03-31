@@ -89,7 +89,7 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		DataNewspaper entity = getEntity(param);
 		entity.setCreator(
 				ToolUtil.isEmpty(entity.getCreator()) ? ShiroKit.getUser().getAccount() : entity.getCreator());
-		entity.setFullName(new SimpleDateFormat(entity.getChsName() + "-yyyy-MM-dd").format(entity.getPublish()));
+		entity.setFullName(entity.getChsName() + new SimpleDateFormat("-yyyy-MM-dd").format(entity.getPublish()));//《ABC》报-yyyy-MM-dd
 		// 4、数据存储
 		this.save(entity);
 		// 5、回调数据
@@ -121,8 +121,8 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		}
 		// 5、更新数据
 		newEntity.setUpdateTime(new Date());
-		newEntity.setFullName(
-				new SimpleDateFormat(newEntity.getChsName() + "-yyyy-MM-dd").format(newEntity.getPublish()));
+		newEntity.setFullName(newEntity.getChsName() + 
+				new SimpleDateFormat("-yyyy-MM-dd").format(newEntity.getPublish()));
 		this.updateById(newEntity);
 		// 6、数据回调
 		return newEntity;
