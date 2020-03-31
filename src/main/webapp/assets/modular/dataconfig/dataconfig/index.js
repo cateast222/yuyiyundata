@@ -51,7 +51,10 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 				{
 					field: 'value',
 					align: 'center',
-					title: '配置V值'
+					title: '配置V值',
+					templet : function(d) {
+						return fast.htmlEncode(d.value);
+					}
 				}, 
 				{
 					field: 'summary',
@@ -117,8 +120,8 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 				title: "新增配置数据",
 				shadeClose: false,
 				shade: 0.3,
-				area: ["80%", "80%"],
-				content: fast.ctxPath + '/dataconfig/add'
+				area: ["48%", "60%"],
+				content: fast.ctxPath + '/dataconfig/add?type=101&dataSource='+fast.getUrlParam('dataSource')
 			});
 		} else if (obj.event === 'delete') {
 			// 批量删除
@@ -192,7 +195,7 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 				title: "修改配置数据",
 				shadeClose: false,
 				shade: 0.3,
-				area: ["80%", "80%"],
+				area: ["48%", "60%"],
 				content: fast.ctxPath + '/dataconfig/edit?uuid=' + obj.data.uuid
 			});
 		}
@@ -217,6 +220,12 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 				curr: 1
 			}
 		});
+	});
+	
+	// 关闭页面
+	$('#backBtn').click(function() {
+		window.history.back(-1);
+		// window.location.href = Feng.ctxPath + "/datasi";
 	});
 
 });

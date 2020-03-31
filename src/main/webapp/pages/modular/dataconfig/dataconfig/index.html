@@ -1,7 +1,7 @@
 @layout("/common/_container.html",{js:["/assets/modular/dataconfig/dataconfig/index.js"]}){
 
 <div class="layui-body-header">
-	<span class="layui-body-header-title"> ˝æ›≈‰÷√π‹¿Ì</span>
+	<span class="layui-body-header-title">Êï∞ÊçÆÈÖçÁΩÆÁÆ°ÁêÜ</span>
 </div>
 <div class="layui-fluid">
     <div class="layui-card">
@@ -11,35 +11,38 @@
                 <div class="layui-form toolbar">
                     <div class="layui-form-item">
                         <!-- <div class="layui-inline">
-                            <label class="layui-form-label"> ˝æ›‘¥</label>
+                            <label class="layui-form-label">Êï∞ÊçÆÊ∫ê</label>
                             <div class="layui-input-inline">
-                                <input id="dataSource" name="dataSource" class="layui-input" type="text" placeholder="«Î ‰»Î ˝æ›‘¥"/>
+                                <input id="dataSource" name="dataSource" class="layui-input" type="text" placeholder="ËØ∑ËæìÂÖ•Êï∞ÊçÆÊ∫ê"/>
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label"> ˝æ›◊÷µ‰</label>
+                            <label class="layui-form-label">Êï∞ÊçÆÂ≠óÂÖ∏</label>
                             <div class="layui-input-inline">
-                                <input id="dataDict" name="dataDict" class="layui-input" type="text" placeholder="«Î ‰»Î ˝æ›◊÷µ‰"/>
+                                <input id="dataDict" name="dataDict" class="layui-input" type="text" placeholder="ËØ∑ËæìÂÖ•Êï∞ÊçÆÂ≠óÂÖ∏"/>
                             </div>
                         </div> -->
                         <div class="layui-inline">
-                            <!-- <label class="layui-form-label">≈‰÷√K÷µ</label> -->
+                            <!-- <label class="layui-form-label">ÈÖçÁΩÆKÂÄº</label> -->
                             <div class="layui-input-inline">
-                                <input id="key" name="key" class="layui-input" type="text" placeholder="«Î ‰»Î≈‰÷√K÷µ"/>
+                                <input id="key" name="key" class="layui-input" type="text" placeholder="ËØ∑ËæìÂÖ•ÈÖçÁΩÆKÂÄº"/>
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <!-- <label class="layui-form-label">√˚≥∆</label> -->
+                            <!-- <label class="layui-form-label">ÂêçÁß∞</label> -->
                             <div class="layui-input-inline">
-                                <input id="name" name="name" class="layui-input" type="text" placeholder="«Î ‰»Î√˚≥∆"/>
+                                <input id="name" name="name" class="layui-input" type="text" placeholder="ËØ∑ËæìÂÖ•ÂêçÁß∞"/>
                             </div>
                         </div>
                         <div class="layui-inline">
                             <button type="button" id="searchBtn" class="layui-btn layui-btn-normal icon-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe615;</i> À—À˜
+                                <i class="layui-icon">&#xe615;</i> ÊêúÁ¥¢
                             </button>
                             <button type="button" id="resetBtn" class="layui-btn layui-btn-primary icon-btn layui-btn-sm">
-                                <i class="layui-icon">&#xe669;</i> ÷ÿ÷√
+                                <i class="layui-icon">&#xe669;</i> ÈáçÁΩÆ
+                            </button>
+                            <button type="button" id="backBtn" class="layui-btn icon-btn layui-btn-warm layui-btn-sm">
+                            	<i class="layui-icon">&#x1006;</i>ÂÖ≥Èó≠
                             </button>
                         </div>
                     </div>
@@ -48,22 +51,22 @@
 
             <table class="layui-hide" id="dataConfigTable" lay-filter="dataConfigTable"></table>
 
-            <!-- ±Ì∏Ò≤Ÿ◊˜π§æﬂ¿∏ -->
+            <!-- Ë°®Ê†ºÊìç‰ΩúÂ∑•ÂÖ∑Ê†è -->
             <script type="text/html" id="toolBar">
                 <div class="layui-btn-container">
                     <button type="button" class="layui-btn layui-btn-sm" lay-event="add">
-                        <i class="layui-icon">&#xe654;</i> –¬‘ˆ ˝æ›
+                        <i class="layui-icon">&#xe654;</i> Êñ∞Â¢ûÊï∞ÊçÆ
                     </button>
                     <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">
-                        <i class="layui-icon">&#xe640;</i> ≈˙¡ø…æ≥˝
+                        <i class="layui-icon">&#xe640;</i> ÊâπÈáèÂà†Èô§
                     </button>
                 </div>
             </script>
 
-            <!--  ˝æ›––π§æﬂ¿∏ -->
+            <!-- Êï∞ÊçÆË°åÂ∑•ÂÖ∑Ê†è -->
             <script type="text/html" id="lineBar">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">±‡º≠</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">…æ≥˝</a>
+                <a class="layui-btn layui-btn-xs" lay-event="edit">ÁºñËæë</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">Âà†Èô§</a>
             </script>
 
         </div>

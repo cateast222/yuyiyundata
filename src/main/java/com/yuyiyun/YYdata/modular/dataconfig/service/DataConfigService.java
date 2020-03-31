@@ -6,15 +6,19 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.dataconfig.entity.DataConfig;
 import com.yuyiyun.YYdata.modular.dataconfig.mapper.DataConfigMapper;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 
 /**
  * <p>
@@ -47,6 +51,15 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 	 * @param dataConfig
 	 */
 	public int addDataConfig(DataConfig dataConfig) {
+		// 1、创建排重查询对象
+		QueryWrapper<DataConfig> queryWrapper = new QueryWrapper<DataConfig>()
+				.and(i -> i.eq("`key`", dataConfig.getKey()).eq("data_source", dataConfig.getDataSource()));
+		// 2、判断是否重复
+		int count = this.count(queryWrapper);
+		if (count > 0) {
+			throw new ServiceException(BizExceptionEnum.DC_EXISTED);
+		}
+
 		// 判断创建者是否存在并且设定
 		if (ToolUtil.isEmpty(dataConfig.getCreator())) {
 			dataConfig.setCreator(ShiroKit.getUser().getAccount());

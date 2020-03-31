@@ -6,15 +6,20 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.modular.dataconfig.entity.DataConfig;
 import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
 import com.yuyiyun.YYdata.modular.dataconfig.mapper.DataDictMapper;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 
 /**
  * <p>
@@ -34,15 +39,15 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 	 * @return
 	 */
 	public LayuiPageInfo selectPageList(DataDict DataDict, int limit, int page) {
-		//封装Page对象
+		// 封装Page对象
 		Page<Map<String, Object>> pageContext = new Page<Map<String, Object>>(page, limit);
-		//设置排序
+		// 设置排序
 		pageContext.setAsc("sort");
-		//获取分页数据
+		// 获取分页数据
 		List<Map<String, Object>> list = this.baseMapper.selectPage(pageContext, DataDict);
-		//结果数据封装
+		// 结果数据封装
 		pageContext.setRecords(list);
-		//返回数据
+		// 返回数据
 		return LayuiPageFactory.createPageInfo(pageContext);
 	}
 
@@ -52,7 +57,16 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 	 * @param DataDict
 	 */
 	public int addDataDict(DataDict dataDict) {
-		//判断创建者是否存在并且设定
+
+		// 1、创建排重查询对象
+		QueryWrapper<DataDict> queryWrapper = new QueryWrapper<DataDict>()
+				.and(i -> i.eq("type", dataDict.getType()).eq("code", dataDict.getCode()));
+		// 2、判断是否重复
+		int count = this.count(queryWrapper);
+		if (count > 0) {
+			throw new ServiceException(BizExceptionEnum.DD_EXISTED);
+		}
+		// 判断创建者是否存在并且设定
 		if (ToolUtil.isEmpty(dataDict.getCreator())) {
 			dataDict.setCreator(ShiroKit.getUser().getAccount());
 		}
@@ -65,9 +79,23 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 	 * @param DataDict
 	 */
 	public int editDataDict(DataDict dataDict) {
-		//设定更新时间
-		dataDict.setUpdateTime(new Date());
-		return baseMapper.updateById(dataDict);
+		// 1、转换得到旧对象
+		DataDict oldEntity = getOldEntity(dataDict);
+		// 2、转换得到新对象
+		DataDict newEntity = getEntity(dataDict);
+		ToolUtil.copyProperties(newEntity, oldEntity);
+		// 1、创建排重查询对象
+		QueryWrapper<DataDict> queryWrapper = new QueryWrapper<DataDict>()
+				.and(i -> i.eq("type", newEntity.getType()).eq("code", newEntity.getCode()))
+				.and(i -> i.ne("uuid", newEntity.getUuid()));
+		// 2、判断是否重复
+		int count = this.count(queryWrapper);
+		if (count > 0) {
+			throw new ServiceException(BizExceptionEnum.DD_EXISTED);
+		}
+		// 设定更新时间
+		newEntity.setUpdateTime(new Date());
+		return baseMapper.updateById(newEntity);
 	}
 
 	/**
@@ -100,4 +128,62 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 		return baseMapper.deleteBatchIds(ids);
 	}
 
+	/**
+	 * 根据tye查询
+	 * 
+	 * @param tyep
+	 * @return
+	 */
+	public List<Map<String, Object>> selectListByEQ(DataDict dataDict) {
+		// 创建查询对象
+		QueryWrapper<DataDict> queryWrapper = new QueryWrapper<DataDict>();
+
+		// 添加查询条件
+		if (ToolUtil.isNotEmpty(dataDict.getCode())) {
+			queryWrapper.and(i -> i.eq("code", dataDict.getCode()));
+		}
+		if (ToolUtil.isNotEmpty(dataDict.getDatas())) {
+			queryWrapper.and(i -> i.eq("datas", dataDict.getDatas()));
+		}
+		if (ToolUtil.isNotEmpty(dataDict.getName())) {
+			queryWrapper.and(i -> i.eq("name", dataDict.getName()));
+		}
+		if (ToolUtil.isNotEmpty(dataDict.getParentUuid())) {
+			queryWrapper.and(i -> i.eq("parent_uuid", dataDict.getParentUuid()));
+		}
+		if (ToolUtil.isNotEmpty(dataDict.getSort())) {
+			queryWrapper.and(i -> i.eq("sort", dataDict.getSort()));
+		}
+		if (ToolUtil.isNotEmpty(dataDict.getRemark())) {
+			queryWrapper.and(i -> i.eq("remark", dataDict.getRemark()));
+		}
+		if (ToolUtil.isNotEmpty(dataDict.getState())) {
+			queryWrapper.and(i -> i.eq("state", dataDict.getState()));
+		}
+		if (ToolUtil.isNotEmpty(dataDict.getSummary())) {
+			queryWrapper.and(i -> i.eq("summary", dataDict.getSummary()));
+		}
+		if (ToolUtil.isNotEmpty(dataDict.getType())) {
+			queryWrapper.and(i -> i.eq("type", dataDict.getType()));
+		}
+		if (ToolUtil.isNotEmpty(dataDict.getUuid())) {
+			queryWrapper.and(i -> i.eq("uuid", dataDict.getUuid()));
+		}
+
+		// 设置排序
+		queryWrapper.orderByAsc("sort", "update_time", "create_time");
+
+		// 返回查询结果
+		return this.listMaps(queryWrapper);
+	}
+
+	private DataDict getOldEntity(DataDict dataDict) {
+		return this.getById(dataDict.getUuid());
+	}
+
+	private DataDict getEntity(DataDict dataDict) {
+		DataDict entity = new DataDict();
+		ToolUtil.copyProperties(dataDict, entity);
+		return entity;
+	}
 }

@@ -50,6 +50,11 @@ layui.use(['table', 'ax'],
 					field: 'org_name',
 					sort: true,
 					title: '原名称',
+					templet: function (d) {
+						var url = Feng.ctxPath + '/dataconfig?dataSource=' + d.uuid;
+						var color = "#FF3333;";
+						return '<a style="color:' + color + '" href="' + url + '">'	+ d.chs_name + '</a>';
+					},
 					align: 'center',
 					width: 120
 				},

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
@@ -65,7 +64,7 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		DataNews byId = this.getById(param.getUuid());
 		// 数据存在进行更新操作，不存在进行新增操作
 		DataNews dataNews = ToolUtil.isEmpty(byId) ? add(param) : update(param);
-		
+
 		// 数据上传至DAMS,在数据新增和修改时上传
 		// 判断数据状态，对状态为"1"的数据进行上传
 		if (dataNews.getState().equals("1")) {
@@ -85,14 +84,14 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 				dataNews = update(dataNewsParam);
 			}
 		}
-		
+
 		return dataNews;
 	}
 
 	public DataNews add(DataNewsParam param) {
 		// 1、创建查询对象，根据电子报纸和URL
 		QueryWrapper<DataNews> queryWrapper = new QueryWrapper<DataNews>()
-				.and(i -> i.eq("data_newspaper", param.getDataNewspaper()).eq("url", param.getUrl()));
+				.eq("data_newspaper", param.getDataNewspaper()).eq("url", param.getUrl());
 		// 2、判断是否重复
 		int count = this.count(queryWrapper);
 		if (count > 0) {
@@ -126,10 +125,11 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		ToolUtil.copyProperties(newEntity, oldEntity);
 		// 3、创建查询对象，根据电子报纸和URL
 		QueryWrapper<DataNews> queryWrapper = new QueryWrapper<DataNews>()
-				.and(i -> i.eq("data_newspaper", param.getDataNewspaper()).eq("url", param.getUrl()));
+				.eq("data_newspaper", newEntity.getDataNewspaper()).eq("url", newEntity.getUrl())
+				.ne("uuid", newEntity.getUuid());
 		// 4、判断是否重复
 		int count = this.count(queryWrapper);
-		if (count > 1) {
+		if (count > 0) {
 			throw new ServiceException(BizExceptionEnum.DN_EXISTED);
 		}
 		// 5、更新数据

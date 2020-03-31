@@ -78,8 +78,8 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	public DataNewspaper add(DataNewspaperParam param) {
 		// 1、创建查询对象，根据数据源、发布时间和URL
 		QueryWrapper<DataNewspaper> queryWrapper = new QueryWrapper<DataNewspaper>()
-				.and(i -> i.eq("data_source", param.getDataSource()).eq("publish", param.getPublish()))
-				.or(i -> i.eq("data_source", param.getDataSource()).eq("url", param.getUrl()));
+				.eq("data_source", param.getDataSource())
+				.and(i -> i.eq("publish", param.getPublish()).or().eq("url", param.getUrl()));
 		// 2、判断是否重复
 		int count = this.count(queryWrapper);
 		if (count > 0) {
@@ -111,11 +111,12 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		ToolUtil.copyProperties(newEntity, oldEntity);
 		// 3、创建查询对象，根据数据源、发布时间和URL
 		QueryWrapper<DataNewspaper> queryWrapper = new QueryWrapper<DataNewspaper>()
-				.and(i -> i.eq("data_source", param.getDataSource()).eq("publish", param.getPublish()))
-				.or(i -> i.eq("data_source", param.getDataSource()).eq("url", param.getUrl()));
+				.eq("data_source", newEntity.getDataSource())
+				.and(i -> i.eq("publish", newEntity.getPublish()).or().eq("url", newEntity.getUrl()))
+				.ne("uuid", newEntity.getUuid());
 		// 4、判断电子报纸是否重复
 		int count = this.count(queryWrapper);
-		if (count > 1) {
+		if (count > 0) {
 			throw new ServiceException(BizExceptionEnum.DNP_EXISTED);
 		}
 		// 5、更新数据

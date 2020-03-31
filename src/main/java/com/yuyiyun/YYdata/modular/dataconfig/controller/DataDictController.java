@@ -1,6 +1,7 @@
 package com.yuyiyun.YYdata.modular.dataconfig.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -136,6 +137,19 @@ public class DataDictController {
 	public ResponseData deleteBatch(@RequestParam(value = "ids[]", required = true) List<Long> ids) {
 		dataDictService.deleteBatch(ids);
 		return ResponseData.success();
+	}
+	
+	/**
+	 * 查看详情
+	 * 
+	 * @param dataDict
+	 * @return
+	 */
+	@RequestMapping("/getList")
+	@ResponseBody
+	public ResponseData list(DataDict dataDict) {
+		List<Map<String,Object>> selectListByEQ = dataDictService.selectListByEQ(dataDict);
+		return ResponseData.success(selectListByEQ);
 	}
 
 }

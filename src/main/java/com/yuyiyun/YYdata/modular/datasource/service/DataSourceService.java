@@ -59,8 +59,9 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 	public DataSource add(DataSourceParam param) {
 		// 1、创建排重查询对象
 		QueryWrapper<DataSource> queryWrapper = new QueryWrapper<DataSource>()
-				.and(i -> i.eq("platform", param.getPlatform()).eq("website_name", param.getWebsiteName()))
-				.or(i -> i.eq("platform", param.getPlatform()).eq("website_url", param.getWebsiteUrl()));
+				.and(i -> i.eq("platform", param.getPlatform()))
+				.and(i -> i.eq("website_name", param.getWebsiteName()).or().eq("website_url",
+						param.getWebsiteUrl()));
 		// 2、判断是否重复
 		int count = this.count(queryWrapper);
 		if (count > 0) {
@@ -100,11 +101,15 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		ToolUtil.copyProperties(newEntity, oldEntity);
 		// 3、创建排重查询对象
 		QueryWrapper<DataSource> queryWrapper = new QueryWrapper<DataSource>()
-				.and(i -> i.eq("platform", param.getPlatform()).eq("website_name", param.getWebsiteName()))
-				.or(i -> i.eq("platform", param.getPlatform()).eq("website_url", param.getWebsiteUrl()));
+//				.and(i -> i.eq("platform", param.getPlatform()).eq("website_name", param.getWebsiteName()))
+//				.or(i -> i.eq("platform", param.getPlatform()).eq("website_url", param.getWebsiteUrl()));
+				.and(i -> i.eq("platform", newEntity.getPlatform()))
+				.and(i -> i.eq("website_name", newEntity.getWebsiteName()).or().eq("website_url",
+						newEntity.getWebsiteUrl()))
+				.and(i -> i.ne("uuid", newEntity.getUuid()));
 		// 4、判断电子报纸是否重复
 		int count = this.count(queryWrapper);
-		if (count > 1) {
+		if (count > 0) {
 			throw new ServiceException(BizExceptionEnum.DS_EXISTED);
 		}
 		// 5、更新数据

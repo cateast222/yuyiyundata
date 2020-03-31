@@ -92,6 +92,32 @@ layui.define(['jquery','layer','table'], function(exports) {
         });
         return formData;
     };
+    
+    /**
+     * html标签转文本
+     * @param html内容
+     * @returns 文本内容
+     */
+    fast.htmlEncode = function(html){
+    	var temp = document.createElement("div");
+        (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
+        var output = temp.innerHTML;
+        temp = null;
+        return output;
+    }
+    
+    /**
+     * 文本转html标签
+     * @param 文本内容
+     * @returns html内容
+     */
+    fast.htmlDecode = function(text){
+    	var temp = document.createElement("div"); 
+        temp.innerHTML = text; 
+        var output = temp.innerText || temp.textContent; 
+        temp = null; 
+        return output;
+    }
 
     /**
      * 获取根目录地址(存在Bug,嫌麻烦建议使用thymeleaf等模板引擎)

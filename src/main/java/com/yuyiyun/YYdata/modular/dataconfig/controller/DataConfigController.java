@@ -1,9 +1,11 @@
 package com.yuyiyun.YYdata.modular.dataconfig.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.modular.dataconfig.entity.DataConfig;
+import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
 import com.yuyiyun.YYdata.modular.dataconfig.service.DataConfigService;
+import com.yuyiyun.YYdata.modular.dataconfig.service.DataDictService;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 
@@ -32,6 +36,8 @@ public class DataConfigController {
 
     @Autowired
     private DataConfigService dataConfigService;
+    @Autowired
+    private DataDictService dataDictServices;
 
     /**
     * 跳转到主页面
@@ -45,7 +51,8 @@ public class DataConfigController {
     * 跳转到新增页面
     */
     @GetMapping("/add")
-    public String add() {
+    public String add(DataDict dataDict,Model model) {
+    	model.addAttribute("dict", dataDictServices.selectListByEQ(dataDict));
         return PREFIX + "/add.html";
     }
 
@@ -67,7 +74,7 @@ public class DataConfigController {
     @RequestMapping("/list")
     @ResponseBody
     public LayuiPageInfo pageList(DataConfig dataConfig, int limit, int page) {
-      return dataConfigService.selectPageList(dataConfig,limit,page);
+    	return dataConfigService.selectPageList(dataConfig,limit,page);
     }
 
     /**

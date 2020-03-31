@@ -21,7 +21,18 @@ public enum BizExceptionEnum implements AbstractBaseExceptionEnum {
 	/**
 	 * 数据源
 	 */
+	
 	DS_EXISTED(400, "该数据源名称或URL已经存在"),
+	
+	/**
+	 * 数据配置
+	 */	
+	DC_EXISTED(400, "该数据配置Key已经存在，请检查！"), DC_ERROR_CREATE(500, "创建数据配置失败"),
+	
+	/**
+	 * 数据配置
+	 */	
+	DD_EXISTED(400, "该数据字典Code已经存在，请检查！"), DD_ERROR_CREATE(500, "创建数据字典失败"),
 
 	/**
 	 * 数据源

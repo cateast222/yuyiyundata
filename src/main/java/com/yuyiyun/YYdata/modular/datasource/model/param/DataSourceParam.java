@@ -75,5 +75,4 @@ public class DataSourceParam implements Serializable,BaseValidatingParam{
 	public String checkParam() {
 		return null;
 	}
-
 }

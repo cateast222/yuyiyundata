@@ -26,7 +26,7 @@ public interface DataConfigMapper extends BaseMapper<DataConfig> {
     * @return
     */
 	@SuppressWarnings("rawtypes")
-	List<Map<String, Object>> selectPage(@Param("page")Page pageContext, @Param("config")DataConfig dataConfig);
+	List<Map<String, Object>> selectPage(@Param("page")Page pageContext, @Param("dataConfig")DataConfig dataConfig);
 
 }
 

@@ -7,8 +7,8 @@
         <id column="uuid" property="uuid" />
         <result column="data_source" property="dataSource" />
         <result column="data_dict" property="dataDict" />
-        <result column="key" property="key" />
-        <result column="value" property="value" />
+        <result column="`key`" property="key" />
+        <result column="`value`" property="value" />
         <result column="name" property="name" />
         <result column="summary" property="summary" />
         <result column="sort" property="sort" />
@@ -25,8 +25,8 @@
         uuid as uuid,
         data_source as dataSource,
         data_dict as dataDict,
-        key as key,
-        value as value,
+        `key` as `key`,
+        `value` as `value`,
         name as name,
         summary as summary,
         sort as sort,
@@ -50,13 +50,13 @@
                 and data_dict = #{dataConfig.dataDict}
             </if>
             <if test="dataConfig.key != null and dataConfig.key != ''">
-                and key = #{dataConfig.key}
+                and `key` like CONCAT('%', #{dataConfig.key},'%')
             </if>
             <if test="dataConfig.value != null and dataConfig.value != ''">
-                and value = #{dataConfig.value}
+                and `value` = #{dataConfig.value}
             </if>
             <if test="dataConfig.name != null and dataConfig.name != ''">
-                and name = #{dataConfig.name}
+                and name like CONCAT('%', #{dataConfig.name},'%')
             </if>
             <if test="dataConfig.summary != null and dataConfig.summary != ''">
                 and summary = #{dataConfig.summary}

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
 
 import lombok.Data;
 
@@ -28,7 +29,7 @@ public class DataSource implements Serializable {
 	/**
 	 * 主键
 	 */
-	@TableId(value = "uuid",type = IdType.ID_WORKER)
+	@TableId(value = "uuid", type = IdType.ID_WORKER)
 	private Long uuid;
 
 	/**
@@ -66,7 +67,7 @@ public class DataSource implements Serializable {
 	 */
 	@TableField("provider")
 	private String provider;
-	
+
 	/**
 	 * 国家（国家字典）
 	 */
@@ -127,4 +128,71 @@ public class DataSource implements Serializable {
 	@TableField(value = "update_time", fill = FieldFill.UPDATE)
 	private Date updateTime;
 
+	public void setUuid(Long uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setChsName(String chsName) {
+		this.chsName = HtmlTagUtil.convertTag(chsName);
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = HtmlTagUtil.convertTag(orgName);
+	}
+
+	public void setWebsiteUrl(String websiteUrl) {
+		this.websiteUrl = HtmlTagUtil.convertTag(websiteUrl);
+	}
+
+	public void setWebsiteName(String websiteName) {
+		this.websiteName = HtmlTagUtil.convertTag(websiteName);
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = HtmlTagUtil.convertTag(platform);
+	}
+
+	public void setProvider(String provider) {
+		this.provider = HtmlTagUtil.convertTag(provider);
+	}
+
+	public void setCountry(String country) {
+		this.country = HtmlTagUtil.convertTag(country);
+	}
+
+	public void setRegion(String region) {
+		this.region = HtmlTagUtil.convertTag(region);
+	}
+
+	public void setLanguage(String language) {
+		this.language = HtmlTagUtil.convertTag(language);
+	}
+
+	public void setEncoded(String encoded) {
+		this.encoded = HtmlTagUtil.convertTag(encoded);
+	}
+
+	public void setProxy(String proxy) {
+		this.proxy = HtmlTagUtil.convertTag(proxy);
+	}
+
+	public void setRemark(String remark) {
+		this.remark = HtmlTagUtil.convertTag(remark);
+	}
+
+	public void setState(String state) {
+		this.state = HtmlTagUtil.convertTag(state);
+	}
+
+	public void setCreator(String creator) {
+		this.creator = HtmlTagUtil.convertTag(creator);
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

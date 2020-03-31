@@ -3,13 +3,12 @@ package com.yuyiyun.YYdata.modular.newspaper.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
 
 import lombok.Data;
 
@@ -21,7 +20,6 @@ import lombok.Data;
  * @author duhao
  * @since 2020-01-03
  */
-@SuppressWarnings("deprecation")
 @Data
 @TableName("data_news")
 public class DataNews implements Serializable {
@@ -250,13 +248,152 @@ public class DataNews implements Serializable {
 	 */
 	@TableField(value = "update_time", fill = FieldFill.UPDATE)
 	private Date updateTime;
-	
-//	public void setContent(String content) {
-//		this.content = content.replace("& ", "&");
-//	}
-	
+
+	public void setUuid(Long uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = HtmlTagUtil.convertTag(orgName);
+	}
+
+	public void setChsName(String chsName) {
+		this.chsName = HtmlTagUtil.convertTag(chsName);
+	}
+
+	public void setDataSource(Long dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	public void setDataNewspaper(Long dataNewspaper) {
+		this.dataNewspaper = dataNewspaper;
+	}
+
+	public void setProvider(String provider) {
+		this.provider = HtmlTagUtil.convertTag(provider);
+	}
+
+	public void setPubtime(Date pubtime) {
+		this.pubtime = pubtime;
+	}
+
+	public void setTitle(String title) {
+		this.title = HtmlTagUtil.convertTag(title);
+	}
+
+	public void setUrl(String url) {
+		this.url = HtmlTagUtil.convertTag(url);
+	}
+
+	public void setPretitle(String pretitle) {
+		this.pretitle = HtmlTagUtil.convertTag(pretitle);
+	}
+
+	public void setSubtitle(String subtitle) {
+		this.subtitle = HtmlTagUtil.convertTag(subtitle);
+	}
+
+	public void setAuthor(String author) {
+		this.author = HtmlTagUtil.convertTag(author);
+	}
+
+	public void setEditor(String editor) {
+		this.editor = HtmlTagUtil.convertTag(editor);
+	}
+
+	public void setAbstracts(String abstracts) {
+		this.abstracts = HtmlTagUtil.convertTag(abstracts);
+	}
+
+	public void setContent(String content) {
+		this.content = HtmlTagUtil.convertTag(content);
+	}
+
 	public void setTagContent(String tagContent) {
-		tagContent = tagContent.replace("& ", "&");
-		this.tagContent = StringEscapeUtils.unescapeHtml4(tagContent);
+		this.tagContent = HtmlTagUtil.convertTag(tagContent);
+	}
+
+	public void setWebsitePictures(String websitePictures) {
+		this.websitePictures = HtmlTagUtil.convertTag(websitePictures);
+	}
+
+	public void setWebsiteAudios(String websiteAudios) {
+		this.websiteAudios = HtmlTagUtil.convertTag(websiteAudios);
+	}
+
+	public void setWebsiteVideos(String websiteVideos) {
+		this.websiteVideos = HtmlTagUtil.convertTag(websiteVideos);
+	}
+
+	public void setWebsiteFiles(String websiteFiles) {
+		this.websiteFiles = HtmlTagUtil.convertTag(websiteFiles);
+	}
+
+	public void setPicturesDescription(String picturesDescription) {
+		this.picturesDescription = HtmlTagUtil.convertTag(picturesDescription);
+	}
+
+	public void setLanguage(String language) {
+		this.language = HtmlTagUtil.convertTag(language);
+	}
+
+	public void setWebsiteThumbnail(String websiteThumbnail) {
+		this.websiteThumbnail = HtmlTagUtil.convertTag(websiteThumbnail);
+	}
+
+	public void setWebsitePdf(String websitePdf) {
+		this.websitePdf = HtmlTagUtil.convertTag(websitePdf);
+	}
+
+	public void setHa(String ha) {
+		this.ha = HtmlTagUtil.convertTag(ha);
+	}
+
+	public void setChannel(String channel) {
+		this.channel = HtmlTagUtil.convertTag(channel);
+	}
+
+	public void setNumber(String number) {
+		this.number = HtmlTagUtil.convertTag(number);
+	}
+
+	public void setPage(String page) {
+		this.page = HtmlTagUtil.convertTag(page);
+	}
+
+	public void setPageName(String pageName) {
+		this.pageName = HtmlTagUtil.convertTag(pageName);
+	}
+
+	public void setPaperCount(Integer paperCount) {
+		this.paperCount = paperCount;
+	}
+
+	public void setFrontPage(Integer frontPage) {
+		this.frontPage = frontPage;
+	}
+
+	public void setInsertTime(Date insertTime) {
+		this.insertTime = insertTime;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = HtmlTagUtil.convertTag(remark);
+	}
+
+	public void setState(String state) {
+		this.state = HtmlTagUtil.convertTag(state);
+	}
+
+	public void setCreator(String creator) {
+		this.creator = HtmlTagUtil.convertTag(creator);
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 }

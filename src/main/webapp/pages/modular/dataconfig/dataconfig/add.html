@@ -1,87 +1,69 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>新增数据</title>
-    <link rel="stylesheet" th:href="@{/component/layui/css/layui.css}"/>
-</head>
-<body class="layui-bg-gray">
-<div class="layui-row">
-    <div class="layui-col-md12">
+@layout("/common/_container.html",{js:["/assets/modular/dataconfig/dataconfig/add.js"]}){
+
+<div class="layui-body-header">
+	<span class="layui-body-header-title">新增配置数据</span>
+</div>
+<div class="layui-fluid " style="">
         <div class="layui-card"  style="margin: 10px;">
             <div class="layui-card-body">
-                <form class="layui-form" action="">
-                    <input name="uuid" type="text" style="display: none">
+                <form class="layui-form layui-form-pane" action="">
+                    <input name="uuid" id="uuid" type="text" style="display: none">
+                    <input name="dataDict" id="dataDict" type="text" style="display: none">
                     <div class="layui-form-item">
-                        <label class="layui-form-label">数据源<span style="color: red;">*</span></label>
+                    	<div class="layui-row layui-col-space15">
+							<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+								<label class="layui-form-label">数据字典</label>
+								<div class="layui-input-block">
+									<select id="dict" lay-search="" lay-filter="dict">
+										<option value="0">自定义</option> 
+										@for(item in dict){
+										<option value="${item.uuid}">${item.name}</option> 
+										@}
+									</select>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+								<label class="layui-form-label">字典配置</label>
+								<div class="layui-input-block">
+									<select id="dictConf" lay-search="" lay-filter="dictConf">
+										<option value="0">自定义</option> 
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+                    <div class="layui-form-item">
+                    	<div class="layui-row layui-col-space15">
+							<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+		                        <label class="layui-form-label">配置K值<span style="color: red;">*</span></label>
+		                        <div class="layui-input-block">
+		                            <input type="text" name="key" id="key" lay-verify="required" placeholder="请输入配置K值" autocomplete="off" class="layui-input">
+		                        </div>
+                    		</div>
+                    		<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+		                        <label class="layui-form-label">名称<span style="color: red;">*</span></label>
+		                        <div class="layui-input-block">
+		                            <input type="text" name="name" id="name" lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+		                        </div>
+                    		</div>
+                    	</div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">配置V值</label>
                         <div class="layui-input-block">
-                            <input type="text" name="dataSource" id="dataSource" lay-verify="required" placeholder="请输入数据源" autocomplete="off" class="layui-input">
+                            <textarea name="value" id="value" placeholder="请输入配置V值"  class="layui-textarea"></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">数据字典<span style="color: red;">*</span></label>
+                        <label class="layui-form-label">排序</label>
                         <div class="layui-input-block">
-                            <input type="text" name="dataDict" id="dataDict" lay-verify="required" placeholder="请输入数据字典" autocomplete="off" class="layui-input">
+                            <input type="number" name="sort" id="sort" placeholder="请输入排序" class="layui-input">
                         </div>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">配置K值<span style="color: red;">*</span></label>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">描述</label>
                         <div class="layui-input-block">
-                            <input type="text" name="key" id="key" lay-verify="required" placeholder="请输入配置K值" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">配置V值<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input type="text" name="value" id="value" lay-verify="required" placeholder="请输入配置V值" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">名称<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input type="text" name="name" id="name" lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">描述<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input type="text" name="summary" id="summary" lay-verify="required" placeholder="请输入描述" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">排序<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input type="text" name="sort" id="sort" lay-verify="required" placeholder="请输入排序" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">备注<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input type="text" name="remark" id="remark" lay-verify="required" placeholder="请输入备注" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">状态<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input type="text" name="state" id="state" lay-verify="required" placeholder="请输入状态" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">创建者<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input type="text" name="creator" id="creator" lay-verify="required" placeholder="请输入创建者" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">创建时间<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input type="text" name="createTime" id="createTime" lay-verify="required" placeholder="请输入创建时间" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">更新时间<span style="color: red;">*</span></label>
-                        <div class="layui-input-block">
-                            <input type="text" name="updateTime" id="updateTime" lay-verify="required" placeholder="请输入更新时间" autocomplete="off" class="layui-input">
+                            <textarea name="summary" id="summary" placeholder="请输入描述"  class="layui-textarea"></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -94,43 +76,4 @@
             </div>
         </div>
     </div>
-</div>
-<script th:src="@{/component/layui/layui.js}"></script>
-<script th:src="@{/assets/common/lay-config.js}"></script>
-<script>
-    layui.use(['layer','jquery','form','fast'], function() {
-        var $ = layui.jquery
-            ,form = layui.form
-            ,layer = layui.layer
-            ,fast = layui.fast;
-
-        //监听提交
-        form.on('submit(formBtn)', function(data) {
-            $.ajax({
-                type: 'post',
-                url: fast.ctxPath + '/config/addConfig',
-                data: data.field,
-                dataType: 'json',
-                success: function (data) {
-                    // 提示信息
-                    top.layer.msg(data.message, {icon: 1});
-                    // 获取当前iframe层的索引
-                    var index = parent.layer.getFrameIndex(window.name);
-                    // 关闭弹窗
-                    parent.layer.close(index);
-                    // 重载表格
-                    parent.layui.table.reload('configTable',{page:{curr:1}});
-                },
-                error: function (XMLHttpRequest,textStatus) {
-                    layer.msg('请求失败，系统发生异常', {icon: 2});
-                    console.log(textStatus);
-                }
-            });
-            return false;
-        });
-
-
-    });
-</script>
-</body>
-</html>
+ @}
