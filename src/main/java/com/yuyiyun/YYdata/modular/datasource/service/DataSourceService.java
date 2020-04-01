@@ -1,14 +1,9 @@
 package com.yuyiyun.YYdata.modular.datasource.service;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.tools.Tool;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +15,6 @@ import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
-import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.mapper.DataSourceMapper;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
@@ -74,6 +68,7 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		}
 		// 3、对象转换
 		DataSource entity = getEntity(param);
+		// 4、设置相关数据
 		if (ToolUtil.isEmpty(entity.getWebsiteName())) {
 			entity.setWebsiteName(entity.getChsName());
 		}
@@ -83,9 +78,9 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		if (ToolUtil.isEmpty(entity.getCreator())) {
 			entity.setCreator(ShiroKit.getUser().getAccount());
 		}
-		// 4、数据存储
+		// 5、数据存储
 		this.save(entity);
-		// 5、数据返回
+		// 6、数据返回
 		return entity;
 	}
 
@@ -137,45 +132,50 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		QueryWrapper<DataSource> queryWrapper = new QueryWrapper<>();
 		// 3、判断并模糊检索名称
 		if (ToolUtil.isNotEmpty(param.getCondition())) {
-			queryWrapper.and(i -> i.like("website_name", param.getCondition()))
-					.or(i -> i.like("chs_name", param.getCondition()))
-					.or(i -> i.like("org_name", param.getCondition()));
+			queryWrapper.and(i -> i.like("website_name", param.getCondition()).or()
+					.like("chs_name", param.getCondition()).or().like("org_name", param.getCondition()));
 		}
 		// 4、判断并检索平台
 		if (ToolUtil.isNotEmpty(param.getPlatform())) {
-			queryWrapper.and(i -> i.eq("platform", param.getPlatform()));
+			queryWrapper.eq("platform", param.getPlatform());
 		}
 		// 5、判断并检索状态
 		if (ToolUtil.isNotEmpty(param.getState())) {
-			queryWrapper.and(i -> i.eq("state", param.getState()));
+			queryWrapper.eq("state", param.getState());
 		}
 		// 6、根据创建时间进行排序
 		pageContext.setDesc("update_time");
 		// 7、封装分页数据
 		Page<Map<String, Object>> pageMaps = (Page<Map<String, Object>>) this.pageMaps(pageContext, queryWrapper);
 //		IPage page = this.page(pageContext, queryWrapper);
+		// 数据补充装换
 		Page<Map<String, Object>> wrap = new DataSourceWrapper(pageMaps).wrap();
+		// 返回处理结果
 		return LayuiPageFactory.createPageInfo(wrap);
 	}
-	
-	public List<Map<String, Object>> get2PpsByApi(String provider, String platform, String state) {
-		DataSource dataSource = new DataSource();
-		dataSource.setProvider(provider);
-		dataSource.setPlatform(platform);
-		dataSource.setState(state);
-		List<Map<String,Object>> list = this.selectListByEQ(dataSource);
+
+	public List<Map<String, Object>> getEQsByApi(DataSource dataSource, String... columns) {
+		// 设置查询字段
+		String[] cs = { "uuid", "proxy", "platform", "chs_name", "encoded" };
+		if (ToolUtil.isNotEmpty(columns) && columns.length > 0) {
+			cs = columns;
+		}
+		// 获取查询结果
+		List<Map<String, Object>> list = this.selectListByEQ(dataSource, cs);
+		// 返回数据结果
 		return list;
 	}
 
 	/**
 	 * 精确查询
+	 * 
 	 * @param dataSource
+	 * @param columns
 	 * @return
 	 */
-	public List<Map<String, Object>> selectListByEQ(DataSource dataSource) {
-		// 创建查询对象
-		QueryWrapper<DataSource> queryWrapper = new QueryWrapper<DataSource>();
-
+	private List<Map<String, Object>> selectListByEQ(DataSource dataSource, String... columns) {
+		// 创建查询对象并指定查询字段
+		QueryWrapper<DataSource> queryWrapper = new QueryWrapper<DataSource>().select(columns);
 		// 设置查询条件
 		if (ToolUtil.isNotEmpty(dataSource.getChsName())) {
 			queryWrapper.eq("chs_name", dataSource.getChsName());
@@ -222,10 +222,8 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		if (ToolUtil.isNotEmpty(dataSource.getWebsiteUrl())) {
 			queryWrapper.eq("website_url", dataSource.getWebsiteUrl());
 		}
-
 		// 设置排序
 		queryWrapper.orderByAsc("create_time", "uuid");
-
 		// 返回查询结果
 		return this.listMaps(queryWrapper);
 	}
@@ -248,6 +246,5 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}
-
 
 }

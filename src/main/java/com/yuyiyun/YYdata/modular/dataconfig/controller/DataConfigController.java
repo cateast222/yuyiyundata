@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -144,16 +145,13 @@ public class DataConfigController {
         return ResponseData.success();
     }
     
-    @ApiOperation(value = "获取配置值", notes = "获取数据配置值")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "key", value = "Key值", required = true, paramType = "query", dataType = "String"),
-			@ApiImplicitParam(name = "dsUuid", value = "数据源", required = true, paramType = "query", dataType = "Long") })
-	@PostMapping("/getValuesByApi")
+    @ApiOperation(value = "获取数据源", notes = "动态查询数据源")
+	@PostMapping("/getEQsByApi")
 	@ResponseBody
-    public ResponseData getValuesByApi(Long dsUuid,String key) {
-    	if (ToolUtil.isNotEmpty(dsUuid)) {
-    		Map<String, String> map = dataConfigService.getValues(dsUuid, key);
-    		return ResponseData.success(map);
+    public ResponseData getValuesByApi(@RequestBody() DataConfig dataConfig, String... columns) {
+    	if (ToolUtil.isNotEmpty(dataConfig)) {
+    		List<Map<String,Object>> list = dataConfigService.getEQsByApi(dataConfig, columns);
+    		return ResponseData.success(list);
 		}else {
 			return ResponseData.error("参数异常，请检查！");
 		}

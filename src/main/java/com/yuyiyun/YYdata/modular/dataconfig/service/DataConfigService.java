@@ -122,46 +122,25 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 		return baseMapper.deleteBatchIds(ids);
 	}
 
-	
-
-	/**
-	 * 
-	 * @param dsUuid
-	 * @param key
-	 * @return
-	 */
-	public Map<String, String> getValues(Long dsUuid, String key) {
-		// 封装查询条件
-		DataConfig dataConfig = new DataConfig();
-		dataConfig.setDataSource(dsUuid);
-		dataConfig.setKey(key);
-
-		// 获取查询结果
-		List<Map<String, Object>> list = this.selectListByEQ(dataConfig);
-
-		// 创建返回对象
-		Map<String, String> retMap = new HashMap<String, String>();
-
-		// 循环处理数据
-		for (Map<String, Object> map : list) {
-			// 存储Key，Value数据
-			retMap.put((String) map.get("key"), (String) map.get("value"));
+	public List<Map<String, Object>> getEQsByApi(DataConfig dataConfig, String... columns) {
+		// 设置查询字段
+		String[] cs = { "`key`", "`value`" };
+		if (ToolUtil.isNotEmpty(columns) && columns.length > 0) {
+			cs = columns;
 		}
-
-		// 返回结果
-		return retMap;
+		// 获取查询结果,返回结果
+		return this.selectListByEQ(dataConfig,cs);
 	}
-	
+
 	/**
 	 * 根据精确查询
 	 * 
 	 * @param dataConfig
 	 * @return
 	 */
-	public List<Map<String, Object>> selectListByEQ(DataConfig dataConfig) {
-		// 创建查询对象
-		QueryWrapper<DataConfig> queryWrapper = new QueryWrapper<DataConfig>();
-
+	public List<Map<String, Object>> selectListByEQ(DataConfig dataConfig, String... columns) {
+		// 创建查询对象并指定查询字段
+		QueryWrapper<DataConfig> queryWrapper = new QueryWrapper<DataConfig>().select(columns);
 		// 设置查询条件
 		if (ToolUtil.isNotEmpty(dataConfig.getDataSource())) {
 			queryWrapper.eq("data_source", dataConfig.getDataSource());
@@ -193,10 +172,8 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 		if (ToolUtil.isNotEmpty(dataConfig.getValue())) {
 			queryWrapper.eq("`value`", dataConfig.getValue());
 		}
-
 		// 设置排序
 		queryWrapper.orderByAsc("sort", "update_time", "create_time");
-
 		// 返回查询结果
 		return this.listMaps(queryWrapper);
 	}

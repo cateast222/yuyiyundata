@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,7 +31,6 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -47,7 +48,6 @@ public class DataSourceController {
 	private String PREFIX = "/modular/datasource";
 	@Autowired
 	DataSourceService dataSourceService;
-
 	@Autowired
 	DataSourceInfoService dataSourceInfoService;
 	@Autowired
@@ -261,7 +261,7 @@ public class DataSourceController {
 		DataSource dataSource = this.dataSourceService.getById(uuid);
 		return ResponseData.success(dataSource);
 	}
-	
+
 	/**
 	 * 
 	 * @Description: API获取详情
@@ -271,18 +271,14 @@ public class DataSourceController {
 	 * @param uuid
 	 * @return
 	 */
-	@ApiOperation(value = "获取数据源", notes = "根据p-p-s查询数据源")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "provider", value = "数据提供方", required = true, paramType = "query", dataType = "String"),
-		@ApiImplicitParam(name = "state", value = "数据状态", required = false, paramType = "query", dataType = "String"),
-		@ApiImplicitParam(name = "platform", value = "数据源", required = false, paramType = "query", dataType = "String") })
-	@GetMapping("/get2PpsByApi")
+	@ApiOperation(value = "获取数据源", notes = "动态查询数据源")
+	@PostMapping("/getEQsByApi")
 	@ResponseBody
-	public ResponseData get2PpsByApi(String provider,String platform,String state) {
-		if (ToolUtil.isNotEmpty(provider)) {
-			List<Map<String,Object>> list = this.dataSourceService.get2PpsByApi(provider,platform,state);
+	public ResponseData getEQsByApi(@RequestBody() DataSource dataSource, String... columns) {
+		if (ToolUtil.isNotEmpty(dataSource)) {
+			List<Map<String, Object>> list = this.dataSourceService.getEQsByApi(dataSource, columns);
 			return ResponseData.success(list);
-		}else {
+		} else {
 			return ResponseData.error("参数异常，请检查！");
 		}
 	}
@@ -329,21 +325,22 @@ public class DataSourceController {
 		System.out.println(list.size());
 		int i = 0;
 		for (DataSource dataSourceInfo : list) {
-			System.out.println("~~~~~开始迁移："+dataSourceInfo.getChsName());
+			System.out.println("~~~~~开始迁移：" + dataSourceInfo.getChsName());
 			DataConfigInfo dataConfigInfo = new DataConfigInfo();
 			dataConfigInfo.setDsiUuid(dataSourceInfo.getRemark().split("\n\\*\\^\\*\n")[1]);
 			List<DataConfigInfo> configInfos = dataConfigInfoService.list(dataConfigInfo);
 			for (DataConfigInfo configInfo : configInfos) {
-				System.out.println("~~~~~~~~~~开始迁移配置："+configInfo.getDdiValue());
+				System.out.println("~~~~~~~~~~开始迁移配置：" + configInfo.getDdiValue());
 				configInfo.setDsiUuid(dataSourceInfo.getUuid().toString());
 				configInfo.setUpdateTime(new Date());
 				dataConfigInfoService.add(configInfo);
-				System.out.println("~~~~~~~~~~完成迁移配置："+configInfo.getDdiValue());
+				System.out.println("~~~~~~~~~~完成迁移配置：" + configInfo.getDdiValue());
 			}
-			System.out.println("~~~~~完成迁移（剩余"+(list.size()-(++i))+"）："+dataSourceInfo.getChsName());
+			System.out.println("~~~~~完成迁移（剩余" + (list.size() - (++i)) + "）：" + dataSourceInfo.getChsName());
 		}
 		return PREFIX + "";
 	}
+
 	/**
 	 * @param uuid
 	 * @param model
@@ -355,18 +352,18 @@ public class DataSourceController {
 		System.out.println(list.size());
 		int i = 0;
 		for (DataSource dataSourceInfo : list) {
-			System.out.println("~~~~~开始迁移："+dataSourceInfo.getChsName());
+			System.out.println("~~~~~开始迁移：" + dataSourceInfo.getChsName());
 			DataConfigInfo dataConfigInfo = new DataConfigInfo();
 			dataConfigInfo.setDsiUuid(dataSourceInfo.getRemark().split("\n\\*\\^\\*\n")[1]);
 			List<DataConfigInfo> configInfos = dataConfigInfoService.list(dataConfigInfo);
 			for (DataConfigInfo configInfo : configInfos) {
-				System.out.println("~~~~~~~~~~开始迁移配置："+configInfo.getDdiValue());
+				System.out.println("~~~~~~~~~~开始迁移配置：" + configInfo.getDdiValue());
 				configInfo.setDsiUuid(dataSourceInfo.getUuid().toString());
 				configInfo.setUpdateTime(new Date());
 				dataConfigInfoService.add(configInfo);
-				System.out.println("~~~~~~~~~~完成迁移配置："+configInfo.getDdiValue());
+				System.out.println("~~~~~~~~~~完成迁移配置：" + configInfo.getDdiValue());
 			}
-			System.out.println("~~~~~完成迁移（剩余"+(list.size()-(++i))+"）："+dataSourceInfo.getChsName());
+			System.out.println("~~~~~完成迁移（剩余" + (list.size() - (++i)) + "）：" + dataSourceInfo.getChsName());
 		}
 		return PREFIX + "";
 	}

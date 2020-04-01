@@ -14,14 +14,14 @@ import cn.stylefeng.roses.core.config.WebAutoConfiguration;
  * @author stylefeng
  * @Date 2017/5/21 12:06
  */
-@SpringBootApplication(exclude = {WebAutoConfiguration.class})
+@SpringBootApplication(exclude = { WebAutoConfiguration.class })
 @EnableScheduling
 public class YYdataApp {
 
-    private final static Logger logger = LoggerFactory.getLogger(YYdataApp.class);
+	private final static Logger logger = LoggerFactory.getLogger(YYdataApp.class);
 
-    public static void main(String[] args) {
-        SpringApplication.run(YYdataApp.class, args);
-        logger.info(YYdataApp.class.getSimpleName() + " is success!");
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(YYdataApp.class, args);
+		logger.info(YYdataApp.class.getSimpleName() + " is success!");
+	}
 }
