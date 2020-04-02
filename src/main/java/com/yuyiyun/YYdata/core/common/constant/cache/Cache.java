@@ -12,4 +12,9 @@ public interface Cache {
      * 常量缓存
      */
     String CONSTANT = "CONSTANT";
+    
+    /**
+     * 系统字典缓存
+     */
+    String SYS_DICT = "sysDict";
 }

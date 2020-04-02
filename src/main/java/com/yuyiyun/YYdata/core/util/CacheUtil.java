@@ -31,7 +31,7 @@ public class CacheUtil {
         }
     }
 
-    public static List getKeys(String cacheName) {
+    public static List<?> getKeys(String cacheName) {
         return getOrAddCache(cacheName).getKeys();
     }
 

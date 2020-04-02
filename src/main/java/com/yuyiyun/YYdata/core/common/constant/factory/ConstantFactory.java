@@ -230,23 +230,27 @@ public class ConstantFactory implements IConstantFactory {
 
 	@Override
 	public String getDictsByName(String name, String code) {
-		DictType temp = new DictType();
-		temp.setName(name);
-		QueryWrapper<DictType> queryWrapper = new QueryWrapper<>(temp);
-		DictType dictType = dictTypeMapper.selectOne(queryWrapper);
-		if (dictType == null) {
+		List<Dict> fid = this.findInDict(name);
+		if (fid == null) {
 			return "";
 		} else {
-			QueryWrapper<Dict> wrapper = new QueryWrapper<>();
-			wrapper = wrapper.eq("dict_type_id", dictType.getDictTypeId());
-			List<Dict> dicts = dictMapper.selectList(wrapper);
-			for (Dict item : dicts) {
+			for (Dict item : fid) {
 				if (item.getCode() != null && item.getCode().equals(code)) {
 					return item.getName();
 				}
 			}
 			return "";
 		}
+		/*
+		 * DictType temp = new DictType(); temp.setName(name); QueryWrapper<DictType>
+		 * queryWrapper = new QueryWrapper<>(temp); DictType dictType =
+		 * dictTypeMapper.selectOne(queryWrapper); if (dictType == null) { return ""; }
+		 * else { QueryWrapper<Dict> wrapper = new QueryWrapper<>(); wrapper =
+		 * wrapper.eq("dict_type_id", dictType.getDictTypeId()); List<Dict> dicts =
+		 * dictMapper.selectList(wrapper); for (Dict item : dicts) { if (item.getCode()
+		 * != null && item.getCode().equals(code)) { return item.getName(); } } return
+		 * ""; }
+		 */
 	}
 
 	@Override
@@ -315,6 +319,7 @@ public class ConstantFactory implements IConstantFactory {
 	}
 
 	@Override
+	@Cacheable(value = Cache.SYS_DICT, key = "'dict_'+#name")
 	public List<Dict> findInDict(String name) {
 		DictType temp = new DictType();
 		temp.setName(name);
@@ -325,7 +330,7 @@ public class ConstantFactory implements IConstantFactory {
 		} else {
 			QueryWrapper<Dict> wrapper = new QueryWrapper<>();
 			wrapper = wrapper.eq("dict_type_id", dictType.getDictTypeId());
-			wrapper.orderByAsc("sort","create_time");
+			wrapper.orderByAsc("sort", "create_time");
 			List<Dict> dicts = dictMapper.selectList(wrapper);
 			if (dicts == null || dicts.size() == 0) {
 				return null;

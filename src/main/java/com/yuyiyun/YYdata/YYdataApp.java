@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import cn.stylefeng.roses.core.config.WebAutoConfiguration;
@@ -16,6 +17,7 @@ import cn.stylefeng.roses.core.config.WebAutoConfiguration;
  */
 @SpringBootApplication(exclude = { WebAutoConfiguration.class })
 @EnableScheduling
+@EnableCaching
 public class YYdataApp {
 
 	private final static Logger logger = LoggerFactory.getLogger(YYdataApp.class);
