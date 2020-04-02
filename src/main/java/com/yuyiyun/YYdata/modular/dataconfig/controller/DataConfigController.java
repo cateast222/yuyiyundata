@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.dataconfig.entity.DataConfig;
 import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
 import com.yuyiyun.YYdata.modular.dataconfig.service.DataConfigService;
 import com.yuyiyun.YYdata.modular.dataconfig.service.DataDictService;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
-import cn.stylefeng.roses.core.util.ToolUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -147,11 +147,11 @@ public class DataConfigController {
 	@PostMapping("/getEQsByApi")
 	@ResponseBody
     public ResponseData getValuesByApi(@RequestBody() DataConfig dataConfig, String... columns) {
-    	if (ToolUtil.isNotEmpty(dataConfig)) {
-    		List<Map<String,Object>> list = dataConfigService.getEQsByApi(dataConfig, columns);
-    		return ResponseData.success(list);
+    	if (ToolsUtil.isPojoEmpty(dataConfig)) {
+    		return ResponseData.error("参数异常，请检查！");
 		}else {
-			return ResponseData.error("参数异常，请检查！");
+			List<Map<String,Object>> list = dataConfigService.getEQsByApi(dataConfig, columns);
+			return ResponseData.success(list);
 		}
     }
     

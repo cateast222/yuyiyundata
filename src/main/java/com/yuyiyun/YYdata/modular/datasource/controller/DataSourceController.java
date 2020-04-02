@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
@@ -275,11 +276,11 @@ public class DataSourceController {
 	@PostMapping("/getEQsByApi")
 	@ResponseBody
 	public ResponseData getEQsByApi(@RequestBody() DataSource dataSource, String... columns) {
-		if (ToolUtil.isNotEmpty(dataSource)) {
+		if (ToolsUtil.isPojoEmpty(dataSource)) {
+			return ResponseData.error("参数异常，请检查！");
+		} else {
 			List<Map<String, Object>> list = this.dataSourceService.getEQsByApi(dataSource, columns);
 			return ResponseData.success(list);
-		} else {
-			return ResponseData.error("参数异常，请检查！");
 		}
 	}
 

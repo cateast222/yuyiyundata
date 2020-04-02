@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.util.UUID;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -24,8 +25,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-
-import cn.stylefeng.roses.core.util.ToolUtil;
+import com.yuyiyun.YYdata.core.util.ToolsUtil;
 
 /**
  * 资源下载、保存及上传
@@ -88,14 +88,15 @@ public class ResourceUpload {
 		HttpEntity entity = response.getEntity();
 		if (entity != null) {
 			byte[] byteArray = EntityUtils.toByteArray(entity);
-			originalFilename = ToolUtil.isNotEmpty(originalFilename) ? originalFilename
+			originalFilename = ToolsUtil.isNotEmpty(originalFilename)
+					? UUID.randomUUID().toString().replaceAll("-", "") + originalFilename
 					: downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1).replaceAll("\\?.*", "");
 			if (uploadUrl != null && !uploadUrl.equals("")) {
-				result += "upload:" + uploadFile(uploadUrl, byteArray, originalFilename);
+				result += uploadFile(uploadUrl, byteArray, originalFilename);
 			}
 
 			if (saveLocalPath != null && !saveLocalPath.equals("")) {
-				result += "saveLocal:" + saveLocalFile(saveLocalPath, byteArray, originalFilename);
+				result += saveLocalFile(saveLocalPath, byteArray, originalFilename);
 			}
 		}
 		return result;
@@ -229,7 +230,7 @@ public class ResourceUpload {
 //		http://yuyiyun.net:8093/yunyidata/document/image/49a7429acaef43b782a12fe55ae047be
 		downloadFile(
 				"https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNNEX_5541198.jpg?itok=12Alnawf&timestamp=1584728847",
-				false, "", "D:/", "");
+				true, "", "D:/", ".jpg");
 	}
 
 }

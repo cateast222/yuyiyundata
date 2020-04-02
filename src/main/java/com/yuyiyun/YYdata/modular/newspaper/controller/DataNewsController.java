@@ -1,9 +1,5 @@
 package com.yuyiyun.YYdata.modular.newspaper.controller;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,15 +12,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
-import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.core.util.DateTimeUtil;
-import com.yuyiyun.YYdata.core.util.TranUtil;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewsParam;
-import com.yuyiyun.YYdata.modular.newspaper.model.param.DataNewspaperParam;
 import com.yuyiyun.YYdata.modular.newspaper.service.DataNewsService;
 import com.yuyiyun.YYdata.modular.newspaper.service.DataNewspaperService;
 
@@ -153,7 +146,6 @@ public class DataNewsController extends BaseController {
 	 * @param dataSourceInfoParam
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping("/detail")
 	@ResponseBody
 	public ResponseData detail(DataNewsParam param) {

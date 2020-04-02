@@ -3,8 +3,6 @@ package com.yuyiyun.YYdata.modular.dataconfig.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -25,7 +23,7 @@ import lombok.Data;
 @Data
 @TableName("data_config")
 public class DataConfig implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
