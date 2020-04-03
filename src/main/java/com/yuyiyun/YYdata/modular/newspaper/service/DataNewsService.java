@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,9 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
  */
 @Service
 public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
+	
+	private static final Logger log = LoggerFactory.getLogger(DataNewsService.class);
+
 	@Autowired
 	DataNewspaperService dataNewspaperService;
 	@Autowired
@@ -66,16 +71,17 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		DataNews dataNews = ToolUtil.isEmpty(byId) ? add(param) : update(param);
 
 		// 数据上传至DAMS,在数据新增和修改时上传
-		// 判断数据状态，对状态为"1"的数据进行上传
-		if (dataNews.getState().equals("1")&&dataNews.getState().equals("5")) {
-			System.out.println("数据准备上传！UUID为：" + dataNews.getUuid());
+		// 判断数据状态，对数据源状态为“启用-1”的数据进行上传
+		if (dataSource.getState().equals("5")) {
+			log.debug("数据准备上传！UUID为：" + dataNews.getUuid());
+//			System.out.println("数据准备上传！UUID为：" + dataNews.getUuid());
 			// 通过数据UUID获取最新的数据信息
 			DataNews byId2 = this.getById(dataNews.getUuid());
 			// 数据上传操作
 			boolean b = DamsApiUpload.dataOnLineToDAMS(byId2);
 			// 判断是否上传成功
 			if (!b) {
-				System.out.println("数据上传异常！UUID为：" + byId2.getUuid());
+				log.debug("数据上传异常！UUID为：" + byId2.getUuid());
 				// 上传失败，数据存在异常，修改标记状态为"-1"
 				byId2.setState("-1");
 				// 数据对象装换（DataNews --> DataNewsParam）

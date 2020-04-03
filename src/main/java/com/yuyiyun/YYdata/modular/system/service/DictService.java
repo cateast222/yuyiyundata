@@ -1,10 +1,12 @@
 package com.yuyiyun.YYdata.modular.system.service;
 
+import com.yuyiyun.YYdata.core.common.constant.cache.Cache;
 import com.yuyiyun.YYdata.core.common.constant.state.CommonStatus;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.node.ZTreeNode;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.util.CacheUtil;
 import com.yuyiyun.YYdata.modular.system.entity.Dict;
 import com.yuyiyun.YYdata.modular.system.mapper.DictMapper;
 import com.yuyiyun.YYdata.modular.system.model.params.DictParam;
@@ -32,245 +34,242 @@ import java.util.List;
 @Service
 public class DictService extends ServiceImpl<DictMapper, Dict> {
 
-    /**
-     * 新增
-     *
-     * @author stylefeng
-     * @Date 2019-03-13
-     */
-    public void add(DictParam param) {
+	/**
+	 * 新增
+	 *
+	 * @author stylefeng
+	 * @Date 2019-03-13
+	 */
+	public void add(DictParam param) {
+		// 判断是否已经存在同编码或同名称字典
+		QueryWrapper<Dict> dictQueryWrapper = new QueryWrapper<>();
+		dictQueryWrapper.and(i -> i.eq("code", param.getCode()).or().eq("name", param.getName()))
+				.and(i -> i.eq("dict_type_id", param.getDictTypeId()));
+		List<Dict> list = this.list(dictQueryWrapper);
+		if (list != null && list.size() > 0) {
+			throw new ServiceException(BizExceptionEnum.DICT_EXISTED);
+		}
+		Dict entity = getEntity(param);
+		// 设置pids
+		dictSetPids(entity);
+		// 设置状态
+		entity.setStatus(CommonStatus.ENABLE.getCode());
+		// 清除缓存
+		if (this.save(entity)) {
+			CacheUtil.removeAll(Cache.SYS_DICT);
+		}
+	}
 
-        //判断是否已经存在同编码或同名称字典
-        QueryWrapper<Dict> dictQueryWrapper = new QueryWrapper<>();
-        dictQueryWrapper
-                .and(i -> i.eq("code", param.getCode()).or().eq("name", param.getName()))
-                .and(i -> i.eq("dict_type_id", param.getDictTypeId()));
-        List<Dict> list = this.list(dictQueryWrapper);
-        if (list != null && list.size() > 0) {
-            throw new ServiceException(BizExceptionEnum.DICT_EXISTED);
-        }
+	/**
+	 * 删除
+	 *
+	 * @author stylefeng
+	 * @Date 2019-03-13
+	 */
+	public void delete(DictParam param) {
+		// 删除字典的所有子级
+		List<Long> subIds = getSubIds(param.getDictId());
+		if (subIds.size() > 0) {
+			this.removeByIds(subIds);
+		}
+		// 清除缓存
+		if (this.removeById(getKey(param))) {
+			CacheUtil.removeAll(Cache.SYS_DICT);
+		}
+	}
 
-        Dict entity = getEntity(param);
+	/**
+	 * 更新
+	 *
+	 * @author stylefeng
+	 * @Date 2019-03-13
+	 */
+	public void update(DictParam param) {
+		Dict oldEntity = getOldEntity(param);
+		Dict newEntity = getEntity(param);
+		ToolUtil.copyProperties(newEntity, oldEntity);
+		// 判断编码是否重复
+		QueryWrapper<Dict> wrapper = new QueryWrapper<Dict>()
+				.and(i -> i.eq("code", newEntity.getCode()).or().eq("name", newEntity.getName()))
+				.and(i -> i.ne("dict_id", newEntity.getDictId())).and(i -> i.eq("dict_type_id", param.getDictTypeId()));
+		int dicts = this.count(wrapper);
+		if (dicts > 0) {
+			throw new ServiceException(BizExceptionEnum.DICT_EXISTED);
+		}
+		// 设置pids
+		dictSetPids(newEntity);
+		// 清除缓存
+		if (this.updateById(newEntity)) {
+			CacheUtil.removeAll(Cache.SYS_DICT);
+		}
+	}
 
-        //设置pids
-        dictSetPids(entity);
+	/**
+	 * 查询单条数据，Specification模式
+	 *
+	 * @author stylefeng
+	 * @Date 2019-03-13
+	 */
+	public DictResult findBySpec(DictParam param) {
+		return null;
+	}
 
-        //设置状态
-        entity.setStatus(CommonStatus.ENABLE.getCode());
+	/**
+	 * 查询列表，Specification模式
+	 *
+	 * @author stylefeng
+	 * @Date 2019-03-13
+	 */
+	public List<DictResult> findListBySpec(DictParam param) {
+		return null;
+	}
 
-        this.save(entity);
-    }
+	/**
+	 * 查询分页数据，Specification模式
+	 *
+	 * @author stylefeng
+	 * @Date 2019-03-13
+	 */
+	public LayuiPageInfo findPageBySpec(DictParam param) {
+		QueryWrapper<Dict> objectQueryWrapper = new QueryWrapper<>();
+		objectQueryWrapper.eq("dict_type_id", param.getDictTypeId());
 
-    /**
-     * 删除
-     *
-     * @author stylefeng
-     * @Date 2019-03-13
-     */
-    public void delete(DictParam param) {
+		if (ToolUtil.isNotEmpty(param.getCondition())) {
+			objectQueryWrapper.and(i -> i.eq("code", param.getCondition()).or().eq("name", param.getCondition()));
+		}
 
-        //删除字典的所有子级
-        List<Long> subIds = getSubIds(param.getDictId());
-        if (subIds.size() > 0) {
-            this.removeByIds(subIds);
-        }
+		objectQueryWrapper.orderByAsc("sort");
 
-        this.removeById(getKey(param));
-    }
+		List<Dict> list = this.list(objectQueryWrapper);
 
-    /**
-     * 更新
-     *
-     * @author stylefeng
-     * @Date 2019-03-13
-     */
-    public void update(DictParam param) {
-        Dict oldEntity = getOldEntity(param);
-        Dict newEntity = getEntity(param);
-        ToolUtil.copyProperties(newEntity, oldEntity);
+		// 创建根节点
+		Dict dict = new Dict();
+		dict.setName("根节点");
+		dict.setDictId(0L);
+		dict.setParentId(-999L);
+		list.add(dict);
 
-        //判断编码是否重复
-        QueryWrapper<Dict> wrapper = new QueryWrapper<Dict>()
-                .and(i -> i.eq("code", newEntity.getCode()).or().eq("name", newEntity.getName()))
-                .and(i -> i.ne("dict_id", newEntity.getDictId()))
-                .and(i -> i.eq("dict_type_id", param.getDictTypeId()));
-        int dicts = this.count(wrapper);
-        if (dicts > 0) {
-            throw new ServiceException(BizExceptionEnum.DICT_EXISTED);
-        }
+		LayuiPageInfo result = new LayuiPageInfo();
+		result.setData(list);
 
-        //设置pids
-        dictSetPids(newEntity);
+		return result;
+	}
 
-        this.updateById(newEntity);
-    }
+	/**
+	 * 获取字典的树形列表（ztree结构）
+	 *
+	 * @author fengshuonan
+	 * @Date 2019/3/14 3:40 PM
+	 */
+	public List<ZTreeNode> dictTreeList(Long dictTypeId, Long dictId) {
+		if (dictTypeId == null) {
+			throw new RequestEmptyException();
+		}
 
-    /**
-     * 查询单条数据，Specification模式
-     *
-     * @author stylefeng
-     * @Date 2019-03-13
-     */
-    public DictResult findBySpec(DictParam param) {
-        return null;
-    }
+		List<ZTreeNode> tree = this.baseMapper.dictTree(dictTypeId);
 
-    /**
-     * 查询列表，Specification模式
-     *
-     * @author stylefeng
-     * @Date 2019-03-13
-     */
-    public List<DictResult> findListBySpec(DictParam param) {
-        return null;
-    }
+		// 获取dict的所有子节点
+		List<Long> subIds = getSubIds(dictId);
 
-    /**
-     * 查询分页数据，Specification模式
-     *
-     * @author stylefeng
-     * @Date 2019-03-13
-     */
-    public LayuiPageInfo findPageBySpec(DictParam param) {
-        QueryWrapper<Dict> objectQueryWrapper = new QueryWrapper<>();
-        objectQueryWrapper.eq("dict_type_id", param.getDictTypeId());
+		// 如果传了dictId，则在返回结果里去掉
+		List<ZTreeNode> resultTree = new ArrayList<>();
+		for (ZTreeNode zTreeNode : tree) {
 
-        if (ToolUtil.isNotEmpty(param.getCondition())) {
-            objectQueryWrapper.and(i -> i.eq("code", param.getCondition()).or().eq("name", param.getCondition()));
-        }
+			// 如果dictId等于树节点的某个id则去除
+			if (ToolUtil.isNotEmpty(dictId) && dictId.equals(zTreeNode.getId())) {
+				continue;
+			}
+			if (subIds.contains(zTreeNode.getId())) {
+				continue;
+			}
+			resultTree.add(zTreeNode);
+		}
 
-        objectQueryWrapper.orderByAsc("sort");
+		resultTree.add(ZTreeNode.createParent());
 
-        List<Dict> list = this.list(objectQueryWrapper);
+		return resultTree;
+	}
 
-        //创建根节点
-        Dict dict = new Dict();
-        dict.setName("根节点");
-        dict.setDictId(0L);
-        dict.setParentId(-999L);
-        list.add(dict);
+	/**
+	 * 查看dict的详情
+	 *
+	 * @author fengshuonan
+	 * @Date 2019/3/14 5:22 PM
+	 */
+	public DictResult dictDetail(Long dictId) {
+		if (ToolUtil.isEmpty(dictId)) {
+			throw new RequestEmptyException();
+		}
 
-        LayuiPageInfo result = new LayuiPageInfo();
-        result.setData(list);
+		DictResult dictResult = new DictResult();
 
-        return result;
-    }
+		// 查询字典
+		Dict detail = this.getById(dictId);
+		if (detail == null) {
+			throw new RequestEmptyException();
+		}
 
-    /**
-     * 获取字典的树形列表（ztree结构）
-     *
-     * @author fengshuonan
-     * @Date 2019/3/14 3:40 PM
-     */
-    public List<ZTreeNode> dictTreeList(Long dictTypeId, Long dictId) {
-        if (dictTypeId == null) {
-            throw new RequestEmptyException();
-        }
+		// 查询父级字典
+		if (ToolUtil.isNotEmpty(detail.getParentId())) {
+			Long parentId = detail.getParentId();
+			Dict dictType = this.getById(parentId);
+			if (dictType != null) {
+				dictResult.setParentName(dictType.getName());
+			} else {
+				dictResult.setParentName("无父级");
+			}
+		}
 
-        List<ZTreeNode> tree = this.baseMapper.dictTree(dictTypeId);
+		ToolUtil.copyProperties(detail, dictResult);
 
-        //获取dict的所有子节点
-        List<Long> subIds = getSubIds(dictId);
+		return dictResult;
+	}
 
-        //如果传了dictId，则在返回结果里去掉
-        List<ZTreeNode> resultTree = new ArrayList<>();
-        for (ZTreeNode zTreeNode : tree) {
+	private Serializable getKey(DictParam param) {
+		return param.getDictId();
+	}
 
-            //如果dictId等于树节点的某个id则去除
-            if (ToolUtil.isNotEmpty(dictId) && dictId.equals(zTreeNode.getId())) {
-                continue;
-            }
-            if (subIds.contains(zTreeNode.getId())) {
-                continue;
-            }
-            resultTree.add(zTreeNode);
-        }
+	private Page getPageContext() {
+		return LayuiPageFactory.defaultPage();
+	}
 
-        resultTree.add(ZTreeNode.createParent());
+	private Dict getOldEntity(DictParam param) {
+		return this.getById(getKey(param));
+	}
 
-        return resultTree;
-    }
+	private Dict getEntity(DictParam param) {
+		Dict entity = new Dict();
+		ToolUtil.copyProperties(param, entity);
+		return entity;
+	}
 
-    /**
-     * 查看dict的详情
-     *
-     * @author fengshuonan
-     * @Date 2019/3/14 5:22 PM
-     */
-    public DictResult dictDetail(Long dictId) {
-        if (ToolUtil.isEmpty(dictId)) {
-            throw new RequestEmptyException();
-        }
+	private List<Long> getSubIds(Long dictId) {
 
-        DictResult dictResult = new DictResult();
+		ArrayList<Long> longs = new ArrayList<>();
 
-        //查询字典
-        Dict detail = this.getById(dictId);
-        if (detail == null) {
-            throw new RequestEmptyException();
-        }
+		if (ToolUtil.isEmpty(dictId)) {
+			return longs;
+		} else {
+			List<Dict> list = this.baseMapper.likeParentIds(dictId);
+			for (Dict dict : list) {
+				longs.add(dict.getDictId());
+			}
+			return longs;
+		}
+	}
 
-        //查询父级字典
-        if (ToolUtil.isNotEmpty(detail.getParentId())) {
-            Long parentId = detail.getParentId();
-            Dict dictType = this.getById(parentId);
-            if (dictType != null) {
-                dictResult.setParentName(dictType.getName());
-            } else {
-                dictResult.setParentName("无父级");
-            }
-        }
-
-        ToolUtil.copyProperties(detail, dictResult);
-
-        return dictResult;
-    }
-
-    private Serializable getKey(DictParam param) {
-        return param.getDictId();
-    }
-
-    private Page getPageContext() {
-        return LayuiPageFactory.defaultPage();
-    }
-
-    private Dict getOldEntity(DictParam param) {
-        return this.getById(getKey(param));
-    }
-
-    private Dict getEntity(DictParam param) {
-        Dict entity = new Dict();
-        ToolUtil.copyProperties(param, entity);
-        return entity;
-    }
-
-    private List<Long> getSubIds(Long dictId) {
-
-        ArrayList<Long> longs = new ArrayList<>();
-
-        if(ToolUtil.isEmpty(dictId)){
-            return longs;
-        }else{
-            List<Dict> list = this.baseMapper.likeParentIds(dictId);
-            for (Dict dict : list) {
-                longs.add(dict.getDictId());
-            }
-            return longs;
-        }
-    }
-
-    private void dictSetPids(Dict param) {
-        if (param.getParentId().equals(0L)) {
-            param.setParentIds("[0]");
-        } else {
-            //获取父级的pids
-            Long parentId = param.getParentId();
-            Dict parent = this.getById(parentId);
-            if (parent == null) {
-                param.setParentIds("[0]");
-            } else {
-                param.setParentIds(parent.getParentIds() + "," + "[" + parentId + "]");
-            }
-        }
-    }
+	private void dictSetPids(Dict param) {
+		if (param.getParentId().equals(0L)) {
+			param.setParentIds("[0]");
+		} else {
+			// 获取父级的pids
+			Long parentId = param.getParentId();
+			Dict parent = this.getById(parentId);
+			if (parent == null) {
+				param.setParentIds("[0]");
+			} else {
+				param.setParentIds(parent.getParentIds() + "," + "[" + parentId + "]");
+			}
+		}
+	}
 }

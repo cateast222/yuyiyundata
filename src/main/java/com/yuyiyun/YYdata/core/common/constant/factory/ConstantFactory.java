@@ -7,11 +7,16 @@ import com.yuyiyun.YYdata.core.common.constant.cache.CacheKey;
 import com.yuyiyun.YYdata.core.common.constant.state.ManagerStatus;
 import com.yuyiyun.YYdata.core.common.constant.state.MenuStatus;
 import com.yuyiyun.YYdata.core.log.LogObjectHolder;
+import com.yuyiyun.YYdata.core.util.CacheUtil;
+import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.system.entity.*;
 import com.yuyiyun.YYdata.modular.system.mapper.*;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -28,6 +33,8 @@ import java.util.List;
 @Component
 @DependsOn("springContextHolder")
 public class ConstantFactory implements IConstantFactory {
+	
+	private static final Logger log = LoggerFactory.getLogger(ConstantFactory.class);
 
 	private RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
 	private DeptMapper deptMapper = SpringContextHolder.getBean(DeptMapper.class);
@@ -319,25 +326,38 @@ public class ConstantFactory implements IConstantFactory {
 	}
 
 	@Override
-	@Cacheable(value = Cache.SYS_DICT, key = "'dict_'+#name")
 	public List<Dict> findInDict(String name) {
-		DictType temp = new DictType();
-		temp.setName(name);
-		QueryWrapper<DictType> queryWrapper = new QueryWrapper<>(temp);
-		DictType dictType = dictTypeMapper.selectOne(queryWrapper);
-		if (dictType == null) {
-			return null;
-		} else {
-			QueryWrapper<Dict> wrapper = new QueryWrapper<>();
-			wrapper = wrapper.eq("dict_type_id", dictType.getDictTypeId());
-			wrapper.orderByAsc("sort", "create_time");
-			List<Dict> dicts = dictMapper.selectList(wrapper);
-			if (dicts == null || dicts.size() == 0) {
-				return null;
-			} else {
-				return dicts;
+		List<Dict> ds = CacheUtil.get(Cache.SYS_DICT, name);
+		if (ds == null) {
+//			log.info(name+"：数据库查询");
+			DictType temp = new DictType();
+			temp.setName(name);
+			QueryWrapper<DictType> queryWrapper = new QueryWrapper<>(temp);
+			DictType dictType = dictTypeMapper.selectOne(queryWrapper);
+			if (ToolsUtil.isNotEmpty(dictType)) {
+				QueryWrapper<Dict> wrapper = new QueryWrapper<>();
+				wrapper = wrapper.eq("dict_type_id", dictType.getDictTypeId());
+				wrapper.orderByAsc("sort", "create_time");
+				List<Dict> dicts = dictMapper.selectList(wrapper);
+				if (ToolsUtil.isNotEmpty(dicts)) {
+					ds = dicts;
+					CacheUtil.put(Cache.SYS_DICT, name, ds);
+				}
 			}
+		}else {
+//			log.info(name+"：缓存查询");
 		}
+		return ds;
+		/*
+		 * DictType temp = new DictType(); temp.setName(name); QueryWrapper<DictType>
+		 * queryWrapper = new QueryWrapper<>(temp); DictType dictType =
+		 * dictTypeMapper.selectOne(queryWrapper); if (dictType == null) { return null;
+		 * } else { QueryWrapper<Dict> wrapper = new QueryWrapper<>(); wrapper =
+		 * wrapper.eq("dict_type_id", dictType.getDictTypeId());
+		 * wrapper.orderByAsc("sort", "create_time"); List<Dict> dicts =
+		 * dictMapper.selectList(wrapper); if (dicts == null || dicts.size() == 0) {
+		 * return null; } else { return dicts; } }
+		 */
 	}
 
 }

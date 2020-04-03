@@ -112,27 +112,29 @@ public class DamsApiUpload {
 
 	/**
 	 * 数据上传至DAMS
+	 * 
 	 * @param dataNews 新闻数据
 	 * @return 上传成功T，上传失败F
 	 */
 	public static boolean dataOnLineToDAMS(DataNews dataNews) {
-		//返回值初始化
+		// 返回值初始化
 		boolean b = false;
 		try {
-			//修改数据上传状态
-			dataNews.setState("-1");
-			//装换数据上传类型
+			// 修改数据上传状态：1-上传为正式数据"4"，其他测试数据"-1"
+			String state = dataNews.getState().equals("1") ? "4" : "-1";
+			dataNews.setState(state);
+			// 装换数据上传类型
 			Map<String, String> wg_Ele_News_Data = dataNews2Wg_Ele_News_Data(dataNews);
-			//数据上传
+			// 数据上传
 			JSONObject j = new DamsApiUpload("dh", "321").createWg_Ele_News_Data(wg_Ele_News_Data);
-			//上传成功处理
+			// 上传成功处理
 			if (j != null) {
 				b = true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//返回
+		// 返回
 		return b;
 	}
 
@@ -154,7 +156,7 @@ public class DamsApiUpload {
 		wg_Ele_News_Data.put("paper_Picture", dataNews.getWebsitePictures());
 //			wg_Ele_News_Data.put("local_Pictures", dataNews.getLocalPictures());
 		wg_Ele_News_Data.put("pictures_Description", dataNews.getPicturesDescription());
-		wg_Ele_News_Data.put("language", ConstantFactory.me().getDictsByName("语种",dataNews.getLanguage()));
+		wg_Ele_News_Data.put("language", ConstantFactory.me().getDictsByName("语种", dataNews.getLanguage()));
 		wg_Ele_News_Data.put("layoutSource", dataNews.getWebsiteThumbnail());
 //			wg_Ele_News_Data.put("local_Thumbnail", dataNews.getLocalThumbnail());
 		wg_Ele_News_Data.put("pdf_Url", dataNews.getWebsitePdf());

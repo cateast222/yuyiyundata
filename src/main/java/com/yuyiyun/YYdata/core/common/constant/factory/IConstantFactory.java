@@ -1,9 +1,9 @@
 package com.yuyiyun.YYdata.core.common.constant.factory;
 
+import java.util.List;
+
 import com.yuyiyun.YYdata.modular.system.entity.Dict;
 import com.yuyiyun.YYdata.modular.system.entity.Menu;
-
-import java.util.List;
 
 /**
  * 常量生产工厂的接口
