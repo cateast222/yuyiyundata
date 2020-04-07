@@ -1,7 +1,6 @@
 package com.yuyiyun.YYdata.modular.dataconfig.service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,6 +121,12 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 		return baseMapper.deleteBatchIds(ids);
 	}
 
+	/**
+	 * 根据精确查询
+	 * @param dataConfig
+	 * @param columns
+	 * @return
+	 */
 	public List<Map<String, Object>> getEQsByApi(DataConfig dataConfig, String... columns) {
 		// 设置查询字段
 		String[] cs = { "`key`", "`value`" };
@@ -132,13 +137,8 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 		return this.selectListByEQ(dataConfig,cs);
 	}
 
-	/**
-	 * 根据精确查询
-	 * 
-	 * @param dataConfig
-	 * @return
-	 */
-	public List<Map<String, Object>> selectListByEQ(DataConfig dataConfig, String... columns) {
+	
+	private List<Map<String, Object>> selectListByEQ(DataConfig dataConfig, String... columns) {
 		// 创建查询对象并指定查询字段
 		QueryWrapper<DataConfig> queryWrapper = new QueryWrapper<DataConfig>().select(columns);
 		// 设置查询条件

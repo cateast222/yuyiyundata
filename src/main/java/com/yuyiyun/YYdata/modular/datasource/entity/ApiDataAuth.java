@@ -1,0 +1,109 @@
+package com.yuyiyun.YYdata.modular.datasource.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+/**
+ * <p>
+ * 调取数据权限
+ * </p>
+ *
+ * @author duhao
+ * @since 2020-04-07
+ */
+@Data
+@ApiModel(value = "ApiDataAuth",description = "调取数据权限实体")
+@TableName("api_data_auth")
+public class ApiDataAuth implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 主键
+     */
+    @ApiModelProperty(value = "主键")
+    @TableId(value = "uuid", type = IdType.ID_WORKER)
+    private String uuid;
+
+    /**
+     * 调取者用户
+     */
+    @ApiModelProperty(value = "调取者用户")
+    @TableField("sys_user")
+    private String sysUser;
+
+    /**
+     * 授权数据源
+     */
+    @ApiModelProperty(value = "授权数据源")
+    @TableField("data_source")
+    private String dataSource;
+
+    /**
+     * 数据源中文名
+     */
+    @ApiModelProperty(value = "数据源中文名")
+    @TableField("data_source_chsname")
+    private String dataSourceChsName;
+    
+    /**
+     * 有效期
+     */
+    @ApiModelProperty(value = "有效期")
+    @TableField("validity")
+    private Date validity;
+
+    /**
+     * 级别(备用)
+     */
+    @ApiModelProperty(value = "级别")
+    @TableField("level")
+    private Integer level;
+
+    /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注")
+    @TableField("remark")
+    private String remark;
+
+    /**
+     * 状态
+     */
+    @ApiModelProperty(value = "")
+    @TableField("state")
+    private String state;
+
+    /**
+     * 创建者
+     */
+    @ApiModelProperty(value = "创建者")
+    @TableField("creator")
+    private String creator;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    @ApiModelProperty(value = "更新时间")
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
+    private Date updateTime;
+
+
+}
