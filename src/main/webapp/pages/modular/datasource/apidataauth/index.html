@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{plugins:["ztree"],js:["/assets/modular/datasource/apidataauth/index.js"]}){
+@layout("/common/_container.html",{js:["/assets/modular/datasource/apidataauth/index.js"]}){
 
 <div class="layui-body-header">
 	<span class="layui-body-header-title">数据权限管理</span>
@@ -12,7 +12,7 @@
 					<div class="layui-form toolbar">
 						<div class="layui-form-item">
 							<div class="layui-inline">
-								<input id="userName" class="layui-input" type="search" placeholder="客户名称" autocomplete="off" />
+								<input id="userName" name="userName" class="layui-input" type="search" placeholder="客户名称" />
 							</div>
 							<div class="layui-inline">
 								<button id="searchSysUserBtn" class="layui-btn icon-btn layui-btn-sm">
@@ -28,6 +28,20 @@
 		<div class="layui-col-sm12 layui-col-md8 layui-col-lg9">
 			<div class="layui-card">
 				<div class="layui-card-body">
+					<div class="layui-form">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<div class="layui-input-inline">
+									<input id="dataSourceChsName" name="dataSourceChsName" class="layui-input" type="search" placeholder="数据源名称"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<button type="button" id="searchApiDataAuthBtn" class="layui-btn layui-btn-normal icon-btn layui-btn-sm">
+									<i class="layui-icon">&#xe615;</i> 搜索
+								</button>
+							</div>
+						</div>
+					</div>
 					<table class="layui-hide" id="apiDataAuthTable" lay-filter="apiDataAuthTable"></table>
 				</div>
 			</div>
@@ -36,29 +50,13 @@
 </div>
 <!-- 表格操作工具栏 -->
 <script type="text/html" id="toolBar">
-	<div class="layui-form">
-		<div class="layui-form-item">
-			<div class="layui-inline">
-				<div class="layui-input-inline">
-					<input id="dataSourceChsName" name="dataSourceChsName" class="layui-input" type="text" placeholder="数据源名称"/>
-				</div>
-			</div>
-			<div class="layui-inline">
-				<button type="button" id="searchApiDataAuthBtn" class="layui-btn layui-btn-normal icon-btn layui-btn-sm">
-					<i class="layui-icon">&#xe615;</i> 搜索
-				</button>
-			</div>
-			<div class="layui-inline">
+	<div class="layui-btn-container">
 				<button type="button" class="layui-btn layui-btn-sm" lay-event="add">
 					<i class="layui-icon">&#xe654;</i> 新增数据
 				</button>
-			</div>
-			<div class="layui-inline">
 				<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">
 					<i class="layui-icon">&#xe640;</i> 批量删除
 				</button>
-			</div>
-		</div>
 	</div>
 </script>
 

@@ -1,3 +1,4 @@
+var sysUser = -1;
 layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 	var layer = layui.layer,
 		table = layui.table,
@@ -7,11 +8,11 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 	var sysUserTable = table.render({
 		elem: '#sysUserTable',
 		method: 'post',
-		where: {
-			'deptId':fast.getUrlParam('deptId'),
-			'userName':$('#userName').val()
-		},
 		url: fast.ctxPath + '/apidataauth/getcustomer', // 数据接口
+		where: {
+			'deptId':fast.getUrlParam('deptId')
+		},
+		page: true, // 开启分页
 		limit: 20,
 		limits: [20, 50, 100, 200],
 		cols: [
@@ -21,7 +22,7 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 				}, {
 					title: '序号',
 					align: 'center',
-					type: "numbers"
+					type: 'numbers'
 				}, {
 					field: 'userId',
 					hide: true,
@@ -41,7 +42,12 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 		elem: '#apiDataAuthTable',
 		method: 'post',
 		url: fast.ctxPath + '/apidataauth/list', // 数据接口
+		where: {
+			'sysUser':sysUser
+		},
 		page: true, // 开启分页
+		limit: 20,
+		limits: [20, 50, 100, 200],
 		toolbar: '#toolBar', // 开启工具栏，此处显示默认图标，可以自定义模板，详见文档
 		cols: [
 			[ // 表头
@@ -50,23 +56,32 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 					align: 'center',
 					fixed: 'left'
 				}, {
+					title: '序号',
+					align: 'center',
+					type: 'numbers'
+				}, {
 					field: 'uuid',
 					hide: true,
 					align: 'center',
 					title: '主键'
 				}, {
 					field: 'sysUser',
+					hide: true,
 					align: 'center',
 					title: '调取者用户'
 				}, {
 					field: 'dataSource',
 					hide: true,
 					align: 'center',
+					title: '授权数据源ID'
+				},{
+					field: 'dataSourceChsName',
+					align: 'center',
 					title: '授权数据源'
-				}, {
+				},{
 					field: 'validity',
 					align: 'center',
-					title: '有效期'
+					title: '授权期限'
 				}, {
 					field: 'level',
 					hide: true,
@@ -110,21 +125,25 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 
 	// 监听头工具栏事件
 	table.on('toolbar(apiDataAuthTable)', function(obj) {
-		var checkStatus = table
-			.checkStatus(obj.config.id),
+		var checkStatus = table.checkStatus(obj.config.id),
 			data = checkStatus.data; // 获取选中的数据
-
 		if (obj.event === 'add') {
 			// 新增数据
-			layer.open({
-				type: 2,
-				title: "新增数据",
-				shadeClose: false,
-				shade: 0.3,
-				area: ["80%", "80%"],
-				content: fast.ctxPath +
-					'/dataAuth/add'
-			});
+			if (sysUser === -1) {
+				layer.open({
+					title: '提示',
+					content: '请先选中客户，再新增数据权限！'
+				});
+			} else {
+				layer.open({
+					type: 2,
+					title: '新增数据',
+					shadeClose: false,
+					shade: 0.3,
+					area: ['80%', '80%'],
+					content: fast.ctxPath + '/apidataauth/add?sysUser='+sysUser
+				});
+			}
 		} else if (obj.event === 'delete') {
 			// 批量删除
 			if (checkStatus.data.length === 0) {
@@ -141,7 +160,7 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 					// 异步请求
 					$.ajax({
 						type: 'post',
-						url: fast.ctxPath + '/dataAuth/deleteBatch',
+						url: fast.ctxPath + '/apidataauth/deleteBatch',
 						data: {
 							ids: ids
 						},
@@ -150,11 +169,7 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 							layer.msg(res.message, {
 								icon: 1
 							});
-							table.reload('dataAuthTable', {
-								page: {
-									curr: 1
-								}
-							});
+							tableIns.search();
 						}
 					});
 				});
@@ -167,7 +182,7 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 		// 是工具条事件名，test
 		// 是 table
 		// 原始容器的属性
-		// lay-filter="对应的值"
+		// lay-filter='对应的值'
 		var data = obj.data, // 获得当前行数据
 			layEvent = obj.event; // 获得 lay-event 对应的值
 		if (layEvent === 'del') {
@@ -175,7 +190,7 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 			layer.confirm('确定要删除吗？', function() {
 				$.ajax({
 					type: 'post',
-					url: fast.ctxPath + '/dataAuth/delete',
+					url: fast.ctxPath + '/apidataauth/delete',
 					data: {
 						uuid: data.uuid
 					},
@@ -184,11 +199,7 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 						layer.msg(res.message, {
 							icon: 1
 						});
-						table.reload('dataAuthTable', {
-							page: {
-								curr: 1
-							}
-						});
+						tableIns.search();
 					}
 				});
 			});
@@ -196,34 +207,54 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 			// 修改
 			layer.open({
 				type: 2,
-				title: "修改数据",
+				title: '修改数据',
 				shadeClose: false,
 				shade: 0.3,
-				area: ["80%", "80%"],
-				content: fast.ctxPath + '/dataAuth/edit?uuid=' + obj.data.uuid
+				area: ['80%', '80%'],
+				content: fast.ctxPath + '/apidataauth/edit?uuid=' + obj.data.uuid
 			});
 		}
 	});
+	
+	// 监听行单击事件
+	table.on('row(sysUserTable)', function(obj) {
+		sysUser = obj.data.userId;
+		tableIns.search();
+	});
 
-	// 搜索
+	// 数据权限搜索
 	$('#searchApiDataAuthBtn').on('click', function() {
+		tableIns.search();
+	});
+
+	// 客户搜索
+	$('#searchSysUserBtn').on('click', function() {
+		sysUserTable.search();
+	});
+	
+	//数据权限表格加载
+	tableIns.search = function() {
 		tableIns.reload({
 			where: {
+				'sysUser':sysUser,
 				'dataSourceChsName':$('#dataSourceChsName').val()
 			},
 			page: {
 				curr: 1
 			}
 		});
-	});
-
-	// 搜索
-	$('#searchSysUserBtn').on('click', function() {
+	}
+	
+	//客户表格加载
+	sysUserTable.search = function() {
 		sysUserTable.reload({
+			where: {
+				'userName':$('#userName').val()
+			},
 			page: {
 				curr: 1
 			}
 		});
-	});
+	}
 
 });

@@ -11,7 +11,7 @@ import com.yuyiyun.YYdata.modular.datasource.entity.ApiDataAuth;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author duhao
@@ -19,14 +19,15 @@ import com.yuyiyun.YYdata.modular.datasource.entity.ApiDataAuth;
  */
 public interface ApiDataAuthMapper extends BaseMapper<ApiDataAuth> {
 
-    /**
-    * 分页查询
-    * @param pageContext
-    * @param dataAuth
-    * @return
-    */
-    @SuppressWarnings("rawtypes")
-	List<Map<String, Object>> selectPage(@Param("page")Page pageContext, @Param("dataAuth")ApiDataAuth apiDataAuth);
+	/**
+	 * 分页查询
+	 * 
+	 * @param pageContext
+	 * @param dataAuth
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	List<Map<String, Object>> selectPage(@Param("page") Page pageContext,
+			@Param("apiDataAuth") ApiDataAuth apiDataAuth);
 
 }
-

@@ -33,21 +33,21 @@ public class ApiDataAuth implements Serializable {
      */
     @ApiModelProperty(value = "主键")
     @TableId(value = "uuid", type = IdType.ID_WORKER)
-    private String uuid;
+    private Long uuid;
 
     /**
      * 调取者用户
      */
     @ApiModelProperty(value = "调取者用户")
     @TableField("sys_user")
-    private String sysUser;
+    private Long sysUser;
 
     /**
      * 授权数据源
      */
     @ApiModelProperty(value = "授权数据源")
     @TableField("data_source")
-    private String dataSource;
+    private Long dataSource;
 
     /**
      * 数据源中文名

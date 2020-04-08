@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+@layout("/common/_container.html",{js:["/assets/modular/datasource/apidataauth/add.js"]}){
 
-</body>
-</html>
+<div class="layui-body-header">
+	<span class="layui-body-header-title">新增数据权限</span>
+</div>
+
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-form toolbar">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<input id="condition" class="layui-input" type="search"
+									placeholder="名称" autocomplete="off" />
+							</div>
+							<div class="layui-inline">
+								<select id="platform" name="platform" lay-search="">
+									<option value="">平台</option>
+									@for(item in dataSourcePlatform){
+									<option value="${item.code}">${item.name}</option> 
+									@}
+								</select>
+							</div>
+							<div class="layui-inline">
+								<button type="button" id="searchBtn" class="layui-btn layui-btn-normal icon-btn layui-btn-sm">
+									<i class="layui-icon">&#xe615;</i> 搜索
+								</button>
+							</div>
+						</div>
+					</div>
+					<table class="layui-table" id="datasourceTable"
+						lay-filter="datasourceTable"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 表格操作工具栏 -->
+<script type="text/html" id="toolBar">
+		<div class="layui-inline">
+		<input id="validity" class="layui-input" type="search" placeholder="授权时间" />
+		</div>
+		<div class="layui-inline">
+		<button type="button" class="layui-btn layui-btn-sm" lay-event="add">
+			<i class="layui-icon">&#xe654;</i> 添加权限
+		</button>
+		</div>
+</script>
+
+@}
