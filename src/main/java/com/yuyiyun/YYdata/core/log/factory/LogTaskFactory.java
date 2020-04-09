@@ -84,6 +84,22 @@ public class LogTaskFactory {
 			}
 		};
 	}
+	
+	public static TimerTask apiServerLog(final Long userId, final String apiServerName, final String clazzName,
+			final String methodName, final String msg) {
+		return new TimerTask() {
+			@Override
+			public void run() {
+				OperationLog operationLog = LogFactory.createOperationLog(LogType.APISERVER, userId, apiServerName,
+						clazzName, methodName, msg, LogSucceed.SUCCESS);
+				try {
+					operationLogMapper.insert(operationLog);
+				} catch (Exception e) {
+					logger.error("创建API日志异常!", e);
+				}
+			}
+		};
+	}
 
 	public static TimerTask exceptionLog(final Long userId, final Exception exception) {
 		return new TimerTask() {

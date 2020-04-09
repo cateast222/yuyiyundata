@@ -44,7 +44,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(value = "数据源controller", tags = { "数据源操作接口" })
 @Controller
-@RequestMapping({ "/datasource", "/yydataApi/datasource" })
+@RequestMapping("/datasource")
 public class DataSourceController {
 	private String PREFIX = "/modular/datasource";
 	@Autowired

@@ -1,6 +1,5 @@
 package com.yuyiyun.YYdata.modular.datasource.controller;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +40,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Controller
 @Api(value = "调取数据权限controller", tags = { "调取数据权限操作接口" })
-@RequestMapping({ "/apidataauth", "/yydataApi/apidataauth" })
+@RequestMapping("/apidataauth")
 public class ApiDataAuthController {
 
 	private String PREFIX = "/modular/datasource";
@@ -100,18 +99,11 @@ public class ApiDataAuthController {
 	 * @param dataAuth
 	 * @return
 	 */
-	@RequestMapping("/addItem")
+	@RequestMapping("/addItems")
 	@ResponseBody
-	public ResponseData addItem(@RequestParam(value = "ids[]", required = true) List<Long> ids,
+	public ResponseData addItems(@RequestParam(value = "ids[]", required = true) List<Long> ids,
 			@RequestParam(value = "chsnames[]", required = true) List<String> chsnames, ApiDataAuth apiDataAuth) {
-		System.out.println("ApiDataAuthController.addItem() apiDataAuth:"+apiDataAuth);
-		System.out.println("ApiDataAuthController.addItem() ids:"+ids);
-		System.out.println("ApiDataAuthController.addItem() chsnames:"+chsnames);
-		for (int i = 0,length=ids.size(); i < length; i++) {
-			apiDataAuth.setDataSource(ids.get(i));
-			apiDataAuth.setDataSourceChsName(chsnames.get(i));
-			this.addItem(apiDataAuth);
-		}
+		apiDataAuthService.addDataAuths(ids,chsnames,apiDataAuth);
 		return ResponseData.success();
 	}
 

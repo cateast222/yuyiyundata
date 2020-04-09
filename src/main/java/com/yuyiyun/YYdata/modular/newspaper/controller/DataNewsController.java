@@ -38,7 +38,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(value = "报纸新闻controller", tags = { "报纸新闻操作接口" })
 @Controller
-@RequestMapping({ "/datanews", "/yydataApi/datanews" })
+@RequestMapping("/datanews")
 public class DataNewsController extends BaseController {
 
 	private String PREFIX = "/modular/newspaper";

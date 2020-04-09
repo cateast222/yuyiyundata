@@ -25,7 +25,8 @@ public enum BizLogType {
 
     ALL(0, null),//全部日志
     BUSSINESS(1, "业务日志"),
-    EXCEPTION(2, "异常日志");
+    EXCEPTION(2, "异常日志"),
+	APISERVER(3, "API日志");
 
     Integer val;
     String message;

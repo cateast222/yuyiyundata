@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(value = "数据配置controller", tags = { "数据配置操作接口" })
 @Controller
-@RequestMapping({"/dataconfig","/yydataApi/dataconfig"})
+@RequestMapping("/dataconfig")
 public class DataConfigController {
 
     private static final String PREFIX = "/modular/dataconfig/dataconfig";

@@ -10,7 +10,7 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 		method: 'post',
 		url: fast.ctxPath + '/apidataauth/getcustomer', // 数据接口
 		where: {
-			'deptId':fast.getUrlParam('deptId')
+			'deptId': fast.getUrlParam('deptId')
 		},
 		page: true, // 开启分页
 		limit: 20,
@@ -43,7 +43,7 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 		method: 'post',
 		url: fast.ctxPath + '/apidataauth/list', // 数据接口
 		where: {
-			'sysUser':sysUser
+			'sysUser': sysUser
 		},
 		page: true, // 开启分页
 		limit: 20,
@@ -63,53 +63,67 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 					field: 'uuid',
 					hide: true,
 					align: 'center',
+					sort: true,
 					title: '主键'
 				}, {
 					field: 'sysUser',
 					hide: true,
 					align: 'center',
+					sort: true,
 					title: '调取者用户'
 				}, {
 					field: 'dataSource',
 					hide: true,
 					align: 'center',
+					sort: true,
 					title: '授权数据源ID'
-				},{
+				}, {
 					field: 'dataSourceChsName',
 					align: 'center',
+					sort: true,
 					title: '授权数据源'
-				},{
+				}, {
 					field: 'validity',
 					align: 'center',
+					sort: true,
 					title: '授权期限'
 				}, {
 					field: 'level',
 					hide: true,
+					align: 'center',
+					sort: true,
 					align: 'center',
 					title: '级别(备用)'
 				}, {
 					field: 'remark',
 					hide: true,
 					align: 'center',
+					sort: true,
 					title: '备注'
 				}, {
 					field: 'state',
 					hide: true,
 					align: 'center',
+					sort: true,
 					title: '状态'
 				}, {
 					field: 'creator',
 					hide: true,
 					align: 'center',
+					sort: true,
 					title: '创建者'
 				}, {
 					field: 'createTime',
 					hide: true,
 					align: 'center',
+					sort: true,
+					align: 'center',
 					title: '创建时间'
 				}, {
 					field: 'updateTime',
 					hide: true,
+					align: 'center',
+					sort: true,
 					align: 'center',
 					title: '更新时间'
 				}, {
@@ -140,8 +154,11 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 					title: '新增数据',
 					shadeClose: false,
 					shade: 0.3,
-					area: ['80%', '80%'],
-					content: fast.ctxPath + '/apidataauth/add?sysUser='+sysUser
+					area: ['35%', '80%'],
+					content: fast.ctxPath + '/apidataauth/add?sysUser=' + sysUser,
+					end: function() {
+						tableIns.search();
+					}
 				});
 			}
 		} else if (obj.event === 'delete') {
@@ -210,16 +227,26 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 				title: '修改数据',
 				shadeClose: false,
 				shade: 0.3,
-				area: ['80%', '80%'],
-				content: fast.ctxPath + '/apidataauth/edit?uuid=' + obj.data.uuid
+				area: ['33%', '45%'],
+				content: fast.ctxPath + '/apidataauth/edit?uuid=' + obj.data.uuid,
+				end: function() {
+					tableIns.search();
+				}
 			});
 		}
 	});
-	
+
 	// 监听行单击事件
 	table.on('row(sysUserTable)', function(obj) {
 		sysUser = obj.data.userId;
 		tableIns.search();
+
+		// (layui—table单击行选中radio与点击 radio选中行	https://blog.csdn.net/zyg1515330502/article/details/94554059)
+		selected = obj.data;
+		//选中行样式
+		obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+		//选中radio样式
+		obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
 	});
 
 	// 数据权限搜索
@@ -231,25 +258,13 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 	$('#searchSysUserBtn').on('click', function() {
 		sysUserTable.search();
 	});
-	
+
 	//数据权限表格加载
 	tableIns.search = function() {
 		tableIns.reload({
 			where: {
-				'sysUser':sysUser,
-				'dataSourceChsName':$('#dataSourceChsName').val()
-			},
-			page: {
-				curr: 1
-			}
-		});
-	}
-	
-	//客户表格加载
-	sysUserTable.search = function() {
-		sysUserTable.reload({
-			where: {
-				'userName':$('#userName').val()
+				'sysUser': sysUser,
+				'dataSourceChsName': $('#dataSourceChsName').val()
 			},
 			page: {
 				curr: 1
@@ -257,4 +272,15 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 		});
 	}
 
+	//客户表格加载
+	sysUserTable.search = function() {
+		sysUserTable.reload({
+			where: {
+				'userName': $('#userName').val()
+			},
+			page: {
+				curr: 1
+			}
+		});
+	}
 });

@@ -1,5 +1,6 @@
 package com.yuyiyun.YYdata.modular.datasource.service;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -151,6 +152,28 @@ public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAu
 		queryWrapper.orderByAsc("update_time", "create_time");
 		// 返回查询结果
 		return this.listMaps(queryWrapper);
+	}
+
+	public int addDataAuths(List<Long> ids, List<String> chsnames, ApiDataAuth apiDataAuth) {
+		int ret = 0;
+		for (int i = 0, length = ids.size(); i < length; i++) {
+			ApiDataAuth ada = new ApiDataAuth();
+			ada.setDataSource(ids.get(i));
+			ada.setSysUser(apiDataAuth.getSysUser());
+			List<Map<String,Object>> list = this.selectListByEQ(ada, "uuid");
+			int size = list.size();
+			if (size==0) {
+				ada.setDataSourceChsName(chsnames.get(i));
+				ada.setValidity(apiDataAuth.getValidity());
+				ret += this.addDataAuth(ada);
+			} else if (size==1) {
+				Map<String, Object> map = list.get(0);
+				ApiDataAuth byId = this.getById((Serializable) map.get("uuid"));
+				byId.setValidity(apiDataAuth.getValidity());
+				ret += this.editDataAuth(byId);
+			}
+		}
+		return ret;
 	}
 
 }
