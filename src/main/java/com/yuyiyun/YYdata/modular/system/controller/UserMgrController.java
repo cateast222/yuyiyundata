@@ -15,7 +15,26 @@
  */
 package com.yuyiyun.YYdata.modular.system.controller;
 
-import cn.hutool.core.collection.CollectionUtil;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuyiyun.YYdata.config.properties.YYdataProperties;
 import com.yuyiyun.YYdata.core.common.annotion.BussinessLog;
 import com.yuyiyun.YYdata.core.common.annotion.Permission;
@@ -32,30 +51,14 @@ import com.yuyiyun.YYdata.modular.system.factory.UserFactory;
 import com.yuyiyun.YYdata.modular.system.model.UserDto;
 import com.yuyiyun.YYdata.modular.system.service.UserService;
 import com.yuyiyun.YYdata.modular.system.warpper.UserWrapper;
+
+import cn.hutool.core.collection.CollectionUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.datascope.DataScope;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * 系统管理员控制器
@@ -180,6 +183,7 @@ public class UserMgrController extends BaseController {
 	 * @param deptId
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("/list")
 	@Permission
 	@ResponseBody

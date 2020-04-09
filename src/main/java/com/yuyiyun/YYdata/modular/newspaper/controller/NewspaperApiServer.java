@@ -86,4 +86,6 @@ public class NewspaperApiServer extends BaseController {
 			return ResponseData.error("数据添加异常！");
 		}
 	}
+	
+	
 }

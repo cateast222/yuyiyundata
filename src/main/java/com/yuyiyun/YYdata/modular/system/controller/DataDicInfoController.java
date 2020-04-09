@@ -18,7 +18,7 @@ import cn.stylefeng.roses.core.base.controller.BaseController;
 @Controller
 @RequestMapping("/datadi")
 public class DataDicInfoController extends BaseController {
-	private String PREFIX = "/modular/system/datadi";
+//	private String PREFIX = "/modular/system/datadi";
 
 	@Autowired
 	private DataDicInfoService dataDicInfoService;

@@ -15,9 +15,28 @@
  */
 package com.yuyiyun.YYdata.modular.system.controller;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.codec.Base64;
-import cn.hutool.core.collection.CollectionUtil;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.yuyiyun.YYdata.config.properties.YYdataProperties;
 import com.yuyiyun.YYdata.core.common.constant.DefaultAvatar;
 import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
@@ -32,29 +51,16 @@ import com.yuyiyun.YYdata.modular.system.factory.UserFactory;
 import com.yuyiyun.YYdata.modular.system.service.FileInfoService;
 import com.yuyiyun.YYdata.modular.system.service.NoticeService;
 import com.yuyiyun.YYdata.modular.system.service.UserService;
+
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.exception.enums.CoreExceptionEnum;
-import com.baomidou.mybatisplus.core.toolkit.IdWorker;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * 通用控制器
@@ -64,7 +70,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/system")
-@Slf4j
+//@Slf4j
 public class SystemController extends BaseController {
 
     @Autowired

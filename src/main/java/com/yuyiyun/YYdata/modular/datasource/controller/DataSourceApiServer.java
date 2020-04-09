@@ -16,7 +16,6 @@ import com.yuyiyun.YYdata.modular.datasource.entity.ApiDataAuth;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.ApiDataAuthService;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
-import com.yuyiyun.YYdata.modular.system.service.UserService;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 
@@ -35,8 +34,6 @@ public class DataSourceApiServer {
 
 	@Autowired
 	private ApiDataAuthService apiDataAuthService;
-	@Autowired
-	private UserService userService;
 	@Autowired
 	private DataSourceService dataSourceService;
 	

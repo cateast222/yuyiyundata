@@ -69,7 +69,8 @@ public class LogController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 5:34 PM
      */
-    @RequestMapping("/list")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping("/list")
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object list(@RequestParam(required = false) String beginTime,

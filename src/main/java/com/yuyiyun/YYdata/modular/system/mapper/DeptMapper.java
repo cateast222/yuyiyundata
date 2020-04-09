@@ -28,7 +28,8 @@ public interface DeptMapper extends BaseMapper<Dept> {
     /**
      * 获取所有部门列表
      */
-    Page<Map<String, Object>> list(@Param("page") Page page, @Param("condition") String condition, @Param("deptId") Long deptId);
+    @SuppressWarnings("rawtypes")
+	Page<Map<String, Object>> list(@Param("page") Page page, @Param("condition") String condition, @Param("deptId") Long deptId);
 
     /**
      * 获取所有部门树列表
