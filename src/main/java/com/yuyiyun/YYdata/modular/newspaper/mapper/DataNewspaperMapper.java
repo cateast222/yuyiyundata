@@ -20,7 +20,7 @@ import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
 public interface DataNewspaperMapper extends BaseMapper<DataNewspaper> {
 
 	/**
-	 * :电子报纸主页获取电子报纸列表
+	 * 电子报纸主页获取电子报纸列表
 	 * 
 	 * @param dataSource
 	 * @param condition
@@ -31,7 +31,7 @@ public interface DataNewspaperMapper extends BaseMapper<DataNewspaper> {
 			@Param("condition") String condition);
 
 	/**
-	 * :报纸新闻主页获取电子报纸列表
+	 * 报纸新闻主页获取电子报纸列表
 	 * 
 	 * @param page
 	 * @param publish
@@ -42,7 +42,7 @@ public interface DataNewspaperMapper extends BaseMapper<DataNewspaper> {
 			@Param("condition") String condition);
 
 	/**
-	 * :按归档日期分页查询电子报纸数据
+	 * 按归档日期分页查询电子报纸数据
 	 * @param page
 	 * @param sysUser
 	 * @param archiveDate

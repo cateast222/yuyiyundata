@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuyiyun.YYdata.core.common.constant.Const;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
@@ -165,6 +166,30 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		}
 	}
 
+	/**
+	 * :按归档日期分页查询电子报纸数据
+	 * @param limit
+	 * @param page
+	 * @param sysUser
+	 * @param archiveDate
+	 * @return
+	 */
+	public LayuiPageInfo getArchiveNewspaper(Long sysUser, String archiveDate, int limit, int page) {
+		if (ToolsUtil.isNotEmpty(limit) && limit > 50) {
+			limit = Const.API_MAX_PAGESIZE;
+		}
+		// 创建分页查询对象
+		Page<Map<String, Object>> pageContext = new Page<Map<String, Object>>(page, limit);
+		// 设置排序
+		pageContext.setAsc("uuid");
+		// 分页查询数据
+		List<Map<String, Object>> list = this.baseMapper.selectArchive(pageContext, sysUser, archiveDate);
+		// 设置分页数据
+		pageContext.setRecords(list);
+		// 封装并返回结果
+		return LayuiPageFactory.createPageInfo(pageContext);
+	}
+	
 	private DataNewspaper getOldEntity(DataNewspaperParam param) {
 		return this.getById(getKey(param));
 	}
@@ -182,31 +207,6 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	@SuppressWarnings("rawtypes")
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
-	}
-
-	/**
-	 * :按归档日期分页查询电子报纸数据
-	 * @param limit
-	 * @param page
-	 * @param sysUser
-	 * @param archiveDate
-	 * @return
-	 */
-	public LayuiPageInfo getArchiveNewspaper(Long sysUser, String archiveDate, int limit, int page) {
-		if (ToolsUtil.isNotEmpty(limit) && limit > 50) {
-			limit = 50;
-		}
-		// 创建分页查询对象
-		Page<Map<String, Object>> pageContext = new Page<Map<String, Object>>(page, limit);
-		// 设置排序
-		pageContext.setAsc("uuid");
-		// 分页查询数据
-		List<Map<String, Object>> list = this.baseMapper.selectArchive(pageContext, sysUser, archiveDate);
-		// 设置分页数据
-		pageContext.setRecords(list);
-		// 封装并返回结果
-		return LayuiPageFactory.createPageInfo(pageContext);
-
 	}
 
 }

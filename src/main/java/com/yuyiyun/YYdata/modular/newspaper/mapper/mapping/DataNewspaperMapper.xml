@@ -29,6 +29,7 @@
 		data_source AS 'dataSource'
 	</sql>
 
+	<!-- 电子报纸主页获取电子报纸列表 -->
 	<select id="listFromNewspaper" resultType="map">
 		SELECT
 		a.uuid AS 'uuid',
@@ -58,6 +59,7 @@
 		ORDER BY a.publish DESC
 	</select>
 
+	<!-- 报纸新闻主页获取电子报纸列表 -->
 	<select id="listFromNews" resultType="map">
 		SELECT
 		a.uuid AS 'uuid',
@@ -84,6 +86,7 @@
 		ORDER BY a.publish DESC
 	</select>
 
+	<!-- 按归档日期分页查询电子报纸数据 -->
 	<select id="selectArchive" resultType="map">
 		SELECT
 		dn.uuid AS 'uuid',

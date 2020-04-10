@@ -63,6 +63,11 @@ public interface Const {
 	String API_MENU_NAME = "接口文档";
 
 	/**
+	 * 接口最大分页查询数量
+	 */
+	int API_MAX_PAGESIZE = 50;
+
+	/**
 	 * 不需要权限验证的资源表达式
 	 */
 	List<String> NONE_PERMISSION_RES = CollectionUtil.newLinkedList("/assets/**", "/yydataApi/**", "/login","/global/sessionError", "/kaptcha", "/error", "/global/error");
