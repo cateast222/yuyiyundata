@@ -73,6 +73,7 @@ public class DataConfigService extends ServiceImpl<DataConfigMapper, DataConfig>
 		if (ToolUtil.isEmpty(dataConfig.getCreator())) {
 			dataConfig.setCreator(ShiroKit.getUser().getAccount());
 		}
+		dataConfig.setUpdateTime(new Date());
 
 		// 返回插入结果
 		return baseMapper.insert(dataConfig);

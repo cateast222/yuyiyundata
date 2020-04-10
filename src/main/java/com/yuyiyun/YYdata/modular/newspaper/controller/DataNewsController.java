@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiOperation;
  * @author duhao
  * @since 2020-01-03
  */
-@Api(value = "报纸新闻controller", tags = { "报纸新闻操作接口" })
+@Api(value = "报刊新闻controller", tags = { "报刊新闻操作接口" })
 @Controller
 @RequestMapping("/datanews")
 public class DataNewsController extends BaseController {

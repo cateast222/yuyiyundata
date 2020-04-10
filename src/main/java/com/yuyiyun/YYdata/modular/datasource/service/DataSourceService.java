@@ -78,6 +78,7 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		if (ToolUtil.isEmpty(entity.getCreator())) {
 			entity.setCreator(ShiroKit.getUser().getAccount());
 		}
+		entity.setUpdateTime(new Date());
 		// 5、数据存储
 		this.save(entity);
 		// 6、数据返回

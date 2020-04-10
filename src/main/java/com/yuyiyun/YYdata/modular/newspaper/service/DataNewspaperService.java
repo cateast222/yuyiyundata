@@ -3,6 +3,7 @@ package com.yuyiyun.YYdata.modular.newspaper.service;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
@@ -89,7 +91,7 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		DataNewspaper entity = getEntity(param);
 		entity.setCreator(
 				ToolUtil.isEmpty(entity.getCreator()) ? ShiroKit.getUser().getAccount() : entity.getCreator());
-		entity.setFullName(entity.getChsName() + new SimpleDateFormat("-yyyy-MM-dd").format(entity.getPublish()));//《ABC》报-yyyy-MM-dd
+		entity.setFullName(entity.getChsName() + new SimpleDateFormat("-yyyy-MM-dd").format(entity.getPublish()));// 《ABC》报-yyyy-MM-dd
 		// 4、数据存储
 		this.save(entity);
 		// 5、回调数据
@@ -121,8 +123,8 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		}
 		// 5、更新数据
 		newEntity.setUpdateTime(new Date());
-		newEntity.setFullName(newEntity.getChsName() + 
-				new SimpleDateFormat("-yyyy-MM-dd").format(newEntity.getPublish()));
+		newEntity.setFullName(
+				newEntity.getChsName() + new SimpleDateFormat("-yyyy-MM-dd").format(newEntity.getPublish()));
 		this.updateById(newEntity);
 		// 6、数据回调
 		return newEntity;
@@ -180,6 +182,31 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 	@SuppressWarnings("rawtypes")
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
+	}
+
+	/**
+	 * :按归档日期分页查询电子报纸数据
+	 * @param limit
+	 * @param page
+	 * @param sysUser
+	 * @param archiveDate
+	 * @return
+	 */
+	public LayuiPageInfo getArchiveNewspaper(Long sysUser, String archiveDate, int limit, int page) {
+		if (ToolsUtil.isNotEmpty(limit) && limit > 50) {
+			limit = 50;
+		}
+		// 创建分页查询对象
+		Page<Map<String, Object>> pageContext = new Page<Map<String, Object>>(page, limit);
+		// 设置排序
+		pageContext.setAsc("uuid");
+		// 分页查询数据
+		List<Map<String, Object>> list = this.baseMapper.selectArchive(pageContext, sysUser, archiveDate);
+		// 设置分页数据
+		pageContext.setRecords(list);
+		// 封装并返回结果
+		return LayuiPageFactory.createPageInfo(pageContext);
+
 	}
 
 }

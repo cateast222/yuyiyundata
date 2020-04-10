@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
  * @author duhao
  * @date 2019年12月4日
  */
-@Api(value = "电子报纸数据controller", tags = { "电子报纸数据操作接口" })
+@Api(value = "闻歌电子报纸controller", tags = { "闻歌电子报纸操作接口" })
 @Controller
 @RequestMapping({ "/wendata", "/yydataApi/wendata" })
 public class WgEleNewsDataController extends BaseController {

@@ -1,5 +1,6 @@
 package com.yuyiyun.YYdata.modular.newspaper.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -37,8 +38,17 @@ public interface DataNewspaperMapper extends BaseMapper<DataNewspaper> {
 	 * @param condition
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
-	Page<Map<String, Object>> listFromNews(@Param("page") Page page, @Param("publish") String publish,
+	Page<Map<String, Object>> listFromNews(@Param("page") Page<?> page, @Param("publish") String publish,
 			@Param("condition") String condition);
+
+	/**
+	 * :按归档日期分页查询电子报纸数据
+	 * @param page
+	 * @param sysUser
+	 * @param archiveDate
+	 * @return
+	 */
+	List<Map<String, Object>> selectArchive(@Param("page") Page<?> page, @Param("sysUser") Long sysUser,
+			@Param("archiveDate") String archiveDate);
 
 }

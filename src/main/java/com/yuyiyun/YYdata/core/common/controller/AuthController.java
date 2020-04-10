@@ -43,9 +43,9 @@ public class AuthController {
 					HashMap<String, Object> data = new HashMap<String, Object>();
 					data.put("access_token", token);
 					data.put("token_type", "Bearer ");
-					data.put("usernameFromToken", JwtTokenUtil.getUsernameFromToken(token));
-					data.put("suedAtDateFromToken", JwtTokenUtil.getIssuedAtDateFromToken(token));
-					data.put("sxpirationDateFromToken", JwtTokenUtil.getExpirationDateFromToken(token));
+					data.put("userID", JwtTokenUtil.getUsernameFromToken(token));
+					data.put("suedAtDate", JwtTokenUtil.getIssuedAtDateFromToken(token));
+					data.put("sxpirationDate", JwtTokenUtil.getExpirationDateFromToken(token));
 					return ResponseData.success(data);
 				}
 			}
@@ -59,9 +59,9 @@ public class AuthController {
 				HashMap<String, Object> data = new HashMap<String, Object>();
 				data.put("access_token", token);
 				data.put("token_type", "Bearer ");
-				data.put("usernameFromToken", usernameFromToken);
-				data.put("suedAtDateFromToken", JwtTokenUtil.getIssuedAtDateFromToken(token));
-				data.put("sxpirationDateFromToken", JwtTokenUtil.getExpirationDateFromToken(token));
+				data.put("userID", usernameFromToken);
+				data.put("suedAtDate", JwtTokenUtil.getIssuedAtDateFromToken(token));
+				data.put("sxpirationDate", JwtTokenUtil.getExpirationDateFromToken(token));
 				return ResponseData.success(data);
 			}
 		}

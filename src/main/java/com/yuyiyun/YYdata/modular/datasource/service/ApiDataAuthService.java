@@ -59,6 +59,7 @@ public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAu
 		if (ToolUtil.isEmpty(apiDataAuth.getCreator())) {
 			apiDataAuth.setCreator(ShiroKit.getUser().getAccount());
 		}
+		apiDataAuth.setUpdateTime(new Date());
 		return baseMapper.insert(apiDataAuth);
 	}
 

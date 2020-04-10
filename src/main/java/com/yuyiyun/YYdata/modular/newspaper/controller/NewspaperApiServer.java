@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
@@ -48,7 +50,7 @@ public class NewspaperApiServer extends BaseController {
 	@ResponseBody
 	public ResponseData addByApi(@RequestBody() DataNewspaperParam param) {
 		DataNewspaper add = this.dataNewspaperService.addOrEdit(param);
-		if (add != null) {
+		if (ToolsUtil.isNotEmpty(add)) {
 			return ResponseData.success(add);
 		} else {
 			return ResponseData.error("数据添加异常！");
@@ -76,16 +78,33 @@ public class NewspaperApiServer extends BaseController {
 	 * @param param
 	 * @return
 	 */
-	@PostMapping("/addByApi")
+	@PostMapping("/datanews/addByApi")
 	@ResponseBody
 	public ResponseData addByApi(@RequestBody() DataNewsParam param) {
 		DataNews add = this.dataNewsService.addOrEdit(param);
-		if (add != null) {
+		if (ToolsUtil.isNotEmpty(add)) {
 			return ResponseData.success(add);
 		} else {
 			return ResponseData.error("数据添加异常！");
 		}
 	}
 	
-	
+	/**
+	 * Description:按归档日期分页查询电子报纸数据
+	 * @param sysUser
+	 * @param archiveDate
+	 * @param limit
+	 * @param page
+	 * @return
+	 */
+	@PostMapping("/newspaper/getArchiveNewspaper")
+	@ResponseBody
+	public ResponseData getArchiveNewspaper(Long sysUser,String archiveDate,int limit, int page) {
+		if (ToolsUtil.isEmpty(sysUser)||ToolsUtil.isEmpty(archiveDate)) {
+			return ResponseData.error("请求参数异常！");
+		}else {
+			LayuiPageInfo info = dataNewspaperService.getArchiveNewspaper(sysUser,archiveDate,limit,page);
+			return ResponseData.success(info);
+		}
+	}
 }

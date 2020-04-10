@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  * @author duhao
  * @since 2020-03-26
  */
-@Api(value = "数据配置controller", tags = { "数据配置操作接口" })
+@Api(value = "数据源配置controller", tags = { "数据源配置操作接口" })
 @Controller
 @RequestMapping("/dataconfig")
 public class DataConfigController {

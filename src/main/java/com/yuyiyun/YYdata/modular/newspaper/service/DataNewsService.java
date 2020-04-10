@@ -112,6 +112,7 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		if (ToolUtil.isEmpty(entity.getInsertTime())) {
 			entity.setInsertTime(new Date());
 		}
+		entity.setUpdateTime(new Date());
 		// 4、数据存储
 		this.save(entity);
 		// 5、数据回调

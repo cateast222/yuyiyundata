@@ -83,4 +83,22 @@
 		</if>
 		ORDER BY a.publish DESC
 	</select>
+
+	<select id="selectArchive" resultType="map">
+		SELECT
+		dn.uuid AS 'uuid',
+		dn.chs_name AS 'chsName',
+		date_format( dn.publish, '%Y-%m-%d' ) AS 'pubtime',
+		dn.full_name AS 'fullName'
+		FROM
+		api_data_auth api,
+		data_newspaper dn
+		WHERE
+		api.sys_user = #{sysUser}
+		AND api.validity >= NOW( )
+		AND dn.data_source = api.data_source
+		AND dn.state = 3
+		AND (dn.update_time between CONCAT(#{archiveDate},' 00:00:00') and
+		CONCAT(#{archiveDate},' 23:59:59'))
+	</select>
 </mapper>

@@ -68,6 +68,7 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 		if (ToolUtil.isEmpty(dataDict.getCreator())) {
 			dataDict.setCreator(ShiroKit.getUser().getAccount());
 		}
+		dataDict.setUpdateTime(new Date());
 		return baseMapper.insert(dataDict);
 	}
 

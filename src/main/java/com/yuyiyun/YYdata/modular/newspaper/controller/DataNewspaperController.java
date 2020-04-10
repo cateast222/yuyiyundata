@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper;
@@ -35,7 +36,7 @@ import io.swagger.annotations.ApiOperation;
  * @author duhao
  * @since 2020-01-02
  */
-@Api(value = "电子报纸controller", tags = { "电子报纸操作接口" })
+@Api(value = "报刊报纸controller", tags = { "报刊报纸操作接口" })
 @Controller
 @RequestMapping("/newspaper")
 public class DataNewspaperController extends BaseController {
@@ -232,5 +233,30 @@ public class DataNewspaperController extends BaseController {
 	@ResponseBody
 	public ResponseData isExistByApi(String pubTime, String url, String dsiUuid) {
 		return dataNewspaperService.isExist(dsiUuid, url, pubTime);
+	}
+	
+	/**
+	 * :按归档日期分页查询电子报纸数据
+	 * @param sysUser
+	 * @param archiveDate
+	 * @param limit
+	 * @param page
+	 * @return
+	 */
+	@ApiOperation(value = "归档数据",notes = "按日期获取归档数据")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "sysUser",value = "客户ID",required = true,paramType = "query", dataType = "String"),
+		@ApiImplicitParam(name = "archiveDate",value = "归档日期yyyy-MM-dd",required = true,paramType = "query", dataType = "String"),
+		@ApiImplicitParam(name = "page",value = "页数",required = true,paramType = "query", dataType = "int"),
+		@ApiImplicitParam(name = "limit",value = "条数",required = true,paramType = "query", dataType = "int")
+	})
+	@PostMapping("/getArchiveNewspaper")
+	@ResponseBody
+	public Object  getArchiveNewspaper(Long sysUser,String archiveDate,int limit, int page) {
+		if (ToolsUtil.isEmpty(sysUser)||ToolsUtil.isEmpty(archiveDate)) {
+			return ResponseData.error("请求参数异常！");
+		}else {
+			return dataNewspaperService.getArchiveNewspaper(sysUser,archiveDate,limit,page);
+		}
 	}
 }

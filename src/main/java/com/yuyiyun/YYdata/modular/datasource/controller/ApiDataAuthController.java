@@ -39,7 +39,7 @@ import io.swagger.annotations.ApiOperation;
  * @since 2020-04-07
  */
 @Controller
-@Api(value = "调取数据权限controller", tags = { "调取数据权限操作接口" })
+@Api(value = "数据源权限controller", tags = { "数据源权限操作接口" })
 @RequestMapping("/apidataauth")
 public class ApiDataAuthController {
 
