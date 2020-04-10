@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.constant.Const;
@@ -42,7 +41,7 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
  */
 @Service
 public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(DataNewsService.class);
 
 	@Autowired
@@ -172,9 +171,10 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		Page<Map<String, Object>> wrap = new DataNewsWrapper(pageMaps).wrap();
 		return LayuiPageFactory.createPageInfo(wrap);
 	}
-	
+
 	/**
 	 * 分页查询报刊数据
+	 * 
 	 * @param newspaperId
 	 * @param limit
 	 * @param page
@@ -219,7 +219,5 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	private Serializable getKey(DataNewsParam param) {
 		return param.getUuid();
 	}
-
-	
 
 }

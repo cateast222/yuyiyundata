@@ -168,6 +168,7 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 
 	/**
 	 * :按归档日期分页查询电子报纸数据
+	 * 
 	 * @param limit
 	 * @param page
 	 * @param sysUser
@@ -189,7 +190,7 @@ public class DataNewspaperService extends ServiceImpl<DataNewspaperMapper, DataN
 		// 封装并返回结果
 		return LayuiPageFactory.createPageInfo(pageContext);
 	}
-	
+
 	private DataNewspaper getOldEntity(DataNewspaperParam param) {
 		return this.getById(getKey(param));
 	}

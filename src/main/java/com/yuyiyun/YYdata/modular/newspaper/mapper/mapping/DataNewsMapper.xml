@@ -204,16 +204,17 @@
 
 
     <!-- 分页查询 -->
-    <select id="selectPage" resultType="com.yuyiyun.YYdata.modular.newspaper.entity.News">
+    <select id="selectPage" resultType="com.yuyiyun.YYdata.modular.newspaper.entity.DataNews">
         select <include refid="BaseColumnList"/>
         from data_news
         <include refid="BaseWhere"/>
     </select>
 
 	<!-- 分页查询归档报刊数据 -->
-    <select id="selectArchive" resultType="com.yuyiyun.YYdata.modular.newspaper.entity.News">
+    <select id="selectArchive" resultType="com.yuyiyun.YYdata.modular.newspaper.entity.DataNews">
         select <include refid="BaseColumnList"/>
         from data_news
-        <include refid="BaseWhere"/>
+        WHERE
+        data_newspaper = #{newspaperId}
     </select>
 </mapper>

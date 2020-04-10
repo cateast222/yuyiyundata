@@ -26,8 +26,7 @@ public interface DataNewspaperMapper extends BaseMapper<DataNewspaper> {
 	 * @param condition
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
-	Page<Map<String, Object>> listFromNewspaper(@Param("page") Page page, @Param("dataSource") Long dataSource,
+	Page<Map<String, Object>> listFromNewspaper(@Param("page") Page<?> page, @Param("dataSource") Long dataSource,
 			@Param("condition") String condition);
 
 	/**

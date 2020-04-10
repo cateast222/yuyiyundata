@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.util.DateTimeUtil;
+import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
@@ -26,6 +27,7 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -211,6 +213,32 @@ public class DataNewsController extends BaseController {
 			return ResponseData.success(add);
 		} else {
 			return ResponseData.error("数据添加异常！");
+		}
+	}
+
+	/**
+	 * 分页查询报刊数据
+	 * 
+	 * @param newspaperId
+	 * @param limit
+	 * @param page
+	 * @return
+	 */
+	@ApiOperation(value = "归档数据", notes = "获取归档数据")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "newspaperId", value = "报纸ID", required = true, paramType = "query", dataType = "long"),
+			@ApiImplicitParam(name = "page", value = "页数", required = true, paramType = "query", dataType = "int"),
+			@ApiImplicitParam(name = "limit", value = "条数", required = true, paramType = "query", dataType = "int") })
+	@PostMapping("/getArchiveDataNews")
+	@ResponseBody
+	public ResponseData getArchiveDataNews(Long newspaperId, int limit, int page) {
+		if (ToolsUtil.isEmpty(newspaperId)) {
+			return ResponseData.error("请求参数异常！");
+		} else if (ToolsUtil.isEmpty(limit) || ToolsUtil.isEmpty(page)) {
+			return ResponseData.error("请求参数page、limit异常！");
+		} else {
+			LayuiPageInfo info = dataNewsService.getArchiveDataNews(newspaperId, limit, page);
+			return ResponseData.success(info);
 		}
 	}
 }

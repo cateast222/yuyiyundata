@@ -105,9 +105,9 @@ public class NewspaperApiServer extends BaseController {
 	public ResponseData getArchiveNewspaper(Long sysUser, String archiveDate, int limit, int page) {
 		if (ToolsUtil.isEmpty(sysUser) || ToolsUtil.isEmpty(DateTimeUtil.stringToDate(archiveDate, "yyyy-MM-dd"))) {
 			return ResponseData.error("请求参数sysUser、archiveDate异常！");
-		} else if (ToolsUtil.isEmpty(limit)||ToolsUtil.isEmpty(page)) {
+		} else if (ToolsUtil.isEmpty(limit) || ToolsUtil.isEmpty(page)) {
 			return ResponseData.error("请求参数page、limit异常！");
-		}else{
+		} else {
 			LayuiPageInfo info = dataNewspaperService.getArchiveNewspaper(sysUser, archiveDate, limit, page);
 			return ResponseData.success(info);
 		}
@@ -115,17 +115,18 @@ public class NewspaperApiServer extends BaseController {
 
 	/**
 	 * 分页查询报刊数据
+	 * 
 	 * @param newspaperId
 	 * @param limit
 	 * @param page
 	 * @return
 	 */
-	@PostMapping("/newspaper/getArchiveDataNews")
+	@PostMapping("/datanews/getArchiveDataNews")
 	@ResponseBody
 	public ResponseData getArchiveDataNews(Long newspaperId, int limit, int page) {
 		if (ToolsUtil.isEmpty(newspaperId)) {
 			return ResponseData.error("请求参数异常！");
-		} else if (ToolsUtil.isEmpty(limit)||ToolsUtil.isEmpty(page)) {
+		} else if (ToolsUtil.isEmpty(limit) || ToolsUtil.isEmpty(page)) {
 			return ResponseData.error("请求参数page、limit异常！");
 		} else {
 			LayuiPageInfo info = dataNewsService.getArchiveDataNews(newspaperId, limit, page);
