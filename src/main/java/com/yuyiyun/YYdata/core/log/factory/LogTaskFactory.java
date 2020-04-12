@@ -85,6 +85,15 @@ public class LogTaskFactory {
 		};
 	}
 	
+	/**
+	 * API服务日志
+	 * @param userId 客户ID
+	 * @param apiServerName 
+	 * @param clazzName
+	 * @param methodName
+	 * @param msg
+	 * @return
+	 */
 	public static TimerTask apiServerLog(final Long userId, final String apiServerName, final String clazzName,
 			final String methodName, final String msg) {
 		return new TimerTask() {

@@ -189,6 +189,7 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		pageContext.setAsc("uuid");
 		// 分页查询数据
 		List<Map<String, Object>> list = this.baseMapper.selectArchive(pageContext, newspaperId);
+		list = new DataNewsWrapper(list).wrap();
 		// 设置分页数据
 		pageContext.setRecords(list);
 		// 封装并返回结果

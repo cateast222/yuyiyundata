@@ -1,5 +1,7 @@
 package com.yuyiyun.YYdata.modular.newspaper.controller;
 
+import static cn.stylefeng.roses.core.util.HttpContext.getIp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.log.LogManager;
+import com.yuyiyun.YYdata.core.log.factory.LogTaskFactory;
 import com.yuyiyun.YYdata.core.util.DateTimeUtil;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
@@ -130,6 +134,7 @@ public class NewspaperApiServer extends BaseController {
 			return ResponseData.error("请求参数page、limit异常！");
 		} else {
 			LayuiPageInfo info = dataNewsService.getArchiveDataNews(newspaperId, limit, page);
+			LogManager.me().executeLog(LogTaskFactory.apiServerLog(userId, apiServerName, clazzName, getIp(), msg));
 			return ResponseData.success(info);
 		}
 	}
