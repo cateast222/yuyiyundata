@@ -121,6 +121,7 @@ public class DictTypeService extends ServiceImpl<DictTypeMapper, DictType> {
 	 * @author stylefeng
 	 * @Date 2019-03-13
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public LayuiPageInfo findPageBySpec(DictTypeParam param) {
 		Page pageContext = getPageContext();
 		QueryWrapper<DictType> objectQueryWrapper = new QueryWrapper<>();
@@ -144,6 +145,7 @@ public class DictTypeService extends ServiceImpl<DictTypeMapper, DictType> {
 		return param.getDictTypeId();
 	}
 
+	@SuppressWarnings("rawtypes")
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}

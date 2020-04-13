@@ -3,6 +3,7 @@ package com.yuyiyun.YYdata.core.common.page;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分页结果的封装(for Layui Table)
@@ -22,40 +23,19 @@ public class LayuiPageInfo {
 
     private long count;
 
-	public Integer getCode() {
-		return code;
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public String getDataMapValues(String key) {
+		List<Map<String, Object>> list = (List<Map<String, Object>>) this.data;
+		StringBuffer sbf = new StringBuffer();
+		for (Map<String, Object> map : list) {
+			sbf.append(map.get(key)+",");
+		}
+		return sbf.toString();
 	}
-
-	public void setCode(Integer code) {
-		this.code = code;
-	}
-
-	public String getMsg() {
-		return msg;
-	}
-
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public List getData() {
-		return data;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public void setData(List data) {
-		this.data = data;
-	}
-
-	public long getCount() {
-		return count;
-	}
-
-	public void setCount(long count) {
-		this.count = count;
-	}
-    
-    
 
 }

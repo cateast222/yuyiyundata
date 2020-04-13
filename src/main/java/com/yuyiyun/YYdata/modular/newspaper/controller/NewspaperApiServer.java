@@ -13,6 +13,7 @@ import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.log.LogManager;
 import com.yuyiyun.YYdata.core.log.factory.LogTaskFactory;
 import com.yuyiyun.YYdata.core.util.DateTimeUtil;
+import com.yuyiyun.YYdata.core.util.JwtTokenUtil;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
@@ -106,19 +107,23 @@ public class NewspaperApiServer extends BaseController {
 	 */
 	@PostMapping("/newspaper/getArchiveNewspaper")
 	@ResponseBody
-	public ResponseData getArchiveNewspaper(Long sysUser, String archiveDate, int limit, int page) {
-		if (ToolsUtil.isEmpty(sysUser) || ToolsUtil.isEmpty(DateTimeUtil.stringToDate(archiveDate, "yyyy-MM-dd"))) {
-			return ResponseData.error("请求参数sysUser、archiveDate异常！");
+	public ResponseData getArchiveNewspaper(String archiveDate, int limit, int page) {
+		if (ToolsUtil.isEmpty(DateTimeUtil.stringToDate(archiveDate, "yyyy-MM-dd"))) {
+			return ResponseData.error("请求参数archiveDate异常！");
 		} else if (ToolsUtil.isEmpty(limit) || ToolsUtil.isEmpty(page)) {
 			return ResponseData.error("请求参数page、limit异常！");
 		} else {
-			LayuiPageInfo info = dataNewspaperService.getArchiveNewspaper(sysUser, archiveDate, limit, page);
+			Long userId = Long.parseLong(JwtTokenUtil.getUsernameFromRequest());
+			LayuiPageInfo info = dataNewspaperService.getArchiveNewspaper(userId, archiveDate, limit, page);
+			//API服务日志
+			LogManager.me().executeLog(LogTaskFactory.apiServerLog(userId, "报刊报纸" + archiveDate, getIp(),
+					"ArchiveNewspaper", info.getDataMapValues("uuid")));
 			return ResponseData.success(info);
 		}
 	}
 
 	/**
-	 * 分页查询报刊数据
+	 * 分页查询报刊新闻数据
 	 * 
 	 * @param newspaperId
 	 * @param limit
@@ -133,8 +138,11 @@ public class NewspaperApiServer extends BaseController {
 		} else if (ToolsUtil.isEmpty(limit) || ToolsUtil.isEmpty(page)) {
 			return ResponseData.error("请求参数page、limit异常！");
 		} else {
+			Long userId = Long.parseLong(JwtTokenUtil.getUsernameFromRequest());
 			LayuiPageInfo info = dataNewsService.getArchiveDataNews(newspaperId, limit, page);
-			LogManager.me().executeLog(LogTaskFactory.apiServerLog(userId, apiServerName, clazzName, getIp(), msg));
+			//API服务日志
+			LogManager.me().executeLog(LogTaskFactory.apiServerLog(userId, "报刊新闻" + newspaperId, getIp(),
+					"ArchiveDataNews", info.getDataMapValues("id")));
 			return ResponseData.success(info);
 		}
 	}

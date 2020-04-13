@@ -215,6 +215,6 @@ layui.use(['table', 'ax'],
 
 		// 添加按钮点击事件
 		$('#btnMigration').click(function () {
-			window.location.href = Feng.ctxPath + '/datasource/news';
+			window.location.href = Feng.ctxPath + '/datasource/dic';
 		});
 	});

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yuyiyun.YYdata.core.common.constant.JwtConstants;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
-import com.yuyiyun.YYdata.core.shiro.service.UserAuthService;
 import com.yuyiyun.YYdata.core.util.JwtTokenUtil;
 import com.yuyiyun.YYdata.modular.system.entity.User;
 import com.yuyiyun.YYdata.modular.system.service.UserService;

@@ -19,7 +19,7 @@ import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
  */
 public interface DataNewsMapper extends BaseMapper<DataNews> {
 	/**
-	 * 分页查询归档报刊数据
+	 * 分页查询报刊新闻数据
 	 * @param pageContext
 	 * @param newspaperId
 	 * @return

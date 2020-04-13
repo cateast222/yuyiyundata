@@ -237,6 +237,7 @@ public class DataNewsController extends BaseController {
 		} else if (ToolsUtil.isEmpty(limit) || ToolsUtil.isEmpty(page)) {
 			return ResponseData.error("请求参数page、limit异常！");
 		} else {
+//			Long userId = ShiroKit.getUser().getId();
 			LayuiPageInfo info = dataNewsService.getArchiveDataNews(newspaperId, limit, page);
 			return ResponseData.success(info);
 		}

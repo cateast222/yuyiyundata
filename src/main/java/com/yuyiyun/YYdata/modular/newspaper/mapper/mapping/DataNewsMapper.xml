@@ -54,38 +54,47 @@
 		chs_name as chsName,
 		data_source as dataSource,
 		data_newspaper as dataNewspaper,
-		pubtime as pubtime,
+		pubtime as
+		pubtime,
 		title as title,
 		url as url,
 		pretitle as pretitle,
-		subtitle as subtitle,
+		subtitle as
+		subtitle,
 		author as author,
 		editor as editor,
 		abstracts as abstracts,
 		content as content,
 		tag_content as tagContent,
-		website_pictures as websitePictures,
+		website_pictures as
+		websitePictures,
 		website_audios as websiteAudios,
-		pictures_description as picturesDescription,
+		pictures_description
+		as picturesDescription,
 		language as language,
-		website_thumbnail as websiteThumbnail,
+		website_thumbnail as
+		websiteThumbnail,
 		website_files as websiteFiles,
-		website_pdf as websitePdf,
+		website_pdf as
+		websitePdf,
 		website_videos as websiteVideos,
 		ha as ha,
-		channel as channel,
+		channel as
+		channel,
 		number as number,
 		page as page,
 		page_name as pageName,
 		paper_count as paperCount,
 		front_page as frontPage,
-		insert_time as insertTime,
+		insert_time as
+		insertTime,
 		remark as remark,
 		state as state,
 		creator as creator,
 		create_time as createTime,
 		update_time as updateTime,
-		provider as provider
+		provider as
+		provider
 	</sql>
 
 	<!-- API查询结果列 -->
@@ -96,26 +105,32 @@
 		pubtime as pubTime,
 		title as title,
 		url as source_Url,
-		pretitle as preTitle,
+		pretitle as
+		preTitle,
 		subtitle as subTitle,
 		author as author,
 		abstracts as abstract,
 		content as content,
 		tag_content as tag_Content,
-		website_pictures as paper_Picture,
+		website_pictures as
+		paper_Picture,
 		website_audios as audios_Url,
-		pictures_description as pictures_Description,
+		pictures_description as
+		pictures_Description,
 		language as languageCode,
-		website_thumbnail as layoutSource,
+		website_thumbnail as
+		layoutSource,
 		website_files as files_Url,
 		website_pdf as pdf_Url,
 		website_videos as videos_Url,
 		ha as ha,
 		channel as channel,
-		number as revision,
+		number as
+		revision,
 		page as page,
 		page_name as edition_Name,
-		paper_count as paper_Count,
+		paper_count as
+		paper_Count,
 		front_page as front_Page,
 		insert_time as insert_Time
 	</sql>
@@ -250,7 +265,7 @@
 		<include refid="BaseWhere" />
 	</select>
 
-	<!-- 分页查询归档报刊数据 -->
+	<!-- 分页查询报刊新闻数据 -->
 	<select id="selectArchive" resultType="map">
 		select
 		<include refid="ApiColumnList" />

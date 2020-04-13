@@ -57,7 +57,10 @@ layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 					field: 'summary',
 					sort: true,
 					align: 'center',
-					title: '描述'
+					title: '描述',
+					templet : function(d) {
+						return fast.htmlEncode(d.summary);
+					}
 				},
 				{
 					field: 'datas',

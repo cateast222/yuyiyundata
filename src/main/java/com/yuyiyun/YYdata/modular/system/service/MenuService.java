@@ -186,7 +186,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
             code = menu.getCode();
         }
 
-        Page page = LayuiPageFactory.defaultPage();
+        Page<?> page = LayuiPageFactory.defaultPage();
 
         return this.baseMapper.selectMenus(page, condition, level, menuId, code);
     }

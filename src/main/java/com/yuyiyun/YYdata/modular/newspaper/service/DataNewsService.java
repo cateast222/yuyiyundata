@@ -173,7 +173,7 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	}
 
 	/**
-	 * 分页查询报刊数据
+	 * 分页查询报刊新闻数据
 	 * 
 	 * @param newspaperId
 	 * @param limit

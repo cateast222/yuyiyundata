@@ -1,12 +1,16 @@
 package com.yuyiyun.YYdata.core.util;
 
 import com.yuyiyun.YYdata.core.common.constant.JwtConstants;
+
+import cn.stylefeng.roses.core.util.HttpContext;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import io.jsonwebtoken.*;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -28,6 +32,14 @@ import java.util.Map;
  * @Date 2017/8/25 10:59
  */
 public class JwtTokenUtil {
+	/**
+	 * 获取用户名从request中
+	 */
+	public static String getUsernameFromRequest() {
+		HttpServletRequest request = HttpContext.getRequest();
+		String authToken = request.getHeader(JwtConstants.AUTH_HEADER).substring(7);
+		return getUsernameFromToken(authToken);
+	}
 	/**
 	 * 获取用户名从token中
 	 */

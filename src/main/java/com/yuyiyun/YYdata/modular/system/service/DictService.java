@@ -229,6 +229,7 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
 		return param.getDictId();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private Page getPageContext() {
 		return LayuiPageFactory.defaultPage();
 	}

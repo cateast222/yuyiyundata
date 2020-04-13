@@ -34,14 +34,14 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(value = "闻歌电子报纸controller", tags = { "闻歌电子报纸操作接口" })
 @Controller
-@RequestMapping({ "/wendata", "/yydataApi/wendata" })
+@RequestMapping("/wendata")
 public class WgEleNewsDataController extends BaseController {
 	private String PREFIX = "/modular/wgelenewsdata";
 	@Autowired
 	private WgEleNewsDataService wgEleNewsDataService;
 	@Autowired
 	private DataSourceInfoService dataSourceInfoService;
-	
+
 	/**
 	 * :数据测试页面
 	 * 
@@ -52,7 +52,7 @@ public class WgEleNewsDataController extends BaseController {
 	public String datatest() {
 		return PREFIX + "/datatest/datatest.html";
 	}
-	
+
 	/**
 	 * :数据测试页面
 	 * 
@@ -63,6 +63,7 @@ public class WgEleNewsDataController extends BaseController {
 	public String dataresult() {
 		return PREFIX + "/dataResults/index.html";
 	}
+
 	/**
 	 * 加入测试接口
 	 *
@@ -151,9 +152,10 @@ public class WgEleNewsDataController extends BaseController {
 			return ResponseData.error("数据添加异常！");
 		}
 	}
-	
+
 	/**
 	 * :根据日期获取分类归档的数据
+	 * 
 	 * @param pubTime
 	 * @param condition
 	 * @return
@@ -161,23 +163,24 @@ public class WgEleNewsDataController extends BaseController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/getDateArchive")
 	@ResponseBody
-	public LayuiPageInfo getDateArchive(String pubTime,String condition) {
-		 //获取分页参数
-        Page page = LayuiPageFactory.defaultPage();
-		List<Map<String,Object>> dateArchive = wgEleNewsDataService.getDateArchive(page,pubTime,condition);
+	public LayuiPageInfo getDateArchive(String pubTime, String condition) {
+		// 获取分页参数
+		Page page = LayuiPageFactory.defaultPage();
+		List<Map<String, Object>> dateArchive = wgEleNewsDataService.getDateArchive(page, pubTime, condition);
 		page.setRecords(dateArchive);
 		return LayuiPageFactory.createPageInfo(page);
 	}
-	
+
 	/**
 	 * :获取某份报纸归档的新闻数据
+	 * 
 	 * @param pubTime
 	 * @param condition
 	 * @return
 	 */
 	@RequestMapping("/getDateNewslist")
 	@ResponseBody
-	public LayuiPageInfo getDateNewslist(String pubTime,String condition,String dsiUuid) {
-		return wgEleNewsDataService.getDateNewslist(dsiUuid,pubTime,condition);
+	public LayuiPageInfo getDateNewslist(String pubTime, String condition, String dsiUuid) {
+		return wgEleNewsDataService.getDateNewslist(dsiUuid, pubTime, condition);
 	}
 }

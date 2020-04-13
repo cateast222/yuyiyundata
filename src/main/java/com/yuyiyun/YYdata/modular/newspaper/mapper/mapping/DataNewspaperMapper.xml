@@ -91,21 +91,22 @@
 		SELECT
 		dn.uuid AS 'uuid',
 		dn.chs_name AS 'chsName',
-		date_format( dn.publish, '%Y-%m-%d' ) AS
-		'pubtime',
+		date_format( dn.publish, '%Y-%m-%d' ) AS 'pubtime',
 		dn.full_name AS 'fullName',
 		dn.update_time AS 'insertTime'
 		FROM
 		api_data_auth api,
-		data_newspaper dn
+		data_newspaper dn,
+		data_source ds
 		WHERE
-		api.sys_user = #{sysUser}
+		ds.uuid = api.data_source
+		AND ds.state = 5
+		AND api.sys_user = #{sysUser}
 		AND api.validity >= NOW( )
 		AND dn.data_source = api.data_source
-		AND
-		dn.state = 3
+		AND dn.state = 1
 		AND (dn.update_time between CONCAT(#{archiveDate},'
-		00:00:00') and
+		00:00:00') AND
 		CONCAT(#{archiveDate},' 23:59:59'))
 	</select>
 </mapper>

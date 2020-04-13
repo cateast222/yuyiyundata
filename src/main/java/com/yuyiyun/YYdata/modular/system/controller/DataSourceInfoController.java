@@ -24,15 +24,15 @@ import io.swagger.annotations.ApiOperation;
  * @author duhao
  *
  */
-@Api(value = "数据源controller", tags = { "数据源操作接口" })
+@Api(value = "闻歌电子报纸controller", tags = { "闻歌电子报纸操作接口" })
 @Controller
-@RequestMapping({ "/datasi", "/yydataApi/datasi" })
+@RequestMapping("/datasi")
 public class DataSourceInfoController extends BaseController {
 	private String PREFIX = "/modular/system/datasi";
 
 	@Autowired
 	private DataSourceInfoService dataSourceInfoService;
-	
+
 	/**
 	 * 跳转到主页面
 	 * 
@@ -92,8 +92,6 @@ public class DataSourceInfoController extends BaseController {
 		return ResponseData.success();
 	}
 
-	
-
 	/**
 	 * 删除接口
 	 *
@@ -145,9 +143,10 @@ public class DataSourceInfoController extends BaseController {
 	public LayuiPageInfo datatestlist(DataSourceInfoParam dataSourceInfoParam) {
 		return this.dataSourceInfoService.findDataTestPageBySpec(dataSourceInfoParam);
 	}
-	
+
 	/**
-	 * 查看详情接口	 *
+	 * 查看详情接口 *
+	 * 
 	 * @author duhao
 	 * @Date 2019-03-13
 	 */

@@ -3,8 +3,6 @@ package com.yuyiyun.YYdata.modular.system.model.params;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
-
 import cn.stylefeng.roses.kernel.model.validator.BaseValidatingParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

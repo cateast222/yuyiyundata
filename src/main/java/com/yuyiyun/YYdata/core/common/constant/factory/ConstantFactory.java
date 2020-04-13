@@ -34,6 +34,7 @@ import java.util.List;
 @DependsOn("springContextHolder")
 public class ConstantFactory implements IConstantFactory {
 	
+	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(ConstantFactory.class);
 
 	private RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);

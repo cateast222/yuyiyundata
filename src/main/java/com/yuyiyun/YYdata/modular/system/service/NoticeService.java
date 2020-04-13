@@ -27,7 +27,7 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
      * @Date 2018/12/23 6:05 PM
      */
     public Page<Map<String, Object>> list(String condition) {
-        Page page = LayuiPageFactory.defaultPage();
+        Page<?> page = LayuiPageFactory.defaultPage();
         return this.baseMapper.list(page, condition);
     }
 }

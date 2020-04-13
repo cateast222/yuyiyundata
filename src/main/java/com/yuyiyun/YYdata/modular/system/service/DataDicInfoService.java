@@ -35,6 +35,7 @@ public class DataDicInfoService extends ServiceImpl<DataDicInfoMapper, DataDicIn
 		return info;
 	}
 	
+	@SuppressWarnings("unused")
 	private DatadiDto getEntity(DataDicInfo param) {
         DatadiDto dto = new DatadiDto();
         ToolUtil.copyProperties(param, dto);

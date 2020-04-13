@@ -95,7 +95,7 @@ public class LogAop {
         BussinessLog annotation = currentMethod.getAnnotation(BussinessLog.class);
         String bussinessName = annotation.value();
         String key = annotation.key();
-        Class dictClass = annotation.dict();
+        Class<?> dictClass = annotation.dict();
 
         StringBuilder sb = new StringBuilder();
         for (Object param : params) {

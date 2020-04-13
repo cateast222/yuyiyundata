@@ -151,6 +151,7 @@ public class DataSourceInfoService extends ServiceImpl<DataSourceInfoMapper, Dat
 	 * @param param
 	 * @return
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public LayuiPageInfo findDataTestPageBySpec(DataSourceInfoParam param) {
 		Page pageContext = getPageContext();
 		QueryWrapper<DataSourceInfo> dsitQueryWrapper = new QueryWrapper<>();

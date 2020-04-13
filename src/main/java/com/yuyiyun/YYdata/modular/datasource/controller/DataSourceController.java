@@ -19,13 +19,17 @@ import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
+import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
+import com.yuyiyun.YYdata.modular.dataconfig.service.DataDictService;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.system.entity.DataConfigInfo;
+import com.yuyiyun.YYdata.modular.system.entity.DataDicInfo;
 import com.yuyiyun.YYdata.modular.system.entity.DataSourceInfo;
 import com.yuyiyun.YYdata.modular.system.entity.Dict;
 import com.yuyiyun.YYdata.modular.system.service.DataConfigInfoService;
+import com.yuyiyun.YYdata.modular.system.service.DataDicInfoService;
 import com.yuyiyun.YYdata.modular.system.service.DataSourceInfoService;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
@@ -53,6 +57,11 @@ public class DataSourceController {
 	DataSourceInfoService dataSourceInfoService;
 	@Autowired
 	DataConfigInfoService dataConfigInfoService;
+	
+	@Autowired
+	DataDicInfoService dataDicInfoService;
+	@Autowired
+	DataDictService dataDictService;
 
 	/**
 	 * :数据源主页面
@@ -342,30 +351,4 @@ public class DataSourceController {
 		return PREFIX + "";
 	}
 
-	/**
-	 * @param uuid
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping("/news")
-	public String news() {
-		List<DataSource> list = dataSourceService.list(new QueryWrapper<DataSource>().ne("state", 0));
-		System.out.println(list.size());
-		int i = 0;
-		for (DataSource dataSourceInfo : list) {
-			System.out.println("~~~~~开始迁移：" + dataSourceInfo.getChsName());
-			DataConfigInfo dataConfigInfo = new DataConfigInfo();
-			dataConfigInfo.setDsiUuid(dataSourceInfo.getRemark().split("\n\\*\\^\\*\n")[1]);
-			List<DataConfigInfo> configInfos = dataConfigInfoService.list(dataConfigInfo);
-			for (DataConfigInfo configInfo : configInfos) {
-				System.out.println("~~~~~~~~~~开始迁移配置：" + configInfo.getDdiValue());
-				configInfo.setDsiUuid(dataSourceInfo.getUuid().toString());
-				configInfo.setUpdateTime(new Date());
-				dataConfigInfoService.add(configInfo);
-				System.out.println("~~~~~~~~~~完成迁移配置：" + configInfo.getDdiValue());
-			}
-			System.out.println("~~~~~完成迁移（剩余" + (list.size() - (++i)) + "）：" + dataSourceInfo.getChsName());
-		}
-		return PREFIX + "";
-	}
 }

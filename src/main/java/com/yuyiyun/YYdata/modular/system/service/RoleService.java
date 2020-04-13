@@ -149,7 +149,7 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
      * @date 2017年2月12日 下午9:14:34
      */
     public Page<Map<String, Object>> selectRoles(String condition) {
-        Page page = LayuiPageFactory.defaultPage();
+        Page<?> page = LayuiPageFactory.defaultPage();
         return this.baseMapper.selectRoles(page, condition);
     }
 

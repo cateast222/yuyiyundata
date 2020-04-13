@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.core.util.DateTimeUtil;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
@@ -246,17 +248,20 @@ public class DataNewspaperController extends BaseController {
 	 */
 	@ApiOperation(value = "归档数据", notes = "按日期获取归档数据")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "sysUser", value = "客户ID", required = true, paramType = "query", dataType = "String"),
 			@ApiImplicitParam(name = "archiveDate", value = "归档日期yyyy-MM-dd", required = true, paramType = "query", dataType = "String"),
 			@ApiImplicitParam(name = "page", value = "页数", required = true, paramType = "query", dataType = "int"),
 			@ApiImplicitParam(name = "limit", value = "条数", required = true, paramType = "query", dataType = "int") })
 	@PostMapping("/getArchiveNewspaper")
 	@ResponseBody
-	public Object getArchiveNewspaper(Long sysUser, String archiveDate, int limit, int page) {
-		if (ToolsUtil.isEmpty(sysUser) || ToolsUtil.isEmpty(archiveDate)) {
-			return ResponseData.error("请求参数异常！");
+	public ResponseData getArchiveNewspaper(String archiveDate, int limit, int page) {
+		if (ToolsUtil.isEmpty(DateTimeUtil.stringToDate(archiveDate, "yyyy-MM-dd"))) {
+			return ResponseData.error("请求参数archiveDate异常！");
+		} else if (ToolsUtil.isEmpty(limit) || ToolsUtil.isEmpty(page)) {
+			return ResponseData.error("请求参数page、limit异常！");
 		} else {
-			return dataNewspaperService.getArchiveNewspaper(sysUser, archiveDate, limit, page);
+			Long userId = ShiroKit.getUser().getId();
+			LayuiPageInfo info = dataNewspaperService.getArchiveNewspaper(userId, archiveDate, limit, page);
+			return ResponseData.success(info);
 		}
 	}
 }
