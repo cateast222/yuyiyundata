@@ -224,12 +224,12 @@ public class DataNewsController extends BaseController {
 	 * @param page
 	 * @return
 	 */
-	@ApiOperation(value = "归档数据", notes = "获取归档数据")
+	@ApiOperation(value = "数据归档", notes = "获取归档数据")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "newspaperId", value = "报纸ID", required = true, paramType = "query", dataType = "long"),
 			@ApiImplicitParam(name = "page", value = "页数", required = true, paramType = "query", dataType = "int"),
 			@ApiImplicitParam(name = "limit", value = "条数", required = true, paramType = "query", dataType = "int") })
-	@PostMapping("/getArchiveDataNews")
+	@PostMapping("/getArchiveByAPi")
 	@ResponseBody
 	public ResponseData getArchiveDataNews(Long newspaperId, int limit, int page) {
 		if (ToolsUtil.isEmpty(newspaperId)) {

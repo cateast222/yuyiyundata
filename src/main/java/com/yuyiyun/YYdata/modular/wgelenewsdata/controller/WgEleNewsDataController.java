@@ -140,7 +140,7 @@ public class WgEleNewsDataController extends BaseController {
 	 * @param wgEleNewsDataParam
 	 * @return
 	 */
-	@ApiOperation(value = "数据新增", notes = "新增电子报纸数据")
+	@ApiOperation(value = "新增新闻数据", notes = "新增电子报纸数据")
 	@ApiImplicitParam(name = "wgEleNewsDataParam", value = "参数", required = false, paramType = "body", dataType = "WgEleNewsDataParam")
 	@PostMapping("/addByApi")
 	@ResponseBody

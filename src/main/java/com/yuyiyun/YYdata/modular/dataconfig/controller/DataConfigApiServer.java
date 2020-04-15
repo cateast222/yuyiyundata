@@ -42,5 +42,16 @@ public class DataConfigApiServer {
 		}
     }
     
+    @PostMapping("/dataconfig/putByApi")
+    @ResponseBody
+    public ResponseData putValueByApi(Long id, String key, String value) {
+    	if (ToolsUtil.isEmpty(id)||ToolsUtil.isEmpty(key)||ToolsUtil.isEmpty(value)) {
+    		return ResponseData.error("参数异常，请检查！");
+    	}else {
+    		DataConfig dataConfig = dataConfigService.putDataAuths(id, key, value);
+    		return ResponseData.success(dataConfig);
+    	}
+    }
+    
 
 }

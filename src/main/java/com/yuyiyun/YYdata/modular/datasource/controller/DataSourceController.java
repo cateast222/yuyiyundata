@@ -19,7 +19,9 @@ import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
+import com.yuyiyun.YYdata.modular.dataconfig.entity.DataConfig;
 import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
+import com.yuyiyun.YYdata.modular.dataconfig.service.DataConfigService;
 import com.yuyiyun.YYdata.modular.dataconfig.service.DataDictService;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
@@ -57,11 +59,13 @@ public class DataSourceController {
 	DataSourceInfoService dataSourceInfoService;
 	@Autowired
 	DataConfigInfoService dataConfigInfoService;
-	
+
 	@Autowired
 	DataDicInfoService dataDicInfoService;
 	@Autowired
 	DataDictService dataDictService;
+	@Autowired
+	DataConfigService dataConfigService;
 
 	/**
 	 * :数据源主页面
@@ -298,28 +302,103 @@ public class DataSourceController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/migration")
-	public String migration() {
-		List<DataSourceInfo> list = dataSourceInfoService.list();
+	@RequestMapping("/ds")
+	public String ds() {
+		List<DataSourceInfo> list = dataSourceInfoService.list(new QueryWrapper<DataSourceInfo>().eq("state", "1"));
 		System.out.println(list.size());
 		int i = 0;
-		for (DataSourceInfo dataSourceInfo : list) {
+		for (DataSourceInfo ds : list) {
 			DataSourceParam dataSource = new DataSourceParam();
-			dataSource.setChsName(dataSourceInfo.getWebsiteName());
-			dataSource.setCountry(dataSourceInfo.getCountry());
-			dataSource.setCreateTime(dataSourceInfo.getCreateTime());
-			dataSource.setCreator(dataSourceInfo.getCreator());
-//			dataSource.setEncoded(PostRequest.getEncoded(dataSourceInfo.getWebsiteUrl()));
-			dataSource.setLanguage(dataSourceInfo.getLanguage());
+			dataSource.setChsName(ds.getName());
+			dataSource.setCountry("CHN");
+			dataSource.setCreateTime(ds.getCreateTime());
+			dataSource.setEncoded("6");
+			dataSource.setLanguage("zh_CN");
+			dataSource.setOrgName(ds.getName());
 			dataSource.setPlatform("1");
-			dataSource.setProxy(dataSourceInfo.getProxy().toString());
-			dataSource.setRegion(dataSourceInfo.getRegion());
-			dataSource.setRemark(dataSourceInfo.getRemark() + "\n*^*\n" + dataSourceInfo.getUuid());
-			dataSource.setState(dataSourceInfo.getState().toString());
+			dataSource.setProxy(ds.getProxy().toString());
+			dataSource.setRegion(ds.getRegion());
+			dataSource.setState("1");
 			dataSource.setUpdateTime(new Date());
-			dataSource.setWebsiteUrl(dataSourceInfo.getWebsiteUrl());
+			dataSource.setProvider("YYCJ_java02");
+			dataSource.setWebsiteName(ds.getWebsiteName());
+			dataSource.setWebsiteUrl(ds.getWebsiteUrl());
+			dataSource.setRemark(ds.getUuid());
+
 			System.out.println("完成：" + (++i));
 			this.dataSourceService.add(dataSource);
+		}
+		return PREFIX + "";
+	}
+
+	/**
+	 * @param uuid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/migration")
+	public String migration() {
+		List<DataSource> list = dataSourceService.list(
+				new QueryWrapper<DataSource>().eq("platform", "1").eq("state", "1").eq("provider", "YYCJ_java02"));
+		System.out.println(list.size());
+		int i = 0;
+		for (DataSource ds : list) {
+			System.out.println("~~~~~开始迁移：" + ds.getChsName());
+			List<DataConfigInfo> list2 = dataConfigInfoService
+					.list(new QueryWrapper<DataConfigInfo>().eq("dsi_uuid", ds.getRemark()));
+			int j = 0;
+			for (DataConfigInfo dc : list2) {
+				System.out.println("~~~~~~~~~开始迁移：" + dc.getDdiValue());
+				DataDict dict = dataDictService
+						.getOne(new QueryWrapper<DataDict>().eq("type", "102").eq("code", dc.getDdiValue().replace("newspicturesDescription", "newspicturesDeion")));
+				DataConfig dataConfig = new DataConfig();
+				dataConfig.setCreator(dc.getCreator());
+				dataConfig.setDataDict(dict.getUuid());
+				dataConfig.setDataSource(ds.getUuid());
+				dataConfig.setKey(dict.getCode());
+				dataConfig.setName(dict.getName());
+				dataConfig.setSort(++j);
+				dataConfig.setState("1");
+				dataConfig.setCreateTime(dc.getCreateTime());
+				dataConfig.setUpdateTime(new Date());
+				dataConfig.setValue(dc.getValue());
+				if (dataConfig.getKey().endsWith("DataExtRul")) {
+					String level = "";
+					if (dataConfig.getValue() != null) {
+						if (dataConfig.getValue().startsWith("channel_Page.")) {
+							level = "channel_Page.";
+						} else if (dataConfig.getValue().startsWith("channel_List.")) {
+							level = "channel_List.";
+						} else if (dataConfig.getValue().startsWith("news.")) {
+							level = "news.";
+						} else if (dataConfig.getValue().startsWith("newslist_Page.")) {
+							level = "newslist_Page.";
+						} else if (dataConfig.getValue().startsWith("newslist_List.")) {
+							level = "newslist_List.";
+						}
+						dataConfig.setValue(dataConfig.getValue().replace(level, ""));
+					} else {
+						dataConfig.setValue("");
+					}
+					this.dataConfigService.addDataConfig(dataConfig);
+
+					if (!level.equals("")) {
+						dict = dataDictService.getOne(
+								new QueryWrapper<DataDict>().eq("type", "102").eq("code", (dc.getDdiKey() + "-level").replace("newspicturesDescription", "newspicturesDeion")));
+						dataConfig.setDataDict(dict.getUuid());
+						dataConfig.setKey(dict.getCode());
+						dataConfig.setName(dict.getName());
+						dataConfig.setSort(++j);
+						dataConfig.setValue(level);
+						dataConfig.setUuid(null);
+						this.dataConfigService.addDataConfig(dataConfig);
+					}
+				} else {
+					this.dataConfigService.addDataConfig(dataConfig);
+				}
+				System.out.println("~~~~~~~~~完成迁移（剩余" + (list2.size() - (j)) + "）：" + dc.getDdiValue());
+			}
+			System.out.println("~~~~~完成迁移（剩余" + (list.size() - (i)) + "）：" + ds.getChsName());
 		}
 		return PREFIX + "";
 	}

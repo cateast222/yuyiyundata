@@ -234,7 +234,10 @@ public class DataNewspaperController extends BaseController {
 	@PostMapping("/isExistByApi")
 	@ResponseBody
 	public ResponseData isExistByApi(String pubTime, String url, String dsiUuid) {
-		return dataNewspaperService.isExist(dsiUuid, url, pubTime);
+		if ((ToolsUtil.isEmpty(url) && ToolsUtil.isEmpty(pubTime) || ToolsUtil.isEmpty(dsiUuid))) {
+			return ResponseData.error("请求参数异常");
+		}
+		return this.dataNewspaperService.isExist(dsiUuid, url, pubTime);
 	}
 
 	/**
@@ -246,12 +249,12 @@ public class DataNewspaperController extends BaseController {
 	 * @param page
 	 * @return
 	 */
-	@ApiOperation(value = "归档数据", notes = "按日期获取归档数据")
+	@ApiOperation(value = "数据归档", notes = "按日期获取归档数据")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "archiveDate", value = "归档日期yyyy-MM-dd", required = true, paramType = "query", dataType = "String"),
 			@ApiImplicitParam(name = "page", value = "页数", required = true, paramType = "query", dataType = "int"),
 			@ApiImplicitParam(name = "limit", value = "条数", required = true, paramType = "query", dataType = "int") })
-	@PostMapping("/getArchiveNewspaper")
+	@PostMapping("/getArchiveByApi")
 	@ResponseBody
 	public ResponseData getArchiveNewspaper(String archiveDate, int limit, int page) {
 		if (ToolsUtil.isEmpty(DateTimeUtil.stringToDate(archiveDate, "yyyy-MM-dd"))) {

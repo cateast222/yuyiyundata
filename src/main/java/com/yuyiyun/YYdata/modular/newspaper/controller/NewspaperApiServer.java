@@ -74,6 +74,9 @@ public class NewspaperApiServer extends BaseController {
 	@PostMapping("/newspaper/isExistByApi")
 	@ResponseBody
 	public ResponseData isExistByApi(String pubTime, String url, String dsiUuid) {
+		if ((ToolsUtil.isEmpty(url) && ToolsUtil.isEmpty(pubTime) || ToolsUtil.isEmpty(dsiUuid))) {
+			return ResponseData.error("请求参数异常");
+		}
 		return this.dataNewspaperService.isExist(dsiUuid, url, pubTime);
 	}
 
@@ -105,7 +108,7 @@ public class NewspaperApiServer extends BaseController {
 	 * @param page
 	 * @return
 	 */
-	@PostMapping("/newspaper/getArchiveNewspaper")
+	@PostMapping("/newspaper/getArchiveByApi")
 	@ResponseBody
 	public ResponseData getArchiveNewspaper(String archiveDate, int limit, int page) {
 		if (ToolsUtil.isEmpty(DateTimeUtil.stringToDate(archiveDate, "yyyy-MM-dd"))) {
@@ -115,7 +118,7 @@ public class NewspaperApiServer extends BaseController {
 		} else {
 			Long userId = Long.parseLong(JwtTokenUtil.getUsernameFromRequest());
 			LayuiPageInfo info = dataNewspaperService.getArchiveNewspaper(userId, archiveDate, limit, page);
-			//API服务日志
+			// API服务日志
 			LogManager.me().executeLog(LogTaskFactory.apiServerLog(userId, "报刊报纸" + archiveDate, getIp(),
 					"ArchiveNewspaper", info.getDataMapValues("uuid")));
 			return ResponseData.success(info);
@@ -130,7 +133,7 @@ public class NewspaperApiServer extends BaseController {
 	 * @param page
 	 * @return
 	 */
-	@PostMapping("/datanews/getArchiveDataNews")
+	@PostMapping("/datanews/getArchiveByApi")
 	@ResponseBody
 	public ResponseData getArchiveDataNews(Long newspaperId, int limit, int page) {
 		if (ToolsUtil.isEmpty(newspaperId)) {
@@ -140,7 +143,7 @@ public class NewspaperApiServer extends BaseController {
 		} else {
 			Long userId = Long.parseLong(JwtTokenUtil.getUsernameFromRequest());
 			LayuiPageInfo info = dataNewsService.getArchiveDataNews(newspaperId, limit, page);
-			//API服务日志
+			// API服务日志
 			LogManager.me().executeLog(LogTaskFactory.apiServerLog(userId, "报刊新闻" + newspaperId, getIp(),
 					"ArchiveDataNews", info.getDataMapValues("id")));
 			return ResponseData.success(info);

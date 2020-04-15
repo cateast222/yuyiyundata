@@ -143,7 +143,7 @@ public class DataConfigController {
         return ResponseData.success();
     }
     
-    @ApiOperation(value = "获取数据源", notes = "动态查询数据源")
+    @ApiOperation(value = "获取数据配置", notes = "动态查询数数据配置")
 	@PostMapping("/getEQsByApi")
 	@ResponseBody
     public ResponseData getValuesByApi(@RequestBody() DataConfig dataConfig, String... columns) {
@@ -155,5 +155,16 @@ public class DataConfigController {
 		}
     }
     
+    @ApiOperation(value = "设置数据配置", notes = "设置数据配置")
+    @PostMapping("/putByApi")
+    @ResponseBody
+    public ResponseData putValueByApi(Long id, String key, String value) {
+    	if (ToolsUtil.isEmpty(id)||ToolsUtil.isEmpty(key)||ToolsUtil.isEmpty(value)) {
+    		return ResponseData.error("参数异常，请检查！");
+    	}else {
+    		DataConfig dataConfig = dataConfigService.putDataAuths(id, key, value);
+    		return ResponseData.success(dataConfig);
+    	}
+    }
 
 }

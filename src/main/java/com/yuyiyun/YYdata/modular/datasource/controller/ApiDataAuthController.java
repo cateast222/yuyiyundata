@@ -193,7 +193,7 @@ public class ApiDataAuthController {
 		return dataSourceService.findPageBySpec(param);
 	}
 
-	@ApiOperation(value = "获取调取数据权限", notes = "动态查询调取数据权限")
+	@ApiOperation(value = "获取数据权限", notes = "动态查询调取数据权限")
 	@PostMapping("/getEQsByApi")
 	@ResponseBody
 	public ResponseData getValuesByApi(@RequestBody() ApiDataAuth apiDataAuth, String... columns) {
