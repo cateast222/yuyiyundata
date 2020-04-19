@@ -257,9 +257,9 @@ public class DataNewspaperController extends BaseController {
 	@PostMapping("/getArchiveByApi")
 	@ResponseBody
 	public ResponseData getArchiveNewspaper(String archiveDate, int limit, int page) {
-		if (ToolsUtil.isEmpty(DateTimeUtil.stringToDate(archiveDate, "yyyy-MM-dd"))) {
+		if (ToolsUtil.isEmpty(archiveDate) && ToolsUtil.isEmpty(DateTimeUtil.stringToDate(archiveDate, "yyyy-MM-dd"))) {
 			return ResponseData.error("请求参数archiveDate异常！");
-		} else if (ToolsUtil.isEmpty(limit) || ToolsUtil.isEmpty(page)) {
+		} else if (limit < 1 || page < 0) {
 			return ResponseData.error("请求参数page、limit异常！");
 		} else {
 			Long userId = ShiroKit.getUser().getId();

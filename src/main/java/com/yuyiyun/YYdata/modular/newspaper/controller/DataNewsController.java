@@ -234,7 +234,7 @@ public class DataNewsController extends BaseController {
 	public ResponseData getArchiveDataNews(Long newspaperId, int limit, int page) {
 		if (ToolsUtil.isEmpty(newspaperId)) {
 			return ResponseData.error("请求参数异常！");
-		} else if (ToolsUtil.isEmpty(limit) || ToolsUtil.isEmpty(page)) {
+		} else if (limit < 1 || page < 0) {
 			return ResponseData.error("请求参数page、limit异常！");
 		} else {
 //			Long userId = ShiroKit.getUser().getId();

@@ -318,7 +318,7 @@ public class DataSourceController {
 			dataSource.setPlatform("1");
 			dataSource.setProxy(ds.getProxy().toString());
 			dataSource.setRegion(ds.getRegion());
-			dataSource.setState("1");
+			dataSource.setState("5");
 			dataSource.setUpdateTime(new Date());
 			dataSource.setProvider("YYCJ_java02");
 			dataSource.setWebsiteName(ds.getWebsiteName());
@@ -339,7 +339,7 @@ public class DataSourceController {
 	@RequestMapping("/migration")
 	public String migration() {
 		List<DataSource> list = dataSourceService.list(
-				new QueryWrapper<DataSource>().eq("platform", "1").eq("state", "1").eq("provider", "YYCJ_java02"));
+				new QueryWrapper<DataSource>().eq("platform", "1").eq("state", "5").eq("provider", "YYCJ_java02"));
 		System.out.println(list.size());
 		int i = 0;
 		for (DataSource ds : list) {

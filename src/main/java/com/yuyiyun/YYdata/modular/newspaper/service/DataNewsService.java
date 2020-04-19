@@ -75,24 +75,24 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 
 		// 数据上传至DAMS,在数据新增和修改时上传
 		// 判断数据状态，对数据源状态为“启用-1”的数据进行上传
-		if (dataSource.getState().equals("5")) {
-			log.debug("数据准备上传！UUID为：" + dataNews.getUuid());
-//			System.out.println("数据准备上传！UUID为：" + dataNews.getUuid());
-			// 通过数据UUID获取最新的数据信息
-			DataNews byId2 = this.getById(dataNews.getUuid());
-			// 数据上传操作
-			boolean b = DamsApiUpload.dataOnLineToDAMS(byId2);
-			// 判断是否上传成功
-			if (!b) {
-				log.debug("数据上传异常！UUID为：" + byId2.getUuid());
-				// 上传失败，数据存在异常，修改标记状态为"-1"
-				byId2.setState("-1");
-				// 数据对象装换（DataNews --> DataNewsParam）
-				DataNewsParam dataNewsParam = getEntity(byId2);
-				// 更新异常数据并返回
-				dataNews = update(dataNewsParam);
-			}
-		}
+//		if (dataSource.getState().equals("5")) {
+//			log.debug("数据准备上传！UUID为：" + dataNews.getUuid());
+////			System.out.println("数据准备上传！UUID为：" + dataNews.getUuid());
+//			// 通过数据UUID获取最新的数据信息
+//			DataNews byId2 = this.getById(dataNews.getUuid());
+//			// 数据上传操作
+//			boolean b = DamsApiUpload.dataOnLineToDAMS(byId2);
+//			// 判断是否上传成功
+//			if (!b) {
+//				log.debug("数据上传异常！UUID为：" + byId2.getUuid());
+//				// 上传失败，数据存在异常，修改标记状态为"-1"
+//				byId2.setState("-1");
+//				// 数据对象装换（DataNews --> DataNewsParam）
+//				DataNewsParam dataNewsParam = getEntity(byId2);
+//				// 更新异常数据并返回
+//				dataNews = update(dataNewsParam);
+//			}
+//		}
 
 		return dataNews;
 	}
