@@ -217,6 +217,27 @@ public class DataNewspaperController extends BaseController {
 			return ResponseData.error("数据添加异常！");
 		}
 	}
+	
+	/**
+	 * @Description: API删除数据
+	 * @author duhao
+	 * @date 2020年1月5日
+	 * @version V1.0
+	 * @param param
+	 * @return
+	 */
+	@ApiOperation(value = "数据删除", notes = "删除电子报纸")
+	@ApiImplicitParam(name = "param", value = "参数", required = false, paramType = "body", dataType = "DataNewspaperParam")
+	@PostMapping("/delByApi")
+	@ResponseBody
+	public ResponseData delByApi(@RequestBody() DataNewspaperParam param) {
+		if (ToolsUtil.isNotEmpty(param.getUuid())) {
+			this.dataNewspaperService.delete(param);
+			return ResponseData.success();
+		} else {
+			return ResponseData.error("数据添加异常！");
+		}
+	}
 
 	/**
 	 * Description: API数据排重

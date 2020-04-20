@@ -80,7 +80,7 @@ public class ResourceUpload {
 		HttpGet httpget = new HttpGet();
 		httpget.setURI(URI.create(downloadUrl));
 		if (isProxy) {
-			RequestConfig config = RequestConfig.custom().setProxy(new HttpHost("127.0.0.1", 1080))
+			RequestConfig config = RequestConfig.custom().setProxy(new HttpHost("127.0.0.1", 8124))
 					.setConnectTimeout(8000).setSocketTimeout(8000).build();
 			httpget.setConfig(config);
 		}

@@ -98,6 +98,25 @@ public class NewspaperApiServer extends BaseController {
 			return ResponseData.error("数据添加异常！");
 		}
 	}
+	
+	/**
+	 * @Description: API删除数据
+	 * @author duhao
+	 * @date 2020年1月5日
+	 * @version V1.0
+	 * @param param
+	 * @return
+	 */
+	@PostMapping("/newspaper/delByApi")
+	@ResponseBody
+	public ResponseData delByApi(@RequestBody() DataNewspaperParam param) {
+		if (ToolsUtil.isNotEmpty(param.getUuid())) {
+			this.dataNewspaperService.delete(param);
+			return ResponseData.success(true);
+		} else {
+			return ResponseData.error("数据添加异常！");
+		}
+	}
 
 	/**
 	 * Description:按归档日期分页查询电子报纸数据
