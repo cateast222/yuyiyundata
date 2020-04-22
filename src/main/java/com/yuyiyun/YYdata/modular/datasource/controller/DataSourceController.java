@@ -59,7 +59,6 @@ public class DataSourceController {
 	DataSourceInfoService dataSourceInfoService;
 	@Autowired
 	DataConfigInfoService dataConfigInfoService;
-
 	@Autowired
 	DataDicInfoService dataDicInfoService;
 	@Autowired
@@ -80,6 +79,34 @@ public class DataSourceController {
 		List<Dict> dataSourcePlatform = ConstantFactory.me().findInDict("数据源平台");
 		model.addAttribute("dataSourcePlatform", dataSourcePlatform);
 		return PREFIX + "/datasource/index.html";
+	}
+	
+	/**
+	 * :电子报纸数据源主页面
+	 * 
+	 * @author duhao
+	 * @return
+	 */
+	@RequestMapping("/newspaper")
+	public String newspaper(Model model) {
+		List<Dict> dataSourceState = ConstantFactory.me().findInDict("数据源状态");
+		model.addAttribute("dataSourceState", dataSourceState);
+		return PREFIX + "/newspaper/index.html";
+	}
+	
+	/**
+	 * :微信公众号数据源主页面
+	 * 
+	 * @author duhao
+	 * @return
+	 */
+	@RequestMapping("/newswechat")
+	public String newswechat(Model model) {
+		List<Dict> dataSourceState = ConstantFactory.me().findInDict("数据源状态");
+		List<Dict> provider = ConstantFactory.me().findInDict("数据源提供方");
+		model.addAttribute("dataSourceState", dataSourceState);
+		model.addAttribute("provider", provider);
+		return PREFIX + "/newswechat/index.html";
 	}
 
 	/**
@@ -115,18 +142,7 @@ public class DataSourceController {
 		return PREFIX + "/datasource/add_edit.html";
 	}
 
-	/**
-	 * :电子报纸数据源主页面
-	 * 
-	 * @author duhao
-	 * @return
-	 */
-	@RequestMapping("/newspaper")
-	public String newspaper(Model model) {
-		List<Dict> dataSourceState = ConstantFactory.me().findInDict("数据源状态");
-		model.addAttribute("dataSourceState", dataSourceState);
-		return PREFIX + "/newspaper/index.html";
-	}
+	
 
 	/**
 	 * :新增更新(电子报纸数据源)页面
@@ -157,6 +173,37 @@ public class DataSourceController {
 			model.addAttribute("title", "编辑");
 		}
 		return PREFIX + "/newspaper/add_edit.html";
+	}
+	
+	/**
+	 * :新增更新(微信公众号数据源)页面
+	 * 
+	 * @param uuid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/addAndEditNewswechat")
+	public String addAndEditNewswechat(Long uuid, Model model) {
+		List<Dict> dataSourceState = ConstantFactory.me().findInDict("数据源状态");
+		model.addAttribute("dataSourceState", dataSourceState);
+		List<Dict> nationalArea = ConstantFactory.me().findInDict("国家地区");
+		model.addAttribute("dataSourceNationalArea", nationalArea);
+		List<Dict> proxy = ConstantFactory.me().findInDict("境区");
+		model.addAttribute("dataSourceProxy", proxy);
+		List<Dict> language = ConstantFactory.me().findInDict("语种");
+		model.addAttribute("dataSourceLanguage", language);
+		List<Dict> encoded = ConstantFactory.me().findInDict("字符集");
+		model.addAttribute("dataSourceEncoded", encoded);
+		List<Dict> provider = ConstantFactory.me().findInDict("数据源提供方");
+		model.addAttribute("dataSourceProvider", provider);
+		if (ToolUtil.isEmpty(uuid)) {
+			model.addAttribute("uuid", null);
+			model.addAttribute("title", "新增");
+		} else {
+			model.addAttribute("uuid", uuid);
+			model.addAttribute("title", "编辑");
+		}
+		return PREFIX + "/newswechat/add_edit.html";
 	}
 
 	/**
