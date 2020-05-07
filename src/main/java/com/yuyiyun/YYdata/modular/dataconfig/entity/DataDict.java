@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -21,6 +23,7 @@ import lombok.Data;
  * @since 2020-03-26
  */
 @Data
+@ApiModel(value = "DataDict", description = "数据字典实体")
 @TableName("data_dict")
 public class DataDict implements Serializable {
 
@@ -29,78 +32,91 @@ public class DataDict implements Serializable {
 	/**
 	 * uuid
 	 */
+	@ApiModelProperty(value = "主键")
 	@TableId(value = "uuid", type = IdType.ID_WORKER)
 	private Long uuid;
 
 	/**
 	 * 类型
 	 */
+	@ApiModelProperty(value = "类型")
 	@TableField("type")
 	private String type;
 
 	/**
 	 * 上级uuid
 	 */
+	@ApiModelProperty(value = "上级UUID")
 	@TableField("parent_uuid")
 	private Long parentUuid;
 
 	/**
 	 * 编号
 	 */
+	@ApiModelProperty(value = "编号")
 	@TableField("code")
 	private String code;
 
 	/**
 	 * 名称
 	 */
+	@ApiModelProperty(value = "名称")
 	@TableField("name")
 	private String name;
 
 	/**
 	 * 描述
 	 */
+	@ApiModelProperty(value = "描述")
 	@TableField("summary")
 	private String summary;
 
 	/**
 	 * 数据
 	 */
+	@ApiModelProperty(value = "数据")
 	@TableField("datas")
 	private String datas;
 
 	/**
 	 * 排序
 	 */
+	@ApiModelProperty(value = "排序")
 	@TableField("sort")
 	private Integer sort;
 
 	/**
 	 * 备注
 	 */
+	@ApiModelProperty(value = "备注")
 	@TableField("remark")
 	private String remark;
 
 	/**
 	 * 状态
 	 */
+	@ApiModelProperty(value = "状态")
 	@TableField("state")
 	private String state;
 
 	/**
 	 * 创建者
 	 */
+	@ApiModelProperty(value = "创建者")
 	@TableField("creator")
 	private String creator;
 
 	/**
 	 * 创建时间
 	 */
+	@ApiModelProperty(value = "创建时间")
 	@TableField(value = "create_time", fill = FieldFill.INSERT)
 	private Date createTime;
 
 	/**
 	 * 更新时间
 	 */
+	@ApiModelProperty(value = "更新时间")
 	@TableField(value = "update_time", fill = FieldFill.UPDATE)
 	private Date updateTime;
 

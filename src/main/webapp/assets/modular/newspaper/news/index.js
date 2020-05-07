@@ -41,7 +41,6 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin'], function () {
 			}, {
 				field: 'publish',
 				sort: true,
-				sort: true,
 				width: 110,
 				title: '发布时间'
 			}, {

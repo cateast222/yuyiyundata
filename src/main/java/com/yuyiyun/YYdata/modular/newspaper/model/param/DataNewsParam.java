@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@ApiModel(value = "DataNewsParam", description = "电子报纸输入实体")
+@ApiModel(value = "DataNewsParam", description = "新闻数据输入实体")
 public class DataNewsParam implements Serializable, BaseValidatingParam {
 
 	private static final long serialVersionUID = 1L;
@@ -28,7 +28,7 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 
 	@ApiModelProperty(value = "电子报纸")
 	private Long dataNewspaper;
-	
+
 	@ApiModelProperty(value = "数据提供方")
 	private String provider;
 
@@ -67,13 +67,13 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 
 	@ApiModelProperty(value = "音频源链接")
 	private String websiteAudios;
-	
+
 	@ApiModelProperty(value = "视频源链接")
 	private String websiteVideos;
 
 	@ApiModelProperty(value = "文件源链接")
 	private String websiteFiles;
-	
+
 	@ApiModelProperty(value = "图片描述")
 	private String picturesDescription;
 
@@ -110,6 +110,42 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 	@ApiModelProperty(value = "采集时间")
 	private Date insertTime;
 
+	@ApiModelProperty(value = "关键词")
+	private String keywords;
+
+	@ApiModelProperty(value = "来源")
+	private String source;
+
+	@ApiModelProperty(value = "评论量")
+	private String DV;
+
+	@ApiModelProperty(value = "受踩量")
+	private String TV;
+
+	@ApiModelProperty(value = "点赞量")
+	private String LV;
+
+	@ApiModelProperty(value = "收藏量")
+	private String CV;
+
+	@ApiModelProperty(value = "在线量")
+	private String OV;
+
+	@ApiModelProperty(value = "阅读量")
+	private String RV;
+
+	@ApiModelProperty(value = "访问量")
+	private String PV;
+
+	@ApiModelProperty(value = "作者地区")
+	private String authorArea;
+
+	@ApiModelProperty(value = "作者信息")
+	private String authorInfos;
+
+	@ApiModelProperty(value = "审核")
+	private String checker;
+
 	@ApiModelProperty(value = "备注")
 	private String remark;
 
@@ -124,7 +160,7 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 
 	@ApiModelProperty(value = "更新时间")
 	private Date updateTime;
-	
+
 	@ApiModelProperty(value = "查询条件")
 	private String condition;
 

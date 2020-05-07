@@ -29,7 +29,7 @@ public class DataNews implements Serializable {
 	/**
 	 * 主键
 	 */
-	@TableId(value = "uuid",type = IdType.ID_WORKER)
+	@TableId(value = "uuid", type = IdType.ID_WORKER)
 	private Long uuid;
 
 	/**
@@ -55,12 +55,6 @@ public class DataNews implements Serializable {
 	 */
 	@TableField("data_newspaper")
 	private Long dataNewspaper;
-	
-	/**
-	 * 数据提供方
-	 */
-	@TableField("provider")
-	private String provider;
 
 	/**
 	 * 新闻发布时间
@@ -93,16 +87,40 @@ public class DataNews implements Serializable {
 	private String subtitle;
 
 	/**
+	 * 数据提供方
+	 */
+	@TableField("provider")
+	private String provider;
+
+	/**
 	 * 新闻作者
 	 */
 	@TableField("author")
 	private String author;
+	
+	/**
+	 * 新闻作者地区
+	 */
+	@TableField("author_area")
+	private String authorArea;
+	
+	/**
+	 * 新闻作者信息
+	 */
+	@TableField("author_infos")
+	private String authorInfos;
 
 	/**
 	 * 新闻编辑
 	 */
 	@TableField("editor")
 	private String editor;
+	
+	/**
+	 * 新闻审核
+	 */
+	@TableField("checker")
+	private String checker;
 
 	/**
 	 * 新闻描述
@@ -133,7 +151,7 @@ public class DataNews implements Serializable {
 	 */
 	@TableField("website_audios")
 	private String websiteAudios;
-	
+
 	/**
 	 * 新闻视频源链接
 	 */
@@ -145,7 +163,7 @@ public class DataNews implements Serializable {
 	 */
 	@TableField("website_files")
 	private String websiteFiles;
-	
+
 	/**
 	 * 新闻图片描述
 	 */
@@ -169,7 +187,6 @@ public class DataNews implements Serializable {
 	 */
 	@TableField("website_pdf")
 	private String websitePdf;
-
 
 	/**
 	 * 新闻所属位置
@@ -214,6 +231,54 @@ public class DataNews implements Serializable {
 	private Integer frontPage;
 
 	/**
+	 * 新闻关键词
+	 */
+	@TableField("keywords")
+	private String keywords;
+	
+	/**
+	 * 新闻来源
+	 */
+	@TableField("source")
+	private String source;
+	
+	/**
+	 * 新闻评论量
+	 */
+	@TableField("d_v")
+	private String DV;
+	/**
+	 *新闻受踩量
+	 */
+	@TableField("t_v")
+	private String TV;
+	/**
+	 * 新闻点赞量
+	 */
+	@TableField("l_v")
+	private String LV;
+	/**
+	 * 新闻收藏量
+	 */
+	@TableField("c_v")
+	private String CV;
+	/**
+	 *新闻在线量
+	 */
+	@TableField("o_v")
+	private String OV;
+	/**
+	 * 新闻阅读量
+	 */
+	@TableField("r_v")
+	private String RV;
+	/**
+	 * 新闻访问量
+	 */
+	@TableField("p_v")
+	private String PV;
+	
+	/**
 	 * 新闻采集时间
 	 */
 	@TableField("insert_time")
@@ -226,7 +291,7 @@ public class DataNews implements Serializable {
 	private String remark;
 
 	/**
-	 * 新闻状态（-2：系统测试数据；-1：测试数据；0：无；1：正常数据；2：已归档数据）
+	 * 新闻状态（关联字典）
 	 */
 	@TableField("state")
 	private String state;
@@ -395,5 +460,53 @@ public class DataNews implements Serializable {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public void setAuthorArea(String authorArea) {
+		this.authorArea = HtmlTagUtil.convertTag(authorArea);
+	}
+
+	public void setAuthorInfos(String authorInfos) {
+		this.authorInfos = HtmlTagUtil.convertTag(authorInfos);
+	}
+
+	public void setChecker(String checker) {
+		this.checker = HtmlTagUtil.convertTag(checker);
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = HtmlTagUtil.convertTag(keywords);
+	}
+
+	public void setSource(String source) {
+		this.source = HtmlTagUtil.convertTag(source);
+	}
+
+	public void setDV(String dV) {
+		DV = HtmlTagUtil.convertTag(dV);
+	}
+
+	public void setTV(String tV) {
+		TV = HtmlTagUtil.convertTag(tV);
+	}
+
+	public void setLV(String lV) {
+		LV = HtmlTagUtil.convertTag(lV);
+	}
+
+	public void setCV(String cV) {
+		CV = HtmlTagUtil.convertTag(cV);
+	}
+
+	public void setOV(String oV) {
+		OV = HtmlTagUtil.convertTag(oV);
+	}
+
+	public void setRV(String rV) {
+		RV = HtmlTagUtil.convertTag(rV);
+	}
+
+	public void setPV(String pV) {
+		PV = HtmlTagUtil.convertTag(pV);
 	}
 }

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -105,5 +106,47 @@ public class ApiDataAuth implements Serializable {
     @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private Date updateTime;
 
+	public void setUuid(Long uuid) {
+		this.uuid = uuid;
+	}
 
+	public void setSysUser(Long sysUser) {
+		this.sysUser = sysUser;
+	}
+
+	public void setDataSource(Long dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	public void setDataSourceChsName(String dataSourceChsName) {
+		this.dataSourceChsName = HtmlTagUtil.convertTag(dataSourceChsName);
+	}
+
+	public void setValidity(Date validity) {
+		this.validity = validity;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = HtmlTagUtil.convertTag(remark);
+	}
+
+	public void setState(String state) {
+		this.state = HtmlTagUtil.convertTag(state);
+	}
+
+	public void setCreator(String creator) {
+		this.creator = HtmlTagUtil.convertTag(creator);
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

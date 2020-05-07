@@ -18,7 +18,6 @@ import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
-import com.yuyiyun.YYdata.core.upload.DamsApiUpload;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
@@ -42,6 +41,7 @@ import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 @Service
 public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 
+	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(DataNewsService.class);
 
 	@Autowired
@@ -73,27 +73,18 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		// 数据存在进行更新操作，不存在进行新增操作
 		DataNews dataNews = ToolUtil.isEmpty(byId) ? add(param) : update(param);
 
-		// 数据上传至DAMS,在数据新增和修改时上传
-		// 判断数据状态，对数据源状态为“启用-1”的数据进行上传
-//		if (dataSource.getState().equals("5")) {
-//			log.debug("数据准备上传！UUID为：" + dataNews.getUuid());
-////			System.out.println("数据准备上传！UUID为：" + dataNews.getUuid());
-//			// 通过数据UUID获取最新的数据信息
-//			DataNews byId2 = this.getById(dataNews.getUuid());
-//			// 数据上传操作
-//			boolean b = DamsApiUpload.dataOnLineToDAMS(byId2);
-//			// 判断是否上传成功
-//			if (!b) {
-//				log.debug("数据上传异常！UUID为：" + byId2.getUuid());
-//				// 上传失败，数据存在异常，修改标记状态为"-1"
-//				byId2.setState("-1");
-//				// 数据对象装换（DataNews --> DataNewsParam）
-//				DataNewsParam dataNewsParam = getEntity(byId2);
-//				// 更新异常数据并返回
-//				dataNews = update(dataNewsParam);
-//			}
-//		}
-
+		/*
+		 * // 数据上传至DAMS,在数据新增和修改时上传 // 判断数据状态，对数据源状态为“启用-1”的数据进行上传 // if
+		 * (dataSource.getState().equals("5")) { // log.debug("数据准备上传！UUID为：" +
+		 * dataNews.getUuid()); //// System.out.println("数据准备上传！UUID为：" +
+		 * dataNews.getUuid()); // // 通过数据UUID获取最新的数据信息 // DataNews byId2 =
+		 * this.getById(dataNews.getUuid()); // // 数据上传操作 // boolean b =
+		 * DamsApiUpload.dataOnLineToDAMS(byId2); // // 判断是否上传成功 // if (!b) { //
+		 * log.debug("数据上传异常！UUID为：" + byId2.getUuid()); // // 上传失败，数据存在异常，修改标记状态为"-1"
+		 * // byId2.setState("-1"); // // 数据对象装换（DataNews --> DataNewsParam） //
+		 * DataNewsParam dataNewsParam = getEntity(byId2); // // 更新异常数据并返回 // dataNews =
+		 * update(dataNewsParam); // } // }
+		 */
 		return dataNews;
 	}
 
@@ -208,12 +199,6 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	private DataNews getEntity(DataNewsParam param) {
 		DataNews entity = new DataNews();
 		ToolUtil.copyProperties(param, entity);
-		return entity;
-	}
-
-	private DataNewsParam getEntity(DataNews dataNews) {
-		DataNewsParam entity = new DataNewsParam();
-		ToolUtil.copyProperties(dataNews, entity);
 		return entity;
 	}
 

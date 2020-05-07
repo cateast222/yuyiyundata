@@ -31,18 +31,18 @@ layui.use(['table', 'ax'],
 					field: 'chs_name',
 					sort: true,
 					title: '中文名称',
-					templet: function (d) {
-						var url = Feng.ctxPath + '/dataci/newspaper?uuid='
-							+ d.uuid;
-						var color = "#01AAED;";
-						if (d.remark != "" && d.state == 2) {
-							color = "#FF3333;";
-						}
-						return '<a title="备注：' + d.remark
-							+ '" style="color:' + color
-							+ '" href="' + url + '">'
-							+ d.chs_name + '</a>';
-					},
+//					templet: function (d) {
+//						var url = Feng.ctxPath + '/dataci/newspaper?uuid='
+//							+ d.uuid;
+//						var color = "#01AAED;";
+//						if (d.remark != "" && d.state == 2) {
+//							color = "#FF3333;";
+//						}
+//						return '<a title="备注：' + d.remark
+//							+ '" style="color:' + color
+//							+ '" href="' + url + '">'
+//							+ d.chs_name + '</a>';
+//					},
 					align: 'center',
 					width: 120
 				},
@@ -133,9 +133,12 @@ layui.use(['table', 'ax'],
 			var queryData = {};
 			queryData['condition'] = $("#condition").val();
 			queryData['state'] = $("#state").val();
-//			queryData['platform'] = 1;
+			queryData['provider'] = $("#provider").val();
 			table.reload(Datasource.tableId, {
-				where: queryData
+				where: queryData,
+				page: {
+				    curr: 1 //重新从第 1 页开始
+				  }
 			});
 		};
 

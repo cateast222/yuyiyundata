@@ -78,6 +78,8 @@ public class DataSourceController {
 		model.addAttribute("dataSourceState", dataSourceState);
 		List<Dict> dataSourcePlatform = ConstantFactory.me().findInDict("数据源平台");
 		model.addAttribute("dataSourcePlatform", dataSourcePlatform);
+		List<Dict> provider = ConstantFactory.me().findInDict("数据源提供方");
+		model.addAttribute("provider", provider);
 		return PREFIX + "/datasource/index.html";
 	}
 	
@@ -91,6 +93,8 @@ public class DataSourceController {
 	public String newspaper(Model model) {
 		List<Dict> dataSourceState = ConstantFactory.me().findInDict("数据源状态");
 		model.addAttribute("dataSourceState", dataSourceState);
+		List<Dict> provider = ConstantFactory.me().findInDict("数据源提供方");
+		model.addAttribute("provider", provider);
 		return PREFIX + "/newspaper/index.html";
 	}
 	
@@ -103,8 +107,8 @@ public class DataSourceController {
 	@RequestMapping("/newswechat")
 	public String newswechat(Model model) {
 		List<Dict> dataSourceState = ConstantFactory.me().findInDict("数据源状态");
-		List<Dict> provider = ConstantFactory.me().findInDict("数据源提供方");
 		model.addAttribute("dataSourceState", dataSourceState);
+		List<Dict> provider = ConstantFactory.me().findInDict("数据源提供方");
 		model.addAttribute("provider", provider);
 		return PREFIX + "/newswechat/index.html";
 	}

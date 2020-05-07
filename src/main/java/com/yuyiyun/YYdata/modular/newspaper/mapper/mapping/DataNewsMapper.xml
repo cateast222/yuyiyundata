@@ -44,6 +44,18 @@
 		<result column="create_time" property="createTime" />
 		<result column="update_time" property="updateTime" />
 		<result column="provider" property="provider" />
+		<result column="author_area" property="authorArea" />
+		<result column="author_infos" property="authorInfos" />
+		<result column="checker" property="checker" />
+		<result column="keywords" property="keywords" />
+		<result column="source" property="source" />
+		<result column="d_v" property="DV" />
+		<result column="t_v" property="TV" />
+		<result column="l_v" property="LV" />
+		<result column="c_v" property="CV" />
+		<result column="o_v" property="OV" />
+		<result column="r_v" property="RV" />
+		<result column="p_v" property="PV" />
 	</resultMap>
 
 
@@ -93,8 +105,19 @@
 		creator as creator,
 		create_time as createTime,
 		update_time as updateTime,
-		provider as
-		provider
+		provider as provider,
+		author_area as authorArea,
+		author_infos as authorInfos,
+		checker as checker,
+		keywords as keywords,
+		source as source,
+		d_v as DV,
+		t_v as TV,
+		l_v as LV,
+		c_v as CV,
+		o_v as OV,
+		r_v as RV,
+		p_v as PV
 	</sql>
 
 	<!-- API查询结果列 -->
@@ -109,6 +132,8 @@
 		preTitle,
 		subtitle as subTitle,
 		author as author,
+		author_area as authorArea,
+		author_infos as authorInfos,
 		abstracts as abstract,
 		content as content,
 		tag_content as tag_Content,
@@ -251,6 +276,21 @@
 			</if>
 			<if test="news.provider != null and news.provider != ''">
 				and provider = #{news.provider}
+			</if>
+			<if test="news.authorArea != null and news.authorArea != ''">
+				and author_area = #{news.authorArea}
+			</if>
+			<if test="news.authorInfos != null and news.authorInfos != ''">
+				and author_infos = #{news.authorInfos}
+			</if>
+			<if test="news.checker != null and news.checker != ''">
+				and checker = #{news.checker}
+			</if>
+			<if test="news.keywords != null and news.keywords != ''">
+				and keywords = #{news.keywords}
+			</if>
+			<if test="news.source != null and news.source != ''">
+				and source = #{news.source}
 			</if>
 		</trim>
 	</sql>
