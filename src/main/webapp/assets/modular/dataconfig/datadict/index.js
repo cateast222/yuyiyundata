@@ -31,28 +31,21 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 					align: 'center',
 					title: '类型'
 				},
-				{
-					field: 'parentUuid',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: '上级uuid'
-				},*/
+				*/
 				{
 					field: 'code',
 					sort: true,
 					align: 'center',
 					title: '编号',
-					templet : function(d) {
-						var url = Feng.ctxPath + '/datadictconf?parentUuid=' + d.uuid;
-						return '<a style="color:#01AAED;" href="' + url + '">' + d.code + '</a>';
-					}
+					toolbar: '#codeBar',
 				},
 				{
 					field: 'name',
 					sort: true,
 					align: 'center',
 					title: '名称',
+					toolbar: '#nameBar',
+					
 					templet : function(d) {
 						var url = Feng.ctxPath + '/datadictconf?parentUuid=' + d.uuid;
 						return '<a style="color:#01AAED;" href="' + url + '">' + d.name + '</a>';
@@ -121,6 +114,15 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 			]
 		]
 	});
+	
+	var search = function() {
+		tableIns.reload({
+			where: fast.getFormData('dataDictForm'),
+			page: {
+				curr: 1
+			}
+		});
+	}
 
 	// 监听头工具栏事件
 	table.on('toolbar(dataDictTable)', function(obj) {
@@ -135,7 +137,10 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 				shadeClose: false,
 				shade: 0.3,
 				area: ["45%", "75%"],
-				content: Feng.ctxPath + '/datadict/add'
+				content: Feng.ctxPath + '/datadict/add',
+				end: function() {
+					search();
+				}
 			});
 		} else if (obj.event === 'delete') {
 			// 批量删除
@@ -162,11 +167,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 							layer.msg(res.message, {
 									icon: 1
 								});
-							table.reload('dataDictTable', {
-								page: {
-									curr: 1
-								}
-							});
+							search();
 						}
 					});
 				});
@@ -176,10 +177,12 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 
 	// 监听行工具事件
 	table.on('tool(dataDictTable)', function(obj) { // 注：tool
-		// 是工具条事件名，test
-		// 是 table
-		// 原始容器的属性
-		// lay-filter="对应的值"
+		/**
+		 * 是工具条事件名，test
+		 * 是 table
+		 * 原始容器的属性
+		 * lay-filter="对应的值"
+		 */
 		var data = obj.data, // 获得当前行数据
 			layEvent = obj.event; // 获得 lay-event 对应的值
 
@@ -197,11 +200,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 						layer.msg(res.message, {
 							icon: 1
 						});
-						table.reload('dataDictTable', {
-							page: {
-								curr: 1
-							}
-						});
+						search();
 					}
 				});
 			});
@@ -213,29 +212,34 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 				shadeClose: false,
 				shade: 0.3,
 				area: ["45%", "75%"],
-				content: Feng.ctxPath + '/datadict/edit?uuid=' + obj.data.uuid
+				content: Feng.ctxPath + '/datadict/edit?uuid=' + data.uuid,
+				end: function() {
+					search();
+				}
+			});
+		}else if (layEvent === 'datadictconf') {
+			layer.open({
+				type: 2,
+				title: "字典配置数据管理",
+				shadeClose: false,
+				shade: 0.3,
+				area: ["100%", "100%"],
+				content: Feng.ctxPath + '/datadictconf?parentUuid=' + data.uuid,
+				end: function() {
+					search();
+				}
 			});
 		}
 	});
 
 	// 搜索
 	$('#searchBtn').on('click', function() {
-		tableIns.reload({
-			where: fast.getFormData('dataDictForm'),
-			page: {
-				curr: 1
-			}
-		});
+		search();
 	});
 
 	// 重置搜索条件
 	$('#resetBtn').on('click', function() {
 		document.getElementById('dataDictForm').reset();
-		tableIns.reload({
-			where: fast.getFormData('dataDictForm'),
-			page: {
-				curr: 1
-			}
-		});
+		search();
 	});	
 });

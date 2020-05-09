@@ -34,13 +34,7 @@ layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 					align: 'center',
 					title: '类型'
 				},
-				{
-					field: 'parentUuid',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: '上级uuid'
-				},*/
+				*/
 				{
 					field: 'code',
 					sort: true,
@@ -120,6 +114,15 @@ layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 			]
 		]
 	});
+	
+	var search = function() {
+		tableIns.reload({
+			where: fast.getFormData('dataDictConfForm'),
+			page: {
+				curr: 1
+			}
+		});
+	}
 
 	// 监听头工具栏事件
 	table.on('toolbar(dataDictConfTable)', function(obj) {
@@ -134,7 +137,10 @@ layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 				shadeClose: false,
 				shade: 0.3,
 				area: ["45%", "75%"],
-				content: Feng.ctxPath + '/datadictconf/add?parentUuid=' + fast.getUrlParam('parentUuid')
+				content: Feng.ctxPath + '/datadictconf/add?parentUuid=' + fast.getUrlParam('parentUuid'),
+				end: function(){
+					search();
+				}
 			});
 		} else if (obj.event === 'delete') {
 			// 批量删除
@@ -161,11 +167,7 @@ layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 							layer.msg(res.message, {
 								icon: 1
 							});
-							table.reload('dataDictConfTable', {
-								page: {
-									curr: 1
-								}
-							});
+							search();
 						}
 					});
 				});
@@ -196,11 +198,7 @@ layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 						layer.msg(res.message, {
 							icon: 1
 						});
-						table.reload('dataDictConfTable', {
-							page: {
-								curr: 1
-							}
-						});
+						search();
 					}
 				});
 			});
@@ -212,35 +210,32 @@ layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 				shadeClose: false,
 				shade: 0.3,
 				area: ["45%", "75%"],
-				content: Feng.ctxPath + '/datadictconf/edit?uuid=' + obj.data.uuid
+				content: Feng.ctxPath + '/datadictconf/edit?uuid=' + obj.data.uuid,
+				end:function(){
+					search();
+				}
 			});
 		}
 	});
 
 	// 搜索
 	$('#searchBtn').on('click', function() {
-		tableIns.reload({
-			where: fast.getFormData('dataDictConfForm'),
-			page: {
-				curr: 1
-			}
-		});
+		search();
 	});
 
 	// 重置搜索条件
 	$('#resetBtn').on('click', function() {
 		document.getElementById('dataDictConfForm').reset();
-		tableIns.reload({
-			where: fast.getFormData('dataDictConfForm'),
-			page: {
-				curr: 1
-			}
-		});
+		search();
 	});
 	
 	// 关闭页面
 	$('#backBtn').click(function() {
-		window.history.back(-1);
-		// window.location.href = Feng.ctxPath + "/datasi";
+		// 获取当前iframe层的索引
+		var index = parent.layer.getFrameIndex(window.name);
+		// 关闭弹窗
+		parent.layer.close(index);
+//		window.history.back(-1);
+//		 window.location.href = Feng.ctxPath + "/datasi";
 	});
 });

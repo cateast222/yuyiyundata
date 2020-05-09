@@ -1,12 +1,11 @@
 layui.use([ 'form', 'admin', 'ax' ], function() {
-	var $ = layui.jquery;
-	var $ax = layui.ax;
-	var admin = layui.admin;
-	var form = layui.form;
+	var $ = layui.jquery,
+		layer = layui.layer,
+		$ax = layui.ax,
+		admin = layui.admin,
+		form = layui.form;
 
 	// 获取详情信息，填充表单
-//	var ajax = new $ax(Feng.ctxPath + "/dataci/detail?dsiUuid="
-//			+ $("#dsiUuid").val() + "&key=" + $("#key").val());
 	var ajax = new $ax(Feng.ctxPath + "/datasource/detail");
 	ajax.set({
 		uuid : $("#uuid").val()
@@ -18,8 +17,10 @@ layui.use([ 'form', 'admin', 'ax' ], function() {
 	form.on('submit(btnSubmit)', function(data) {
 		var ajax = new $ax(Feng.ctxPath + "/datasource/addAndEditItem", function(data) {
 			Feng.success("修改成功！");
-			// 关掉对话框
-			window.location.href = Feng.ctxPath + "/datasource/newspaper";
+			// 获取当前iframe层的索引
+			var index = parent.layer.getFrameIndex(window.name);
+			// 关闭弹窗
+			parent.layer.close(index);
 		}, function(data) {
 			Feng.error("修改失败！" + data.responseJSON.message)
 		});
@@ -30,6 +31,9 @@ layui.use([ 'form', 'admin', 'ax' ], function() {
 
 	// 返回按钮
 	$("#backupPage").click(function() {
-		window.location.href = Feng.ctxPath + "/datasource/newspaper";
+		// 获取当前iframe层的索引
+		var index = parent.layer.getFrameIndex(window.name);
+		// 关闭弹窗
+		parent.layer.close(index);
 	});
 });

@@ -1,7 +1,9 @@
-layui.use([ 'table', 'ax' ], function() {
-	var $ = layui.$;
-	var table = layui.table;
-	var $ax = layui.ax;
+layui.use([ 'table', 'ax','layer','fast' ], function() {
+	var $ = layui.$,
+		table = layui.table,
+		layer = layui.layer,
+		$ax = layui.ax,
+		fast = layui.fast;
 
 	/**
 	 * 数据源信息表管理
@@ -31,18 +33,6 @@ layui.use([ 'table', 'ax' ], function() {
 					field : 'chs_name',
 					sort : true,
 					title : '中文名称',
-					// templet: function (d) {
-					// var url = Feng.ctxPath + '/dataci/newspaper?uuid='
-					// + d.uuid;
-					// var color = "#01AAED;";
-					// if (d.remark != "" && d.state == 2) {
-					// color = "#FF3333;";
-					// }
-					// return '<a title="备注：' + d.remark
-					// + '" style="color:' + color
-					// + '" href="' + url + '">'
-					// + d.chs_name + '</a>';
-					// },
 					align : 'center',
 					width : 120
 				},
@@ -50,13 +40,7 @@ layui.use([ 'table', 'ax' ], function() {
 					field : 'org_name',
 					sort : true,
 					title : '原名称',
-					templet : function(d) {
-						var url = Feng.ctxPath + '/dataconfig?dataSource='
-								+ d.uuid;
-						var color = "#FF3333;";
-						return '<a style="color:' + color + '" href="' + url
-								+ '">' + d.org_name + '</a>';
-					},
+					toolbar : '#dataconfigBar',
 					align : 'center',
 					width : 120
 				},
@@ -157,19 +141,54 @@ layui.use([ 'table', 'ax' ], function() {
 	 * 弹出添加对话框
 	 */
 	Datasource.openAddDlg = function() {
-		window.location.href = Feng.ctxPath
-				+ '/datasource/addAndEditNewspaper?uuid=';
+		layer.open({
+			type: 2,
+			title: '新增数据',
+			shadeClose: false,
+			shade: 0.3,
+			area: ['45%', '99%'],
+			content: fast.ctxPath + '/datasource/addAndEditNewspaper?uuid=',
+			end: function() {
+				Datasource.search();
+			}
+		});
 	};
 
 	/**
-	 * 点击编辑
+	 * 点击编辑对话框
 	 * 
 	 * @param data
 	 *            点击按钮时候的行数据
 	 */
 	Datasource.openEditDlg = function(data) {
-		window.location.href = Feng.ctxPath
-				+ '/datasource/addAndEditNewspaper?uuid=' + data.uuid;
+		layer.open({
+			type: 2,
+			title: '新增数据',
+			shadeClose: false,
+			shade: 0.3,
+			area: ['45%', '99%'],
+			content: fast.ctxPath + '/datasource/addAndEditNewspaper?uuid=' + data.uuid,
+			end: function() {
+				Datasource.search();
+			}
+		});
+	};
+	
+	/**
+	 * 点击配置数据对话框
+	 */
+	Datasource.dataconfigDlg = function(data) {
+		layer.open({
+			type: 2,
+			title: '配置数据',
+			shadeClose: false,
+			shade: 0.3,
+			area: ['100%', '100%'],
+			content: fast.ctxPath + '/dataconfig?dataSource=' + data.uuid,
+			end: function() {
+				Datasource.search();
+			}
+		});
 	};
 
 	/**
@@ -212,6 +231,8 @@ layui.use([ 'table', 'ax' ], function() {
 			Datasource.openEditDlg(data);
 		} else if (layEvent === 'delete') {
 			Datasource.onDeleteItem(data);
+		}else if (layEvent === 'dataconfig') {
+			Datasource.dataconfigDlg(data)
 		}
 	});
 
@@ -219,4 +240,6 @@ layui.use([ 'table', 'ax' ], function() {
 	$('#btnMigration').click(function() {
 		window.location.href = Feng.ctxPath + '/datasource/migration';
 	});
+	
+	
 });

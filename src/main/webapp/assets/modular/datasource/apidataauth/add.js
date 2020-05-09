@@ -100,7 +100,6 @@ layui.use(['table', 'layer', 'jquery', 'fast', 'ax', 'laydate'], function() {
 						var index = parent.layer.getFrameIndex(window.name);
 						// 关闭弹窗
 						parent.layer.close(index);
-						// 重载表格
 					},
 					error: function(data) {
 						Feng.error("添加失败！" + data.responseJSON.message)

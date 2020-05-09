@@ -31,13 +31,13 @@ layui.use(['layer', 'jquery', 'form', 'fast'], function() {
 		$('#dataDict').val('');
 		$('#key').val('');
 		$('#name').val('');
-		$('#summary').attr('title', '');
+		$('#summary').val('');
 		$(dict).each(function(v, k) {
 			if (data.value == k.uuid) {
 				$('#dataDict').val(k.uuid);
 				$('#key').val(k.code);
 				$('#name').val(k.name);
-				$('#summary').attr('title', k.summary);
+				$('#summary').val(k.summary);
 			}
 		});
 	});
@@ -69,12 +69,6 @@ layui.use(['layer', 'jquery', 'form', 'fast'], function() {
 			error: function(data) {
 				Feng.error("修改失败！" + data.responseJSON.message)
 			}
-			/*error: function(XMLHttpRequest, textStatus) {
-				layer.msg('请求失败，系统发生异常', {
-					icon: 2
-				});
-				console.log(textStatus);
-			}*/
 		});
 		return false;
 	});

@@ -140,6 +140,9 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 		if (ToolUtil.isNotEmpty(param.getPlatform())) {
 			queryWrapper.eq("platform", param.getPlatform());
 		}
+		if (ToolUtil.isNotEmpty(param.getProvider())) {
+			queryWrapper.eq("provider", param.getProvider());
+		}
 		// 5、判断并检索状态
 		if (ToolUtil.isNotEmpty(param.getState())) {
 			queryWrapper.eq("state", param.getState());

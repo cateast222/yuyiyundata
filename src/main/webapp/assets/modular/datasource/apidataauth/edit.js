@@ -46,7 +46,6 @@ layui.use(['layer', 'jquery', 'form', 'fast', 'laydate'], function() {
 				var index = parent.layer.getFrameIndex(window.name);
 				// 关闭弹窗
 				parent.layer.close(index);
-				// 重载表格
 			},
 			error: function(XMLHttpRequest, textStatus) {
 				layer.msg('请求失败，系统发生异常', {

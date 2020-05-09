@@ -224,8 +224,10 @@ layui.use(['table', 'layer', 'jquery', 'fast'], function() {
 	
 	// 关闭页面
 	$('#backBtn').click(function() {
-		window.history.back(-1);
-		// window.location.href = Feng.ctxPath + "/datasi";
+		// 获取当前iframe层的索引
+		var index = parent.layer.getFrameIndex(window.name);
+		// 关闭弹窗
+		parent.layer.close(index);
 	});
 
 });
