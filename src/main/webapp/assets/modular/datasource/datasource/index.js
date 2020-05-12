@@ -146,7 +146,17 @@ layui.use([ 'table', 'ax' ], function() {
 	 * 弹出添加对话框
 	 */
 	Datasource.openAddDlg = function() {
-		window.location.href = Feng.ctxPath + '/datasource/addAndEdit?uuid=';
+		layer.open({
+			type: 2,
+			title: '新增数据',
+			shadeClose: false,
+			shade: 0.3,
+			area: ['45%', '99%'],
+			content: fast.ctxPath + '/datasource/addAndEdit?uuid=',
+			end: function() {
+				Datasource.search();
+			}
+		});
 	};
 
 	/**
@@ -156,8 +166,17 @@ layui.use([ 'table', 'ax' ], function() {
 	 *            点击按钮时候的行数据
 	 */
 	Datasource.openEditDlg = function(data) {
-		window.location.href = Feng.ctxPath + '/datasource/addAndEdit?uuid='
-				+ data.uuid;
+		layer.open({
+			type: 2,
+			title: '新增数据',
+			shadeClose: false,
+			shade: 0.3,
+			area: ['45%', '99%'],
+			content: fast.ctxPath + '/datasource/addAndEdit?uuid=' + data.uuid,
+			end: function() {
+				Datasource.search();
+			}
+		});
 	};
 
 	/**

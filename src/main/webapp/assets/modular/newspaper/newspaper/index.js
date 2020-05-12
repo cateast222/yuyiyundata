@@ -35,17 +35,7 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 				sort: true,
 				align: 'center',
 				title: '名称'
-			}, /* {
-					field: 'websiteUrl',
-					sort: true,
-					title: '网址',
-					templet: function (d) {
-						return '<a title="备注：' + d.remark +
-							'" style="color: #01AAED;" href="' +
-							d.websiteUrl + '" target="_blank">' +
-							d.websiteUrl + '</a>';
-					}
-				}, */ {
+			}, {
 				field: 'newpaperCount',
 				sort: true,
 				width: 120,
@@ -79,11 +69,7 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 				width: 180,
 				align: 'center',
 				title: '名称',
-				templet: function (d) {
-					return '<a title="' + d.fullName +
-						'" style="color: #01AAED;" href="' + d.url +
-						'" target="_blank">' + d.fullName + '</a>';
-				}
+				toolbar: '#fullNameBar',
 			}, {
 				field: 'publish',
 				sort: true,
@@ -94,13 +80,12 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 				field: 'cover',
 				align: 'center',
 				title: '封面',
-				width: 110,
+				width: 120,
 				align: 'center',
 				templet: "#coverImg"
 			}, {
 				field: 'url',
 				sort: true,
-				// width:180,
 				align: 'center',
 				title: 'URL',
 				templet: function (d) {
@@ -158,18 +143,24 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 	 * 点击查询按钮
 	 */
 	Datasourec.search = function () {
-		var queryData = {};
-		queryData['condition'] = $("#datasourecCondition").val();
 		table.reload(Datasourec.tableId, {
-			where: queryData
+			where: {
+				'condition': $("#datasourecCondition").val()
+			},
+			page : {
+				curr : 1// 重新从第 1 页开始
+			}
 		});
 	};
 	Newspaper.search = function () {
-		var queryData = {};
-		queryData['condition'] = $("#newspaperCondition").val();
-		queryData['dataSource'] = DatasourecUUID;
 		table.reload(Newspaper.tableId, {
-			where: queryData
+			where: {
+				'condition': $("#newspaperCondition").val(),
+				'dataSource': DatasourecUUID
+			},
+			page : {
+				curr : 1// 重新从第 1 页开始
+			}
 		});
 	};
 
@@ -193,6 +184,24 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 		});
 	};
 
+	/**
+	 * 点击查看
+	 * 
+	 * @param data
+	 *            点击按钮时候的行数据
+	 */
+	Newspaper.openCheckDlg = function (data) {
+		admin.putTempData('formOk', false);
+		top.layui.admin.open({
+			type: 2,
+			area: ['80%', '88%'],
+			offset: 'auto',
+			resize: true,
+			title: '查看报刊新闻',
+			content: Feng.ctxPath + '/newspaper/check?newspaperId=' + data.uuid
+		});
+	};
+	
 	/**
 	 * 点击编辑
 	 * 
@@ -274,6 +283,8 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 			}
 		} else if (layEvent === 'delete') {
 			Newspaper.onDeleteItem(data);
+		}else if (layEvent === 'check') {
+			Newspaper.openCheckDlg(data);
 		}
 	});
 
@@ -281,7 +292,6 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 	table.on('rowDouble(' + Datasourec.tableId + ')', function (obj) {
 		DatasourecUUID = obj.data.uuid;
 		Newspaper.search();
-
 		// (layui—table单击行选中radio与点击 radio选中行	https://blog.csdn.net/zyg1515330502/article/details/94554059)
 		selected = obj.data;
 		//选中行样式
@@ -289,24 +299,6 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 		//选中radio样式
 		obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
 	});
-	/* table.on('row(' + WgEleNewsData.tableId + ')', function (obj) {
-		for (var field in obj.data) {
-			switch (field) {
-				case "url":
-					$("#url").attr("href", obj.data[field]);
-					$("#url").attr("title", obj.data[field]);
-					break;
-				case "frontPage":
-					var frontPage = obj.data[field] == 1 ? "是" : "否";
-					$("#frontPage").html(frontPage);
-					break;
-				default:
-					$("#" + field).html(obj.data[field]);
-					break;
-			}
-		}
-
-	}); */
 });
 
 

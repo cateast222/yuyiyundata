@@ -106,19 +106,25 @@ layui.use([ 'layer', 'table', 'ax', 'laydate', 'admin' ], function() {
 
 	// 点击查询按钮
 	Newspaper.search = function() {
-		var queryData = {};
-		queryData['condition'] = $("#newspaperCondition").val();
-		queryData['publish'] = $("#publish").val();
 		table.reload(Newspaper.tableId, {
-			where : queryData
+			where : {
+				'condition': $("#newspaperCondition").val(),
+				'publish': $("#publish").val()
+			},
+			page:{
+				curr: 1
+			}
 		});
 	};
 	News.search = function() {
-		var queryData = {};
-		queryData['condition'] = $("#newsCondition").val();
-		queryData['dataNewspaper'] = NewspaperUUID;
 		table.reload(News.tableId, {
-			where : queryData
+			where : {
+				'condition': $("#newsCondition").val(),
+				'dataNewspaper': NewspaperUUID
+			},
+			page:{
+				curr: 1
+			}
 		});
 	};
 
@@ -287,15 +293,15 @@ layui.use([ 'layer', 'table', 'ax', 'laydate', 'admin' ], function() {
 		$("#author").html("");
 		$("#author_area").html("");
 		$("#author_infos").html("");
-//		$("#source").html("");
-//		$("#keywords").html("");
-//		$("#p_v").html("");
-//		$("#r_v").html("");
-//		$("#o_v").html("");
-//		$("#c_v").html("");
-//		$("#l_v").html("");
-//		$("#t_v").html("");
-//		$("#d_v").html("");
+		/*$("#source").html("");
+		$("#keywords").html("");
+		$("#p_v").html("");
+		$("#r_v").html("");
+		$("#o_v").html("");
+		$("#c_v").html("");
+		$("#l_v").html("");
+		$("#t_v").html("");
+		$("#d_v").html("");*/
 		$("#ha").html("");
 		$("#abstracts").html("");
 		$("#tag_content").html("");

@@ -5,8 +5,6 @@ layui.use([ 'form', 'admin', 'ax' ], function() {
 	var form = layui.form;
 
 	// 获取详情信息，填充表单
-//	var ajax = new $ax(Feng.ctxPath + "/dataci/detail?dsiUuid="
-//			+ $("#dsiUuid").val() + "&key=" + $("#key").val());
 	var ajax = new $ax(Feng.ctxPath + "/datasource/detail");
 	ajax.set({
 		uuid : $("#uuid").val()
@@ -30,6 +28,9 @@ layui.use([ 'form', 'admin', 'ax' ], function() {
 
 	// 返回按钮
 	$("#backupPage").click(function() {
-		window.location.href = Feng.ctxPath + "/datasource";
+		// 获取当前iframe层的索引
+		var index = parent.layer.getFrameIndex(window.name);
+		// 关闭弹窗
+		parent.layer.close(index);
 	});
 });

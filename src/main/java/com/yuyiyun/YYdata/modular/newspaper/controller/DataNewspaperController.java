@@ -81,6 +81,11 @@ public class DataNewspaperController extends BaseController {
 		model.addAttribute("dataSource", dataSource);
 		return PREFIX + "/newspaper/add_edit.html";
 	}
+	
+	@RequestMapping("check")
+	public String check() {
+		return PREFIX + "/newspaper/news_check.html";
+	}
 
 	/**
 	 * :新增接口
