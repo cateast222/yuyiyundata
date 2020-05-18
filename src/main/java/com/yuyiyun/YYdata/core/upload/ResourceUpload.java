@@ -8,18 +8,33 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.net.URI;
 import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
+import javax.net.ssl.SSLSocketFactory;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.config.RequestConfig.Builder;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.Connection;
+import org.jsoup.Connection.Method;
+import org.jsoup.Connection.Response;
+import org.jsoup.HttpStatusException;
+import org.jsoup.Jsoup;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -34,6 +49,27 @@ import com.yuyiyun.YYdata.core.util.ToolsUtil;
  *
  */
 public class ResourceUpload {
+	/**
+	 * 请求超时时间
+	 */
+	private static final int TIME_OUT = 120000;
+	/**
+	 * Https请求
+	 */
+	private static final String HTTPS = "https";
+	/**
+	 * Content-Type
+	 */
+	private static final String CONTENT_TYPE = "Content-Type";
+	/**
+	 * 表单提交方式Content-Type
+	 */
+	private static final String FORM_TYPE = "application/x-www-form-urlencoded;charset=UTF-8";
+	/**
+	 * JSON提交方式Content-Type
+	 */
+	private static final String JSON_TYPE = "application/json;charset=UTF-8";
+	
 	private static String getContentTypes(String fileExt) {
 		String fileName = "src/main/resources/config.json";
 		JSONObject config_json;
@@ -61,6 +97,53 @@ public class ResourceUpload {
 		System.out.println("getTicks " + hexString);
 		return hexString;
 	}
+	
+	private static Map<String, String> getString2Map(String str0,String str1,String ste2) {
+		Map<String, String> hashMap = new HashMap<String, String>();
+		if (!StringUtils.isBlank(str0)) {
+			String[] split = str0.split(str1);
+			for (String eachStr : split) {
+				String[] key_val = eachStr.split(ste2);
+				if (key_val.length > 1) {
+					String key = key_val[0].trim();
+					String val = key_val[1].trim();
+					hashMap.put(key, val);
+				}
+			}
+		}
+		return hashMap;
+	}	
+	
+	private static Response getResponse(String url, Map<String, String> headers, boolean proxy) {
+		Response response = null;
+		Connection conn = Jsoup.connect(url).method(Method.GET);
+		if (headers != null && headers.size() > 0) {
+			conn.headers(headers);
+		}
+		if (proxy) {
+			conn.proxy("192.168.0.88", 8125);
+		}
+		conn.ignoreContentType(true).maxBodySize(0);
+
+		int count = 1;
+		while (count <= 3 && response == null) {
+			try {
+				response = conn.execute();
+			} catch (IOException e) {
+				count++;
+				if(e instanceof HttpStatusException) {
+					HttpStatusException hse = (HttpStatusException)e;
+					System.err.print(hse.getStatusCode()+"-");
+				}
+				System.err.println(e.getMessage());
+				try {
+					Thread.sleep(1000 * 2);
+				} catch (Exception e1) {
+				}
+			}
+		}
+		return response;
+	}
 
 	/**
 	 * :爬取网络资源
@@ -73,8 +156,9 @@ public class ResourceUpload {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String downloadFile(String downloadUrl, boolean isProxy, String uploadUrl, String saveLocalPath,
-			String originalFilename) throws Exception {
+	public static String downloadFile(String downloadUrl, String headerStr, boolean isProxy,
+			String uploadUrl, String saveLocalPath, String originalFilename) throws Exception {
+
 		String result = "";
 		HttpClient client = HttpClients.createDefault();
 		HttpGet httpget = new HttpGet();
@@ -222,15 +306,31 @@ public class ResourceUpload {
 	}
 
 	public static void main(String[] args) throws Exception, Throwable {
+		String headers = "Accept: image/webp,image/apng,image/*,*/*;q=0.8\r\n" + 
+				"Accept-Encoding: gzip, deflate\r\n" + 
+				"Accept-Language: zh-CN,zh;q=0.9\r\n" + 
+				"Host: img.qikan.com.cn\r\n" + 
+				"Proxy-Connection: keep-alive\r\n" + 
+				"Referer: http://www.qikan.com/articleinfo/xwzk20201503.html\r\n" + 
+				"User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36";
+		
+		System.out.println(headers.toUpperCase());
+//		Map<String, String> map = getString2Map(headers, "\\r?\\n", ":");
+//		Response response = getResponse("https://i.prcdn.co/img?file=59b12020051400000000001001&page=1&width=290", null, true);
+//		String type = response.contentType();
+//		System.out.println(type);
+//		byte[] bodyBytes = response.bodyAsBytes();
+//		saveLocalFile("D:/", bodyBytes, "134.jpg");
+		
 //		System.out.println(getContentTypes("6370555030261494447433236.JPG"));
 //		https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNNEX_5541198.jpg?itok=12Alnawf&timestamp=1584728847
 //		https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNLAWRENCEFTR7_5541276.jpg?itok=jCsbmDmq&timestamp=1584728796
 //		https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNLAWRENCE_5541269.jpg?itok=wRCuHjny&timestamp=1584728782
 //		http://yuyiyun.net:8093/document/fileupload/yunyidata
 //		http://yuyiyun.net:8093/yunyidata/document/image/49a7429acaef43b782a12fe55ae047be
-		downloadFile(
-				"https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNNEX_5541198.jpg?itok=12Alnawf&timestamp=1584728847",
-				true, "", "D:/", ".jpg");
+//		downloadFile(
+//				"https://www.straitstimes.com/sites/default/files/styles/article_pictrure_780x520_/public/articles/2020/03/21/ST_20200321_VNNEX_5541198.jpg?itok=12Alnawf&timestamp=1584728847",
+//				true, "", "D:/", ".jpg");
 	}
 
 }

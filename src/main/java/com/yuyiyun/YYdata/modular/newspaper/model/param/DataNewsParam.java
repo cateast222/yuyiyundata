@@ -117,25 +117,25 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 	private String source;
 
 	@ApiModelProperty(value = "评论量")
-	private String DV;
+	private String dv;
 
 	@ApiModelProperty(value = "受踩量")
-	private String TV;
+	private String tv;
 
 	@ApiModelProperty(value = "点赞量")
-	private String LV;
+	private String lv;
 
 	@ApiModelProperty(value = "收藏量")
-	private String CV;
+	private String cv;
 
 	@ApiModelProperty(value = "在线量")
-	private String OV;
+	private String ov;
 
 	@ApiModelProperty(value = "阅读量")
-	private String RV;
+	private String rv;
 
 	@ApiModelProperty(value = "访问量")
-	private String PV;
+	private String pv;
 
 	@ApiModelProperty(value = "作者地区")
 	private String authorArea;

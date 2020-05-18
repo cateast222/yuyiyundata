@@ -16,8 +16,10 @@ layui.use([ 'form', 'admin', 'ax' ], function() {
 	form.on('submit(btnSubmit)', function(data) {
 		var ajax = new $ax(Feng.ctxPath + "/datasource/addAndEditItem", function(data) {
 			Feng.success("修改成功！");
-			// 关掉对话框
-			window.location.href = Feng.ctxPath + "/datasource";
+			// 获取当前iframe层的索引
+			var index = parent.layer.getFrameIndex(window.name);
+			// 关闭弹窗
+			parent.layer.close(index);
 		}, function(data) {
 			Feng.error("修改失败！" + data.responseJSON.message)
 		});

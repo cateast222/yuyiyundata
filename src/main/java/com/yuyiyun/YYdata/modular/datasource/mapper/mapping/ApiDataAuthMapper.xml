@@ -45,7 +45,7 @@
                 and data_source = #{apiDataAuth.dataSource}
             </if>
             <if test="apiDataAuth.dataSourceChsName != null and apiDataAuth.dataSourceChsName != ''">
-                and data_source_chsname = #{apiDataAuth.dataSourceChsName}
+                and data_source_chsname like CONCAT('%',#{apiDataAuth.dataSourceChsName},'%')
             </if>
             <if test="apiDataAuth.validity != null and apiDataAuth.validity != ''">
                 and validity = #{apiDataAuth.validity}

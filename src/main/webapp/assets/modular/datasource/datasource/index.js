@@ -1,7 +1,8 @@
-layui.use([ 'table', 'ax' ], function() {
-	var $ = layui.$;
-	var table = layui.table;
-	var $ax = layui.ax;
+layui.use([ 'table', 'ax','fast' ], function() {
+	var $ = layui.$,
+		table = layui.table,
+		$ax = layui.ax,
+		fast = layui.fast;
 
 	/**
 	 * 数据源信息表管理

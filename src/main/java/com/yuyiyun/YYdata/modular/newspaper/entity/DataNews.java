@@ -246,37 +246,37 @@ public class DataNews implements Serializable {
 	 * 新闻评论量
 	 */
 	@TableField("d_v")
-	private String DV;
+	private String dv;
 	/**
 	 *新闻受踩量
 	 */
 	@TableField("t_v")
-	private String TV;
+	private String tv;
 	/**
 	 * 新闻点赞量
 	 */
 	@TableField("l_v")
-	private String LV;
+	private String lv;
 	/**
 	 * 新闻收藏量
 	 */
 	@TableField("c_v")
-	private String CV;
+	private String cv;
 	/**
 	 *新闻在线量
 	 */
 	@TableField("o_v")
-	private String OV;
+	private String ov;
 	/**
 	 * 新闻阅读量
 	 */
 	@TableField("r_v")
-	private String RV;
+	private String rv;
 	/**
 	 * 新闻访问量
 	 */
 	@TableField("p_v")
-	private String PV;
+	private String pv;
 	
 	/**
 	 * 新闻采集时间
@@ -482,31 +482,31 @@ public class DataNews implements Serializable {
 		this.source = HtmlTagUtil.convertTag(source);
 	}
 
-	public void setDV(String dV) {
-		DV = HtmlTagUtil.convertTag(dV);
+	public void setDv(String dv) {
+		this.dv = HtmlTagUtil.convertTag(dv);
 	}
 
-	public void setTV(String tV) {
-		TV = HtmlTagUtil.convertTag(tV);
+	public void setTV(String tv) {
+		this.tv = HtmlTagUtil.convertTag(tv);
 	}
 
-	public void setLV(String lV) {
-		LV = HtmlTagUtil.convertTag(lV);
+	public void setLv(String lv) {
+		this.lv = HtmlTagUtil.convertTag(lv);
 	}
 
-	public void setCV(String cV) {
-		CV = HtmlTagUtil.convertTag(cV);
+	public void setCv(String cv) {
+		this.cv = HtmlTagUtil.convertTag(cv);
 	}
 
-	public void setOV(String oV) {
-		OV = HtmlTagUtil.convertTag(oV);
+	public void setOv(String ov) {
+		this.ov = HtmlTagUtil.convertTag(ov);
 	}
 
-	public void setRV(String rV) {
-		RV = HtmlTagUtil.convertTag(rV);
+	public void setRv(String rv) {
+		this.rv = HtmlTagUtil.convertTag(rv);
 	}
 
-	public void setPV(String pV) {
-		PV = HtmlTagUtil.convertTag(pV);
+	public void setPv(String pv) {
+		this.pv = HtmlTagUtil.convertTag(pv);
 	}
 }
