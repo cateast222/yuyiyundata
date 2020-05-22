@@ -1,10 +1,12 @@
 package com.yuyiyun.YYdata.modular.dataconfig.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,6 +15,8 @@ import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.core.util.HtmlUtil;
+import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
 import com.yuyiyun.YYdata.modular.dataconfig.mapper.DataDictMapper;
 
@@ -106,6 +110,23 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 	public DataDict getDetailsById(String uuid) {
 		return baseMapper.selectById(uuid);
 	}
+	
+	/**
+	 * 获取对应的表单配置
+	 * 
+	 * @param uuid
+	 * @return
+	 */
+	public List<String> getFroms(Long uuid) {
+		String datas = getById(uuid).getDatas();
+		List<String> arrayList = new ArrayList<String>();
+		if (ToolsUtil.isNotEmpty(datas)) {
+			arrayList = HtmlUtil.getJXNodes(datas, "//div[@class='layui-form-item']");
+		}
+		return arrayList;
+	}
+	
+	
 
 	/**
 	 * 删除数据

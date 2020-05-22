@@ -215,6 +215,19 @@ layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 					search();
 				}
 			});
+		}else if(layEvent === 'template'){
+			// 模板
+			layer.open({
+				type: 2,
+				title: "表单模板配置",
+				shadeClose: false,
+				shade: 0.3,
+				area: ["80%", "95%"],
+				content: Feng.ctxPath + '/dev/dataDictConfFroms?dataDictUuid=' + obj.data.uuid
+				/*end:function(){
+					search();
+				}*/
+			});
 		}
 	});
 

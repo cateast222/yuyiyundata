@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
+import com.yuyiyun.YYdata.core.util.HtmlUtil;
 import com.yuyiyun.YYdata.modular.system.entity.DataConfigInfo;
 
 public class DataConfigdto implements Serializable {
@@ -181,7 +181,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setListUrl(String listUrl) {
-		this.listUrl = HtmlTagUtil.convertTag(listUrl);
+		this.listUrl = HtmlUtil.convertTag(listUrl);
 	}
 
 	public Integer getRequestType() {
@@ -197,7 +197,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setHeader(String header) {
-		this.header = HtmlTagUtil.convertTag(header);
+		this.header = HtmlUtil.convertTag(header);
 	}
 
 	public Integer getBodyType() {
@@ -213,7 +213,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setBody(String body) {
-		this.body = HtmlTagUtil.convertTag(body);
+		this.body = HtmlUtil.convertTag(body);
 	}
 
 	public String getOrgDataDec() {
@@ -221,7 +221,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setOrgDataDec(String orgDataDec) {
-		this.orgDataDec = HtmlTagUtil.convertTag(orgDataDec);
+		this.orgDataDec = HtmlUtil.convertTag(orgDataDec);
 	}
 
 	public String getDataExtRul() {
@@ -229,7 +229,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setDataExtRul(String dataExtRul) {
-		this.dataExtRul = HtmlTagUtil.convertTag(dataExtRul);
+		this.dataExtRul = HtmlUtil.convertTag(dataExtRul);
 	}
 
 	public String getLevel() {
@@ -237,7 +237,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setLevel(String level) {
-		this.level = HtmlTagUtil.convertTag(level);
+		this.level = HtmlUtil.convertTag(level);
 	}
 
 	public String getDataCleanDec() {
@@ -245,7 +245,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setDataCleanDec(String dataCleanDec) {
-		this.dataCleanDec = HtmlTagUtil.convertTag(dataCleanDec);
+		this.dataCleanDec = HtmlUtil.convertTag(dataCleanDec);
 	}
 
 	public String getDataCleanReg() {
@@ -253,7 +253,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setDataCleanReg(String dataCleanReg) {
-		this.dataCleanReg = HtmlTagUtil.convertTag(dataCleanReg);
+		this.dataCleanReg = HtmlUtil.convertTag(dataCleanReg);
 	}
 
 	public String getPreData() {
@@ -261,7 +261,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setPreData(String preData) {
-		this.preData = HtmlTagUtil.convertTag(preData);
+		this.preData = HtmlUtil.convertTag(preData);
 	}
 
 	public String getPosreData() {
@@ -269,7 +269,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setPosreData(String posreData) {
-		this.posreData = HtmlTagUtil.convertTag(posreData);
+		this.posreData = HtmlUtil.convertTag(posreData);
 	}
 
 	public Integer getProxy() {
@@ -293,7 +293,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setDataLink(String dataLink) {
-		this.dataLink = HtmlTagUtil.convertTag(dataLink);
+		this.dataLink = HtmlUtil.convertTag(dataLink);
 	}
 
 	public String getValue() {
@@ -301,7 +301,7 @@ public class DataConfigdto implements Serializable {
 	}
 
 	public void setValue(String value) {
-		this.value = HtmlTagUtil.convertTag(value);
+		this.value = HtmlUtil.convertTag(value);
 	}
 
 	public static long getSerialversionuid() {

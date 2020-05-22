@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
+import com.yuyiyun.YYdata.core.util.HtmlUtil;
 
 import lombok.Data;
 
@@ -126,15 +126,15 @@ public class DataNewspaper implements Serializable {
 	}
 
 	public void setOrgName(String orgName) {
-		this.orgName = HtmlTagUtil.convertTag(orgName);
+		this.orgName = HtmlUtil.convertTag(orgName);
 	}
 
 	public void setChsName(String chsName) {
-		this.chsName = HtmlTagUtil.convertTag(chsName);
+		this.chsName = HtmlUtil.convertTag(chsName);
 	}
 
 	public void setFullName(String fullName) {
-		this.fullName = HtmlTagUtil.convertTag(fullName);
+		this.fullName = HtmlUtil.convertTag(fullName);
 	}
 
 	public void setPublish(Date publish) {
@@ -142,15 +142,15 @@ public class DataNewspaper implements Serializable {
 	}
 
 	public void setType(String type) {
-		this.type = HtmlTagUtil.convertTag(type);
+		this.type = HtmlUtil.convertTag(type);
 	}
 
 	public void setUrl(String url) {
-		this.url = HtmlTagUtil.convertTag(url);
+		this.url = HtmlUtil.convertTag(url);
 	}
 
 	public void setCover(String cover) {
-		this.cover = HtmlTagUtil.convertTag(cover);
+		this.cover = HtmlUtil.convertTag(cover);
 	}
 
 	public void setDataSource(Long dataSource) {
@@ -158,19 +158,19 @@ public class DataNewspaper implements Serializable {
 	}
 
 	public void setProvider(String provider) {
-		this.provider = HtmlTagUtil.convertTag(provider);
+		this.provider = HtmlUtil.convertTag(provider);
 	}
 
 	public void setRemark(String remark) {
-		this.remark = HtmlTagUtil.convertTag(remark);
+		this.remark = HtmlUtil.convertTag(remark);
 	}
 
 	public void setState(String state) {
-		this.state = HtmlTagUtil.convertTag(state);
+		this.state = HtmlUtil.convertTag(state);
 	}
 
 	public void setCreator(String creator) {
-		this.creator = HtmlTagUtil.convertTag(creator);
+		this.creator = HtmlUtil.convertTag(creator);
 	}
 
 	public void setCreateTime(Date createTime) {

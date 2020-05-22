@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
+import com.yuyiyun.YYdata.core.util.HtmlUtil;
 
 import lombok.Data;
 
@@ -319,11 +319,11 @@ public class DataNews implements Serializable {
 	}
 
 	public void setOrgName(String orgName) {
-		this.orgName = HtmlTagUtil.convertTag(orgName);
+		this.orgName = HtmlUtil.convertTag(orgName);
 	}
 
 	public void setChsName(String chsName) {
-		this.chsName = HtmlTagUtil.convertTag(chsName);
+		this.chsName = HtmlUtil.convertTag(chsName);
 	}
 
 	public void setDataSource(Long dataSource) {
@@ -335,7 +335,7 @@ public class DataNews implements Serializable {
 	}
 
 	public void setProvider(String provider) {
-		this.provider = HtmlTagUtil.convertTag(provider);
+		this.provider = HtmlUtil.convertTag(provider);
 	}
 
 	public void setPubtime(Date pubtime) {
@@ -343,91 +343,91 @@ public class DataNews implements Serializable {
 	}
 
 	public void setTitle(String title) {
-		this.title = HtmlTagUtil.convertTag(title);
+		this.title = HtmlUtil.convertTag(title);
 	}
 
 	public void setUrl(String url) {
-		this.url = HtmlTagUtil.convertTag(url);
+		this.url = HtmlUtil.convertTag(url);
 	}
 
 	public void setPretitle(String pretitle) {
-		this.pretitle = HtmlTagUtil.convertTag(pretitle);
+		this.pretitle = HtmlUtil.convertTag(pretitle);
 	}
 
 	public void setSubtitle(String subtitle) {
-		this.subtitle = HtmlTagUtil.convertTag(subtitle);
+		this.subtitle = HtmlUtil.convertTag(subtitle);
 	}
 
 	public void setAuthor(String author) {
-		this.author = HtmlTagUtil.convertTag(author);
+		this.author = HtmlUtil.convertTag(author);
 	}
 
 	public void setEditor(String editor) {
-		this.editor = HtmlTagUtil.convertTag(editor);
+		this.editor = HtmlUtil.convertTag(editor);
 	}
 
 	public void setAbstracts(String abstracts) {
-		this.abstracts = HtmlTagUtil.convertTag(abstracts);
+		this.abstracts = HtmlUtil.convertTag(abstracts);
 	}
 
 	public void setContent(String content) {
-		this.content = HtmlTagUtil.convertTag(content);
+		this.content = HtmlUtil.convertTag(content);
 	}
 
 	public void setTagContent(String tagContent) {
-		this.tagContent = HtmlTagUtil.convertTag(tagContent);
+		this.tagContent = HtmlUtil.convertTag(tagContent);
 	}
 
 	public void setWebsitePictures(String websitePictures) {
-		this.websitePictures = HtmlTagUtil.convertTag(websitePictures);
+		this.websitePictures = HtmlUtil.convertTag(websitePictures);
 	}
 
 	public void setWebsiteAudios(String websiteAudios) {
-		this.websiteAudios = HtmlTagUtil.convertTag(websiteAudios);
+		this.websiteAudios = HtmlUtil.convertTag(websiteAudios);
 	}
 
 	public void setWebsiteVideos(String websiteVideos) {
-		this.websiteVideos = HtmlTagUtil.convertTag(websiteVideos);
+		this.websiteVideos = HtmlUtil.convertTag(websiteVideos);
 	}
 
 	public void setWebsiteFiles(String websiteFiles) {
-		this.websiteFiles = HtmlTagUtil.convertTag(websiteFiles);
+		this.websiteFiles = HtmlUtil.convertTag(websiteFiles);
 	}
 
 	public void setPicturesDescription(String picturesDescription) {
-		this.picturesDescription = HtmlTagUtil.convertTag(picturesDescription);
+		this.picturesDescription = HtmlUtil.convertTag(picturesDescription);
 	}
 
 	public void setLanguage(String language) {
-		this.language = HtmlTagUtil.convertTag(language);
+		this.language = HtmlUtil.convertTag(language);
 	}
 
 	public void setWebsiteThumbnail(String websiteThumbnail) {
-		this.websiteThumbnail = HtmlTagUtil.convertTag(websiteThumbnail);
+		this.websiteThumbnail = HtmlUtil.convertTag(websiteThumbnail);
 	}
 
 	public void setWebsitePdf(String websitePdf) {
-		this.websitePdf = HtmlTagUtil.convertTag(websitePdf);
+		this.websitePdf = HtmlUtil.convertTag(websitePdf);
 	}
 
 	public void setHa(String ha) {
-		this.ha = HtmlTagUtil.convertTag(ha);
+		this.ha = HtmlUtil.convertTag(ha);
 	}
 
 	public void setChannel(String channel) {
-		this.channel = HtmlTagUtil.convertTag(channel);
+		this.channel = HtmlUtil.convertTag(channel);
 	}
 
 	public void setNumber(String number) {
-		this.number = HtmlTagUtil.convertTag(number);
+		this.number = HtmlUtil.convertTag(number);
 	}
 
 	public void setPage(String page) {
-		this.page = HtmlTagUtil.convertTag(page);
+		this.page = HtmlUtil.convertTag(page);
 	}
 
 	public void setPageName(String pageName) {
-		this.pageName = HtmlTagUtil.convertTag(pageName);
+		this.pageName = HtmlUtil.convertTag(pageName);
 	}
 
 	public void setPaperCount(Integer paperCount) {
@@ -443,15 +443,15 @@ public class DataNews implements Serializable {
 	}
 
 	public void setRemark(String remark) {
-		this.remark = HtmlTagUtil.convertTag(remark);
+		this.remark = HtmlUtil.convertTag(remark);
 	}
 
 	public void setState(String state) {
-		this.state = HtmlTagUtil.convertTag(state);
+		this.state = HtmlUtil.convertTag(state);
 	}
 
 	public void setCreator(String creator) {
-		this.creator = HtmlTagUtil.convertTag(creator);
+		this.creator = HtmlUtil.convertTag(creator);
 	}
 
 	public void setCreateTime(Date createTime) {
@@ -463,50 +463,50 @@ public class DataNews implements Serializable {
 	}
 
 	public void setAuthorArea(String authorArea) {
-		this.authorArea = HtmlTagUtil.convertTag(authorArea);
+		this.authorArea = HtmlUtil.convertTag(authorArea);
 	}
 
 	public void setAuthorInfos(String authorInfos) {
-		this.authorInfos = HtmlTagUtil.convertTag(authorInfos);
+		this.authorInfos = HtmlUtil.convertTag(authorInfos);
 	}
 
 	public void setChecker(String checker) {
-		this.checker = HtmlTagUtil.convertTag(checker);
+		this.checker = HtmlUtil.convertTag(checker);
 	}
 
 	public void setKeywords(String keywords) {
-		this.keywords = HtmlTagUtil.convertTag(keywords);
+		this.keywords = HtmlUtil.convertTag(keywords);
 	}
 
 	public void setSource(String source) {
-		this.source = HtmlTagUtil.convertTag(source);
+		this.source = HtmlUtil.convertTag(source);
 	}
 
 	public void setDv(String dv) {
-		this.dv = HtmlTagUtil.convertTag(dv);
+		this.dv = HtmlUtil.convertTag(dv);
 	}
 
 	public void setTV(String tv) {
-		this.tv = HtmlTagUtil.convertTag(tv);
+		this.tv = HtmlUtil.convertTag(tv);
 	}
 
 	public void setLv(String lv) {
-		this.lv = HtmlTagUtil.convertTag(lv);
+		this.lv = HtmlUtil.convertTag(lv);
 	}
 
 	public void setCv(String cv) {
-		this.cv = HtmlTagUtil.convertTag(cv);
+		this.cv = HtmlUtil.convertTag(cv);
 	}
 
 	public void setOv(String ov) {
-		this.ov = HtmlTagUtil.convertTag(ov);
+		this.ov = HtmlUtil.convertTag(ov);
 	}
 
 	public void setRv(String rv) {
-		this.rv = HtmlTagUtil.convertTag(rv);
+		this.rv = HtmlUtil.convertTag(rv);
 	}
 
 	public void setPv(String pv) {
-		this.pv = HtmlTagUtil.convertTag(pv);
+		this.pv = HtmlUtil.convertTag(pv);
 	}
 }

@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
+import com.yuyiyun.YYdata.core.util.HtmlUtil;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -119,7 +119,7 @@ public class ApiDataAuth implements Serializable {
 	}
 
 	public void setDataSourceChsName(String dataSourceChsName) {
-		this.dataSourceChsName = HtmlTagUtil.convertTag(dataSourceChsName);
+		this.dataSourceChsName = HtmlUtil.convertTag(dataSourceChsName);
 	}
 
 	public void setValidity(Date validity) {
@@ -131,15 +131,15 @@ public class ApiDataAuth implements Serializable {
 	}
 
 	public void setRemark(String remark) {
-		this.remark = HtmlTagUtil.convertTag(remark);
+		this.remark = HtmlUtil.convertTag(remark);
 	}
 
 	public void setState(String state) {
-		this.state = HtmlTagUtil.convertTag(state);
+		this.state = HtmlUtil.convertTag(state);
 	}
 
 	public void setCreator(String creator) {
-		this.creator = HtmlTagUtil.convertTag(creator);
+		this.creator = HtmlUtil.convertTag(creator);
 	}
 
 	public void setCreateTime(Date createTime) {

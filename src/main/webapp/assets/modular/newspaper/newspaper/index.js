@@ -142,24 +142,24 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 	/**
 	 * 点击查询按钮
 	 */
-	Datasourec.search = function () {
+	Datasourec.search = function (curr) {
 		table.reload(Datasourec.tableId, {
 			where: {
 				'condition': $("#datasourecCondition").val()
 			},
 			page : {
-				curr : 1// 重新从第 1 页开始
+				curr : curr// 重新从第 1 页开始
 			}
 		});
 	};
-	Newspaper.search = function () {
+	Newspaper.search = function (curr) {
 		table.reload(Newspaper.tableId, {
 			where: {
 				'condition': $("#newspaperCondition").val(),
 				'dataSource': DatasourecUUID
 			},
 			page : {
-				curr : 1// 重新从第 1 页开始
+				curr : curr// 重新从第 1 页开始
 			}
 		});
 	};
@@ -178,8 +178,8 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 			content: Feng.ctxPath + '/newspaper/addAndEdit?dataSource=' + DatasourecUUID + '&uuid=',
 			end: function () {
 				admin.getTempData('formOk');
-				Datasourec.search();
-				Newspaper.search();
+				Datasourec.search($(".layui-laypage-em:eq(0)").next().html());
+				Newspaper.search($(".layui-laypage-em:eq(1)").next().html());
 			}
 		});
 	};
@@ -220,8 +220,8 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 				+ DatasourecUUID + '&uuid=' + data.uuid,
 			end: function () {
 				admin.getTempData('formOk');
-				Datasourec.search();
-				Newspaper.search();
+				Datasourec.search($(".layui-laypage-em:eq(0)").next().html());
+				Newspaper.search($(".layui-laypage-em:eq(1)").next().html());
 			}
 		});
 	};
@@ -262,10 +262,10 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 	});
 	// 搜索按钮点击事件
 	$('#datasourecBtnSearch').click(function () {
-		Datasourec.search();
+		Datasourec.search(1);
 	});
 	$('#newspaperBtnSearch').click(function () {
-		Newspaper.search();
+		Newspaper.search(1);
 	});
 
 	// 工具条点击事件
@@ -291,7 +291,7 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 	// 监听行单击事件
 	table.on('rowDouble(' + Datasourec.tableId + ')', function (obj) {
 		DatasourecUUID = obj.data.uuid;
-		Newspaper.search();
+		Newspaper.search(1);
 		// (layui—table单击行选中radio与点击 radio选中行	https://blog.csdn.net/zyg1515330502/article/details/94554059)
 		selected = obj.data;
 		//选中行样式

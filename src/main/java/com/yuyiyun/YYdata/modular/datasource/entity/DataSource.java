@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
+import com.yuyiyun.YYdata.core.util.HtmlUtil;
 
 import lombok.Data;
 
@@ -133,59 +133,59 @@ public class DataSource implements Serializable {
 	}
 
 	public void setChsName(String chsName) {
-		this.chsName = HtmlTagUtil.convertTag(chsName);
+		this.chsName = HtmlUtil.convertTag(chsName);
 	}
 
 	public void setOrgName(String orgName) {
-		this.orgName = HtmlTagUtil.convertTag(orgName);
+		this.orgName = HtmlUtil.convertTag(orgName);
 	}
 
 	public void setWebsiteUrl(String websiteUrl) {
-		this.websiteUrl = HtmlTagUtil.convertTag(websiteUrl);
+		this.websiteUrl = HtmlUtil.convertTag(websiteUrl);
 	}
 
 	public void setWebsiteName(String websiteName) {
-		this.websiteName = HtmlTagUtil.convertTag(websiteName);
+		this.websiteName = HtmlUtil.convertTag(websiteName);
 	}
 
 	public void setPlatform(String platform) {
-		this.platform = HtmlTagUtil.convertTag(platform);
+		this.platform = HtmlUtil.convertTag(platform);
 	}
 
 	public void setProvider(String provider) {
-		this.provider = HtmlTagUtil.convertTag(provider);
+		this.provider = HtmlUtil.convertTag(provider);
 	}
 
 	public void setCountry(String country) {
-		this.country = HtmlTagUtil.convertTag(country);
+		this.country = HtmlUtil.convertTag(country);
 	}
 
 	public void setRegion(String region) {
-		this.region = HtmlTagUtil.convertTag(region);
+		this.region = HtmlUtil.convertTag(region);
 	}
 
 	public void setLanguage(String language) {
-		this.language = HtmlTagUtil.convertTag(language);
+		this.language = HtmlUtil.convertTag(language);
 	}
 
 	public void setEncoded(String encoded) {
-		this.encoded = HtmlTagUtil.convertTag(encoded);
+		this.encoded = HtmlUtil.convertTag(encoded);
 	}
 
 	public void setProxy(String proxy) {
-		this.proxy = HtmlTagUtil.convertTag(proxy);
+		this.proxy = HtmlUtil.convertTag(proxy);
 	}
 
 	public void setRemark(String remark) {
-		this.remark = HtmlTagUtil.convertTag(remark);
+		this.remark = HtmlUtil.convertTag(remark);
 	}
 
 	public void setState(String state) {
-		this.state = HtmlTagUtil.convertTag(state);
+		this.state = HtmlUtil.convertTag(state);
 	}
 
 	public void setCreator(String creator) {
-		this.creator = HtmlTagUtil.convertTag(creator);
+		this.creator = HtmlUtil.convertTag(creator);
 	}
 
 	public void setCreateTime(Date createTime) {

@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.yuyiyun.YYdata.core.util.HtmlTagUtil;
+import com.yuyiyun.YYdata.core.util.HtmlUtil;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -125,7 +125,7 @@ public class DataDict implements Serializable {
 	}
 
 	public void setType(String type) {
-		this.type = HtmlTagUtil.convertTag(type);
+		this.type = HtmlUtil.convertTag(type);
 	}
 
 	public void setParentUuid(Long parentUuid) {
@@ -133,19 +133,19 @@ public class DataDict implements Serializable {
 	}
 
 	public void setCode(String code) {
-		this.code = HtmlTagUtil.convertTag(code);
+		this.code = HtmlUtil.convertTag(code);
 	}
 
 	public void setName(String name) {
-		this.name = HtmlTagUtil.convertTag(name);
+		this.name = HtmlUtil.convertTag(name);
 	}
 
 	public void setSummary(String summary) {
-		this.summary = HtmlTagUtil.convertTag(summary);
+		this.summary = HtmlUtil.convertTag(summary);
 	}
 
 	public void setDatas(String datas) {
-		this.datas = HtmlTagUtil.convertTag(datas);
+		this.datas = HtmlUtil.convertTag(datas);
 	}
 
 	public void setSort(Integer sort) {
@@ -153,15 +153,15 @@ public class DataDict implements Serializable {
 	}
 
 	public void setRemark(String remark) {
-		this.remark = HtmlTagUtil.convertTag(remark);
+		this.remark = HtmlUtil.convertTag(remark);
 	}
 
 	public void setState(String state) {
-		this.state = HtmlTagUtil.convertTag(state);
+		this.state = HtmlUtil.convertTag(state);
 	}
 
 	public void setCreator(String creator) {
-		this.creator = HtmlTagUtil.convertTag(creator);
+		this.creator = HtmlUtil.convertTag(creator);
 	}
 
 	public void setCreateTime(Date createTime) {
