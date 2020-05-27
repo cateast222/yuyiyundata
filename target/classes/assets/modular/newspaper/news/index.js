@@ -105,25 +105,25 @@ layui.use([ 'layer', 'table', 'ax', 'laydate', 'admin' ], function() {
 	};
 
 	// 点击查询按钮
-	Newspaper.search = function() {
+	Newspaper.search = function(curr) {
 		table.reload(Newspaper.tableId, {
 			where : {
 				'condition': $("#newspaperCondition").val(),
 				'publish': $("#publish").val()
 			},
 			page:{
-				curr: 1
+				curr: curr
 			}
 		});
 	};
-	News.search = function() {
+	News.search = function(curr) {
 		table.reload(News.tableId, {
 			where : {
 				'condition': $("#newsCondition").val(),
 				'dataNewspaper': NewspaperUUID
 			},
 			page:{
-				curr: 1
+				curr: curr
 			}
 		});
 	};
@@ -152,10 +152,10 @@ layui.use([ 'layer', 'table', 'ax', 'laydate', 'admin' ], function() {
 
 	// 搜索按钮点击事件
 	$('#newspaperBtnSearch').click(function() {
-		Newspaper.search();
+		Newspaper.search(1);
 	});
 	$('#newsBtnSearch').click(function() {
-		News.search();
+		News.search(1);
 	});
 
 	// 新增报纸新闻信息
@@ -174,8 +174,8 @@ layui.use([ 'layer', 'table', 'ax', 'laydate', 'admin' ], function() {
 							+ NewspaperUUID,
 					end : function() {
 						admin.getTempData('formOk');
-						News.search();
-						Newspaper.search();
+						News.search($(".layui-laypage-em:eq(1)").next().html());
+						Newspaper.search($(".layui-laypage-em:eq(0)").next().html());
 					}
 				});
 			} else {
@@ -200,8 +200,8 @@ layui.use([ 'layer', 'table', 'ax', 'laydate', 'admin' ], function() {
 							+ NewsUUID,
 					end : function() {
 						admin.getTempData('formOk');
-						News.search();
-						Newspaper.search();
+						News.search($(".layui-laypage-em:eq(1)").next().html());
+						Newspaper.search($(".layui-laypage-em:eq(0)").next().html());
 					}
 				});
 			} else {
@@ -220,8 +220,8 @@ layui.use([ 'layer', 'table', 'ax', 'laydate', 'admin' ], function() {
 							function(data) {
 								Feng.success("删除成功!");
 								var NewsUUID = null;
-								News.search();
-								Newspaper.search();
+								News.search(1);
+								Newspaper.search(1);
 							}, function(data) {
 								Feng.error("删除失败!"
 										+ data.responseJSON.message);
@@ -241,7 +241,7 @@ layui.use([ 'layer', 'table', 'ax', 'laydate', 'admin' ], function() {
 	// 监听行单击事件
 	table.on('rowDouble(' + Newspaper.tableId + ')', function(obj) { // 双击事件
 		NewspaperUUID = obj.data.uuid;
-		News.search();
+		News.search(1);
 
 		// (layui—table单击行选中radio与点击 radio选中行
 		// https://blog.csdn.net/zyg1515330502/article/details/94554059)

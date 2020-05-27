@@ -113,7 +113,7 @@ layui.use([ 'table', 'ax','layer','fast' ], function() {
 	/**
 	 * 点击查询按钮
 	 */
-	Datasource.search = function() {
+	Datasource.search = function(curr) {
 		table.reload(Datasource.tableId, {
 			where : {
 				'condition' : $("#condition").val(),
@@ -121,7 +121,7 @@ layui.use([ 'table', 'ax','layer','fast' ], function() {
 				'provider' : $("#provider").val()
 			},
 			page : {
-				curr : 1// 重新从第 1 页开始
+				curr : curr// 重新从第 1 页开始
 			}
 		});
 	};
@@ -150,7 +150,7 @@ layui.use([ 'table', 'ax','layer','fast' ], function() {
 			area: ['45%', '99%'],
 			content: fast.ctxPath + '/datasource/addAndEditNewspaper?uuid=',
 			end: function() {
-				Datasource.search();
+				Datasource.search($(".layui-laypage-em:eq(0)").next().html());
 			}
 		});
 	};
@@ -170,7 +170,7 @@ layui.use([ 'table', 'ax','layer','fast' ], function() {
 			area: ['45%', '99%'],
 			content: fast.ctxPath + '/datasource/addAndEditNewspaper?uuid=' + data.uuid,
 			end: function() {
-				Datasource.search();
+				Datasource.search($(".layui-laypage-em:eq(0)").next().html());
 			}
 		});
 	};
@@ -187,7 +187,7 @@ layui.use([ 'table', 'ax','layer','fast' ], function() {
 			area: ['100%', '100%'],
 			content: fast.ctxPath + '/dataconfig?dataSource=' + data.uuid,
 			end: function() {
-				Datasource.search();
+				Datasource.search($(".layui-laypage-em:eq(0)").next().html());
 			}
 		});
 	};
@@ -229,7 +229,7 @@ layui.use([ 'table', 'ax','layer','fast' ], function() {
 
 	// 搜索按钮点击事件
 	$('#btnSearch').click(function() {
-		Datasource.search();
+		Datasource.search(1);
 	});
 
 	// 添加按钮点击事件

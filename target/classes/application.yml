@@ -14,7 +14,7 @@ beetl:
 
 spring:
   profiles:
-    active: local
+    active: dev
   mvc:
     view:
       prefix: /pages
