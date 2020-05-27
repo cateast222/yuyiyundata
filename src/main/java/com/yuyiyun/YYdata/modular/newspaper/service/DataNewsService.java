@@ -56,7 +56,6 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	 * @return 更新后的新闻数据
 	 */
 	public DataNews addOrEdit(DataNewsParam param) {
-		System.out.println("DataNewsService.addOrEdit()--->"+param);
 		if (ToolUtil.isEmpty(param.getUuid())) {
 			// 获取对应的电子报纸
 			DataNewspaper dataNewspaper = dataNewspaperService.getById(param.getDataNewspaper());
@@ -125,20 +124,20 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	}
 
 	public DataNews update(DataNewsParam param) {
-//		// 1、获取旧对象
-//		DataNews oldEntity = getOldEntity(param);
-//		// 2、转换得到新对象
+		// 1、获取旧对象
+		DataNews oldEntity = getOldEntity(param);
+		// 2、转换得到新对象
 		DataNews newEntity = getEntity(param);
-//		ToolUtil.copyProperties(newEntity, oldEntity);
-//		// 3、创建查询对象，根据电子报纸和URL
-//		QueryWrapper<DataNews> queryWrapper = new QueryWrapper<DataNews>()
-//				.eq("data_newspaper", newEntity.getDataNewspaper()).eq("url", newEntity.getUrl())
-//				.ne("uuid", newEntity.getUuid());
-//		// 4、判断是否重复
-//		int count = this.count(queryWrapper);
-//		if (count > 0) {
-//			throw new ServiceException(BizExceptionEnum.DN_EXISTED);
-//		}
+		ToolUtil.copyProperties(newEntity, oldEntity);
+		// 3、创建查询对象，根据电子报纸和URL
+		QueryWrapper<DataNews> queryWrapper = new QueryWrapper<DataNews>()
+				.eq("data_newspaper", newEntity.getDataNewspaper()).eq("url", newEntity.getUrl())
+				.ne("uuid", newEntity.getUuid());
+		// 4、判断是否重复
+		int count = this.count(queryWrapper);
+		if (count > 0) {
+			throw new ServiceException(BizExceptionEnum.DN_EXISTED);
+		}
 		// 5、更新数据
 		newEntity.setUpdateTime(new Date());
 		this.updateById(newEntity);
