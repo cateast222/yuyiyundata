@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyiyun.YYdata.modular.datasource.mapper.DataApiauthMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth">
+        <id column="uuid" property="uuid" />
+        <result column="sys_user" property="sysUser" />
+        <result column="data_source" property="dataSource" />
+        <result column="data_source_chsname" property="dataSourceChsName" />
+        <result column="validity" property="validity" />
+        <result column="level" property="level" />
+        <result column="remark" property="remark" />
+        <result column="state" property="state" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        uuid as uuid,
+        sys_user as sysUser,
+        data_source as dataSource,
+        data_source_chsname as dataSourceChsName,
+        validity as validity,
+        level as level,
+        remark as remark,
+        state as state,
+        creator as creator,
+        create_time as createTime,
+        update_time as updateTime
+    </sql>
+
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="apiDataAuth.uuid != null and apiDataAuth.uuid != ''">
+                and uuid = #{apiDataAuth.uuid}
+            </if>
+            <if test="apiDataAuth.sysUser != null and apiDataAuth.sysUser != ''">
+                and sys_user = #{apiDataAuth.sysUser}
+            </if>
+            <if test="apiDataAuth.dataSource != null and apiDataAuth.dataSource != ''">
+                and data_source = #{apiDataAuth.dataSource}
+            </if>
+            <if test="apiDataAuth.dataSourceChsName != null and apiDataAuth.dataSourceChsName != ''">
+                and data_source_chsname like CONCAT('%',#{apiDataAuth.dataSourceChsName},'%')
+            </if>
+            <if test="apiDataAuth.validity != null and apiDataAuth.validity != ''">
+                and validity = #{apiDataAuth.validity}
+            </if>
+            <if test="apiDataAuth.level != null and apiDataAuth.level != ''">
+                and level = #{apiDataAuth.level}
+            </if>
+            <if test="apiDataAuth.remark != null and apiDataAuth.remark != ''">
+                and remark = #{apiDataAuth.remark}
+            </if>
+            <if test="apiDataAuth.state != null and apiDataAuth.state != ''">
+                and state = #{apiDataAuth.state}
+            </if>
+            <if test="apiDataAuth.creator != null and apiDataAuth.creator != ''">
+                and creator = #{apiDataAuth.creator}
+            </if>
+            <if test="apiDataAuth.createTime != null and apiDataAuth.createTime != ''">
+                and create_time = #{apiDataAuth.createTime}
+            </if>
+            <if test="apiDataAuth.updateTime != null and apiDataAuth.updateTime != ''">
+                and update_time = #{apiDataAuth.updateTime}
+            </if>
+        </trim>
+    </sql>
+
+
+    <!-- 分页查询 -->
+    <select id="selectPage" resultType="com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth">
+        select <include refid="BaseColumnList"/>
+        from data_apiauth
+        <include refid="BaseWhere"/>
+    </select>
+
+</mapper>

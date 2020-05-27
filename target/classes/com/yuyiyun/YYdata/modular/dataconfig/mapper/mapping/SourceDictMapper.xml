@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.yuyiyun.YYdata.modular.dataconfig.mapper.SourceDictMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap"
+		type="com.yuyiyun.YYdata.modular.dataconfig.entity.SourceDict">
+		<id column="uuid" property="uuid" />
+		<result column="data_source" property="dataSource" />
+		<result column="data_dict" property="dataDict" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列 -->
+	<sql id="BaseColumnList">
+		uuid as uuid,
+		data_source as dataSource,
+		data_dict as dataDict,
+	</sql>
+
+	<!-- 通用查询条件 -->
+	<sql id="BaseWhere">
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="sourceDict.uuid != null and sourceDict.uuid != ''">
+				and uuid = #{sourceDict.uuid}
+			</if>
+			<if
+				test="sourceDict.dataSource != null and sourceDict.dataSource != ''">
+				and data_dict = #{sourceDict.dataSource}
+			</if>
+			<if
+				test="sourceDict.dataDict != null and sourceDict.dataDict != ''">
+				and data_dict = #{sourceDict.dataDict}
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 分页查询 -->
+	<select id="selectPage" resultType="map">
+		select
+		<include refid="BaseColumnList" />
+		from rel_source_dict
+		<include refid="BaseWhere" />
+	</select>
+
+
+	<select id="selPageSourceDict" resultType="map">
+		SELECT
+		rsd.`uuid` AS uuid,
+		rsd.`data_source` AS dataSource,
+		rsd.`data_dict` AS dataDict,
+		dd.`type` AS type,
+		dd.`code` AS code,
+		dd.`name` AS name
+		FROM
+		rel_source_dict rsd
+		INNER JOIN data_dict dd ON rsd.`data_dict` = dd.`uuid`
+		WHERE
+		rsd.`data_source` = #{sourceDict.dataSource}
+		AND dd.`type` = #{dataDict.type}
+		<if test="dataDict.code != null and dataDict.code != ''">
+			AND dd.`code` LIKE CONCAT('%',#{dataDict.code},'%')
+		</if>
+		<if test="dataDict.name != null and dataDict.name != ''">
+			AND dd.`name` LIKE CONCAT('%',#{dataDict.name},'%')
+		</if>
+	</select>
+
+</mapper>

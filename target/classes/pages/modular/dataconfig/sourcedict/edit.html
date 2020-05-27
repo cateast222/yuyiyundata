@@ -1,0 +1,24 @@
+@layout("/common/_container.html",{js:["/assets/modular/dataconfig/sourcedict/edit.js"]}){
+
+<div class="layui-body-header">
+	<span class="layui-body-header-title">修改数据字典配置</span>
+</div>
+
+<div class="layui-fluid " style="">
+        <div class="layui-card"  style="margin: 10px;">
+            <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" action="" lay-filter="sourceDictfForm">
+                    @for(item in froms){
+						${item}
+					@}
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formBtn">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@}

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.yuyiyun.YYdata.modular.newspaper.mapper.DataNewsMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap"
+		type="com.yuyiyun.YYdata.modular.newspaper.entity.DataNews">
+		<id column="uuid" property="uuid" />
+		<result column="org_name" property="orgName" />
+		<result column="chs_name" property="chsName" />
+		<result column="data_source" property="dataSource" />
+		<result column="data_newspaper" property="dataNewspaper" />
+		<result column="pubtime" property="pubtime" />
+		<result column="title" property="title" />
+		<result column="url" property="url" />
+		<result column="pretitle" property="pretitle" />
+		<result column="subtitle" property="subtitle" />
+		<result column="author" property="author" />
+		<result column="editor" property="editor" />
+		<result column="abstracts" property="abstracts" />
+		<result column="content" property="content" />
+		<result column="tag_content" property="tagContent" />
+		<result column="website_pictures" property="websitePictures" />
+		<result column="website_audios" property="websiteAudios" />
+		<result column="pictures_description"
+			property="picturesDescription" />
+		<result column="language" property="language" />
+		<result column="website_thumbnail" property="websiteThumbnail" />
+		<result column="website_files" property="websiteFiles" />
+		<result column="website_pdf" property="websitePdf" />
+		<result column="website_videos" property="websiteVideos" />
+		<result column="ha" property="ha" />
+		<result column="channel" property="channel" />
+		<result column="number" property="number" />
+		<result column="page" property="page" />
+		<result column="page_name" property="pageName" />
+		<result column="paper_count" property="paperCount" />
+		<result column="front_page" property="frontPage" />
+		<result column="insert_time" property="insertTime" />
+		<result column="remark" property="remark" />
+		<result column="state" property="state" />
+		<result column="creator" property="creator" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="provider" property="provider" />
+		<result column="author_area" property="authorArea" />
+		<result column="author_infos" property="authorInfos" />
+		<result column="checker" property="checker" />
+		<result column="keywords" property="keywords" />
+		<result column="source" property="source" />
+		<result column="d_v" property="DV" />
+		<result column="t_v" property="TV" />
+		<result column="l_v" property="LV" />
+		<result column="c_v" property="CV" />
+		<result column="o_v" property="OV" />
+		<result column="r_v" property="RV" />
+		<result column="p_v" property="PV" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列 -->
+	<sql id="BaseColumnList">
+		uuid as uuid,
+		org_name as orgName,
+		chs_name as chsName,
+		data_source as dataSource,
+		data_newspaper as dataNewspaper,
+		pubtime as
+		pubtime,
+		title as title,
+		url as url,
+		pretitle as pretitle,
+		subtitle as
+		subtitle,
+		author as author,
+		editor as editor,
+		abstracts as abstracts,
+		content as content,
+		tag_content as tagContent,
+		website_pictures as
+		websitePictures,
+		website_audios as websiteAudios,
+		pictures_description
+		as picturesDescription,
+		language as language,
+		website_thumbnail as
+		websiteThumbnail,
+		website_files as websiteFiles,
+		website_pdf as
+		websitePdf,
+		website_videos as websiteVideos,
+		ha as ha,
+		channel as
+		channel,
+		number as number,
+		page as page,
+		page_name as pageName,
+		paper_count as paperCount,
+		front_page as frontPage,
+		insert_time as
+		insertTime,
+		remark as remark,
+		state as state,
+		creator as creator,
+		create_time as createTime,
+		update_time as updateTime,
+		provider as provider,
+		author_area as authorArea,
+		author_infos as authorInfos,
+		checker as checker,
+		keywords as keywords,
+		source as source,
+		d_v as DV,
+		t_v as TV,
+		l_v as LV,
+		c_v as CV,
+		o_v as OV,
+		r_v as RV,
+		p_v as PV
+	</sql>
+
+	<!-- API查询结果列 -->
+	<sql id="ApiColumnList">
+		uuid as id,
+		chs_name as site,
+		data_source as paper_Id,
+		pubtime as pubTime,
+		title as title,
+		url as source_Url,
+		pretitle as
+		preTitle,
+		subtitle as subTitle,
+		author as author,
+		author_area as authorArea,
+		author_infos as authorInfos,
+		abstracts as abstract,
+		content as content,
+		tag_content as tag_Content,
+		website_pictures as
+		paper_Picture,
+		website_audios as audios_Url,
+		pictures_description as
+		pictures_Description,
+		language as languageCode,
+		website_thumbnail as
+		layoutSource,
+		website_files as files_Url,
+		website_pdf as pdf_Url,
+		website_videos as videos_Url,
+		ha as ha,
+		channel as channel,
+		number as
+		revision,
+		page as page,
+		page_name as edition_Name,
+		paper_count as
+		paper_Count,
+		front_page as front_Page,
+		insert_time as insert_Time
+	</sql>
+
+	<!-- 通用查询条件 -->
+	<sql id="BaseWhere">
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="news.uuid != null and news.uuid != ''">
+				and uuid = #{news.uuid}
+			</if>
+			<if test="news.orgName != null and news.orgName != ''">
+				and org_name = #{news.orgName}
+			</if>
+			<if test="news.chsName != null and news.chsName != ''">
+				and chs_name = #{news.chsName}
+			</if>
+			<if test="news.dataSource != null and news.dataSource != ''">
+				and data_source = #{news.dataSource}
+			</if>
+			<if test="news.dataNewspaper != null and news.dataNewspaper != ''">
+				and data_newspaper = #{news.dataNewspaper}
+			</if>
+			<if test="news.pubtime != null and news.pubtime != ''">
+				and pubtime = #{news.pubtime}
+			</if>
+			<if test="news.title != null and news.title != ''">
+				and title = #{news.title}
+			</if>
+			<if test="news.url != null and news.url != ''">
+				and url = #{news.url}
+			</if>
+			<if test="news.pretitle != null and news.pretitle != ''">
+				and pretitle = #{news.pretitle}
+			</if>
+			<if test="news.subtitle != null and news.subtitle != ''">
+				and subtitle = #{news.subtitle}
+			</if>
+			<if test="news.author != null and news.author != ''">
+				and author = #{news.author}
+			</if>
+			<if test="news.editor != null and news.editor != ''">
+				and editor = #{news.editor}
+			</if>
+			<if test="news.abstracts != null and news.abstracts != ''">
+				and abstracts = #{news.abstracts}
+			</if>
+			<if test="news.content != null and news.content != ''">
+				and content = #{news.content}
+			</if>
+			<if test="news.tagContent != null and news.tagContent != ''">
+				and tag_content = #{news.tagContent}
+			</if>
+			<if
+				test="news.websitePictures != null and news.websitePictures != ''">
+				and website_pictures = #{news.websitePictures}
+			</if>
+			<if test="news.websiteAudios != null and news.websiteAudios != ''">
+				and website_audios = #{news.websiteAudios}
+			</if>
+			<if
+				test="news.picturesDescription != null and news.picturesDescription != ''">
+				and pictures_description = #{news.picturesDescription}
+			</if>
+			<if test="news.language != null and news.language != ''">
+				and language = #{news.language}
+			</if>
+			<if
+				test="news.websiteThumbnail != null and news.websiteThumbnail != ''">
+				and website_thumbnail = #{news.websiteThumbnail}
+			</if>
+			<if test="news.websiteFiles != null and news.websiteFiles != ''">
+				and website_files = #{news.websiteFiles}
+			</if>
+			<if test="news.websitePdf != null and news.websitePdf != ''">
+				and website_pdf = #{news.websitePdf}
+			</if>
+			<if test="news.websiteVideos != null and news.websiteVideos != ''">
+				and website_videos = #{news.websiteVideos}
+			</if>
+			<if test="news.ha != null and news.ha != ''">
+				and ha = #{news.ha}
+			</if>
+			<if test="news.channel != null and news.channel != ''">
+				and channel = #{news.channel}
+			</if>
+			<if test="news.number != null and news.number != ''">
+				and number = #{news.number}
+			</if>
+			<if test="news.page != null and news.page != ''">
+				and page = #{news.page}
+			</if>
+			<if test="news.pageName != null and news.pageName != ''">
+				and page_name = #{news.pageName}
+			</if>
+			<if test="news.paperCount != null and news.paperCount != ''">
+				and paper_count = #{news.paperCount}
+			</if>
+			<if test="news.frontPage != null and news.frontPage != ''">
+				and front_page = #{news.frontPage}
+			</if>
+			<if test="news.insertTime != null and news.insertTime != ''">
+				and insert_time = #{news.insertTime}
+			</if>
+			<if test="news.remark != null and news.remark != ''">
+				and remark = #{news.remark}
+			</if>
+			<if test="news.state != null and news.state != ''">
+				and state = #{news.state}
+			</if>
+			<if test="news.creator != null and news.creator != ''">
+				and creator = #{news.creator}
+			</if>
+			<if test="news.createTime != null and news.createTime != ''">
+				and create_time = #{news.createTime}
+			</if>
+			<if test="news.updateTime != null and news.updateTime != ''">
+				and update_time = #{news.updateTime}
+			</if>
+			<if test="news.provider != null and news.provider != ''">
+				and provider = #{news.provider}
+			</if>
+			<if test="news.authorArea != null and news.authorArea != ''">
+				and author_area = #{news.authorArea}
+			</if>
+			<if test="news.authorInfos != null and news.authorInfos != ''">
+				and author_infos = #{news.authorInfos}
+			</if>
+			<if test="news.checker != null and news.checker != ''">
+				and checker = #{news.checker}
+			</if>
+			<if test="news.keywords != null and news.keywords != ''">
+				and keywords = #{news.keywords}
+			</if>
+			<if test="news.source != null and news.source != ''">
+				and source = #{news.source}
+			</if>
+		</trim>
+	</sql>
+
+
+	<!-- 分页查询 -->
+	<select id="selectPage"
+		resultType="com.yuyiyun.YYdata.modular.newspaper.entity.DataNews">
+		select
+		<include refid="BaseColumnList" />
+		from data_news
+		<include refid="BaseWhere" />
+	</select>
+
+	<!-- 分页查询报刊新闻数据 -->
+	<select id="selectArchive" resultType="map">
+		select
+		<include refid="ApiColumnList" />
+		from data_news
+		WHERE
+		data_newspaper = #{newspaperId}
+	</select>
+</mapper>

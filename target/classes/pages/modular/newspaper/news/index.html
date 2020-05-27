@@ -1,0 +1,162 @@
+@layout("/common/_container.html",{js:["/assets/modular/newspaper/news/index.js"],css:["/assets/common/css/global.css"]}){
+<div class="layui-body-header">
+	<span class="layui-body-header-title">报纸新闻信息</span>
+</div>
+
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-form toolbar">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<input id="newspaperCondition" class="layui-input" type="search"
+									placeholder="报纸名称" autocomplete="off" />
+							</div>
+							<div class="layui-inline">
+								<input id="publish" class="layui-input" type="search"
+									placeholder="发布时间" />
+							</div>
+							<div class="layui-inline">
+								<button id="newspaperBtnSearch" class="layui-btn icon-btn layui-btn-sm">
+									<i class="layui-icon layui-icon-search"></i>搜索
+								</button>
+							</div>
+						</div>
+					</div>
+					<table class="layui-table" id="newspaperTable"
+						lay-filter="newspaperTable"></table>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-form toolbar">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<input id="newsCondition" class="layui-input" type="search"
+									placeholder="新闻标题" autocomplete="off" />
+							</div>
+							<div class="layui-inline">
+								<button id="newsBtnSearch" class="layui-btn icon-btn layui-btn-sm">
+									<i class="layui-icon layui-icon-search"></i>搜索
+								</button>
+								@if(shiro.hasPermission("/news/addItem")){
+								<button id="newsBtnAdd" class="layui-btn icon-btn layui-btn-sm">
+									<i class="layui-icon layui-icon-add-1"></i>新增
+								</button>
+								@}
+							</div>
+						</div>
+					</div>
+					<table class="layui-table" id="newsTable" lay-filter="newsTable"></table>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-timeline-content layui-text">
+					<div class="layui-form toolbar">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								@if(shiro.hasPermission("/news/delete")){
+								<button id="newsBtnDelete" class="layui-btn layui-btn-radius layui-btn-sm layui-btn-danger" title="删除">
+									<i class="layui-icon layui-icon-delete"></i>
+								</button>
+								@}
+								@if(shiro.hasPermission("/news/editItem")){
+								<button id="newsBtnEdit" class="layui-btn layui-btn-radius layui-btn-sm layui-btn-normal" title="修改">
+									<i class="layui-icon layui-icon-edit"></i>
+								</button>
+								@} 
+							</div>
+						</div>
+					</div>
+						<h4 class="layui-timeline-title">
+							<b>前置标题：</b> <small title="前置标题" id="pretitle">我省“两步申报”通关改革启动</small>
+						</h4>
+						<h3 class="layui-timeline-title">
+							<b>标题：</b> <small title="标题" id="title">更符合企业级开发的管理系统</small>&emsp;
+							<span class="layui-badge-rim"><a target="_blank" href="" title="" id="url">原文链接</a></span>
+						</h3>
+						<h4 class="layui-timeline-title">
+							<b>副标题：</b> <small title="副标题" id="subtitle">最新独创领域驱动设计 + 数据驱动模式代码生成器</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>报纸媒体：</b> <span title="报纸媒体" class="layui-badge-rim" style="color: #393D49" id="chs_name">辽沈晚报</span>&emsp; 
+							<b>语种：</b> <span title="语种" class="layui-badge-rim" style="color: #FFB800" id="language_name">中文</span>&emsp; 
+							<b>地区：</b> <span title="地区" class="layui-badge-rim" style="color: #c2c2c2" id="region">中国</span>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>所属版面：</b> <span title="所属版面" class="layui-badge-rim" style="color: #5FB878" id="page">第A1版</span>&emsp; 
+							<b>版面名称：</b> <span title="版面名称" class="layui-badge-rim" style="color: #2F4056" id="page_name">鄂州要闻</span>&emsp; 
+							<b>发布日期：</b> <span title="发布日期" class="layui-badge-rim layui-bg-orange" id="pubtime">2019-11-19 11:13:54</span>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>所属页面：</b> <span title="所属页面" class="layui-badge-rim layui-bg-green" id="number">A1</span>&emsp;
+							<b>所属频道：</b> <span title="所属频道" class="layui-badge-rim layui-bg-cyan" id="channel">鄂州要闻</span>&emsp;
+							<b>频道排序：</b> <span title="频道排序" class="layui-badge-rim layui-bg-blue" id="paper_count">2</span>&emsp;
+							<b>头条头版：</b> <span title="头条头版" class="layui-badge" id="front_page">是/否</span>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>编辑：</b> <span title="编辑" class="layui-badge-rim" style="color: #01AAED" id="editor">编辑梁涛、丁洁</span>&emsp;
+							<b>审核：</b> <span title="审核" class="layui-badge-rim" style="color: #aaff7f" id="checker">审核阎轶洁</span><br/>
+							<b>作者：</b> <span title="作者" class="layui-badge-rim" style="color: #FF5722" id="author">记者李栋</span>&emsp;
+							<b>作者地区：</b> <span title="作者地区" class="layui-badge-rim" style="color: #aaffff" id="author_area">湖南长沙</span><br />
+							<b>作者介绍：</b> <span title="作者介绍" class="layui-badge-rim" style="color: #ffaaff" id="author_infos">来自湖南红网新闻记者</span>
+						</h4>
+						<!-- <h4 class="layui-timeline-title">
+							<b>来源：</b> <span title="来源" class="layui-badge-rim" style="color: #aaff00" id="source"></span>&emsp;
+							<b>关键词：</b> <span title="关键词" class="layui-badge-rim" style="color: #00ff7f" id="keywords"></span><br/>
+							<b>PV：</b> <span title="访问量" class="layui-badge-rim" style="color: #aaaaff" id="p_v">0</span>&emsp;
+							<b>RV：</b> <span title="阅读量" class="layui-badge-rim" style="color: #55aa00" id="r_v">0</span>&emsp;
+							<b>OV：</b> <span title="在线量" class="layui-badge-rim" style="color: #ff557f" id="o_v">0</span>&emsp;
+							<b>CV：</b> <span title="收藏量" class="layui-badge-rim" style="color: #5555ff" id="c_v">0</span>&emsp;
+							<b>LV：</b> <span title="点赞量" class="layui-badge-rim" style="color: #ff00ff" id="l_v">0</span>&emsp;
+							<b>TV：</b> <span title="受踩量" class="layui-badge-rim" style="color: #55557f" id="t_v">0</span>&emsp;
+							<b>DV：</b> <span title="评论量" class="layui-badge-rim" style="color: #ff5500" id="d_v">0</span>
+						</h4> -->
+						<h4 class="layui-timeline-title">
+							<b>所属位置：</b> <small title="所属位置" id="ha">293,65,294,65,294,47,379,47,379,65,393,65,393,227,293,227,293,65</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>描述：</b> <small title="描述" id="abstracts">不断丰富和发展“一国两制”在香港特别行政区的实践，保持香港长期繁荣稳定，是中国梦的重要组成部分，也是完善和发展中国特色社会主义制度，推进国家治理体系和治理能力现代化的必然要求。</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>正文：</b>
+							<small title="正文" id="tag_content">
+								<p>不断丰富和发展“一国两制”在香港特别行政区的实践,保持香港长期繁荣稳定，是中国梦的重要组成部分，也是完善和发展中国特色社会主义制度,推进国家治理体系和治理能力现代化的必然要求。</p>
+								<p>不断丰富和发展“一国两制”在香港特别行政区的实践,不断丰富和发展“一国两制”在香港特别行政区的实践,保持香港长期繁荣稳定，是中国梦的重要组成部分，也是完善和发展中国特色社会主义制度</p>
+							</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>缩略图源链接：</b> <small title="图源链接" id="website_thumbnail">http://epaper.tywbw.com/tyrb/20191115/page_03.jpg</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>PDF源链接：</b> <small title="PDF源链接" id="website_pdf">http://epaper.qyrb.com:7777/../../PDF/20191119/A07.pdf</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>图片源链接：</b> <small title="图片源链接" id="website_pictures">http://epaper.qyrb.com:7777/../../IMAGE/20191119/A05/A05_A05_0022.jpg#http://epaper.qyrb.com:7777/../../IMAGE/20191119/A05/A05_A05_0023.jpg#http://epaper.qyrb.com:7777/../../IMAGE/20191119/A05/A05_A05_0024.jpg</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>图片描述：</b>
+							<small title="图片描述" id="pictures_description">
+								小孩子正在带领志愿者观看他们村的新变化,孩子说这两年我们村越来越漂亮了。（张晓菲 摄）#
+								小朋友正在认真参与耳语传真游戏。（张晓菲 摄）# 志愿者正在教小朋友学习《弟子规》。（陈祖业 摄）
+							</small>
+						</h4>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/html" id="tableBar">
+</script>
+@}

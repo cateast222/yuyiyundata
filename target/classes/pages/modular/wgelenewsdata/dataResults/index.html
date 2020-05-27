@@ -1,0 +1,150 @@
+@layout("/common/_container.html",{js:["/assets/modular/wgelenewsdata/dataResults/index.js"],css:["/assets/common/css/global.css"]}){
+<div class="layui-body-header">
+	<span class="layui-body-header-title">电子报纸归档</span>
+</div>
+
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-form toolbar">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<input id="datasiCondition" class="layui-input" type="search"
+									placeholder="报纸名称" autocomplete="off" />
+							</div>
+							<div class="layui-inline">
+                                <input id="pubTime" class="layui-input" type="text" placeholder="发布时间"/>
+                            </div>
+							<div class="layui-inline">
+								<button id="datasiBtnSearch" class="layui-btn icon-btn">
+									<i class="layui-icon">&#xe615;</i>搜索
+								</button>
+							</div>
+						</div>
+					</div>
+					<table class="layui-table" id="datasiTable"
+						lay-filter="datasiTable"></table>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-form toolbar">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<input id="wgEleNewsDataCondition" class="layui-input"
+									type="search" placeholder="新闻标题" autocomplete="off" />
+							</div>
+							<div class="layui-inline">
+								<button id="wgEleNewsDataBtnSearch" class="layui-btn icon-btn">
+									<i class="layui-icon">&#xe615;</i>搜索
+								</button>
+							</div>
+						</div>
+					</div>
+					<table class="layui-table" id="wgEleNewsDataTable"
+						lay-filter="wgEleNewsDataTable"></table>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-col-sm4 layui-col-md4 layui-col-lg4">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-timeline-content layui-text">
+						<h4 class="layui-timeline-title">
+							<b>前置标题：</b>
+							<small title="前置标题" id="pretitlt">我省“两步申报”通关改革启动 </small>
+						</h4>
+						<h3 class="layui-timeline-title">
+							<b>标题：</b> 
+							<small title="标题" id="title">更符合企业级开发的管理系统</small>&emsp; 
+							<span class="layui-badge-rim"><a target="_blank" href="" title="" id="url">原文链接</a></span>
+						</h3>
+						<h4 class="layui-timeline-title">
+							<b>副标题：</b>
+							<small title="副标题" id="subtitle">最新独创领域驱动设计 + 数据驱动模式代码生成器</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>报纸媒体：</b>
+							<span title="报纸媒体" class="layui-badge-rim" style="color: #393D49" id="dsiName">辽沈晚报</span>&emsp; 
+							<b>语种：</b>
+							<span title="语种" class="layui-badge-rim" style="color: #FFB800" id="language">中文</span>&emsp;
+							<b>地区：</b>
+							<span title="地区" class="layui-badge-rim" style="color: #c2c2c2" id="region">中国</span>&emsp;
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>所属版面：</b>
+							<span title="所属版面" class="layui-badge-rim" style="color: #5FB878" id="page">第A1版</span>&emsp; 
+							<b>版面名称：</b>
+							<span title="版面名称" class="layui-badge-rim" style="color: #2F4056" id="pageName">鄂州要闻</span>&emsp;
+							<b>发布日期：</b>
+							<span title="发布日期" class="layui-badge-rim layui-bg-orange" id="pubtime">2019-11-19 11:13:54</span>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>所属页面：</b>
+							<span title="所属页面" class="layui-badge-rim layui-bg-green" id="number">A1</span>&emsp; 
+							<b>所属频道：</b>
+							<span title="所属频道" class="layui-badge-rim layui-bg-cyan" id="channel">鄂州要闻</span>&emsp;
+							<b>频道排序：</b>
+							<span title="频道排序" class="layui-badge-rim layui-bg-blue" id="paperCount">2</span>&emsp; 
+							<b>头条头版：</b>
+							<span title="头条头版" class="layui-badge" id="frontPage">是/否</span>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>新闻作者：</b>
+							<span title="新闻作者" class="layui-badge-rim" style="color: #FF5722" id="author">山西日报 记者李栋</span>&emsp; 
+							<b>新闻编辑：</b>
+							<span title="新闻编辑" class="layui-badge-rim" style="color: #01AAED" id="editor">记者梁涛、丁洁、阎轶洁</span>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>新闻所属位置：</b>
+							<small title="新闻所属位置" id="ha">293,65,294,65,294,47,379,47,379,65,393,65,393,227,293,227,293,65</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>新闻描述：</b>
+							<small title="新闻描述" id="abstracts">不断丰富和发展“一国两制”在香港特别行政区的实践，保持香港长期繁荣稳定，是中国梦的重要组成部分，也是完善和发展中国特色社会主义制度，推进国家治理体系和治理能力现代化的必然要求。</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>新闻正文：</b>
+							<small title="新闻正文" id="tagContent">
+								<p>不断丰富和发展“一国两制”在香港特别行政区的实践,保持香港长期繁荣稳定，是中国梦的重要组成部分，也是完善和发展中国特色社会主义制度,推进国家治理体系和治理能力现代化的必然要求。</p>
+								<p>不断丰富和发展“一国两制”在香港特别行政区的实践,不断丰富和发展“一国两制”在香港特别行政区的实践,保持香港长期繁荣稳定，是中国梦的重要组成部分，也是完善和发展中国特色社会主义制度</p>
+							</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>缩略图源链接：</b>
+							<small title="缩略图源链接" id="websiteThumbnail">http://epaper.tywbw.com/tyrb/20191115/page_03.jpg</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>新闻PDF源链接：</b>
+							<small title="新闻PDF源链接" id="websitePdf">http://epaper.qyrb.com:7777/../../PDF/20191119/A07.pdf</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>新闻图片源链接：</b>
+							<small title="新闻图片源链接" id="websitePictures">http://epaper.qyrb.com:7777/../../IMAGE/20191119/A05/A05_A05_0022.jpg；http://epaper.qyrb.com:7777/../../IMAGE/20191119/A05/A05_A05_0023.jpg#http://epaper.qyrb.com:7777/../../IMAGE/20191119/A05/A05_A05_0024.jpg</small>
+						</h4>
+						<h4 class="layui-timeline-title">
+							<b>新闻图片描述：</b>
+							<small title="新闻图片描述" id="picturesDescription">
+								小孩子正在带领志愿者观看他们村的新变化,孩子说这两年我们村越来越漂亮了。（张晓菲 摄）#
+								小朋友正在认真参与耳语传真游戏。（张晓菲 摄）# 志愿者正在教小朋友学习《弟子规》。（陈祖业 摄）</small>
+						</h4>
+						<!-- <ul>
+							<li class="text-danger"><h4>标题：</h4> <small>最新独创领域驱动设计
+									+ 数据驱动模式代码生成器</small></li>
+							<li class="text-danger">新增高级表单demo，高级表格demo，增加文件上传，图片上传，富文本编辑框功能</li>
+						</ul> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/html" id="tableBar">
+</script>
+@}

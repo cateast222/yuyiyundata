@@ -1,0 +1,103 @@
+@layout("/common/_container.html",{bg:"bg-white",js:["/assets/modular/system/dataci/config.js"]}){
+
+<div class="layui-fluid " style="">
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<button type="button" class="layui-btn layui-btn-fluid">${summary}</button>
+			<hr>
+			<form id="dataciForm" lay-filter="dataciForm"
+				class="layui-form layui-form-pane">
+				<input name="dsiUuid" id="dsiUuid" type="hidden" value="${dsiUuid}" /> <input
+					name="key" id="key" type="hidden" value="${key}" />
+				<div class="layui-form-item">
+					<label class="layui-form-label">原数据解密<span
+						style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="orgDataDec" id="orgDataDec"
+							placeholder="MD5；BASE64；\u；AES；DES-密码；RC4；Rabbit；TripleDes"
+							type="text" class="layui-input"   />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">提取规则<span
+						style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="dataExtRul" id="dataExtRul"
+							placeholder="Text-正则；Xml-xpath；Html-xpath；Json-jsonpath"
+							type="text" class="layui-input"   />
+					</div>
+					<div class="layui-input-block">
+						<select name="level" id="level">
+							<option value="-1">不选···</option>
+							<option value="news.">详情页</option>
+							<option value="newslist_List.">新闻列表</option>
+							<option value="newslist_Page.">列表页</option>
+							<option value="channel_List.">频道列表</option>
+							<option value="channel_Page.">频道页</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">清洗解密<span
+						style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="dataCleanDec" id="dataCleanDec"
+							placeholder="MD5；BASE64；\u；AES；DES-密码；RC4；Rabbit；TripleDes"
+							type="text" class="layui-input"   />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">清洗归则<span
+						style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="dataCleanReg" id="dataCleanReg" placeholder="清洗数据的正则(Replace:替换;Match:匹配;Match-Replace:匹配替换<-MR->)"
+							type="text" class="layui-input"   />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">连接参数<span
+						style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="dataLink" id="dataLink" placeholder="数据连接参数"
+							type="text" class="layui-input"   />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">前置参数<span
+						style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="preData" id="preData" placeholder="数据前置参数"
+							type="text" class="layui-input"   />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">后置参数<span
+						style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="posreData" id="posreData" placeholder="数据后置参数"
+							type="text" class="layui-input"   />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">响应类型<span
+						style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<select name="retDataType" id="retDataType">
+							<option value="-1">选择响应类型···</option>
+							<option value="1">TEXT</option>
+							<option value="2">XML</option>
+							<option value="3">HTML</option>
+							<option value="4">JSON</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item text-center">
+					<button class="layui-btn layui-btn-primary" type="button"
+						ew-event="closeDialog">取消</button>
+					<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+@}

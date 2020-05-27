@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+    namespace="com.yuyiyun.YYdata.modular.datasource.mapper.DataSourceMapper">
+ 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap"
+        type="com.yuyiyun.YYdata.modular.datasource.entity.DataSource">
+        <id column="uuid" property="uuid" />
+        <result column="chs_name" property="chsName" />
+        <result column="org_name" property="orgName" />
+        <result column="website_url" property="websiteUrl" />
+        <result column="website_name" property="websiteName" />
+        <result column="platform" property="platform" />
+        <result column="provider" property="provider" />
+        <result column="country" property="country" />
+        <result column="region" property="region" />
+        <result column="language" property="language" />
+        <result column="encoded" property="encoded" />
+        <result column="proxy" property="proxy" />
+        <result column="remark" property="remark" />
+        <result column="state" property="state" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+ 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        uuid AS "uuid"
+        ,dsi_uuid AS "dsiUuid"
+    </sql>
+ 
+    <select id="listFromNewspaper" resultType="map">
+        SELECT
+        a.uuid AS 'uuid',
+        a.chs_name AS 'chsName',
+        a.website_url AS
+        'websiteUrl',
+        a.remark AS 'remark',
+        ( SELECT COUNT( b.uuid ) FROM
+        data_newspaper b WHERE a.uuid =
+        b.data_source ) AS 'newpaperCount',
+        (
+        SELECT date_format( MAX( b.publish ), '%Y-%m-%d' ) FROM
+        data_newspaper
+        b WHERE a.uuid = b.data_source ) AS 'lastAcquTime'
+        FROM
+        data_source a
+        WHERE
+        a.platform = '1'
+        <if test="dataSource.condition != null and dataSource.condition !=''">
+            AND a.chs_name like CONCAT('%',#{dataSource.condition},'%')
+        </if>
+ 		<if test="dataSource.provider != null and dataSource.provider !=''">
+            AND a.provider = #{dataSource.provider}
+        </if>
+        <!-- SELECT a.uuid AS 'uuid', a.chs_name AS 'chsName', a.website_url AS 
+            'websiteUrl', a.remark AS 'remark', COUNT( b.uuid ) 'newpaperCount', date_format( 
+            MAX( b.publish ), '%Y-%m-%d' ) 'lastAcquTime' FROM data_source a JOIN data_newspaper 
+            b ON a.uuid = b.data_source AND a.platform = 1 <if test="condition != null 
+            and condition !=''"> AND a.chs_name like CONCAT('%',#{condition},'%') </if> 
+            GROUP BY a.uuid -->
+    </select>
+</mapper>

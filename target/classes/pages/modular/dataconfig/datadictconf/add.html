@@ -1,0 +1,94 @@
+@layout("/common/_container.html",{js:["/assets/modular/dataconfig/datadictconf/add.js"]}){
+
+<div class="layui-body-header">
+	<span class="layui-body-header-title">新增数据字典配置</span>
+</div>
+
+<div class="layui-fluid " style="">
+        <div class="layui-card"  style="margin: 10px;">
+            <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" action="">
+                    <input name="uuid" id="uuid" type="text" style="display: none">
+                    <!-- <div class="layui-form-item">
+                        <label class="layui-form-label">类型<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="type" id="type" lay-verify="required" placeholder="请输入类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">上级uuid<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="parentUuid" id="parentUuid" lay-verify="required" placeholder="请输入上级uuid" autocomplete="off" class="layui-input">
+                        </div>
+                    </div> -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">编号<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="code" id="code" lay-verify="required" placeholder="请输入编号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">名称<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" id="name" lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">排序</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="sort" id="sort" placeholder="请输入排序" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">描述</label>
+                        <div class="layui-input-block">
+                            <textarea name="summary" id="summary" placeholder="请输入描述"  class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+                    <!-- <div class="layui-form-item">
+                        <label class="layui-form-label">数据<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="datas" id="datas" lay-verify="required" placeholder="请输入数据" autocomplete="off" class="layui-input">
+                        </div>
+                    </div> -->
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <textarea name="remark" id="remark" placeholder="请输入备注"  class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+                    <!-- <div class="layui-form-item">
+                        <label class="layui-form-label">状态<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="state" id="state" lay-verify="required" placeholder="请输入状态" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">创建者<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="creator" id="creator" lay-verify="required" placeholder="请输入创建者" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">创建时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="createTime" id="createTime" lay-verify="required" placeholder="请输入创建时间" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">更新时间<span style="color: red;">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="updateTime" id="updateTime" lay-verify="required" placeholder="请输入更新时间" autocomplete="off" class="layui-input">
+                        </div>
+                    </div> -->
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formBtn">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@}

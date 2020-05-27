@@ -1,0 +1,66 @@
+@layout("/common/_container.html",{bg:"bg-white",js:["/assets/modular/newspaper/newspaper/add_edit.js"]}){
+
+<div class="layui-fluid " style="">
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<form id="newspaperForm" lay-filter="newspaperForm" class="layui-form layui-form-pane">
+				<input name="uuid" id="uuid" type="hidden" value="${uuid}" /> <input name="dataSource" id="dataSource"
+					type="hidden" value="${dataSource}" />
+				<div class="layui-form-item">
+					<label class="layui-form-label">中文名称<span style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="chsName" id="chsName" placeholder="中文名称" type="text" class="layui-input"
+							readonly />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">原名称<span style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="orgName" id="orgName" placeholder="原名称" type="text" class="layui-input"
+							readonly />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">发布日期<span style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="publish" id="publish" placeholder="请选择发布日期" type="text" class="layui-input"
+							lay-verify="required" required />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">URL<span style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<input name="url" id="url" placeholder="请输入URL" type="text" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">封面<span style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<input name="cover" id="cover" placeholder="请输入封面" type="text" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">状态<span style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<select id="state" name="state" lay-search="">
+							@for(item in newsState){
+							<option value="${item.code}">${item.name}</option> 
+							@}
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-block">
+						<textarea id="remark" name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+					</div>
+				</div>
+				<div class="layui-form-item text-center">
+					<button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+					<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+@}

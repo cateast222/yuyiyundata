@@ -1,0 +1,72 @@
+@layout("/common/_container.html",{js:["/assets/modular/datasource/newspaper/index.js"]}){
+<div class="layui-body-header">
+	<span class="layui-body-header-title">电子报纸数据源管理</span>
+</div>
+
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-form toolbar">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<input id="condition" class="layui-input" type="search"
+									placeholder="名称" autocomplete="off" />
+							</div>
+							<div class="layui-inline">
+								<select id="state" name="state" lay-search>
+									<option value="">状态</option>
+									@for(item in dataSourceState){
+									<option value="${item.code}">${item.name}</option> 
+									@}
+								</select>
+							</div>
+							<div class="layui-inline">
+								<select id="provider" name="provider" lay-search>
+									<option value="">提供方</option>
+									@for(item in provider){
+									<option value="${item.code}">${item.name}</option> 
+									@}
+								</select>
+							</div>
+							<div class="layui-inline">
+								<button id="btnSearch" class="layui-btn icon-btn">
+									<i class="layui-icon">&#xe615;</i>搜索
+								</button>
+								@if(shiro.hasPermission("/datasource/newspaper/addItem")){
+								<button id="btnAdd" class="layui-btn icon-btn">
+									<i class="layui-icon">&#xe654;</i>新增
+								</button>
+								@}
+								 <!-- <button id="btnMigration" class="layui-btn icon-btn">
+									<i class="layui-icon">&#xe670;</i>数据迁移
+									<i class="layui-icon">&#xe670;</i>电子报纸配置数据迁移
+									<i class="layui-icon">&#xe670;</i>电子报纸新闻迁移
+								</button>  -->
+							</div>
+						</div>
+					</div>
+					<table class="layui-table" id="datasourceTable"
+						lay-filter="datasourceTable"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/html" id="dataconfigBar">
+    <a style="color:#FF3333;" lay-event="dataconfig">{{d.org_name}}</a>
+</script>
+<script type="text/html" id="sourcedictBar">
+    <a style="color:#01AAED;" lay-event="sourcedict">{{d.chs_name}}</a>
+</script>
+<script type="text/html" id="tableBar">
+	@if(shiro.hasPermission("/datasource/newspaper/editItem")){
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    @}
+    @if(shiro.hasPermission("/datasource/newspaper/delete")){
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+    @}
+</script>
+@}

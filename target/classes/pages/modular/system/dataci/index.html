@@ -1,0 +1,32 @@
+@layout("/common/_container.html",{js:["/assets/modular/system/dataci/index.js"]}){
+<div class="layui-body-header">
+	<span class="layui-body-header-title">配置信息管理<span style="color: #1E9FFF;">${websiteName}</span></span>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-form toolbar">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <input type="hidden" id="datasiUuid" value="${datasiUuid}"/>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn icon-btn"><i class="layui-icon">&#xe663;</i>${websiteName}</button>
+                                <button id="btnBack" class="layui-btn icon-btn layui-btn-warm"><i class="layui-icon">&#x1006;</i>关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="layui-table" id="dataciTable" lay-filter="dataciTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="tableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe631;</i>配置</a>
+</script>
+@}

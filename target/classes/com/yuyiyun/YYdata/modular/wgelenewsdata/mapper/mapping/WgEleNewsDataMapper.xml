@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.yuyiyun.YYdata.modular.wgelenewsdata.mapper.WgEleNewsDataMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap"
+		type="com.yuyiyun.YYdata.modular.wgelenewsdata.entity.WgEleNewsData">
+		<id column="uuid" property="uuid" />
+		<result column="dsi_uuid" property="dsiUuid" />
+		<result column="dsi_name" property="dsiName" />
+		<result column="title" property="title" />
+		<result column="url" property="url" />
+		<result column="pretitlt" property="pretitlt" />
+		<result column="subtitle" property="subtitle" />
+		<result column="pubtime" property="pubtime" />
+		<result column="author" property="author" />
+		<result column="editor" property="editor" />
+		<result column="abstracts" property="abstracts" />
+		<result column="content" property="content" />
+		<result column="tag_content" property="tagContent" />
+		<result column="website_pictures" property="websitePictures" />
+		<result column="local_pictures" property="localPictures" />
+		<result column="pictures_description"
+			property="picturesDescription" />
+		<result column="language" property="language" />
+		<result column="website_thumbnail" property="websiteThumbnail" />
+		<result column="local_thumbnail" property="localThumbnail" />
+		<result column="website_pdf" property="websitePdf" />
+		<result column="local_pdf" property="localPdf" />
+		<result column="ha" property="ha" />
+		<result column="channel" property="channel" />
+		<result column="number" property="number" />
+		<result column="page" property="page" />
+		<result column="page_name" property="pageName" />
+		<result column="paper_count" property="paperCount" />
+		<result column="front_page" property="frontPage" />
+		<result column="insert_time" property="insertTime" />
+		<result column="remark" property="remark" />
+		<result column="state" property="state" />
+		<result column="creator" property="creator" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		uuid AS "uuid"
+		,dsi_uuid AS "dsiUuid"
+		,dsi_name AS "dsiName"
+		,title AS "title"
+		,url AS "url"
+		,pretitlt AS "pretitlt"
+		,subtitle AS
+		"subtitle"
+		,pubtime AS "pubtime"
+		,author AS "author"
+		,editor AS "editor"
+		,abstracts AS "abstracts"
+		,content AS "content"
+		,tag_content AS
+		"tagContent"
+		,website_pictures AS "websitePictures"
+		,local_pictures AS
+		"localPictures"
+		,pictures_description AS "picturesDescription"
+		,language AS "language"
+		,website_thumbnail AS "websiteThumbnail"
+		,local_thumbnail AS "localThumbnail"
+		,website_pdf AS "websitePdf"
+		,local_pdf AS "localPdf"
+		,ha AS "ha"
+		,channel AS "channel"
+		,number AS
+		"number"
+		,page AS "page"
+		,page_name AS "pageName"
+		,paper_count AS
+		"paperCount"
+		,front_page AS "frontPage"
+		,insert_time AS "insertTime"
+		,remark AS "remark"
+		,state AS "state"
+		,creator AS "creator"
+		,create_time
+		AS "createTime"
+		,update_time AS "updateTime"
+	</sql>
+
+	<select id="getDateArchive" resultType="map">
+		select
+		date_format( pubtime, '%Y-%m-%d' ) AS 'pubtime',
+		dsi_uuid AS 'dsiUuid',
+		dsi_name AS 'dsiName',
+		creator AS 'creator',
+		count(*) AS 'dataVolume' 
+		from wg_ele_news_data where 1 = 1
+		<if
+			test="pubTime != null and pubTime !=''">
+			and (pubtime between CONCAT(#{pubTime},' 00:00:00') and
+			CONCAT(#{pubTime},' 23:59:59'))
+		</if>
+		<if test="condition != null and condition !=''">
+			<!-- and dsi_name like CONCAT('%',#{condition},'%') -->
+			and dsi_name = #{condition}
+		</if>
+		GROUP BY date_format( pubtime, '%Y-%m-%d' ),dsi_name
+	</select>
+</mapper>

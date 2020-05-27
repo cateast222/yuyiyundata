@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.yuyiyun.YYdata.modular.newspaper.mapper.DataNewspaperMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap"
+		type="com.yuyiyun.YYdata.modular.newspaper.entity.DataNewspaper">
+		<id column="uuid" property="uuid" />
+		<result column="chs_name" property="chsName" />
+		<result column="org_name" property="orgName" />
+		<result column="full_name" property="fullName" />
+		<result column="publish" property="publish" />
+		<result column="type" property="type" />
+		<result column="url" property="url" />
+		<result column="cover" property="cover" />
+		<result column="data_source" property="dataSource" />
+		<result column="provider" property="provider" />
+		<result column="remark" property="remark" />
+		<result column="state" property="state" />
+		<result column="creator" property="creator" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		uuid AS 'uuid',
+		data_source AS 'dataSource'
+	</sql>
+
+	<!-- 电子报纸主页获取电子报纸列表 -->
+	<select id="listFromNewspaper" resultType="map">
+		SELECT
+		a.uuid AS 'uuid',
+		a.chs_name AS 'chsName',
+		a.full_name AS
+		'fullName',
+		date_format( a.publish, '%Y-%m-%d' ) AS 'publish',
+		a.url AS
+		'url',
+		a.cover AS 'cover',
+		a.remark AS 'remark',
+		a.state AS 'state',
+		(
+		SELECT COUNT( uuid ) FROM data_news b WHERE a.uuid = b.data_newspaper
+		)
+		AS 'newsCount'
+		FROM
+		data_newspaper a
+		WHERE 1 = 1
+		<if test="dataSource!=null and dataSource!=0">
+			AND a.data_source = #{dataSource}
+		</if>
+		<if test="condition != null and condition !=''">
+			AND a.full_name like CONCAT('%',#{condition},'%')
+			<!-- AND a.chs_name = #{condition} -->
+		</if>
+		ORDER BY a.publish DESC
+	</select>
+
+	<!-- 报纸新闻主页获取电子报纸列表 -->
+	<select id="listFromNews" resultType="map">
+		SELECT
+		a.uuid AS 'uuid',
+		a.chs_name AS 'chsName',
+		date_format( a.publish,
+		'%Y-%m-%d' ) AS 'publish',
+		a.url AS 'url',
+		a.creator AS 'creator',
+		a.state AS 'state',
+		(
+		SELECT COUNT( uuid ) FROM data_news b WHERE a.uuid
+		= b.data_newspaper
+		) AS 'newsCount'
+		FROM
+		data_newspaper a
+		WHERE 1 = 1
+		<if test="publish != null and publish !=''">
+			AND a.publish = #{publish}
+		</if>
+		<if test="condition != null and condition !=''">
+			AND a.full_name like CONCAT('%',#{condition},'%')
+			<!-- AND a.chs_name = #{condition} -->
+		</if>
+		ORDER BY a.publish DESC
+	</select>
+
+	<!-- 按归档日期分页查询电子报纸数据 -->
+	<select id="selectArchive" resultType="map">
+		SELECT
+		dn.uuid AS 'uuid',
+		dn.chs_name AS 'chsName',
+		date_format( dn.publish, '%Y-%m-%d' ) AS 'pubtime',
+		dn.full_name AS 'fullName',
+		dn.update_time AS 'insertTime'
+		FROM
+		data_apiauth api,
+		data_newspaper dn,
+		data_source ds
+		WHERE
+		ds.uuid = api.data_source
+		AND ds.state = 5
+		AND api.sys_user = #{sysUser}
+		AND api.validity >= NOW( )
+		AND dn.data_source = api.data_source
+		AND dn.state = 1
+		AND (dn.update_time between CONCAT(#{archiveDate},'
+		00:00:00') AND
+		CONCAT(#{archiveDate},' 23:59:59'))
+	</select>
+</mapper>
