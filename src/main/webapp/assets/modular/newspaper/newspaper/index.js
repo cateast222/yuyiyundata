@@ -145,7 +145,8 @@ layui.use(['admin', 'layer', 'table', 'ax'], function () {
 	Datasourec.search = function (curr) {
 		table.reload(Datasourec.tableId, {
 			where: {
-				'condition': $("#datasourecCondition").val()
+				'condition': $("#datasourecCondition").val(),
+				'provider': $("#provider").val()
 			},
 			page : {
 				curr : curr// 重新从第 1 页开始

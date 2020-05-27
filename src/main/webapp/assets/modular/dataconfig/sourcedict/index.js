@@ -1,14 +1,17 @@
-layui.use(['form','table', 'layer', 'jquery','fast'], function() {
+layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 	var layer = layui.layer,
 		table = layui.table,
 		$ = layui.jquery,
 		fast = layui.fast;
-	
+
 	var tableIns = table.render({
-		elem: '#dataDictTable',
+		elem: '#sourceDictTable',
 		method: 'post',
-		where: {'parentUuid':'1'},
-		url: Feng.ctxPath + '/datadict/list', // 数据接口
+		where: {
+			'type': fast.getUrlParam('type'),
+			'dataSource': fast.getUrlParam('dataSource')
+		},
+		url: Feng.ctxPath + '/sourcedict/sourceDictList', // 数据接口
 		page: true, // 开启分页
 		toolbar: '#toolBar', // 开启工具栏，此处显示默认图标，可以自定义模板，详见文档
 		cols: [
@@ -18,11 +21,9 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 					fixed: 'left'
 				},
 				{
-					field: 'uuid',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: 'uuid'
+					field : 'uuid',
+					hide : true,
+					title : 'id'
 				},
 				{
 					field: 'name',
@@ -34,67 +35,14 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 					field: 'code',
 					sort: true,
 					align: 'center',
-					title: '编号',
-					toolbar: '#codeBar',
+					title: '编号'
 				},
 				{
 					field: 'type_name',
+					hide: true,
 					sort: true,
 					align: 'center',
 					title: '类型'
-				},
-				{
-					field: 'summary',
-					sort: true,
-					align: 'center',
-					title: '描述'
-				},
-				{
-					field: 'datas',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: '数据'
-				},
-				{
-					field: 'sort',
-					sort: true,
-					align: 'center',
-					title: '排序'
-				},
-				{
-					field: 'remark',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: '备注'
-				},
-				{
-					field: 'state',
-					sort: true,
-					align: 'center',
-					title: '状态'
-				},
-				{
-					field: 'creator',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: '创建者'
-				},
-				{
-					field: 'createTime',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: '创建时间'
-				},
-				{
-					field: 'updateTime',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: '更新时间'
 				},
 				{
 					fixed: 'right',
@@ -106,18 +54,18 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 			]
 		]
 	});
-	
-	var search = function() {
+
+	var search = function(curr) {
 		tableIns.reload({
-			where: fast.getFormData('dataDictForm'),
+			where: fast.getFormData('sourceDictForm'),
 			page: {
-				curr: 1
+				curr: curr
 			}
 		});
 	}
 
 	// 监听头工具栏事件
-	table.on('toolbar(dataDictTable)', function(obj) {
+	table.on('toolbar(sourceDictTable)', function(obj) {
 		var checkStatus = table.checkStatus(obj.config.id),
 			data = checkStatus.data; // 获取选中的数据
 
@@ -125,13 +73,14 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 			// 新增数据
 			layer.open({
 				type: 2,
-				title: "新增数据字典",
+				title: "新增数据源字典",
 				shadeClose: false,
 				shade: 0.3,
 				area: ["45%", "75%"],
-				content: Feng.ctxPath + '/datadict/add',
+				content: Feng.ctxPath + '/sourcedict/add?parentUuid=1&type=' + fast.getUrlParam('type') + '&dataSource=' +
+					fast.getUrlParam('dataSource'),
 				end: function() {
-					search();
+					search($(".layui-laypage-em:eq(0)").next().html());
 				}
 			});
 		} else if (obj.event === 'delete') {
@@ -150,16 +99,16 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 					// 异步请求
 					$.ajax({
 						type: 'post',
-						url: Feng.ctxPath + '/datadict/deleteBatch',
+						url: Feng.ctxPath + '/sourcedict/deleteBatch',
 						data: {
 							ids: ids
 						},
 						dataType: 'json',
 						success: function(res) {
 							layer.msg(res.message, {
-									icon: 1
-								});
-							search();
+								icon: 1
+							});
+							search(1);
 						}
 					});
 				});
@@ -168,7 +117,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 	});
 
 	// 监听行工具事件
-	table.on('tool(dataDictTable)', function(obj) { // 注：tool
+	table.on('tool(sourceDictTable)', function(obj) { // 注：tool
 		/**
 		 * 是工具条事件名，test
 		 * 是 table
@@ -183,7 +132,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 			layer.confirm('确定要删除吗？', function() {
 				$.ajax({
 					type: 'post',
-					url: Feng.ctxPath + '/datadict/delete',
+					url: Feng.ctxPath + '/sourcedict/delete',
 					data: {
 						uuid: data.uuid
 					},
@@ -192,7 +141,7 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 						layer.msg(res.message, {
 							icon: 1
 						});
-						search();
+						search(1);
 					}
 				});
 			});
@@ -200,25 +149,14 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 			// 修改
 			layer.open({
 				type: 2,
-				title: "修改字典数据",
+				title: "配置数据",
 				shadeClose: false,
 				shade: 0.3,
 				area: ["45%", "75%"],
-				content: Feng.ctxPath + '/datadict/edit?uuid=' + data.uuid,
+				content: Feng.ctxPath + '/sourcedict/edit?dataDict=' + data.dataDict + '&dataSource=' +
+				data.dataSource,
 				end: function() {
-					search();
-				}
-			});
-		}else if (layEvent === 'datadictconf') {
-			layer.open({
-				type: 2,
-				title: "字典配置数据管理",
-				shadeClose: false,
-				shade: 0.3,
-				area: ["100%", "100%"],
-				content: Feng.ctxPath + '/datadictconf?parentUuid=' + data.uuid,
-				end: function() {
-					search();
+					search($(".layui-laypage-em:eq(0)").next().html());
 				}
 			});
 		}
@@ -226,12 +164,20 @@ layui.use(['form','table', 'layer', 'jquery','fast'], function() {
 
 	// 搜索
 	$('#searchBtn').on('click', function() {
-		search();
+		search(1);
 	});
 
 	// 重置搜索条件
 	$('#resetBtn').on('click', function() {
-		document.getElementById('dataDictForm').reset();
-		search();
-	});	
+		document.getElementById('sourceDictForm').reset();
+		search(1);
+	});
+
+	// 关闭页面
+	$('#backBtn').click(function() {
+		// 获取当前iframe层的索引
+		var index = parent.layer.getFrameIndex(window.name);
+		// 关闭弹窗
+		parent.layer.close(index);
+	});
 });

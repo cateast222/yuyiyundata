@@ -296,15 +296,15 @@ public class DataSourceController {
 	/**
 	 * :电子报纸主页获取数据源列表
 	 * 
-	 * @param condition
+	 * @param param
 	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/listFromNewspaper")
 	@ResponseBody
-	public LayuiPageInfo listFromNewspaper(String condition) {
+	public LayuiPageInfo listFromNewspaper(DataSourceParam param) {
 		Page page = LayuiPageFactory.defaultPage();
-		List<Map<String, Object>> list = this.dataSourceService.listFromNewspaper(page, condition);
+		List<Map<String, Object>> list = this.dataSourceService.listFromNewspaper(page, param);
 		page.setRecords(list);
 		return LayuiPageFactory.createPageInfo(page);
 	}

@@ -9,8 +9,21 @@ import org.springframework.web.util.HtmlUtils;
 public class HtmlUtil {
 
 	public static void main(String[] args) {
-		String convertTag = convertTag("");
-		System.out.println(convertTag);
+		String html = "<div class=\"layui-form-item\">\r\n" + 
+				"							<label class=\"layui-form-label\">输入框</label>\r\n" + 
+				"							<div class=\"layui-input-block\">\r\n" + 
+				"								<input type=\"text\" name=\"title\" lay-verify=\"title\" autocomplete=\"off\" placeholder=\"请输入标题\" class=\"layui-input\">\r\n" + 
+				"							</div>\r\n" + 
+				"						</div>\r\n" + 
+				"<div class=\"layui-form-item\">\r\n" + 
+				"							<label class=\"layui-form-label\">单选框</label>\r\n" + 
+				"							<div class=\"layui-input-block\">\r\n" + 
+				"								<input type=\"radio\" name=\"sex\" value=\"男\" title=\"男\" checked=\"\">\r\n" + 
+				"								<input type=\"radio\" name=\"sex\" value=\"女\" title=\"女\">\r\n" + 
+				"							</div>\r\n" + 
+				"						</div>";
+		List<String> jxNodes = getJXNodes(html, "//div[@class='layui-form-item']");
+		System.out.println(jxNodes);
 	}
 
 	/**

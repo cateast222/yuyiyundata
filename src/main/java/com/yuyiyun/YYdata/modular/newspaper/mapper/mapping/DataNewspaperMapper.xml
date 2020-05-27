@@ -95,7 +95,7 @@
 		dn.full_name AS 'fullName',
 		dn.update_time AS 'insertTime'
 		FROM
-		api_data_auth api,
+		data_apiauth api,
 		data_newspaper dn,
 		data_source ds
 		WHERE

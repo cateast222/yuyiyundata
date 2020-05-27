@@ -14,8 +14,8 @@ import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
-import com.yuyiyun.YYdata.modular.datasource.entity.ApiDataAuth;
-import com.yuyiyun.YYdata.modular.datasource.mapper.ApiDataAuthMapper;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth;
+import com.yuyiyun.YYdata.modular.datasource.mapper.DataApiauthMapper;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
 
@@ -28,7 +28,7 @@ import cn.stylefeng.roses.core.util.ToolUtil;
  * @since 2020-04-07
  */
 @Service
-public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAuth> {
+public class DataApiauthService extends ServiceImpl<DataApiauthMapper, DataApiauth> {
 
 	/**
 	 * 分页查询列表
@@ -36,7 +36,7 @@ public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAu
 	 * @param dataAuth
 	 * @return
 	 */
-	public LayuiPageInfo selectPageList(ApiDataAuth apiDataAuth, int limit, int page) {
+	public LayuiPageInfo selectPageList(DataApiauth apiDataAuth, int limit, int page) {
 		// 封装Page对象
 		Page<Map<String, Object>> pageContext = new Page<Map<String, Object>>(page, limit);
 		// 设置排序
@@ -54,7 +54,7 @@ public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAu
 	 * 
 	 * @param dataAuth
 	 */
-	public int addDataAuth(ApiDataAuth apiDataAuth) {
+	public int addDataAuth(DataApiauth apiDataAuth) {
 		// 判断创建者是否存在并且设定
 		if (ToolUtil.isEmpty(apiDataAuth.getCreator())) {
 			apiDataAuth.setCreator(ShiroKit.getUser().getAccount());
@@ -68,7 +68,7 @@ public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAu
 	 * 
 	 * @param dataAuth
 	 */
-	public int editDataAuth(ApiDataAuth apiDataAuth) {
+	public int editDataAuth(DataApiauth apiDataAuth) {
 		// 设定更新时间
 		apiDataAuth.setUpdateTime(new Date());
 		return baseMapper.updateById(apiDataAuth);
@@ -80,7 +80,7 @@ public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAu
 	 * @param uuid
 	 * @return
 	 */
-	public ApiDataAuth getDetailsById(String uuid) {
+	public DataApiauth getDetailsById(String uuid) {
 		return baseMapper.selectById(uuid);
 	}
 
@@ -107,11 +107,11 @@ public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAu
 	/**
 	 * 根据精确查询
 	 * 
-	 * @param apiDataAuth
+	 * @param DataApiauth
 	 * @param columns
 	 * @return
 	 */
-	public List<Map<String, Object>> getEQsByApi(ApiDataAuth apiDataAuth, String... columns) {
+	public List<Map<String, Object>> getEQsByApi(DataApiauth apiDataAuth, String... columns) {
 		// 设置查询字段
 		String[] cs = { "uuid", "sys_user", "data_source", "validity" };
 		if (ToolUtil.isNotEmpty(columns) && columns.length > 0) {
@@ -121,10 +121,10 @@ public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAu
 		return this.selectListByEQ(apiDataAuth, cs);
 	}
 
-	public int addDataAuths(List<Long> ids, List<String> chsnames, ApiDataAuth apiDataAuth) {
+	public int addDataAuths(List<Long> ids, List<String> chsnames, DataApiauth apiDataAuth) {
 		int ret = 0;
 		for (int i = 0, length = ids.size(); i < length; i++) {
-			ApiDataAuth ada = new ApiDataAuth();
+			DataApiauth ada = new DataApiauth();
 			ada.setDataSource(ids.get(i));
 			ada.setSysUser(apiDataAuth.getSysUser());
 			List<Map<String, Object>> list = this.selectListByEQ(ada, "uuid");
@@ -135,7 +135,7 @@ public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAu
 				ret += this.addDataAuth(ada);
 			} else if (size == 1) {
 				Map<String, Object> map = list.get(0);
-				ApiDataAuth byId = this.getById((Serializable) map.get("uuid"));
+				DataApiauth byId = this.getById((Serializable) map.get("uuid"));
 				byId.setValidity(apiDataAuth.getValidity());
 				ret += this.editDataAuth(byId);
 			}
@@ -143,9 +143,9 @@ public class ApiDataAuthService extends ServiceImpl<ApiDataAuthMapper, ApiDataAu
 		return ret;
 	}
 
-	private List<Map<String, Object>> selectListByEQ(ApiDataAuth apiDataAuth, String... columns) {
+	private List<Map<String, Object>> selectListByEQ(DataApiauth apiDataAuth, String... columns) {
 		// 创建查询对象
-		QueryWrapper<ApiDataAuth> queryWrapper = new QueryWrapper<ApiDataAuth>().select(columns);
+		QueryWrapper<DataApiauth> queryWrapper = new QueryWrapper<DataApiauth>().select(columns);
 		// 添加查询条件
 		if (ToolsUtil.isNotEmpty(apiDataAuth.getCreator())) {
 			queryWrapper.eq("creator", apiDataAuth.getCreator());

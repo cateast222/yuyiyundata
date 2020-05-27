@@ -15,6 +15,14 @@
                                     autocomplete="off" />
                             </div>
                             <div class="layui-inline">
+								<select id="provider" name="provider" lay-search>
+									<option value="">提供方</option>
+									@for(item in provider){
+									<option value="${item.code}">${item.name}</option> 
+									@}
+								</select>
+							</div>
+                            <div class="layui-inline">
                                 <button id="datasourecBtnSearch" class="layui-btn icon-btn">
                                     <i class="layui-icon">&#xe615;</i>搜索
                                 </button>

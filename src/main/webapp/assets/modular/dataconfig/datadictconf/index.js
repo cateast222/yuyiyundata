@@ -8,7 +8,6 @@ layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 		elem: '#dataDictConfTable',
 		method: 'post',
 		where: {
-			'type': $("#type").val(),
 			'parentUuid': fast.getUrlParam('parentUuid')
 		},
 		url: Feng.ctxPath + '/datadictconf/list', // 数据接口
@@ -27,14 +26,6 @@ layui.use(['form', 'table', 'layer', 'jquery', 'fast'], function() {
 					align: 'center',
 					title: 'uuid'
 				},
-				/*{
-					field: 'type',
-					hide: true,
-					sort: true,
-					align: 'center',
-					title: '类型'
-				},
-				*/
 				{
 					field: 'code',
 					sort: true,

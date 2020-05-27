@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
 import com.yuyiyun.YYdata.modular.dataconfig.service.DataDictService;
+import com.yuyiyun.YYdata.modular.system.entity.Dict;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 
@@ -39,7 +41,7 @@ public class DataDictController {
 	 */
 	@GetMapping
 	public String index(Model model) {
-		model.addAttribute("type", "101");
+		model.addAttribute("dataDicType", dataDictService.getSysDict2DataDicType());
 		return PREFIX + "/index.html";
 	}
 
@@ -48,7 +50,7 @@ public class DataDictController {
 	 */
 	@GetMapping("/add")
 	public String add(Model model) {
-		model.addAttribute("type", "101");
+		model.addAttribute("dataDicType", dataDictService.getSysDict2DataDicType());
 		return PREFIX + "/add.html";
 	}
 
@@ -56,7 +58,8 @@ public class DataDictController {
 	 * 跳转到修改页面
 	 */
 	@GetMapping("/edit")
-	public String edit() {
+	public String edit(Model model) {
+		model.addAttribute("dataDicType", dataDictService.getSysDict2DataDicType());
 		return PREFIX + "/edit.html";
 	}
 

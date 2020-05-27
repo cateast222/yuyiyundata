@@ -18,9 +18,9 @@ import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
-import com.yuyiyun.YYdata.modular.datasource.entity.ApiDataAuth;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth;
 import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
-import com.yuyiyun.YYdata.modular.datasource.service.ApiDataAuthService;
+import com.yuyiyun.YYdata.modular.datasource.service.DataApiauthService;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 import com.yuyiyun.YYdata.modular.system.entity.Dict;
 import com.yuyiyun.YYdata.modular.system.service.UserService;
@@ -41,12 +41,12 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @Api(value = "数据源权限controller", tags = { "数据源权限操作接口" })
 @RequestMapping("/apidataauth")
-public class ApiDataAuthController {
+public class DataApiauthController {
 
 	private String PREFIX = "/modular/datasource";
 
 	@Autowired
-	private ApiDataAuthService apiDataAuthService;
+	private DataApiauthService apiDataAuthService;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -88,7 +88,7 @@ public class ApiDataAuthController {
 	 */
 	@RequestMapping("/list")
 	@ResponseBody
-	public LayuiPageInfo pageList(ApiDataAuth apiDataAuth, int limit, int page) {
+	public LayuiPageInfo pageList(DataApiauth apiDataAuth, int limit, int page) {
 		LayuiPageInfo info = apiDataAuthService.selectPageList(apiDataAuth, limit, page);
 		return info;
 	}
@@ -102,12 +102,12 @@ public class ApiDataAuthController {
 	@RequestMapping("/addItems")
 	@ResponseBody
 	public ResponseData addItems(@RequestParam(value = "ids[]", required = true) List<Long> ids,
-			@RequestParam(value = "chsnames[]", required = true) List<String> chsnames, ApiDataAuth apiDataAuth) {
+			@RequestParam(value = "chsnames[]", required = true) List<String> chsnames, DataApiauth apiDataAuth) {
 		apiDataAuthService.addDataAuths(ids,chsnames,apiDataAuth);
 		return ResponseData.success();
 	}
 
-	public ResponseData addItem(ApiDataAuth apiDataAuth) {
+	public ResponseData addItem(DataApiauth apiDataAuth) {
 		apiDataAuthService.addDataAuth(apiDataAuth);
 		return ResponseData.success();
 	}
@@ -120,7 +120,7 @@ public class ApiDataAuthController {
 	 */
 	@RequestMapping("/editItem")
 	@ResponseBody
-	public ResponseData editItem(ApiDataAuth apiDataAuth) {
+	public ResponseData editItem(DataApiauth apiDataAuth) {
 		apiDataAuthService.editDataAuth(apiDataAuth);
 		return ResponseData.success();
 	}
@@ -134,7 +134,7 @@ public class ApiDataAuthController {
 	@RequestMapping("/detail")
 	@ResponseBody
 	public ResponseData detail(String uuid) {
-		ApiDataAuth apiDataAuth = apiDataAuthService.getDetailsById(uuid);
+		DataApiauth apiDataAuth = apiDataAuthService.getDetailsById(uuid);
 		return ResponseData.success(apiDataAuth);
 	}
 
@@ -196,7 +196,7 @@ public class ApiDataAuthController {
 	@ApiOperation(value = "获取数据权限", notes = "动态查询调取数据权限")
 	@PostMapping("/getEQsByApi")
 	@ResponseBody
-	public ResponseData getValuesByApi(@RequestBody() ApiDataAuth apiDataAuth, String... columns) {
+	public ResponseData getValuesByApi(@RequestBody() DataApiauth apiDataAuth, String... columns) {
 		if (ToolsUtil.isPojoEmpty(apiDataAuth)) {
 			return ResponseData.error("参数异常，请检查！");
 		} else {

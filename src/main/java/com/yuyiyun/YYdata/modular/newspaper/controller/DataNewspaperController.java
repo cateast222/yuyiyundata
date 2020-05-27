@@ -56,7 +56,9 @@ public class DataNewspaperController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("")
-	public String index() {
+	public String index(Model model) {
+		List<Dict> provider = ConstantFactory.me().findInDict("数据源提供方");
+		model.addAttribute("provider", provider);
 		return PREFIX + "/newspaper/index.html";
 	}
 
