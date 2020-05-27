@@ -7,15 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yuyiyun.YYdata.core.util.ToolsUtil;
-import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
 import com.yuyiyun.YYdata.modular.dataconfig.service.DataDictService;
-import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
-import cn.stylefeng.roses.core.reqres.response.ResponseData;
 
 @Controller
 @RequestMapping("/dev")
