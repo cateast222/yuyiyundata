@@ -9,7 +9,6 @@
             <div class="layui-card-body">
                 <form class="layui-form layui-form-pane" action="">
                     <input name="uuid" id="uuid" type="text" style="display: none">
-					<input name="type" id="type" type="hidden" value="${type}" />
                     <!-- <div class="layui-form-item">
                         <label class="layui-form-label">类型<span style="color: red;">*</span></label>
                         <div class="layui-input-block">
@@ -34,6 +33,17 @@
                             <input type="text" name="name" id="name" lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
                         </div>
                     </div>
+                    <div class="layui-form-item" lay-search="">
+						<label class="layui-form-label">类型<span
+							style="color: red;"></span></label>
+						<div class="layui-input-block">
+							<select id="type" name="type" lay-search>
+								@for(item in dataDicType){
+								<option value="${item.code}">${item.name}</option> 
+								@}
+							</select>
+						</div>
+					</div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">排序</label>
                         <div class="layui-input-block">

@@ -23,9 +23,9 @@ import lombok.Data;
  * @since 2020-04-07
  */
 @Data
-@ApiModel(value = "ApiDataAuth",description = "调取数据权限实体")
-@TableName("api_data_auth")
-public class ApiDataAuth implements Serializable {
+@ApiModel(value = "DataApiauth",description = "调取数据权限实体")
+@TableName("data_apiauth")
+public class DataApiauth implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

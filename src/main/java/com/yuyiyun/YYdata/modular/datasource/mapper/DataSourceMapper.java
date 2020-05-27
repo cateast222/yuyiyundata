@@ -1,6 +1,7 @@
 package com.yuyiyun.YYdata.modular.datasource.mapper;
 
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
+import com.yuyiyun.YYdata.modular.datasource.model.param.DataSourceParam;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,6 @@ public interface DataSourceMapper extends BaseMapper<DataSource> {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	List<Map<String, Object>> listFromNewspaper(@Param("page") Page page,@Param("condition") String condition);
+	List<Map<String, Object>> listFromNewspaper(@Param("page") Page page,@Param("dataSource") DataSourceParam param);
 
 }

@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.HtmlUtils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
@@ -19,6 +19,8 @@ import com.yuyiyun.YYdata.core.util.HtmlUtil;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict;
 import com.yuyiyun.YYdata.modular.dataconfig.mapper.DataDictMapper;
+import com.yuyiyun.YYdata.modular.dataconfig.wrapper.DataDictWrapper;
+import com.yuyiyun.YYdata.modular.system.entity.Dict;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
@@ -40,13 +42,14 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 	 * @param dict
 	 * @return
 	 */
-	public LayuiPageInfo selectPageList(DataDict DataDict, int limit, int page) {
+	public LayuiPageInfo selectPageList(DataDict dataDict, int limit, int page) {
 		// 封装Page对象
 		Page<Map<String, Object>> pageContext = new Page<Map<String, Object>>(page, limit);
 		// 设置排序
 		pageContext.setAsc("sort");
 		// 获取分页数据
-		List<Map<String, Object>> list = this.baseMapper.selectPage(pageContext, DataDict);
+		List<Map<String, Object>> list = this.baseMapper.selectPage(pageContext, dataDict);
+		list = new DataDictWrapper(list).wrap();
 		// 结果数据封装
 		pageContext.setRecords(list);
 		// 返回数据
@@ -121,7 +124,7 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 		String datas = getById(uuid).getDatas();
 		List<String> arrayList = new ArrayList<String>();
 		if (ToolsUtil.isNotEmpty(datas)) {
-			arrayList = HtmlUtil.getJXNodes(datas, "//div[@class='layui-form-item']");
+			arrayList = HtmlUtil.getJXNodes(datas, "//div[contains(@class,'layui-form-item')]");
 		}
 		return arrayList;
 	}
@@ -206,5 +209,15 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 		DataDict entity = new DataDict();
 		ToolUtil.copyProperties(dataDict, entity);
 		return entity;
+	}
+	
+	/**
+	 * @describe 系统字典（数据字典类型）
+	 * @author duhao
+	 * @date 2020年5月23日下午11:27:13
+	 * @return
+	 */
+	public List<Dict> getSysDict2DataDicType() {
+		return ConstantFactory.me().findInDict("数据字典类型");
 	}
 }

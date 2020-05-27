@@ -56,22 +56,28 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	 * @return 更新后的新闻数据
 	 */
 	public DataNews addOrEdit(DataNewsParam param) {
-		// 获取对应的电子报纸
-		DataNewspaper dataNewspaper = dataNewspaperService.getById(param.getDataNewspaper());
-		// 获取对应的报刊数据源
-		DataSource dataSource = dataSourceService.getById(dataNewspaper.getDataSource());
-		// 修改属性值
-		param.setDataSource(dataSource.getUuid());
-		param.setLanguage(dataSource.getLanguage());
-		param.setPubtime(dataNewspaper.getPublish());
-		param.setChsName(dataNewspaper.getChsName());
-		param.setOrgName(dataNewspaper.getOrgName());
-		param.setProvider(dataNewspaper.getProvider());
-		param.setState(dataNewspaper.getState());
+		System.out.println("DataNewsService.addOrEdit()--->"+param);
+		if (ToolUtil.isEmpty(param.getUuid())) {
+			// 获取对应的电子报纸
+			DataNewspaper dataNewspaper = dataNewspaperService.getById(param.getDataNewspaper());
+			// 获取对应的报刊数据源
+			DataSource dataSource = dataSourceService.getById(dataNewspaper.getDataSource());
+			// 修改属性值
+			param.setDataSource(dataSource.getUuid());
+			param.setLanguage(dataSource.getLanguage());
+			param.setPubtime(dataNewspaper.getPublish());
+			param.setChsName(dataNewspaper.getChsName());
+			param.setOrgName(dataNewspaper.getOrgName());
+			param.setProvider(dataNewspaper.getProvider());
+			param.setState(dataNewspaper.getState());
+			return add(param);
+		}else {
+			return update(param);
+		}
 		// 通过UUID查询是否存在数据
-		DataNews byId = this.getById(param.getUuid());
+//		DataNews byId = this.getById(param.getUuid());
 		// 数据存在进行更新操作，不存在进行新增操作
-		DataNews dataNews = ToolUtil.isEmpty(byId) ? add(param) : update(param);
+//		DataNews dataNews = ToolUtil.isEmpty(param.getUuid()) ? add(param) : update(param);
 
 		/*
 		 * // 数据上传至DAMS,在数据新增和修改时上传 // 判断数据状态，对数据源状态为“启用-1”的数据进行上传 // if
@@ -85,7 +91,7 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		 * DataNewsParam dataNewsParam = getEntity(byId2); // // 更新异常数据并返回 // dataNews =
 		 * update(dataNewsParam); // } // }
 		 */
-		return dataNews;
+//		return dataNews;
 	}
 
 	public DataNews add(DataNewsParam param) {
@@ -119,20 +125,20 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	}
 
 	public DataNews update(DataNewsParam param) {
-		// 1、获取旧对象
-		DataNews oldEntity = getOldEntity(param);
-		// 2、转换得到新对象
+//		// 1、获取旧对象
+//		DataNews oldEntity = getOldEntity(param);
+//		// 2、转换得到新对象
 		DataNews newEntity = getEntity(param);
-		ToolUtil.copyProperties(newEntity, oldEntity);
-		// 3、创建查询对象，根据电子报纸和URL
-		QueryWrapper<DataNews> queryWrapper = new QueryWrapper<DataNews>()
-				.eq("data_newspaper", newEntity.getDataNewspaper()).eq("url", newEntity.getUrl())
-				.ne("uuid", newEntity.getUuid());
-		// 4、判断是否重复
-		int count = this.count(queryWrapper);
-		if (count > 0) {
-			throw new ServiceException(BizExceptionEnum.DN_EXISTED);
-		}
+//		ToolUtil.copyProperties(newEntity, oldEntity);
+//		// 3、创建查询对象，根据电子报纸和URL
+//		QueryWrapper<DataNews> queryWrapper = new QueryWrapper<DataNews>()
+//				.eq("data_newspaper", newEntity.getDataNewspaper()).eq("url", newEntity.getUrl())
+//				.ne("uuid", newEntity.getUuid());
+//		// 4、判断是否重复
+//		int count = this.count(queryWrapper);
+//		if (count > 0) {
+//			throw new ServiceException(BizExceptionEnum.DN_EXISTED);
+//		}
 		// 5、更新数据
 		newEntity.setUpdateTime(new Date());
 		this.updateById(newEntity);

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
-import com.yuyiyun.YYdata.modular.datasource.entity.ApiDataAuth;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
-import com.yuyiyun.YYdata.modular.datasource.service.ApiDataAuthService;
+import com.yuyiyun.YYdata.modular.datasource.service.DataApiauthService;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
@@ -33,7 +33,7 @@ public class DataSourceApiServer {
 
 
 	@Autowired
-	private ApiDataAuthService apiDataAuthService;
+	private DataApiauthService apiDataAuthService;
 	@Autowired
 	private DataSourceService dataSourceService;
 	
@@ -75,7 +75,7 @@ public class DataSourceApiServer {
 
 	@PostMapping("/apidataauth/getEQsByApi")
 	@ResponseBody
-	public ResponseData getValuesByApi(@RequestBody() ApiDataAuth apiDataAuth, String... columns) {
+	public ResponseData getValuesByApi(@RequestBody() DataApiauth apiDataAuth, String... columns) {
 		if (ToolsUtil.isPojoEmpty(apiDataAuth)) {
 			return ResponseData.error("参数异常，请检查！");
 		} else {

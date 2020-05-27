@@ -43,8 +43,8 @@ public class DataSourceService extends ServiceImpl<DataSourceMapper, DataSource>
 	DataNewsService dataNewsService;
 
 	@SuppressWarnings("rawtypes")
-	public List<Map<String, Object>> listFromNewspaper(Page page, String condition) {
-		return this.baseMapper.listFromNewspaper(page, condition);
+	public List<Map<String, Object>> listFromNewspaper(Page page, DataSourceParam param) {
+		return this.baseMapper.listFromNewspaper(page, param);
 	}
 
 	public DataSource addOrEdit(DataSourceParam param) {

@@ -84,7 +84,7 @@
 
 
     <!-- 分页查询 -->
-    <select id="selectPage" resultType="com.yuyiyun.YYdata.modular.dataconfig.entity.DataDict">
+    <select id="selectPage" resultType="map">
         select <include refid="BaseColumnList"/>
         from data_dict
         <include refid="BaseWhere"/>

@@ -200,11 +200,16 @@
 			<version>1.11.3</version>
 		</dependency>
 		<dependency>
-		  <groupId>cn.wanghaomiao</groupId>
-		  <artifactId>JsoupXpath</artifactId>
-		  <version>2.3.2</version>
+			<groupId>cn.wanghaomiao</groupId>
+			<artifactId>JsoupXpath</artifactId>
+			<version>2.3.2</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr4-runtime</artifactId>
+			<version>4.7.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>

@@ -49,11 +49,12 @@
         data_source a
         WHERE
         a.platform = '1'
-        <if test="condition != null and condition !=''">
-            AND a.chs_name like CONCAT('%',#{condition},'%')
-            <!-- AND a.chs_name = #{condition} -->
+        <if test="dataSource.condition != null and dataSource.condition !=''">
+            AND a.chs_name like CONCAT('%',#{dataSource.condition},'%')
         </if>
- 
+ 		<if test="dataSource.provider != null and dataSource.provider !=''">
+            AND a.provider = #{dataSource.provider}
+        </if>
         <!-- SELECT a.uuid AS 'uuid', a.chs_name AS 'chsName', a.website_url AS 
             'websiteUrl', a.remark AS 'remark', COUNT( b.uuid ) 'newpaperCount', date_format( 
             MAX( b.publish ), '%Y-%m-%d' ) 'lastAcquTime' FROM data_source a JOIN data_newspaper 

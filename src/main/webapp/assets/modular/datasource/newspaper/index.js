@@ -33,6 +33,7 @@ layui.use([ 'table', 'ax','layer','fast' ], function() {
 					field : 'chs_name',
 					sort : true,
 					title : '中文名称',
+					toolbar : '#sourcedictBar',
 					align : 'center',
 					width : 120
 				},
@@ -190,6 +191,20 @@ layui.use([ 'table', 'ax','layer','fast' ], function() {
 			}
 		});
 	};
+	
+	/**
+	 * 点击字典数据对话框
+	 */
+	Datasource.sourcedictDlg = function(data) {
+		layer.open({
+			type: 2,
+			title: '字典数据',
+			shadeClose: false,
+			shade: 0.3,
+			area: ['100%', '100%'],
+			content: fast.ctxPath + '/sourcedict?type=111&dataSource=' + data.uuid,
+		});
+	};
 
 	/**
 	 * 点击删除
@@ -232,7 +247,9 @@ layui.use([ 'table', 'ax','layer','fast' ], function() {
 		} else if (layEvent === 'delete') {
 			Datasource.onDeleteItem(data);
 		}else if (layEvent === 'dataconfig') {
-			Datasource.dataconfigDlg(data)
+			Datasource.dataconfigDlg(data);
+		}else if (layEvent === 'sourcedict') {
+			Datasource.sourcedictDlg(data);
 		}
 	});
 

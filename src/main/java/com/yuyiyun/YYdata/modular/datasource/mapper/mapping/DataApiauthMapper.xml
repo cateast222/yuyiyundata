@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yuyiyun.YYdata.modular.datasource.mapper.ApiDataAuthMapper">
+<mapper namespace="com.yuyiyun.YYdata.modular.datasource.mapper.DataApiauthMapper">
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.yuyiyun.YYdata.modular.datasource.entity.ApiDataAuth">
+    <resultMap id="BaseResultMap" type="com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth">
         <id column="uuid" property="uuid" />
         <result column="sys_user" property="sysUser" />
         <result column="data_source" property="dataSource" />
@@ -73,9 +73,9 @@
 
 
     <!-- 分页查询 -->
-    <select id="selectPage" resultType="com.yuyiyun.YYdata.modular.datasource.entity.ApiDataAuth">
+    <select id="selectPage" resultType="com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth">
         select <include refid="BaseColumnList"/>
-        from api_data_auth
+        from data_apiauth
         <include refid="BaseWhere"/>
     </select>
 

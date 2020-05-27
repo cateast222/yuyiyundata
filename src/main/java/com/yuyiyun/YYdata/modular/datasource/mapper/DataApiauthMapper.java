@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yuyiyun.YYdata.modular.datasource.entity.ApiDataAuth;
+import com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import com.yuyiyun.YYdata.modular.datasource.entity.ApiDataAuth;
  * @author duhao
  * @since 2020-04-07
  */
-public interface ApiDataAuthMapper extends BaseMapper<ApiDataAuth> {
+public interface DataApiauthMapper extends BaseMapper<DataApiauth> {
 
 	/**
 	 * 分页查询
@@ -28,6 +28,6 @@ public interface ApiDataAuthMapper extends BaseMapper<ApiDataAuth> {
 	 */
 	@SuppressWarnings("rawtypes")
 	List<Map<String, Object>> selectPage(@Param("page") Page pageContext,
-			@Param("apiDataAuth") ApiDataAuth apiDataAuth);
+			@Param("apiDataAuth") DataApiauth apiDataAuth);
 
 }

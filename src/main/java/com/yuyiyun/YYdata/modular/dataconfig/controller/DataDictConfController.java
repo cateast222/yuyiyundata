@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,8 +36,7 @@ public class DataDictConfController {
 	 * 跳转到主页面
 	 */
 	@GetMapping
-	public String index(Model model) {
-		model.addAttribute("type", "102");
+	public String index() {
 		return PREFIX + "/index.html";
 	}
 
@@ -46,8 +44,7 @@ public class DataDictConfController {
 	 * 跳转到新增页面
 	 */
 	@GetMapping("/add")
-	public String add(Model model) {
-		model.addAttribute("type", "102");
+	public String add() {
 		return PREFIX + "/add.html";
 	}
 
@@ -82,6 +79,7 @@ public class DataDictConfController {
 	@RequestMapping("/addItem")
 	@ResponseBody
 	public ResponseData adddataDict(DataDict dataDict) {
+		dataDict.setType(dataDictService.getById(dataDict.getParentUuid()).getType());
 		dataDictService.addDataDict(dataDict);
 		return ResponseData.success();
 	}

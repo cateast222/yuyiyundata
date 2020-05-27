@@ -1,0 +1,43 @@
+@layout("/common/_container.html",{js:["/assets/modular/dataconfig/sourcedict/add.js"]}){
+
+<div class="layui-body-header">
+	<span class="layui-body-header-title">新增数据字典配置</span>
+</div>
+<div class="layui-fluid " style="">
+        <div class="layui-card"  style="margin: 10px;">
+            <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" action="">
+                    <input name="dataDict" id="dataDict" type="text" value="0" style="display: none">
+                    <div class="layui-form-item">
+                    	<div class="layui-row layui-col-space15">
+							<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+								<label class="layui-form-label">数据字典</label>
+								<div class="layui-input-block">
+									<select id="dict" lay-search="" lay-filter="dict">
+										<option value="0">请选择</option> 
+										@for(item in dict){
+										<option value="${item.uuid}">${item.name}</option> 
+										@}
+									</select>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md6 layui-col-lg6">
+								<label class="layui-form-label">字典配置</label>
+								<div class="layui-input-block">
+									<select id="dictConf" lay-search="" lay-filter="dictConf">
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formBtn">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+ @}
