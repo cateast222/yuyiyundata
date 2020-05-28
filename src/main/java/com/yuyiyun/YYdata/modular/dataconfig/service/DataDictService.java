@@ -129,6 +129,21 @@ public class DataDictService extends ServiceImpl<DataDictMapper, DataDict> {
 		return arrayList;
 	}
 	
+	/**
+	 * 获取对应的表单属性name
+	 * 
+	 * @param uuid
+	 * @return
+	 */
+	public List<String> getFroms2Name(Long uuid) {
+		String datas = getById(uuid).getDatas();
+		List<String> arrayList = new ArrayList<String>();
+		if (ToolsUtil.isNotEmpty(datas)) {
+			arrayList = HtmlUtil.getJXNodes(datas, "//div[@class='layui-form-item']//*[@name]/@name");
+		}
+		return arrayList;
+	}
+	
 	
 
 	/**

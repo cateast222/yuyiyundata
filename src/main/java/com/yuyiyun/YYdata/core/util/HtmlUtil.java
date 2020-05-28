@@ -9,20 +9,42 @@ import org.springframework.web.util.HtmlUtils;
 public class HtmlUtil {
 
 	public static void main(String[] args) {
-		String html = "<div class=\"layui-form-item\">\r\n" + 
-				"							<label class=\"layui-form-label\">输入框</label>\r\n" + 
-				"							<div class=\"layui-input-block\">\r\n" + 
-				"								<input type=\"text\" name=\"title\" lay-verify=\"title\" autocomplete=\"off\" placeholder=\"请输入标题\" class=\"layui-input\">\r\n" + 
-				"							</div>\r\n" + 
-				"						</div>\r\n" + 
-				"<div class=\"layui-form-item\">\r\n" + 
-				"							<label class=\"layui-form-label\">单选框</label>\r\n" + 
-				"							<div class=\"layui-input-block\">\r\n" + 
-				"								<input type=\"radio\" name=\"sex\" value=\"男\" title=\"男\" checked=\"\">\r\n" + 
-				"								<input type=\"radio\" name=\"sex\" value=\"女\" title=\"女\">\r\n" + 
-				"							</div>\r\n" + 
-				"						</div>";
-		List<String> jxNodes = getJXNodes(html, "//div[@class='layui-form-item']");
+		String html = "<div class=\"layui-form-item\"> \r\n" + 
+				" <label class=\"layui-form-label\">输入框</label> \r\n" + 
+				" <div class=\"layui-input-block\"> \r\n" + 
+				"  <input type=\"text\" name=\"title-1\" id=\"title\" autocomplete=\"off\" placeholder=\"请输入标题\" class=\"layui-input\"> \r\n" + 
+				" </div> \r\n" + 
+				"</div>\r\n" + 
+				"<div class=\"layui-form-item\"> \r\n" + 
+				" <label class=\"layui-form-label\">选择框</label> \r\n" + 
+				" <div class=\"layui-input-block\"> \r\n" + 
+				"  <select name=\"aihao-1\" id=\"aihao\"> <option value=\"\"></option> <option value=\"0\">写作</option> <option value=\"1\">阅读</option> <option value=\"2\">游戏</option> <option value=\"3\">音乐</option> <option value=\"4\">旅行</option> </select> \r\n" + 
+				" </div> \r\n" + 
+				"</div>\r\n" + 
+				"<div class=\"layui-form-item\"> \r\n" + 
+				" <label class=\"layui-form-label\">复选框</label> \r\n" + 
+				" <div class=\"layui-input-block\"> \r\n" + 
+				"  <input type=\"checkbox\" name=\"like-1\" value=\"write\" title=\"写作\"> \r\n" + 
+				"  <input type=\"checkbox\" name=\"like-1\" value=\"read\" title=\"阅读\" checked=\"\"> \r\n" + 
+				"  <input type=\"checkbox\" name=\"like-1\" value=\"game\" title=\"游戏\"> \r\n" + 
+				" </div> \r\n" + 
+				"</div>\r\n" + 
+				"<div class=\"layui-form-item\"> \r\n" + 
+				" <label class=\"layui-form-label\">单选框</label> \r\n" + 
+				" <div class=\"layui-input-block\"> \r\n" + 
+				"  <input type=\"radio\" name=\"sex-1\" value=\"男\" title=\"男\" checked=\"\"> \r\n" + 
+				"  <input type=\"radio\" name=\"sex-1\" value=\"女\" title=\"女\"> \r\n" + 
+				" </div> \r\n" + 
+				"</div>\r\n" + 
+				"<div class=\"layui-form-item layui-form-text\"> \r\n" + 
+				" <label class=\"layui-form-label\">文本域</label> \r\n" + 
+				" <div class=\"layui-input-block\"> \r\n" + 
+				"  <textarea placeholder=\"请输入内容\" class=\"layui-textarea\" name=\"desc-1\" id=\"desc\"></textarea> \r\n" + 
+				" </div> \r\n" + 
+				"</div>\r\n" + 
+				"" + 
+				"";
+		List<String> jxNodes = getJXNodes(html, "//div[@class='layui-form-item']//*[@name]/@name");
 		System.out.println(jxNodes);
 	}
 

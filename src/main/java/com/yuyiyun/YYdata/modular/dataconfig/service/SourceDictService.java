@@ -43,6 +43,8 @@ public class SourceDictService extends ServiceImpl<SourceDictMapper, SourceDict>
 	private DataConfigService configService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	DataDictService dataDictService;
 
 	/**
 	 * 分页查询列表
@@ -62,6 +64,18 @@ public class SourceDictService extends ServiceImpl<SourceDictMapper, SourceDict>
 		pageContext.setRecords(list);
 		// 返回数据
 		return LayuiPageFactory.createPageInfo(pageContext);
+	}
+	
+	public Map<String, Object> getDetails(Long dataSource, Long dataDict) {
+		List<String> froms2Name = dataDictService.getFroms2Name(dataDict);
+		
+		QueryWrapper<DataConfig> queryWrapper = new QueryWrapper<DataConfig>().eq("data_source", dataSource).in("`key`", froms2Name);
+		List<DataConfig> list = configService.list(queryWrapper);
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		for (DataConfig dataConfig : list) {
+			map.put(dataConfig.getKey(), dataConfig.getValue());
+		}
+		return map;
 	}
 
 	/**
@@ -155,16 +169,6 @@ public class SourceDictService extends ServiceImpl<SourceDictMapper, SourceDict>
 		return configService.saveOrUpdateBatch(arrayList);
 	}
 	
-	public Map<String, Object> getDetails(Long dataSource, Long dataDict) {
-		QueryWrapper<DataConfig> queryWrapper = new QueryWrapper<DataConfig>().eq("data_source", dataSource).eq("data_dict", dataDict);
-		List<DataConfig> list = configService.list(queryWrapper);
-		HashMap<String,Object> map = new HashMap<String, Object>();
-		for (DataConfig dataConfig : list) {
-			map.put(dataConfig.getKey(), dataConfig.getValue());
-		}
-		return map;
-	}
-
 	/**
 	 * 删除数据
 	 * 

@@ -41,4 +41,15 @@ public interface SourceDictMapper extends BaseMapper<SourceDict> {
 	List<Map<String, Object>> selPageSourceDict(@Param("page") Page pageContext, @Param("sourceDict") SourceDict sourceDict,
 			@Param("dataDict") DataDict dataDict);
 
+	/**
+	 * @Description 根据数据源与数据字典获取配置数据
+	 * @author duhao
+	 * @date 2020年5月28日
+	 * @version V1.0
+	 * @param dataSource
+	 * @param dataDict
+	 * @return
+	 */
+	List<Map<String, Object>> getDetails(@Param("dataSource")Long dataSource, @Param("dataDict") Long dataDict);
+
 }
