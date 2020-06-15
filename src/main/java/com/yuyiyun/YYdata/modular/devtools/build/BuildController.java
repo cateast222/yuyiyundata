@@ -12,10 +12,17 @@ import com.yuyiyun.YYdata.modular.dataconfig.service.DataDictService;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
 
+/**
+ * 
+ * @ClassName: BuildController
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author duhao
+ * @date 2020年6月2日
+ */
 @Controller
 @RequestMapping("/dev")
 public class BuildController extends BaseController{
-	private String PREFIX = "/modular/dev";
+	private final String PREFIX = "/modular/dev";
 	
 	@Autowired
 	private DataDictService dataDictService;
