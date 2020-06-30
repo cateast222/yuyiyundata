@@ -25,7 +25,7 @@ public class PaperDataPushQuartz implements CommandLineRunner{
         JobDetail jobDetail = JobBuilder.newJob(PaperDataPushJob.class).withIdentity(PaperDataPushJob.class.getName(), "aaa").build();
 
         //表达式调度构建器(即任务执行的时间)
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("*/5 * * * * ?");
+        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("*/10 * * * * ?");
 
         //按新的cronExpression表达式构建一个新的trigger
         CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(PaperDataPushJob.class.getName(), "aaa")

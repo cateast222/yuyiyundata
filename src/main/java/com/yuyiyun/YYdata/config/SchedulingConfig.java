@@ -50,9 +50,9 @@ public class SchedulingConfig {
 //    public StartQuartzExample startQuartzExample() {
 //        return new StartQuartzExample();
 //    }
-    @Bean
-    public PaperDataPushQuartz paperDataPushQuartz() {
-    	return new PaperDataPushQuartz();
-    }
+//    @Bean
+//    public PaperDataPushQuartz paperDataPushQuartz() {
+//    	return new PaperDataPushQuartz();
+//    }
 
 }

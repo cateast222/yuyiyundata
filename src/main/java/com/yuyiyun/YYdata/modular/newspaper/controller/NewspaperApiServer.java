@@ -2,6 +2,9 @@ package com.yuyiyun.YYdata.modular.newspaper.controller;
 
 import static cn.stylefeng.roses.core.util.HttpContext.getIp;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +33,6 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
  * <p>
  * 电子报刊API服务
  * </p>
- *
  * @author duhao
  * @since
  */
@@ -65,7 +67,6 @@ public class NewspaperApiServer extends BaseController {
 
 	/**
 	 * Description: API数据排重
-	 * 
 	 * @author duhao
 	 * @param pubTime
 	 * @param dsiUuid
@@ -120,7 +121,6 @@ public class NewspaperApiServer extends BaseController {
 
 	/**
 	 * Description:按归档日期分页查询电子报纸数据
-	 * 
 	 * @param sysUser
 	 * @param archiveDate
 	 * @param limit
@@ -146,7 +146,6 @@ public class NewspaperApiServer extends BaseController {
 
 	/**
 	 * 分页查询报刊新闻数据
-	 * 
 	 * @param newspaperId
 	 * @param limit
 	 * @param page
@@ -167,5 +166,37 @@ public class NewspaperApiServer extends BaseController {
 					"ArchiveDataNews", info.getDataMapValues("id")));
 			return ResponseData.success(info);
 		}
+	}
+	
+	/**
+	 * 批量修改
+	 * @author duhao
+	 * @return
+	 */
+	@PostMapping("/datanews/updateBatchByApi")
+	@ResponseBody
+	public ResponseData updateBatch(@RequestBody() List<DataNews> dataNews) {
+		if (ToolsUtil.isEmpty(dataNews)) {
+			return ResponseData.error("参数异常！");
+		}
+		boolean updateBatch = dataNewsService.updateBatch(dataNews);
+		return ResponseData.success(updateBatch);
+	}
+	
+	/**
+	 * 获取推送数据
+	 * @author duhao
+	 * @param limit
+	 * @return
+	 */
+	@PostMapping("/datanews/getPushDatasByApi")
+	@ResponseBody
+	public ResponseData getPushDatas(int limit) {
+		if (ToolsUtil.isEmpty(limit)&&limit<=0) {
+			limit = 50;
+		}
+		Long userId = Long.parseLong(JwtTokenUtil.getUsernameFromRequest());
+		List<Map<String,Object>> pushDatas = dataNewsService.getPushDatas(userId, limit);
+		return ResponseData.success(pushDatas);
 	}
 }

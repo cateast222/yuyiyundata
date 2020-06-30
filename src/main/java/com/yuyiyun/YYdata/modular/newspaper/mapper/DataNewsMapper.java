@@ -27,4 +27,13 @@ public interface DataNewsMapper extends BaseMapper<DataNews> {
 	List<Map<String, Object>> selectArchive(@Param("page") Page<Map<String, Object>> pageContext,
 			@Param("newspaperId") Long newspaperId);
 
+	/**
+	 * 获取需要推送的数据
+	 * @author duhao
+	 * @param userId
+	 * @param limit
+	 * @return
+	 */
+	List<Map<String, Object>> getPushDatas(@Param("userId") Long userId,@Param("limit") int limit);
+
 }

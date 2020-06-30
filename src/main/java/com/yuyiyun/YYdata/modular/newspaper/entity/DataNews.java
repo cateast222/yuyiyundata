@@ -283,6 +283,18 @@ public class DataNews implements Serializable {
 	 */
 	@TableField("insert_time")
 	private Date insertTime;
+	
+	/**
+	 * 推送状态：0-默认，1-新增，2-推送，3-更新
+	 */
+	@TableField("push_state")
+	private Integer pushState;
+	
+	/**
+	 * 推送覆盖：0-默认，1-覆盖
+	 */
+	@TableField("push_coverage")
+	private Integer pushCoverage;
 
 	/**
 	 * 新闻备注

@@ -1,5 +1,8 @@
 package com.yuyiyun.YYdata.modular.newspaper.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
+import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.core.util.DateTimeUtil;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
@@ -241,5 +245,39 @@ public class DataNewsController extends BaseController {
 			LayuiPageInfo info = dataNewsService.getArchiveDataNews(newspaperId, limit, page);
 			return ResponseData.success(info);
 		}
+	}
+
+	/**
+	 * 批量修改
+	 * @author duhao
+	 * @return
+	 */
+	@ApiOperation(value = "批量修改", notes = "批量修改数据")
+	@PostMapping("/updateBatchByApi")
+	@ResponseBody
+	public ResponseData updateBatch(@RequestBody() List<DataNews> dataNews) {
+		if (ToolsUtil.isEmpty(dataNews)) {
+			return ResponseData.error("参数异常！");
+		}
+		boolean updateBatch = dataNewsService.updateBatch(dataNews);
+		return ResponseData.success(updateBatch);
+	}
+	
+	/**
+	 * 获取推送数据
+	 * @author duhao
+	 * @param limit
+	 * @return
+	 */
+	@ApiOperation(value = "推送数据", notes = "获取推送数据")
+	@PostMapping("/getPushDatasByApi")
+	@ResponseBody
+	public ResponseData getPushDatas(int limit) {
+		if (ToolsUtil.isEmpty(limit)||limit<=0) {
+			limit = 50;
+		}
+		Long userId = ShiroKit.getUser().getId();
+		List<Map<String,Object>> pushDatas = dataNewsService.getPushDatas(userId, limit);
+		return ResponseData.success(pushDatas);
 	}
 }

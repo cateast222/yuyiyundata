@@ -109,6 +109,12 @@ public class DataNewsParam implements Serializable, BaseValidatingParam {
 
 	@ApiModelProperty(value = "采集时间")
 	private Date insertTime;
+	
+	@ApiModelProperty(value = "推送状态")
+	private Integer pushState;
+	
+	@ApiModelProperty(value = "推送覆盖")
+	private Integer pushCoverage;
 
 	@ApiModelProperty(value = "关键词")
 	private String keywords;

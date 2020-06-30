@@ -38,6 +38,8 @@
 		<result column="paper_count" property="paperCount" />
 		<result column="front_page" property="frontPage" />
 		<result column="insert_time" property="insertTime" />
+		<result column="push_state" property="pushState" />
+		<result column="push_coverage" property="pushCoverage" />
 		<result column="remark" property="remark" />
 		<result column="state" property="state" />
 		<result column="creator" property="creator" />
@@ -57,7 +59,6 @@
 		<result column="r_v" property="RV" />
 		<result column="p_v" property="PV" />
 	</resultMap>
-
 
 	<!-- 通用查询结果列 -->
 	<sql id="BaseColumnList">
@@ -100,6 +101,8 @@
 		front_page as frontPage,
 		insert_time as
 		insertTime,
+		push_state as pushState,
+		push_coverage as pushCoverage,
 		remark as remark,
 		state as state,
 		creator as creator,
@@ -259,6 +262,12 @@
 			<if test="news.insertTime != null and news.insertTime != ''">
 				and insert_time = #{news.insertTime}
 			</if>
+			<if test="news.pushState != null and news.pushState != ''">
+				and push_state = #{news.pushState}
+			</if>
+			<if test="news.pushCoverage != null and news.pushCoverage != ''">
+				and push_coverage = #{news.pushCoverage}
+			</if>
 			<if test="news.remark != null and news.remark != ''">
 				and remark = #{news.remark}
 			</if>
@@ -295,10 +304,55 @@
 		</trim>
 	</sql>
 
+	<!-- duhao 获取需要推送的数据 -->
+	<select id="getPushDatas" resultType="map">
+		SELECT
+			dn.uuid AS id,
+			dn.chs_name AS site,
+			dn.data_source AS paperId,
+			dn.pubtime AS pubTime,
+			dn.title AS title,
+			dn.url AS sourceUrl,
+			dn.pretitle AS preTitle,
+			dn.subtitle AS subTitle,
+			dn.author AS author,
+			dn.author_area AS authorArea,
+			dn.author_infos AS authorInfos,
+			dn.abstracts AS abstract,
+			dn.content AS content,
+			dn.tag_content AS tagContent,
+			dn.website_pictures AS paperPicture,
+			dn.website_audios AS audiosUrl,
+			dn.pictures_description AS picturesDescription,
+			dn.LANGUAGE AS languageCode,
+			dn.website_thumbnail AS layoutSource,
+			dn.website_files AS filesUrl,
+			dn.website_pdf AS pdfUrl,
+			dn.website_videos AS videosUrl,
+			dn.ha AS ha,
+			dn.channel AS channel,
+			dn.number AS revision,
+			dn.page AS page,
+			dn.page_name AS editionName,
+			dn.paper_count AS paperCount,
+			dn.front_page AS frontPage,
+			dn.insert_time AS insertTime, 
+			dn.push_state AS pushState, 
+			dn.push_coverage AS pushCoverage
+		FROM
+			data_news dn
+			INNER JOIN data_newspaper dnp ON dn.data_newspaper = dnp.uuid
+			INNER JOIN data_apiauth daa ON dn.data_source = daa.data_source 
+		WHERE
+			dn.push_state IN ( 1, 3 ) 
+			AND dnp.state = 1 
+			AND daa.validity >= NOW( ) 
+			AND daa.sys_user = #{userId} 
+			LIMIT #{limit}
+	</select>
 
 	<!-- 分页查询 -->
-	<select id="selectPage"
-		resultType="com.yuyiyun.YYdata.modular.newspaper.entity.DataNews">
+	<select id="selectPage"	resultType="com.yuyiyun.YYdata.modular.newspaper.entity.DataNews">
 		select
 		<include refid="BaseColumnList" />
 		from data_news

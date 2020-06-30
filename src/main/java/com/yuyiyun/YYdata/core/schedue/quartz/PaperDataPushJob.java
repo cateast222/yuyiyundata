@@ -13,42 +13,54 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
+import com.yuyiyun.YYdata.modular.newspaper.service.DataNewsService;
+
 public class PaperDataPushJob extends QuartzJobBean {
+	@Autowired
+	DataNewsService dataNewsService;
 
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		System.err
 				.println("<<<<<调试信息,注释掉SchedulingConfig类中的内容来关闭这个定时任务！>>>>> quartz task执行 >>>>> PaperDataPushJob执行了！");
-
+		List<Map<String, Object>> pushDatas = dataNewsService.getPushDatas(1252046381513875458L, 20);
+		for (Map<String, Object> dataNews : pushDatas) {
+			System.out.println(dataNews);
+		}
 	}
 
 	private static Connection conn = null;
 	private static Statement sm = null;
 	private static String schema = "yydata";// 模式名
 	private static String select = "SELECT * FROM";// 查询sql
-	private static String where = " where uuid = '1242740195878707202';";// 查询sql
+	private static String where = " where data_source = '1242621332017037314'";// 查询sql
 	private static String insert = "INSERT INTO";// 插入sql
 	private static String values = "VALUES";// values关键字
 	private static String[] table = { "data_news" };// table数组
 	private static List<String> insertList = new ArrayList<String>();// 全局存放insertsql文件的数据
 	private static String filePath = "D:\\mysql\\sql.sql";// 绝对路径导出数据的文件
-	
+
 	public static void main(String[] args) throws SQLException {
-        List<String> listSQL = new ArrayList<String>();
-        connectSQL("com.mysql.jdbc.Driver", "jdbc:mysql://192.168.0.158:3306/yydata?useUnicode=true&characterEncoding=utf8&useSSL=false&tinyInt1isBit=true", "root", "1212");//连接数据库
-        System.out.println(conn);
-        System.out.println(sm);
-        listSQL = createSQL();//创建查询语句
-        System.out.println(listSQL);
-        executeSQL(conn, sm, listSQL);//执行sql并拼装
-        System.out.println(">>"+insertList);
-//        createFile();//创建文件
-    }
+		List<String> listSQL = new ArrayList<String>();
+		connectSQL("com.mysql.jdbc.Driver",
+				"jdbc:mysql://192.168.0.100:3306/yydata?useUnicode=true&characterEncoding=utf8&useSSL=false&tinyInt1isBit=true",
+				"root", "1212");// 连接数据库
+		System.out.println(conn);
+		System.out.println(sm);
+		listSQL = createSQL();// 创建查询语句
+		System.out.println(listSQL);
+		executeSQL(conn, sm, listSQL);// 执行sql并拼装
+		System.out.println(">>" + insertList);
+        createFile();//创建文件
+	}
 
 	/**
 	 * 创建insertsql.txt并导出数据
@@ -132,7 +144,7 @@ public class PaperDataPushJob extends QuartzJobBean {
 	 * @param listSQL
 	 * @throws SQLException
 	 */
-	public static void executeSQL(Connection conn, Statement sm, List listSQL) throws SQLException {
+	public static void executeSQL(Connection conn, Statement sm, List<String> listSQL) throws SQLException {
 		List<String> insertSQL = new ArrayList<String>();
 		ResultSet rs = null;
 		try {
@@ -156,7 +168,8 @@ public class PaperDataPushJob extends QuartzJobBean {
 	 * @return
 	 * @throws SQLException
 	 */
-	private static ResultSet getColumnNameAndColumeValue(Statement sm, List listSQL, ResultSet rs) throws SQLException {
+	private static ResultSet getColumnNameAndColumeValue(Statement sm, List<String> listSQL, ResultSet rs)
+			throws SQLException {
 		if (listSQL.size() > 0) {
 			for (int j = 0; j < listSQL.size(); j++) {
 				String sql = String.valueOf(listSQL.get(j));
@@ -167,7 +180,12 @@ public class PaperDataPushJob extends QuartzJobBean {
 					StringBuffer ColumnName = new StringBuffer();
 					StringBuffer ColumnValue = new StringBuffer();
 					for (int i = 1; i <= columnCount; i++) {
-						String value = rs.getString(i).trim();
+						Object object = rs.getObject(i);
+//						String value = rs.getString(i).trim();
+						if (null == object) {
+							continue;
+						}
+						String value = object.toString().trim();
 						if ("".equals(value)) {
 							value = "";
 						}
