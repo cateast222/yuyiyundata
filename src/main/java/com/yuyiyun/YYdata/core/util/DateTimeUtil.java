@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -36,11 +37,14 @@ public class DateTimeUtil {
 	private String dateTimeStr = null;
 
 	public static void main(String args[]) {
-		Date date1 = stringToDate("2019-10-15 11:55:55", "");
-		Date date2 = stringToDate("2019-10-15 15:55:56", "");
-		System.out.println(date1.getTime() < date2.getTime());
-		boolean b = dateContrast(date1, date2, 6);
-		System.out.println(b);
+		Date dayBegin = getDayEnd(new Date());
+		System.out.println(dayBegin);
+		
+//		Date date1 = stringToDate("2019-10-15 11:55:55", "");
+//		Date date2 = stringToDate("2019-10-15 15:55:56", "");
+//		System.out.println(date1.getTime() < date2.getTime());
+//		boolean b = dateContrast(date1, date2, 6);
+//		System.out.println(b);
 //		System.out.println(date1.getHours()+"-"+date2.getHours());
 //		boolean t =  date1.getHours() >= date2.getHours();
 //		System.out.println(t);
@@ -1466,6 +1470,39 @@ public class DateTimeUtil {
 			string = sdf3.format(new Date()) + string;
 		}
 		return parseDateTime(string, null, null, null, null);
+	}
+	
+	/**
+	 * 获取当天的开始时间
+	 * @author duhao
+	 * @return
+	 */
+	public static java.util.Date getDayBegin(java.util.Date date) {
+		Calendar cal = new GregorianCalendar();
+		if (ToolsUtil.isNotEmpty(date)) {
+			cal.setTime(date);
+		}
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTime();
+	}
+
+	/**
+	 * 获取当天的结束时间
+	 * @author duhao
+	 * @return
+	 */
+	public static java.util.Date getDayEnd(java.util.Date date) {
+		Calendar cal = new GregorianCalendar();
+		if (ToolsUtil.isNotEmpty(date)) {
+			cal.setTime(date);
+		}
+		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		return cal.getTime();
 	}
 
 }

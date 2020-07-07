@@ -10,9 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.common.constant.Const;
@@ -20,6 +19,7 @@ import com.yuyiyun.YYdata.core.common.exception.BizExceptionEnum;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
+import com.yuyiyun.YYdata.core.util.DateTimeUtil;
 import com.yuyiyun.YYdata.core.util.ToolsUtil;
 import com.yuyiyun.YYdata.modular.datasource.entity.DataSource;
 import com.yuyiyun.YYdata.modular.datasource.service.DataSourceService;
@@ -50,9 +50,10 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	DataNewspaperService dataNewspaperService;
 	@Autowired
 	DataSourceService dataSourceService;
-	
+
 	/**
 	 * 批量修改
+	 * 
 	 * @author duhao
 	 * @param dataNews
 	 * @return
@@ -63,13 +64,14 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 
 	/**
 	 * 获取需要推送的数据
+	 * 
 	 * @author duhao
 	 * @param limit
 	 * @return
 	 */
-	public List<Map<String, Object>> getPushDatas(Long userId,int limit) {
+	public List<Map<String, Object>> getPushDatas(Long userId, int limit) {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		if (ToolsUtil.isNotEmpty(userId)||limit>0) {
+		if (ToolsUtil.isNotEmpty(userId) || limit > 0) {
 			list = this.baseMapper.getPushDatas(userId, limit);
 		}
 		return list;
@@ -138,10 +140,10 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 			entity.setInsertTime(new Date());
 		}
 		entity.setUpdateTime(new Date());
-		
-		//推送数据处理
+
+		// 推送数据处理
 		entity.setPushState(1);
-		
+
 		// 4、数据存储
 		this.save(entity);
 		// 5、数据回调
@@ -170,10 +172,10 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		}
 		// 5、更新数据
 		newEntity.setUpdateTime(new Date());
-		
-		//推送数据处理
+
+		// 推送数据处理
 		newEntity.setPushState(3);
-		
+
 		this.updateById(newEntity);
 		// 6、数据回
 		return newEntity;
@@ -185,14 +187,12 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		Page<DataNews> pageContext = getPageContext();
 		// 2、创建查询对象
 		QueryWrapper<DataNews> queryWrapper = new QueryWrapper<>();
-		// 3、判断并检索电子报纸全名称
-		if (ToolUtil.isNotEmpty(param.getCondition())) {
-			queryWrapper.and(i -> i.like("title", param.getCondition()));
-		}
-		// 4、判断并检索电子报纸发布日期
-		if (ToolUtil.isNotEmpty(param.getDataNewspaper())) {
-			queryWrapper.and(i -> i.eq("data_newspaper", param.getDataNewspaper()));
-		}
+		// 3、判断并检索
+		queryWrapper.and(i -> i.like(ToolsUtil.isNotEmpty(param.getCondition()), "title", param.getCondition()))
+				.and(i -> i.like(ToolsUtil.isNotEmpty(param.getTitle()), "title", param.getTitle()))
+				.and(i -> i.eq(ToolsUtil.isNotEmpty(param.getDataNewspaper()), "data_newspaper", param.getDataNewspaper()))
+				.and(i -> i.eq(ToolsUtil.isNotEmpty(param.getChsName()), "chs_name", param.getChsName()))
+				.and(i -> i.between(ToolsUtil.isNotEmpty(param.getPubtime()), "pubtime", DateTimeUtil.getDayBegin(param.getPubtime()), DateTimeUtil.getDayBegin(param.getPubtime())));
 		// 5、根据创建时间进行排序
 		pageContext.setAsc("paper_count");
 		// 6、封装分页数据
