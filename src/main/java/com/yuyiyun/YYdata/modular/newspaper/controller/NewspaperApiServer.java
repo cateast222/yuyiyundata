@@ -191,12 +191,12 @@ public class NewspaperApiServer extends BaseController {
 	 */
 	@PostMapping("/datanews/getPushDatasByApi")
 	@ResponseBody
-	public ResponseData getPushDatas(int limit) {
+	public ResponseData getPushDatas(Integer limit,Integer start) {
 		if (ToolsUtil.isEmpty(limit)&&limit<=0) {
 			limit = 50;
 		}
 		Long userId = Long.parseLong(JwtTokenUtil.getUsernameFromRequest());
-		List<Map<String,Object>> pushDatas = dataNewsService.getPushDatas(userId, limit);
+		List<Map<String,Object>> pushDatas = dataNewsService.getPushDatas(userId, limit,start);
 		return ResponseData.success(pushDatas);
 	}
 }

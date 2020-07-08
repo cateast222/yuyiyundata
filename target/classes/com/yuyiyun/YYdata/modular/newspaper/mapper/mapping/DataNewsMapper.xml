@@ -348,7 +348,7 @@
 			AND dnp.state = 1 
 			AND daa.validity >= NOW( ) 
 			AND daa.sys_user = #{userId} 
-			LIMIT #{limit}
+			LIMIT #{start},#{limit}
 	</select>
 
 	<!-- 分页查询 -->

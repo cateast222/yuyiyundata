@@ -47,6 +47,18 @@ layui.use(['layer', 'table', 'ax', 'laydate', 'admin'], function() {
 							'" target="_blank">' + title + '</a>';
 					}
 				}, {
+					field: 'chs_name',
+					sort: true,
+					width: 120,
+					align: 'center',
+					title: '电子报',
+				},{
+					field: 'pubtime',
+					sort: true,
+					width: 120,
+					align: 'center',
+					title: '发布时间',
+				},{
 					field: 'page',
 					sort: true,
 					width: 100,
@@ -59,11 +71,17 @@ layui.use(['layer', 'table', 'ax', 'laydate', 'admin'], function() {
 					align: 'center',
 					title: '频道',
 				}, {
-					field: 'state_name',
+					field: 'provider_name',
+					sort: true,
+					width: 100,
+					align: 'center',
+					title: '提供方',
+				},{
+					field: 'creator',
 					sort: true,
 					width: 80,
 					align: 'center',
-					title: '状态'
+					title: '采集人'
 				}
 			]
 		];
@@ -73,9 +91,9 @@ layui.use(['layer', 'table', 'ax', 'laydate', 'admin'], function() {
 	News.search = function(curr) {
 		table.reload(News.tableId, {
 			where: {
-				'news': $("#newsCondition").val(),
-				'newspaper': $("#newspaperCondition").val(),
-				'publish': $("#publish").val()
+				'title': $("#newsCondition").val(),
+				'pubtimeStr': $("#publish").val(),
+				'chsName': $("#newspaperCondition").val()
 			},
 			page: {
 				curr: curr
@@ -86,7 +104,7 @@ layui.use(['layer', 'table', 'ax', 'laydate', 'admin'], function() {
 	// 渲染表格
 	var newsTableResult = table.render({
 		elem: '#' + News.tableId,
-		url: Feng.ctxPath + '/datanews/listFromNews',
+		url: Feng.ctxPath + '/newsOutlier/list',
 		page: true,
 		height: "full-98",
 		cellMinWidth: 100,

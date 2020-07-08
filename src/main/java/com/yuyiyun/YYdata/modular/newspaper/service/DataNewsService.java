@@ -69,10 +69,10 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 	 * @param limit
 	 * @return
 	 */
-	public List<Map<String, Object>> getPushDatas(Long userId, int limit) {
+	public List<Map<String, Object>> getPushDatas(Long userId, Integer limit,Integer start) {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		if (ToolsUtil.isNotEmpty(userId) || limit > 0) {
-			list = this.baseMapper.getPushDatas(userId, limit);
+			list = this.baseMapper.getPushDatas(userId, limit,start);
 		}
 		return list;
 	}
@@ -188,11 +188,13 @@ public class DataNewsService extends ServiceImpl<DataNewsMapper, DataNews> {
 		// 2、创建查询对象
 		QueryWrapper<DataNews> queryWrapper = new QueryWrapper<>();
 		// 3、判断并检索
-		queryWrapper.and(i -> i.like(ToolsUtil.isNotEmpty(param.getCondition()), "title", param.getCondition()))
-				.and(i -> i.like(ToolsUtil.isNotEmpty(param.getTitle()), "title", param.getTitle()))
-				.and(i -> i.eq(ToolsUtil.isNotEmpty(param.getDataNewspaper()), "data_newspaper", param.getDataNewspaper()))
-				.and(i -> i.eq(ToolsUtil.isNotEmpty(param.getChsName()), "chs_name", param.getChsName()))
-				.and(i -> i.between(ToolsUtil.isNotEmpty(param.getPubtime()), "pubtime", DateTimeUtil.getDayBegin(param.getPubtime()), DateTimeUtil.getDayBegin(param.getPubtime())));
+		queryWrapper.and(i -> i.like(ToolsUtil.isNotEmpty(param.getCondition()), "title", param.getCondition())
+				.eq(ToolsUtil.isNotEmpty(param.getPushState()), "push_state", param.getPushState())
+				.eq(ToolsUtil.isNotEmpty(param.getDataNewspaper()), "data_newspaper", param.getDataNewspaper())
+				.like(ToolsUtil.isNotEmpty(param.getChsName()), "chs_name", param.getChsName())
+				.like(ToolsUtil.isNotEmpty(param.getTitle()), "title", param.getTitle())
+				.between(ToolsUtil.isNotEmpty(param.getPubtime()), "pubtime",
+						DateTimeUtil.getDayBegin(param.getPubtime()), DateTimeUtil.getDayEnd(param.getPubtime())));
 		// 5、根据创建时间进行排序
 		pageContext.setAsc("paper_count");
 		// 6、封装分页数据

@@ -34,6 +34,6 @@ public interface DataNewsMapper extends BaseMapper<DataNews> {
 	 * @param limit
 	 * @return
 	 */
-	List<Map<String, Object>> getPushDatas(@Param("userId") Long userId,@Param("limit") int limit);
+	List<Map<String, Object>> getPushDatas(@Param("userId") Long userId,@Param("limit") Integer limit,@Param("start") Integer start);
 
 }

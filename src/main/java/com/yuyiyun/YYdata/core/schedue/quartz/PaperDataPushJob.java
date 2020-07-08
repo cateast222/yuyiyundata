@@ -20,7 +20,6 @@ import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
 import com.yuyiyun.YYdata.modular.newspaper.service.DataNewsService;
 
 public class PaperDataPushJob extends QuartzJobBean {
@@ -31,7 +30,7 @@ public class PaperDataPushJob extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		System.err
 				.println("<<<<<调试信息,注释掉SchedulingConfig类中的内容来关闭这个定时任务！>>>>> quartz task执行 >>>>> PaperDataPushJob执行了！");
-		List<Map<String, Object>> pushDatas = dataNewsService.getPushDatas(1252046381513875458L, 20);
+		List<Map<String, Object>> pushDatas = dataNewsService.getPushDatas(1252046381513875458L,0, 20);
 		for (Map<String, Object> dataNews : pushDatas) {
 			System.out.println(dataNews);
 		}

@@ -272,12 +272,15 @@ public class DataNewsController extends BaseController {
 	@ApiOperation(value = "推送数据", notes = "获取推送数据")
 	@PostMapping("/getPushDatasByApi")
 	@ResponseBody
-	public ResponseData getPushDatas(int limit) {
+	public ResponseData getPushDatas(Integer start,Integer limit) {
+		if (ToolsUtil.isEmpty(start)||start<=0) {
+			limit = 0;
+		}
 		if (ToolsUtil.isEmpty(limit)||limit<=0) {
 			limit = 50;
 		}
 		Long userId = ShiroKit.getUser().getId();
-		List<Map<String,Object>> pushDatas = dataNewsService.getPushDatas(userId, limit);
+		List<Map<String,Object>> pushDatas = dataNewsService.getPushDatas(userId, limit,start);
 		return ResponseData.success(pushDatas);
 	}
 }
