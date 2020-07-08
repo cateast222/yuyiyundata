@@ -1,0 +1,102 @@
+<#include "/common/include.html"/>
+<@pageTheme mark="${config.optimize()?string('true', 'false')}">
+<@header title="新增绩效">
+</@header>
+<@addorEdit fromId="form-perfoAppraisal-add">
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "被考核人">:                 
+        </label>
+        <div class="col-sm-8"><input name="thePerson" class="form-control" type="text">            
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "所属部门">:                 
+        </label>
+        <div class="col-sm-8"><input name="DEPARTMENT" class="form-control" type="text">            
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "考核月份"/>：</label>
+        <div class="col-sm-8">
+            <select name="ckMonth" class="form-control m-b">
+                <option value="">所有</option>
+            </select>
+            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "直属上级"/>：</label>
+        <div class="col-sm-8">
+            <select name="SUPERIOR" class="form-control m-b">
+                <option value="">所有</option>
+            </select>
+            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "考核日期"/>：</label>
+        <div class="col-sm-8">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control time-input" name="insDate"  data-type="date" data-format="yyyy-MM-dd" type="text" >
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "工作业绩">:                 
+        </label>
+        <div class="col-sm-8"><input name="wkPerform" class="form-control" type="text">            
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "工作能力">:                 
+        </label>
+        <div class="col-sm-8"><input name="seAbility" class="form-control" type="text">            
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "工作态度">:                 
+        </label>
+        <div class="col-sm-8"><input name="attWard" class="form-control" type="text">            
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "例外考核">:                 
+        </label>
+        <div class="col-sm-8"><input name="exeInspec" class="form-control" type="text">            
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "出勤状况">:                 
+        </label>
+        <div class="col-sm-8"><input name="attStas" class="form-control" type="text">            
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "总分">:                 
+        </label>
+        <div class="col-sm-8"><input name="TATAL" class="form-control" type="text">            
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "总评">:                 
+        </label>
+        <div class="col-sm-8"><input name="OVERALL" class="form-control" type="text">            
+        </div>
+    </div>
+</@addorEdit>
+<@footer>
+<script type="text/javascript">
+    var prefix = baseURL + "caiji/perfoAppraisal"
+    $("#form-perfoAppraisal-add").validate({
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if (opt.validate.form()) {
+            opt.operate.save(prefix + "/add", $('#form-perfoAppraisal-add').serialize());
+        }
+    }
+</script>
+</@footer>
+</@pageTheme>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>语亦云绩效考核评分表</title>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <script src="js/jquery.js"></script>
+</head>
+
+<body>
+
+
+    <div id="box">
+        <table border="1" cellspacing="0" style="width: 1000px;margin: 0 auto;">
+            <tr>
+                <th colspan="10">语亦云绩效考核评分表</th>
+            </tr>
+            <tr>
+                <td style="width: 100px;">被考核人：</td>
+                <td style="width: 80px;font-size:17px " contenteditable="true">
+				<input type="text" id="thePerson" name="thePerson"/>
+				</td>
+                <td style="width: 100px;">所属部门：</td>
+                <td style="width: 80px;font-size:17px" contenteditable="true">
+					<input type="text" id="DEPARTMENT" name="DEPARTMENT"/>
+				</td>
+                <td style="width: 100px;">考核月份：</td>
+                <td style="width: 80px;font-size:17px" contenteditable="true">
+					<input type="text" id="ckMonth" name="ckMonth"/></td>
+                <td style="width: 100px;">直属上级：</td>
+                <td style="width: 80px;font-size:17px" contenteditable="true">
+					<select id="SUPERIOR" name="SUPERIOR">
+					<option>请选择</option>
+					<option>111</option>
+					<option>222</option>
+					</select>
+                <td>日期：</td>
+                <td style="width: 80px;font-size:17px" contenteditable="true">
+					<input type="text" id="insDate" name="insDate"/></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2">考核类别</td>
+                <td rowspan="2">考核项目</td>
+                <td rowspan="2">权重</td>
+                <td rowspan="2">目标要求</td>
+                <td rowspan="2" colspan="4" style="text-align: center;">评分等级</td>
+                <td colspan="2" style="text-align: center;">评分</td>
+                <tr>
+                    <td>自评</td>
+                    <td>上级</td>
+                </tr>
+            </tr>
+
+
+            <tr>
+                <td rowspan="3">工作业绩 30%</td>
+                <td>工作达成</td>
+                <td>10%</td>
+                <td>与目标或与期望值比较，完全达成目标或达到期望值</td>
+                <td colspan="4" style="text-align: center;">
+                    1.超额达成工作目标，且工作效果优良，并在原基础上有新的突破和建树9-10分 <br> 2.全部达成工作目标，工作质量较好6-8分
+                    <br> 3.基本达成工作目标，且不影响整体工作3-5分 <br> 4.勉强达成工作目标，但效果较差1~2分 <br> 5.未达成工作目标0分
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="Wk_ACHIEVE" name="Wk_ACHIEVE"/></td>
+                <td style="width: 80px" contenteditable="true">
+					<input type="text" id="Wk_ACHIEVES" name="Wk_ACHIEVES"/></td>
+            </tr>
+
+            <tr>
+                <td>工作量</td>
+                <td>10%</td>
+                <td>职责内工作、上级交办工作及自主性工作完成的工作量饱和度佳，不存在时间浪费</td>
+                <td colspan="4" style="text-align: center;">
+                    1.能自主准时完成超负荷的工作量，且工作效果显著9-10分<br> 2.工作量饱和，能在工作时间内自主完成6-8分
+                    <br> 3.工作量稍大，能在上级或同事的帮助下完成3-5分
+                    <br> 4.工作量适中，要在上级的催促下完成1~2分
+                    <br> 5.工作量偏少，在上级的催促下也不能完成0分
+                    <br>
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">	
+				<input type="text" id="WKLOAD" name="WKLOAD"/></td>
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="WKLOADS" name="WKLOADS"/></td>
+            </tr>
+
+
+            <tr>
+                <td>工作效率</td>
+                <td>10%</td>
+                <td>达成工作目标的速度迅速、过程可追溯、工作品质符合要求</td>
+                <td colspan="4" style="text-align: center;">
+                    1.工作高效、过程可追溯、工作品质优秀，且能引领团队提高效率9-10分<br> 2.工作效率较高，过程清晰，工作品质符合要求6-8分
+                    <br> 3.工作效率能满足要求，过程可见，工作品质基本符合要求3-5分
+                    <br> 4.工作效率较低，但未影响整体工作进度1~2分
+                    <br> 5.工作效率极低，影响个人及团队的整体工作进度0分
+                    <br>
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="WK_CIEN" name="WK_CIEN"/></td>
+                <td style="width: 80px" contenteditable="true">
+					<input type="text" id="WK_CIENS" name="WK_CIENS"/></td>
+            </tr>
+
+            <tr>
+                <td rowspan="4">工作能力 35%</td>
+                <td>执行力</td>
+                <td>10%</td>
+                <td>对上级指示、计划的执行深度执行</td>
+                <td colspan="4" style="text-align: center;">
+                    1.执行力超强，能及时快速有效深入的进行执行，并以最快速度取得超越期望的结果9-10分<br> 2.执行力较强，执行速度迅速有效，能在规定的时间内取得符合要求的结果6-8分
+                    <br> 3.执行力较强，执行迅速，能在规定的时间内取得结果3-5分
+                    <br> 4.执行力较弱，执行速度较慢，效果欠佳1~2分
+                    <br> 5.执行力差，未取得结果0分
+                    <br>
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="EXE_FORCE" name="EXE_FORCE"/></td>
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="EXE_FORCES" name="EXE_FORCES"/></td>
+            </tr>
+
+            <tr>
+                <td>责任感</td>
+                <td>5%</td>
+                <td>竭尽所能完成工作并对过程和结果负责</td>
+                <td colspan="4" style="text-align: center;">
+                    1.明确自己的岗位要求、团队目标及公司目标，自觉主动对自己的行为及后果负责5分<br> 2.在有上级监督的情况下，对自己的行为及后果负责4分
+                    <br> 3.在一般情况下，能够对自己的行为负责2-3分
+                    <br> 4.对工作中的失误，有时进行逃避，或推卸责任1分
+                    <br> 5.对工作中的失误经常逃避责任，爱发闹骚或作各种辩解0分
+                    <br>
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="SE_DUTY" name="SE_DUTY"/></td>
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="SE_DUTYS" name="SE_DUTYS"/></td>
+            </tr>
+
+            <tr>
+                <td>主动性<br>积极性</td>
+                <td>10%</td>
+                <td>具有自觉性、积极性、主动性，对工作的积极投入、勇于进取</td>
+                <td colspan="4" style="text-align: center;">
+                    1.积极主动、热心工作、积极进取，能针对问题主动寻找方法进行有效的解决9-10分<br> 2.积极主动，对上级的指示和工作目标进行及时跟进完成6-8分
+                    <br> 3.能自觉完成相关工作安排和任务3-5分
+                    <br> 4.要在上级的催促和监督下完成工作1~2分
+                    <br> 5.态度傲慢，上级多次催促监督才能勉强完成工作0分以
+                    <br>
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="INI_ENT " name="INI_ENT "/></td>
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="INI_ENTS" name="INI_ENTS"/></td>
+            </tr>
+
+            <tr>
+                <td>综合素质</td>
+                <td>15%</td>
+                <td>爱岗敬业、诚实守信、乐于奉献、勤勉踏实、卫生评比、集体活动</td>
+                <td colspan="4" style="text-align: center;">
+                    1.爱岗敬业、诚实守信、乐于奉献、勤勉踏实，具有良好的职业道德操守，并能积极影响他人；每日定时都有检查、打扫自己所负责的卫生区域，保持卫生区域干净、整洁、不留垃圾，做工间操时集合时间迅速，参与度高，其他集体活动积极参与11-15分<br> 2.能积极遵守职业道德操守；偶尔忘记检查、打扫卫生区域，利用其他空余时间打扫，保持卫生区域干净，不留垃圾，工间操集合时间迅速但参与度不高，其他集体活动积极参与6-10分
+                    <br> 3.不太注重职业道德操守，偶有违规，但未造成不良影响；多次忘记检查、打扫、垃圾残留被检查到，工间操集合拖拉，参与度低，其他集体活动参与度低1-5分
+                    <br> 4.违背职业道德操守，缺乏最基本的职业道德意识；多次被检查到未检查及打扫、垃圾溢出，工间操不参与，其他集体活动不参与0分
+                    <br>
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="COM_QUALITY" name="COM_QUALITY"/></td>
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="COM_QUALITYS" name="COM_QUALITYS"/></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2"><label id="EXE_INSPEC" name="EXE_INSPEC">例外考核</label></td>
+                <td>加分项</td>
+                <td>存在例外加分项</td>
+                <td colspan="5" style="text-align: center;" contenteditable="true"> </td>
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="BS_POS" name="BS_POS"/></td>
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="BS_POSS" name="BS_POSS"/></td>
+            </tr>
+
+            <tr>
+                <td>减分项</td>
+                <td>存在例外减分项</td>
+                <td colspan="5" style="text-align: center;" contenteditable="true"> </td>
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="BS_REDCS" name="BS_REDCS"/></td>
+                <td style="width: 80px;" contenteditable="true">
+					<input type="text" id="BS_REDCS" name="BS_REDCS"/></td>
+            </tr>
+
+            <tr>
+                <td colspan="2">出勤状况</td>
+                <td colspan="8">
+                    <span contenteditable="false"> 出勤天数:</span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="ATT_DAY" name="ATT_DAY"/></span>
+
+
+                    <span contenteditable="false"> 请假:</span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="ATT_LEAVE" name="ATT_LEAVE"/></span>
+
+                    <span contenteditable="false"> 休假(调休):</span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="ATT_HOLIDAY" name="ATT_HOLIDAY"/></span>
+
+                    <span contenteditable="false"> 加班:</span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="OVERTIME" name="OVERTIME"/></span>
+
+                    <span contenteditable="false"> 迟到:</span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="B_LATE" name="B_LATE"/></span>
+
+                    <span contenteditable="false"> 旷工:</span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="ABSENT" name="ABSENT"/></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><label id="TATAL" name="TATAL">总分</label></td>
+                <td colspan="8">总分=（个人评分*30%+上级评分*70%）+日常得分-日常扣分</td>
+            </tr>
+
+            <tr>
+                <td rowspan="3"><label id="" name="">总评</label></td>
+                <td colspan="9">
+                    <span contenteditable="false"> 得分等级:</span>
+                    <span contenteditable="true" style="outline: none;">	<input type="text" id="RAN_POIN" name="RAN_POIN"/></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="9">
+                    <span contenteditable="false"> 其他评价:</span>
+                    <span contenteditable="true" style="outline: none;">	<input type="text" id="OT_EVAL " name="OT_EVAL"/></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="9" style="text-align:right">
+                    <span contenteditable="false"> 考核人:</span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="INS_PERSON" name="INS_PERSON"/></span>
+
+                    <span contenteditable="false">  考核日期:</span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="INS_DATES" name="INS_DATES"/></span>
+                </td>
+            </tr>
+
+            <tr style="text-align: center;">
+                <td colspan="10">得分等级：A(卓越)≥95分 A-(杰出) 90~94分 B(优秀)85~89分 B-(优良)80~84分 C(良好)75~79分 C-(胜任) 70~74分 D(达标)65~69分 D-(合格)60~64分 E(较差)＜60分</td>
+            </tr>
+
+
+        </table>
+
+
+        </table>
+        </form>
+    </div>
+</body>
+
+</html>

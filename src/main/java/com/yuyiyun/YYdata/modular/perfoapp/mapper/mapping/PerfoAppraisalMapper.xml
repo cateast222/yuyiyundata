@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyiyun.YYdata.modular.perfoapp.mapper.PerfoAppraisalMapper">
+    
+    <resultMap type="PerfoAppraisalEntity" id="PerfoAppraisalResult">
+        <result property="PERFOID"    column="PERFOID"    />
+        <result property="thePerson"    column="THE_PERSON"    />
+        <result property="DEPARTMENT"    column="DEPARTMENT"    />
+        <result property="ckMonth"    column="CK_MONTH"    />
+        <result property="SUPERIOR"    column="SUPERIOR"    />
+        <result property="insDate"    column="INS_DATE"    />
+        <result property="wkPerform"    column="WK_PERFORM"    />
+        <result property="seAbility"    column="SE_ABILITY"    />
+        <result property="attWard"    column="ATT_WARD"    />
+        <result property="exeInspec"    column="EXE_INSPEC"    />
+        <result property="attStas"    column="ATT_STAS"    />
+        <result property="TATAL"    column="TATAL"    />
+        <result property="OVERALL"    column="OVERALL"    />
+    </resultMap>
+
+    <sql id="selectPerfoAppraisalVo">
+        select PERFOID, THE_PERSON, DEPARTMENT, CK_MONTH, SUPERIOR, INS_DATE, WK_PERFORM, SE_ABILITY, ATT_WARD, EXE_INSPEC, ATT_STAS, TATAL, OVERALL from perfo_appraisal
+    </sql>
+
+
+
+</mapper>

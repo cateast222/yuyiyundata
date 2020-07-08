@@ -1,0 +1,103 @@
+<#include "/common/include.html"/>
+<@pageTheme mark="${config.optimize()?string('true', 'false')}">
+<@header title="修改绩效">
+</@header>
+<@addorEdit fromId="form-perfoAppraisal-edit">
+    <input name="PERFOID" value="${perfoAppraisal.PERFOID}" type="hidden">
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "被考核人">：                
+       </label>
+        <div class="col-sm-8"><input name="thePerson" value="${perfoAppraisal.thePerson?default("")}" class="form-control" type="text" >                
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "所属部门">：                
+       </label>
+        <div class="col-sm-8"><input name="DEPARTMENT" value="${perfoAppraisal.DEPARTMENT?default("")}" class="form-control" type="text" >                
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "考核月份"/>：</label>
+        <div class="col-sm-8">
+            <select name="ckMonth" class="form-control m-b">
+                <option value="">所有</option>
+            </select>
+            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "直属上级"/>：</label>
+        <div class="col-sm-8">
+            <select name="SUPERIOR" class="form-control m-b">
+                <option value="">所有</option>
+            </select>
+            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "考核日期"/>：</label>
+        <div class="col-sm-8">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input class="form-control time-input" name="insDate"  data-type="date"   value="${(perfoAppraisal.insDate?string('yyyy-MM-dd'))!}" data-format="yyyy-MM-dd" type="text" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "工作业绩">：                
+       </label>
+        <div class="col-sm-8"><input name="wkPerform" value="${perfoAppraisal.wkPerform?default("")}" class="form-control" type="text" >                
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "工作能力">：                
+       </label>
+        <div class="col-sm-8"><input name="seAbility" value="${perfoAppraisal.seAbility?default("")}" class="form-control" type="text" >                
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "工作态度">：                
+       </label>
+        <div class="col-sm-8"><input name="attWard" value="${perfoAppraisal.attWard?default("")}" class="form-control" type="text" >                
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "例外考核">：                
+       </label>
+        <div class="col-sm-8"><input name="exeInspec" value="${perfoAppraisal.exeInspec?default("")}" class="form-control" type="text" >                
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "出勤状况">：                
+       </label>
+        <div class="col-sm-8"><input name="attStas" value="${perfoAppraisal.attStas?default("")}" class="form-control" type="text" >                
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "总分">：                
+       </label>
+        <div class="col-sm-8"><input name="TATAL" value="${perfoAppraisal.TATAL?default("")}" class="form-control" type="text" >                
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"><@ctx.i18n text = "总评">：                
+       </label>
+        <div class="col-sm-8"><input name="OVERALL" value="${perfoAppraisal.OVERALL?default("")}" class="form-control" type="text" >                
+        </div>
+     </div>
+</@addorEdit>
+<@footer>
+<script type="text/javascript">
+    var prefix = baseURL + "caiji/perfoAppraisal";
+    $("#form-perfoAppraisal-edit").validate({
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if (opt.validate.form()) {
+            opt.operate.save(prefix + "/edit", $('#form-perfoAppraisal-edit').serialize());
+        }
+    }
+</script>
+</@footer>
+</@pageTheme>
