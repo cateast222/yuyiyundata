@@ -1,4 +1,7 @@
 package  com.yuyiyun.YYdata.modular.perfoapp.service;
+import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,6 +14,8 @@ import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import javax.annotation.Resource;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
 /**
@@ -24,5 +29,60 @@ public class PerfoAppraisalService extends ServiceImpl<PerfoAppraisalMapper,Perf
 
 	@Resource
 	private PerfoAppraisalMapper perfoAppraisalMapper;
+
+
+	/**
+	 * 查询出指定用户的历史记录
+	 * @param
+	 * @return
+	 */
+	public List<PerfoAppVo> selectSelf(PerfoAppraisalEntity p){
+
+		List<PerfoAppVo> list = perfoAppraisalMapper.selectSelf(p);
+		return list;
+
+	}
+
+
+	/**
+	 * 保存绩效自评
+	 * @param perfoAppraisalEntity
+	 * @return
+	 */
+	public String insertPer(PerfoAppraisalEntity perfoAppraisalEntity){
+		perfoAppraisalMapper.insert(perfoAppraisalEntity);
+		return null;
+	}
+
+
+	/**
+	 * 自己点击回显数据
+	 * @param perfoAppraisalEntity
+	 * @return
+	 */
+	public  List<PerfoAppraisalEntity> selectById(PerfoAppraisalEntity perfoAppraisalEntity){
+		List <PerfoAppraisalEntity> list=perfoAppraisalMapper.selectById(perfoAppraisalEntity);
+		return list;
+	}
+
+	/**
+	 * 查询出当前启用的用户
+	 * @param
+	 * @return
+	 */
+	public  List<PerfoAppVo> select(){
+		List <PerfoAppVo> list=perfoAppraisalMapper.select();
+		return list;
+	}
+
+	/**
+	 * 查询出当前用户
+	 * @param p
+	 * @return
+	 */
+	public List<PerfoAppVo> selectUser(PerfoAppVo p){
+		List<PerfoAppVo> perfoAppVos = perfoAppraisalMapper.selectUser(p);
+		return perfoAppVos;
+	}
 
 }

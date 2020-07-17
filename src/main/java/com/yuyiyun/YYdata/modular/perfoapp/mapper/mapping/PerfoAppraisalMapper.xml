@@ -23,5 +23,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectPerfoAppraisalVo">
         select uuid, the_person, department, ck_month, superior, ins_date, wk_perform, se_ability, att_ward, exe_inspec, att_stas, tatal, overall from perfo_appraisal
     </sql>
+    <!--历史记录查询-->
+    <select id="selectSelf" resultType="com.yuyiyun.YYdata.modular.perfoapp.entity.PerfoAppraisalEntity"  parameterType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo">
+        SELECT  su.name, pea.* FROM sys_user su INNER JOIN perfo_appraisal pea  ON (su.`name`=pea.the_person)
+               WHERE su.user_id=#{userid}
+
+    </select>
+    <!--个人绩效保存-->
+    <insert id="insertPer"  parameterType="com.yuyiyun.YYdata.modular.perfoapp.entity.PerfoAppraisalEntity">
+         INSERT INTO perfo_appraisal(uuid,thePerson,department,ckMonth,superior,insDate,wkPerform,seAbility,attWard,exeInspec,attStas,tatal,overall)
+        VALUES(#{uuid},#{thePerson},#{department},#{ckMonth},#{superior},#{insDate},#{wkPerform},#{seAbility},#{attWard},#{exeInspec},#{attStas},#{tatal},#{overall})
+    </insert>
+    <!--自己点击回显数据-->
+    <select id="selectById" resultType="com.yuyiyun.YYdata.modular.perfoapp.entity.PerfoAppraisalEntity"  parameterType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo">
+        SELECT * FROM perfo_appraisal WHERE uuid=#{uuid}
+    </select>
+    <!--查询出所有的用户-->
+    <select id="select" resultType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo"  parameterType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo">
+        SELECT  `name`,user_id FROM sys_user WHERE `status`='ENABLE'
+    </select>
+<!--    查询出当前用户-->
+    <select id="selectUser" resultType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo"  parameterType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo">
+        SELECT  `name`FROM sys_user WHERE user_id=#{userid}
+    </select>
+
+
+
 
 </mapper>

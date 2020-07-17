@@ -22,10 +22,29 @@ public class PerfoAppraisalEntity {
 
 	/** 绩效id */
 	@TableId(value = "uuid", type = IdType.ID_WORKER)
-	private Long uuid;
+	private String uuid;
 	/** 被考核人 */
 	@TableField("the_person")
-	private Long thePerson;
+	private String thePerson;
+
+	@Override
+	public String toString() {
+		return "PerfoAppraisalEntity{" +
+				"uuid=" + uuid +
+				", thePerson='" + thePerson + '\'' +
+				", department='" + department + '\'' +
+				", ckMonth='" + ckMonth + '\'' +
+				", superior='" + superior + '\'' +
+				", insDate=" + insDate +
+				", wkPerform='" + wkPerform + '\'' +
+				", seAbility='" + seAbility + '\'' +
+				", attWard='" + attWard + '\'' +
+				", exeInspec='" + exeInspec + '\'' +
+				", attStas='" + attStas + '\'' +
+				", tatal=" + tatal +
+				", overall='" + overall + '\'' +
+				'}';
+	}
 
 	/** 所属部门 */
 	@TableField("department")
@@ -66,10 +85,113 @@ public class PerfoAppraisalEntity {
 
 	/** 总分 */
 	@TableField("tatal")
-	private Long tatal;
+	private String tatal;
 
 	/** 总评 */
 	@TableField("overall")
 	private String overall;
 
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public String getThePerson() {
+		return thePerson;
+	}
+
+	public void setThePerson(String thePerson) {
+		this.thePerson = thePerson;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	public String getCkMonth() {
+		return ckMonth;
+	}
+
+	public void setCkMonth(String ckMonth) {
+		this.ckMonth = ckMonth;
+	}
+
+	public String getSuperior() {
+		return superior;
+	}
+
+	public void setSuperior(String superior) {
+		this.superior = superior;
+	}
+
+	public Date getInsDate() {
+		return insDate;
+	}
+
+	public void setInsDate(Date insDate) {
+		this.insDate = insDate;
+	}
+
+	public String getWkPerform() {
+		return wkPerform;
+	}
+
+	public void setWkPerform(String wkPerform) {
+		this.wkPerform = wkPerform;
+	}
+
+	public String getSeAbility() {
+		return seAbility;
+	}
+
+	public void setSeAbility(String seAbility) {
+		this.seAbility = seAbility;
+	}
+
+	public String getAttWard() {
+		return attWard;
+	}
+
+	public void setAttWard(String attWard) {
+		this.attWard = attWard;
+	}
+
+	public String getExeInspec() {
+		return exeInspec;
+	}
+
+	public void setExeInspec(String exeInspec) {
+		this.exeInspec = exeInspec;
+	}
+
+	public String getAttStas() {
+		return attStas;
+	}
+
+	public void setAttStas(String attStas) {
+		this.attStas = attStas;
+	}
+
+	public String getTatal() {
+		return tatal;
+	}
+
+	public void setTatal(String tatal) {
+		this.tatal = tatal;
+	}
+
+	public String getOverall() {
+		return overall;
+	}
+
+	public void setOverall(String overall) {
+		this.overall = overall;
+	}
 }

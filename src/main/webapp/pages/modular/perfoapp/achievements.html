@@ -1,44 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>语亦云绩效考核评分表</title>
-    <link rel="stylesheet" href="css/normalize.css" />
-    <script src="js/jquery.js"></script>
-</head>
-
-<body>
-
-
-    <div id="box">
-        <table border="1" cellspacing="0" style="width: 1000px;margin: 0 auto;">
+@layout("/common/_container.html",{js:["/assets/modular/perfoapp/achievements.js"]}){
+<div id="box" >
+    <div class="layui-fluid" style="float: left;width: 30%;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <div class="layui-form toolbar">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <button id="searchSysUserBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="layui-table" id="selectSelf" lay-filter="lineBar"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <table border="1" cellspacing="0" style="width: 1000px;margin: 0 10px;">
             <tr>
                 <th colspan="10">语亦云绩效考核评分表</th>
             </tr>
             <tr>
                 <td style="width: 100px;">被考核人：</td>
                 <td style="width: 80px;font-size:17px " contenteditable="true">
-				<input type="text" id="thePerson" name="thePerson"/>
+				<input type="text" disabled="true" id="thePerson" name="thePerson"/>
 				</td>
                 <td style="width: 100px;">所属部门：</td>
                 <td style="width: 80px;font-size:17px" contenteditable="true">
-					<input type="text" id="DEPARTMENT" name="DEPARTMENT"/>
+					<input type="text" id="department" name="department"/>
 				</td>
                 <td style="width: 100px;">考核月份：</td>
                 <td style="width: 80px;font-size:17px" contenteditable="true">
-					<input type="text" id="ckMonth" name="ckMonth"/></td>
+                    <div class="layui-inline">
+                        <label class="layui-form-label"></label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="ckMonth" placeholder="yyyy-MM-dd">
+                        </div>
+                    </div>
                 <td style="width: 100px;">直属上级：</td>
                 <td style="width: 80px;font-size:17px" contenteditable="true">
-					<select id="SUPERIOR" name="SUPERIOR">
+					<select id="superior" name="superior">
 					<option>请选择</option>
-					<option>111</option>
-					<option>222</option>
 					</select>
                 <td>日期：</td>
                 <td style="width: 80px;font-size:17px" contenteditable="true">
-					<input type="text" id="insDate" name="insDate"/></td>
+                    <div class="layui-inline">
+                        <label class="layui-form-label"></label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="insDate" placeholder="yyyy-MM-dd">
+                        </div>
+                    </div>
             </tr>
 
             <tr>
@@ -66,9 +79,9 @@
                 </td>
 
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="Wk_ACHIEVE" name="Wk_ACHIEVE"/></td>
+					<input class="ajson" type="text" id="Wk_ACHIEVE" name="Wk_ACHIEVE"/></td>
                 <td style="width: 80px" contenteditable="true">
-					<input type="text" id="Wk_ACHIEVES" name="Wk_ACHIEVES"/></td>
+					<input  type="text" disabled="true" id="Wk_ACHIEVES" name="Wk_ACHIEVES"/></td>
             </tr>
 
             <tr>
@@ -84,9 +97,9 @@
                 </td>
 
                 <td style="width: 80px;" contenteditable="true">	
-				<input type="text" id="WKLOAD" name="WKLOAD"/></td>
+				<input class="ajson" type="text" id="WKLOAD" name="WKLOAD"/></td>
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="WKLOADS" name="WKLOADS"/></td>
+					<input type="text" disabled="true" id="WKLOADS" name="WKLOADS"/></td>
             </tr>
 
 
@@ -103,9 +116,9 @@
                 </td>
 
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="WK_CIEN" name="WK_CIEN"/></td>
+					<input class="ajson" type="text" id="WK_CIEN" name="WK_CIEN"/></td>
                 <td style="width: 80px" contenteditable="true">
-					<input type="text" id="WK_CIENS" name="WK_CIENS"/></td>
+					<input type="text" disabled="true" id="WK_CIENS" name="WK_CIENS"/></td>
             </tr>
 
             <tr>
@@ -122,9 +135,80 @@
                 </td>
 
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="EXE_FORCE" name="EXE_FORCE"/></td>
+					<input class="bjson" type="text" id="EXE_FORCE" name="EXE_FORCE"/></td>
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="EXE_FORCES" name="EXE_FORCES"/></td>
+					<input type="text" disabled="true" id="EXE_FORCES" name="EXE_FORCES"/></td>
+            </tr>
+            <tr>
+                <td>计划性</td>
+                <td>5%</td>
+                <td>工作事前计划，对工作（内容、时间、数量、程序）安排分配的合理有效可执行</td>
+                <td colspan="4">
+                    1.工作计划明确有条理，目标清晰，可行性强，时间分配合理，能整体带动团队的工作进程5分<br> 2.工作计划清晰明确有条理，具有可行性，时间分配合理4分
+                    <br> 3.工作计划较为清楚有条理，具有可行性2-3分
+                    <br> 4.工作计划较为紊乱，可行性不高1分
+                    <br> 5.没有工作计划0分
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">
+                    <input class="bjson" type="text" id="PLANN" name="PLANN"/>
+                </td>
+                <td style="width: 80px;" contenteditable="true">
+                 <input  type="text" disabled="true" id="PLANNS" name="PLANNS"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>职务技能</td>
+                <td>10%</td>
+                <td>对担任职务相关知识的掌握、运用熟练</td>
+                <td colspan="4">
+                    1.具有跟本职岗位相关所需要的全部知识和技能且能熟练运用，对与其相关的职位都有深入的认知，并能胜任相关的其他岗位9-10分<br> 2.具有跟本职岗位相关所需要的全部知识和技能，且能熟练运用6-8分
+                    <br> 3.具有跟本职岗位相关所需要的必备知识和技能，并能运用于工作3-5分
+                    <br> 4.了解本职岗位所应具备的基本知识和技能，能基本进行运用1-2分
+                    <br> 5.对本职岗位所应具备的基本知识和技能都不了解0分
+                    <br>
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">
+                    <input class="bjson" type="text" id="JOB_SKILLS" name="JOB_SKILLS"/>
+                </td>
+                <td style="width: 80px;" contenteditable="true">
+                    <input  type="text" disabled="true" id="JOB_SKILLSS" name="JOB_SKILLSS"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>周全缜密</td>
+                <td>10%</td>
+                <td>工作认真细致及深入，考虑问题全面，无疏忽或遗漏</td>
+                <td colspan="4">
+                    1.工作认真细致，考虑问题深入全面，工作无疏忽或遗漏，能对以往的问题和漏洞就行有效的改善和修正8-10分 <br> 2.工作认真细致，考虑问题全面，工作无疏忽或遗漏4-7分 <br> 3.工作认真，偶有疏漏但未影响整体工作1-3分 <br> 4.工作粗心大意，常有疏漏0分
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">
+                    <input class="bjson" type="text" id="CPS_RIG" name="CPS_RIG"/>
+                </td>
+                <td style="width: 80px;" contenteditable="true">
+                    <input  type="text" disabled="true" id="CPS_RIGS" name="CPS_RIGS"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td rowspan="4">工作态度 35%</td>
+                <td>团队协作</td>
+                <td>5%</td>
+                <td>人际关系良好，与同事及与其他部门工作协调良好</td>
+                <td colspan="4">
+                    1.人际关系良好，与各部门各同事沟通协调高效顺畅，为总体工作目标的完成尽最大的努力5分 <br> 2.人际关系较好，能主动与各部门各同事协调达成工作目标3-4分 <br> 3.人际关系一般，能基本与其他同事及部门协调完成工作1~2分 <br> 4.人际关系较差，难以完成与同事及部门间基本的沟通协作0分 <br>
+                </td>
+
+                <td style="width: 80px;" contenteditable="true">
+                    <input class="cjson" type="text" id="TEAMWORK" name="TEAMWORK"/>
+                </td>
+                <td style="width: 80px;" contenteditable="true">
+                    <input  type="text" disabled="true" id="TEAMWORKS" name="TEAMWORKS"/>
+                </td>
             </tr>
 
             <tr>
@@ -140,9 +224,9 @@
                 </td>
 
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="SE_DUTY" name="SE_DUTY"/></td>
+					<input class="cjson" type="text" id="SE_DUTY" name="SE_DUTY"/></td>
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="SE_DUTYS" name="SE_DUTYS"/></td>
+					<input type="text" disabled="true" id="SE_DUTYS" name="SE_DUTYS"/></td>
             </tr>
 
             <tr>
@@ -158,9 +242,9 @@
                 </td>
 
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="INI_ENT " name="INI_ENT "/></td>
+					<input class="cjson" type="text" id="INI_ENT" name="INI_ENT"/></td>
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="INI_ENTS" name="INI_ENTS"/></td>
+					<input type="text" disabled="true" id="INI_ENTS" name="INI_ENTS"/></td>
             </tr>
 
             <tr>
@@ -175,9 +259,9 @@
                 </td>
 
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="COM_QUALITY" name="COM_QUALITY"/></td>
+					<input class="cjson" type="text" id="COM_QUALITY" name="COM_QUALITY"/></td>
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="COM_QUALITYS" name="COM_QUALITYS"/></td>
+					<input type="text" disabled="true" id="COM_QUALITYS" name="COM_QUALITYS"/></td>
             </tr>
 
             <tr>
@@ -186,9 +270,9 @@
                 <td>存在例外加分项</td>
                 <td colspan="5" style="text-align: center;" contenteditable="true"> </td>
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="BS_POS" name="BS_POS"/></td>
+					<input class="djson" type="text" id="BS_POS" name="BS_POS"/></td>
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="BS_POSS" name="BS_POSS"/></td>
+					<input type="text" disabled="true" id="BS_POSS" name="BS_POSS"/></td>
             </tr>
 
             <tr>
@@ -196,67 +280,80 @@
                 <td>存在例外减分项</td>
                 <td colspan="5" style="text-align: center;" contenteditable="true"> </td>
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="BS_REDCS" name="BS_REDCS"/></td>
+					<input class="djson" type="text" id="BS_REDC" name="BS_REDC"/></td>
                 <td style="width: 80px;" contenteditable="true">
-					<input type="text" id="BS_REDCS" name="BS_REDCS"/></td>
+					<input type="text" disabled="true" id="BS_REDCS" name="BS_REDCS"/></td>
             </tr>
 
             <tr>
                 <td colspan="2">出勤状况</td>
                 <td colspan="8">
                     <span contenteditable="false"> 出勤天数:</span>
-                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="ATT_DAY" name="ATT_DAY"/></span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input class="ejson" type="text" id="ATT_DAY" name="ATT_DAY"/></span>
 
 
                     <span contenteditable="false"> 请假:</span>
-                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="ATT_LEAVE" name="ATT_LEAVE"/></span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input class="ejson" type="text" id="ATT_LEAVE" name="ATT_LEAVE"/></span>
 
                     <span contenteditable="false"> 休假(调休):</span>
-                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="ATT_HOLIDAY" name="ATT_HOLIDAY"/></span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input class="ejson" type="text" id="ATT_HOLIDAY" name="ATT_HOLIDAY"/></span>
 
                     <span contenteditable="false"> 加班:</span>
-                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="OVERTIME" name="OVERTIME"/></span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input class="ejson" type="text" id="OVERTIME" name="OVERTIME"/></span>
 
                     <span contenteditable="false"> 迟到:</span>
-                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="B_LATE" name="B_LATE"/></span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input class="ejson" type="text" id="B_LATE" name="B_LATE"/></span>
 
                     <span contenteditable="false"> 旷工:</span>
-                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="ABSENT" name="ABSENT"/></span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input class="ejson" type="text" id="ABSENT" name="ABSENT"/></span>
                 </td>
             </tr>
 
             <tr>
-                <td colspan="2"><label id="TATAL" name="TATAL">总分</label></td>
-                <td colspan="8">总分=（个人评分*30%+上级评分*70%）+日常得分-日常扣分</td>
+                <td colspan="2"><label id="tatal" name="tatal">总分</label></td>
+                <td colspan="8">
+                    <input style="width: 50px" disabled="true" class=".mjson" id="totalpoints"  name="totalpoints" type="text"/>总分=（个人评分*30%
+                    <input id="person" disabled="true" class=".mjson" name="person" style="width: 50px;color: red;" type="text"/>+上级评分
+                    <input style="width: 50px" disabled="true" class=".mjson" id="superiors" name="superiors" type="text"/>*70%）+日常得分
+                    <input style="width: 50px" disabled="true" class=".mjson"  id="scores" name="scores" type="text"/>-日常扣分
+                    <input id="penalty" disabled="true" class=".mjson" name="penalty" style="width: 50px" type="text"/>总分=（个人评分*30%+上级评分*70%）+日常得分-日常扣分</td>
             </tr>
 
             <tr>
-                <td rowspan="3"><label id="" name="">总评</label></td>
+                <td rowspan="3"><label id="overall" name="overall">总评</label></td>
                 <td colspan="9">
                     <span contenteditable="false"> 得分等级:</span>
-                    <span contenteditable="true" style="outline: none;">	<input type="text" id="RAN_POIN" name="RAN_POIN"/></span>
+                    <span contenteditable="true" style="outline: none;">	<input disabled="true" class="fjson" type="text" id="RAN_POIN" name="RAN_POIN"/></span>
                 </td>
             </tr>
 
             <tr>
                 <td colspan="9">
                     <span contenteditable="false"> 其他评价:</span>
-                    <span contenteditable="true" style="outline: none;">	<input type="text" id="OT_EVAL " name="OT_EVAL"/></span>
+                    <span contenteditable="true" style="outline: none;">	<input  disabled="true" class="fjson" type="text" id="OT_EVAL " name="OT_EVAL"/></span>
                 </td>
             </tr>
 
             <tr>
                 <td colspan="9" style="text-align:right">
                     <span contenteditable="false"> 考核人:</span>
-                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="INS_PERSON" name="INS_PERSON"/></span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input class="fjson" disabled="true" type="text" id="INS_PERSON" name="INS_PERSON"/></span>
 
                     <span contenteditable="false">  考核日期:</span>
-                    <span contenteditable="true" style="outline: none;padding: 10px;">	<input type="text" id="INS_DATES" name="INS_DATES"/></span>
+                    <span contenteditable="true" style="outline: none;padding: 10px;">	<div class="layui-inline">
+                        <label class="layui-form-label"></label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" disabled="true" id="INS_DATES" name="INS_DATES" placeholder="yyyy-MM-dd">
+                        </div>
+                    </div>
                 </td>
             </tr>
 
             <tr style="text-align: center;">
                 <td colspan="10">得分等级：A(卓越)≥95分 A-(杰出) 90~94分 B(优秀)85~89分 B-(优良)80~84分 C(良好)75~79分 C-(胜任) 70~74分 D(达标)65~69分 D-(合格)60~64分 E(较差)＜60分</td>
+            </tr>
+            <tr>
+                <td><button type="button" id="btnSubmit">提交</button></td>
             </tr>
 
 
@@ -266,6 +363,11 @@
         </table>
         </form>
     </div>
-</body>
+<!-- 数据行工具栏 -->
+<script type="text/html" id="lineBar">
+    <a class="layui-btn layui-btn-xs" lay-event="select">查看详情</a>
+</script>
+@}
 
-</html>
+
+
