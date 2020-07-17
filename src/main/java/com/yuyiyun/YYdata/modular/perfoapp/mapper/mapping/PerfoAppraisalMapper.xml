@@ -46,6 +46,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectUser" resultType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo"  parameterType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo">
         SELECT  `name`FROM sys_user WHERE user_id=#{userid}
     </select>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     
+    <!--查询未审核的人员名单-->
+    <select id="unrevisedAll" resultType="java.util.Map" parameterType="com.yuyiyun.YYdata.modular.perfoapp.entity.PerfoAppraisalEntity">
+     SELECT su.name, pea.* FROM sys_user su INNER JOIN perfo_appraisal pea  ON (su.user_id=pea.superior)
+     WHERE su.user_id=#{superior} and pea.state=0
+        <if test="thePerson != null and thePerson != ''">
+            AND   pea.the_person = #{thePerson}
+        </if>
+    </select>
+
+
+
+
+    <!--查询历史记录的人员名单-->
+    <select id="unrevisedHistory" resultType="java.util.Map" parameterType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo">
+        SELECT su.name, pea.* FROM sys_user su INNER JOIN perfo_appraisal pea  ON (su.user_id=pea.superior)
+        WHERE  su.user_id=1 AND  pea.state=1
+        <if test="startTime != null and startTime != ''">
+            AND   DATE_FORMAT(pea.ins_date,'%Y-%m')
+            <![CDATA[ >= ]]> #{startTime} AND DATE_FORMAT(pea.ins_date,'%Y-%m')<![CDATA[ <= ]]> #{endTime}
+        </if>
+
+        <if test="thePerson != null and thePerson != ''">
+            AND   pea.the_person = #{thePerson}
+        </if>
+
+    </select>
+
+    <update id="updatePerfo"  parameterType="com.yuyiyun.YYdata.modular.perfoapp.entity.PerfoAppraisalEntity">
+        UPDATE perfo_appraisal SET wk_perform=#{wkPerform},se_ability=#{seAbility},
+        att_ward=#{attWard}, exe_inspec=#{exeInspec},att_stas=#{attStas},
+           tatal=#{tatal},overall=#{overall},state='0' WHERE UUID=#{uuid}
+    </update>
+    
 
 
 

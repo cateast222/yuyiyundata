@@ -1,0 +1,73 @@
+@layout("/common/_container.html",{js:["/assets/modular/perfoapp/audit.js"]}){
+
+<div class="layui-body-header">
+	<span class="layui-body-header-title">数据权限管理</span>
+</div>
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-sm12 layui-col-md4 layui-col-lg4">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-form toolbar">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<input id="thePersons" name="thePersons" class="layui-input" type="search" placeholder="被考核人" />
+							</div>
+							<!--<div class="layui-inline">
+								<div class="layui-input-inline">
+									<input type="text" class="layui-input" id="dateTime" placeholder="日期范围查询">
+								</div>
+							</div>-->
+							<div class="layui-inline">
+								<button id="searchSysUserBtn" class="layui-btn icon-btn layui-btn-sm">
+									<i class="layui-icon">&#xe615;</i>搜索
+								</button>
+							</div>
+						</div>
+					</div>
+					<table class="layui-table" id="unrevisedHistoryTable" lay-filter="unrevisedHistoryTable"></table>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-sm12 layui-col-md8 layui-col-lg8">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-form">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<div class="layui-input-inline">
+									<input id="thePerson" name="thePerson" class="layui-input" type="search" placeholder="被考核人"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<button type="button" id="searchApiDataAuthBtn" class="layui-btn layui-btn-normal icon-btn layui-btn-sm">
+									<i class="layui-icon">&#xe615;</i> 搜索
+								</button>
+							</div>
+						</div>
+					</div>
+					<table class="layui-hide" id="unrevisedAllTable" lay-filter="unrevisedAllTable"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 表格操作工具栏 -->
+<script type="text/html" id="toolBar">
+	<!--<div class="layui-btn-container">
+		<button type="button" class="layui-btn layui-btn-sm" lay-event="add">
+			<i class="layui-icon">&#xe654;</i> 新增数据
+		</button>
+		<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">
+			<i class="layui-icon">&#xe640;</i> 批量删除
+		</button>
+	</div>-->
+</script>
+
+<!-- 数据行工具栏 -->
+<script type="text/html" id="lineBar">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">审核</a>
+	<!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+</script>
+
+@}

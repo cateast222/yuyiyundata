@@ -84,5 +84,53 @@ public class PerfoAppraisalService extends ServiceImpl<PerfoAppraisalMapper,Perf
 		List<PerfoAppVo> perfoAppVos = perfoAppraisalMapper.selectUser(p);
 		return perfoAppVos;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 查询未审核的人员名单-
+	 * @param perfoAppraisalEntity
+	 * @return
+	 */
+	 public List<Map>  unrevisedAll(PerfoAppraisalEntity perfoAppraisalEntity){
+       return perfoAppraisalMapper.unrevisedAll(perfoAppraisalEntity);
+	}
+
+
+	/**
+	 * 查询历史记录的人员名单-
+	 * @param
+	 * @return
+	 */
+	public List<Map>  unrevisedHistory(PerfoAppVo appVo){
+		return perfoAppraisalMapper.unrevisedHistory(appVo);
+	}
+
+
+
+	/**
+	 *
+	 * @param
+	 * @return
+	 */
+	public int updatePerfo(PerfoAppraisalEntity perfoAppraisalEntity){
+		return perfoAppraisalMapper.updatePerfo(perfoAppraisalEntity);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

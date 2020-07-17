@@ -5,6 +5,7 @@ import com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -49,5 +50,38 @@ public interface PerfoAppraisalMapper extends BaseMapper<PerfoAppraisalEntity> {
      * @return
      */
     List<PerfoAppVo> selectUser(PerfoAppVo perfoAppVo);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+	 * 查询未审核的人员名单
+	 */
+	List<Map>  unrevisedAll(PerfoAppraisalEntity appraisalEntity);
+
+	/**
+	 * 查询历史记录；的人员名单
+	 */
+	List<Map>   unrevisedHistory(PerfoAppVo appVo);
+
+	/**
+	 * 对人员进行审核
+	 * @param appraisalEntity
+	 * @return
+	 */
+	int  updatePerfo(PerfoAppraisalEntity appraisalEntity);
+    
+    
+    
+    
 
 }
