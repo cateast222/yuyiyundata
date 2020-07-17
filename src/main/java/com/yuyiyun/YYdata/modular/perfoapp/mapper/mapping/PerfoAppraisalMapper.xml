@@ -89,7 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updatePerfo"  parameterType="com.yuyiyun.YYdata.modular.perfoapp.entity.PerfoAppraisalEntity">
         UPDATE perfo_appraisal SET wk_perform=#{wkPerform},se_ability=#{seAbility},
         att_ward=#{attWard}, exe_inspec=#{exeInspec},att_stas=#{attStas},
-           tatal=#{tatal},overall=#{overall},state='0' WHERE UUID=#{uuid}
+           tatal=#{tatal},overall=#{overall},state='1' WHERE UUID=#{uuid}
     </update>
     
 
