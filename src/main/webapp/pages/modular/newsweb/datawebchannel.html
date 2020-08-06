@@ -1,0 +1,45 @@
+@layout("/common/_container.html",{js:["/assets/modular/newsweb/datawebchannel.js"]}){
+<div id="box" >
+    <div class="layui-fluid" style="float: left;width: 100%;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <div class="layui-form toolbar" >
+                            <div class="layui-form-item" >
+                            	<div class="layui-inline">
+                                <input id="moduleName" name="moduleName" class="layui-input" type="search" placeholder="频道名称"
+                                    autocomplete="off" />
+                            	</div>
+                            	<div class="layui-inline">
+                                <input id="subModuleUrl" name="subModuleUrl" class="layui-input" type="search" placeholder="网址"
+                                    autocomplete="off" />
+                            	</div>
+                                <div class="layui-inline">
+                                    <button id="selectAll" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                    <button id="addUrl" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>新增</button>
+                                    <button id="deleteBacth" class="layui-btn icon-btn"><i class="layui-icon">&#xe64d;</i>批量删除</button>
+                                    <button id="updateBacth" class="layui-btn icon-btn"><i class="layui-icon">&#xe63d;</i>批量更新</button>
+                                    <button id="configureBacth" class="layui-btn icon-btn"><i class="layui-icon">&#xe663;</i>频道页批量配置</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="layui-table" id="dataTab" lay-filter="dataTab"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/html" id="barDemo">
+    	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"><i class="layui-icon">&#xe642;</i> 编辑</a>
+   		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+	</script>
+	<script type="text/html" id="Demo">
+    	<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="details">详情页配置</a>
+    	<a class="layui-btn layui-btn-xs" lay-event="channel">频道页配置</a>
+	</script>
+@}
+
+
+

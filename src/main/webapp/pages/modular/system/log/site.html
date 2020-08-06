@@ -1,0 +1,81 @@
+@layout("/common/_container.html",{js:["/assets/modular/system/log/site.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">站点信息</span>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-form toolbar">
+                        <div class="layui-form-item">
+                            <!--<div class="layui-inline">
+                                <input id="beginTime" class="layui-input" type="text" placeholder="添加时间"/>
+                            </div>-->
+                            <!--<div class="layui-inline">
+                               <input id="beginTime" class="layui-input" type="text" placeholder="添加时间"/>
+                           </div>-->
+
+                            <div class="layui-inline">
+                                <input id="website_name" class="layui-input" type="text" placeholder="媒体名称"/>
+                            </div>
+
+                            <div class="layui-inline">
+                                <input id="sub_host" class="layui-input" type="text" placeholder="域名"/>
+                            </div>
+
+                            <div class="layui-inline">
+                                <input id="website_sub_name" class="layui-input" type="text" placeholder="网站名称"/>
+                            </div>
+
+                            <div class="layui-inline">
+                                <input id="website_sub_url" class="layui-input" type="text" placeholder="网址"/>
+                            </div>
+
+
+                            <div class="layui-inline">
+                                <select id="proxy">
+                                    <option value=""></option>
+                                    <option value="0">境内</option>
+                                    <option value="1">境外</option>
+                                </select>
+                            </div>
+
+                            <div class="layui-inline">
+                                <select id="state" name="state">
+                                    <option value=""></option>
+                                    <option value="0">启用</option>
+                                    <option value="1">废弃</option>
+                                </select>
+                            </div>
+                            <!--<div class="layui-inline">
+                                <select id="language">
+                                    <option value="">语种</option>
+                                    <option value="0">境内</option>
+                                    <option value="1">境外</option>
+                                </select>
+                            </div>-->
+                            <div class="layui-inline">
+                                <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="layui-table" id="logTable" lay-filter="logTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="tableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+</script>
+
+<script type="text/html" id="config">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">频道配置</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="content">详情配置</a>
+</script>
+@}

@@ -1,0 +1,71 @@
+@layout("/common/_container.html",{js:["/assets/modular/SiteTest/add_edit.js"]}){
+<div class="layui-fluid " style="">
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<form id="addEditForm" lay-filter="addEditForm" class="layui-form layui-form-pane">
+				<input name="mediaid" id="mediaid" type="hidden" /> 
+				<div class="layui-form-item">
+					<label class="layui-form-label">媒体名称<span style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="mname" id="mname" placeholder="媒体名称" type="text" class="layui-input"/>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">境区</label>
+					<div class="layui-input-block">
+						<select id="domfor" name="domfor" lay-search="">
+							<option value="0">请选择</option> 
+							<option value="1">境内</option> 
+							<option value="2">境外</option> 
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">所属国家</label>
+					<div class="layui-input-block">
+						<input name="countrycode" id="countrycode" placeholder="所属国家" type="text" class="layui-input"/>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">所属省份<span style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<input name="provincecode" id="provincecode" placeholder="所属省份" type="text" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">所属城市<span style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<input name="citycode" id="citycode" placeholder="所属城市" type="text" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">所属地区<span style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<input name="areacode" id="areacode" placeholder="所属地区" type="text" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">标签<span style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<input name="label" id="label" placeholder="标签" type="text" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">状态</label>
+					<div class="layui-input-block">
+						<select id="state" name="state" lay-search="">
+							<option value="0">请选择</option> 
+							<option value="1">启用</option> 
+							<option value="2">弃用</option> 
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item text-center">
+					<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+					<button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+@}

@@ -1,0 +1,48 @@
+@layout("/common/_container.html",{bg:"bg-white",js:["/assets/modular/system/log/site_edit.js"]}){
+<input name="uuid" type="hidden"/>
+
+<div class="layui-form-item">
+    <label class="layui-form-label">媒体名称</label>
+    <div class="layui-input-block">
+        <input type="text" name="website_name" lay-verify="required"  placeholder="请输入媒体名称" class="layui-input" required/>
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">网站名称</label>
+    <div class="layui-input-block">
+        <input type="text" name="website_sub_name" lay-verify="required"  placeholder="请输入网站名称" class="layui-input" required/>
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">网址</label>
+    <div class="layui-input-block">
+        <input type="text" name="website_sub_url" lay-verify="title"  placeholder="请输入网址" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">域名</label>
+    <div class="layui-input-block">
+        <input type="text" name="sub_host" lay-verify="title"  placeholder="请输入域名" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">境内外</label>
+    <div class="layui-input-block">
+        <select name="interest" lay-filter="aihao">
+            <option value="0">境内</option>
+            <option value="1">境外</option>
+        </select>
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">语种</label>
+    <div class="layui-input-block">
+        <input type="text" name="language" lay-verify="title"  placeholder="请输入语种" class="layui-input">
+    </div>
+</div>
+
+<div class="layui-form-item text-right">
+    <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+    <button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+</div>
+@}

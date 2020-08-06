@@ -1,0 +1,138 @@
+package com.yuyiyun.YYdata.modular.newsweb.service;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity;
+import com.yuyiyun.YYdata.modular.newsweb.mapper.DataWebChannelMapper;
+import com.yuyiyun.YYdata.modular.newsweb.model.param.DataWebChannelParam;
+import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo;
+
+/**
+ * @author meiren
+ *
+ */
+@Service
+public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, DataWebChannelEntity>{
+	@Resource
+	private DataWebChannelMapper channelMapper;
+	
+	
+	/**
+	 * 查询当前登录用户
+	 * 
+	 * */
+	public DataWebChannelVo selectUser(DataWebChannelVo datavo){
+		DataWebChannelVo user = channelMapper.selectUser(datavo);
+		return user;
+	}
+	
+	
+	
+	/**
+	 * 查询网站名称
+	 * @param datavo
+	 * @return
+	 */
+	public DataWebChannelVo selectWebeSiteName(DataWebChannelVo datavo){
+		DataWebChannelVo siteName = channelMapper.selectWebSiteName(datavo);
+		return siteName;
+		
+	}
+	
+	/**
+	 * 分页查询
+	 * 
+	 * */
+	@SuppressWarnings("rawtypes")
+	public List<Map<String, Object>> selectPage(Page page, DataWebChannelParam param,String id) {
+		return this.channelMapper.selectPage(page, param,id);
+	}
+	
+	/**
+	 * 排重
+	 * 
+	 * */
+	private boolean checkcolumnrepeat(DataWebChannelEntity dataWebChannelEntity) {
+		QueryWrapper<DataWebChannelEntity> wrapper = new QueryWrapper();
+		wrapper.eq("sub_module_url", dataWebChannelEntity.getSubModuleUrl());
+		List<DataWebChannelEntity> dataChannelList = channelMapper.selectList(wrapper);
+		//遍历出mouduleList和subModuleUrl
+		//List<String> moduleNameList = dataChannelList.stream().map(DataWebChannelEntity::getModuleName).collect(Collectors.toList());
+		List<String> subModuleUrlList = dataChannelList.stream().map(DataWebChannelEntity::getSubModuleUrl).collect(Collectors.toList());
+		//判断网站名称是否在集合内
+		//moduleNameList.contains(dataWebChannelEntity.getModuleName()) ||
+		if (subModuleUrlList.contains(dataWebChannelEntity.getSubModuleUrl())) {
+			//重复
+			return false;
+		} else {
+			//不重复
+			return true;
+		}
+	}
+
+	
+	/**
+	 * 根据id查询
+	 * 
+	 * */
+	public DataWebChannelEntity findById(String id) {
+		DataWebChannelEntity list = channelMapper.findById(id);
+		return list;
+	}
+	
+	/**
+	 * 删除
+	 * 
+	 * */
+	public int delete(String id) {
+		return channelMapper.delete(id);
+	}
+	
+	/**
+	 * 批量删除
+	 * 
+	 * */
+	public int deleteBacth(String[] id) {
+		return channelMapper.deleteBacth(id);
+	}
+	
+	/**
+	 * 批量更新
+	 * 
+	 * */
+	public int updateBacth(String[] id) {
+		return channelMapper.updateBacth(id);
+	}
+	
+	/**
+	 * 修改
+	 * 
+	 * */
+	public int update(DataWebChannelEntity data) {
+		return channelMapper.update(data);
+	}
+	
+	/**
+	 * 新增，判断是否重复
+	 * 
+	 * */
+	public int add(DataWebChannelEntity data) {
+		        //媒体频道重复
+				if (checkcolumnrepeat(data)) {
+					return channelMapper.add(data);
+				} else {
+					return 0;
+				}
+	}
+	
+	
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyiyun.YYdata.modular.news.mapper.DataWebSiteMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yuyiyun.YYdata.modular.news.entity.DataWebSite">
+        <id column="uuid" property="uuid" />
+        <result column="data_web_media" property="dataWebMedia" />
+        <result column="website_name" property="websiteName" />
+        <result column="website_sub_name" property="websiteSubName" />
+        <result column="website_sub_url" property="websiteSubUrl" />
+        <result column="sub_host" property="subHost" />
+        <result column="language" property="language" />
+        <result column="remark" property="remark" />
+        <result column="proxy" property="proxy" />
+        <result column="state" property="state" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        uuid as uuid,
+        data_web_media as data_web_media,
+        website_name as website_name,
+        website_sub_name as website_sub_name,
+        website_sub_url as website_sub_url,
+        sub_host as sub_host,
+        language as language,
+        remark as remark,
+        proxy as proxy,
+        state as state,
+        create_time as create_time,
+        update_by as update_by,
+        create_by as create_by,
+        update_time as update_time
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+
+        </trim>
+    </sql>
+
+
+    <!-- 分页查询 -->
+    <!--<select id="selectPage" resultType="com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth">
+        select <include refid="BaseColumnList"/>
+        from data_apiauth
+        <include refid="BaseWhere"/>
+    </select>-->
+    <select id="getSites" resultType="map">
+    	select
+	    <include refid="BaseColumnList" />
+	    from data_web_website where 1 = 1
+	        <if test="dataWebSite.websiteName != null and dataWebSite.websiteName != ''">
+	            and website_name like CONCAT('%',#{dataWebSite.websiteName},'%')
+	        </if>
+	        <if test="dataWebSite.websiteSubName != null and dataWebSite.websiteSubName != ''">
+	            and website_sub_name like CONCAT('%',#{dataWebSite.websiteSubName},'%')
+	        </if>
+	
+	        <if test="dataWebSite.subHost != null and dataWebSite.subHost != ''">
+	            and sub_host = #{dataWebSite.subHost}
+	        </if>
+	
+	        <if test="dataWebSite.websiteSubUrl != null and dataWebSite.websiteSubUrl != ''">
+	            and website_sub_url = #{dataWebSite.websiteSubUrl}
+	        </if>
+	
+	        <if test="dataWebSite.proxy != null and dataWebSite.proxy != ''">
+	            and proxy = #{dataWebSite.proxy}
+	        </if>
+	
+	        <if test="dataWebSite.state != null and dataWebSite.state != ''">
+	            and state = #{dataWebSite.state}
+	        </if>
+    </select>
+</mapper>

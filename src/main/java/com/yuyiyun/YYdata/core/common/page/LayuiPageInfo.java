@@ -1,9 +1,10 @@
 package com.yuyiyun.YYdata.core.common.page;
 
-import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
+
+import lombok.Data;
 
 /**
  * 分页结果的封装(for Layui Table)

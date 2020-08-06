@@ -93,11 +93,7 @@ layui.use(['table', 'layer', 'jquery','laydate', 'fast'], function() {
 
 
     // 监听行工具事件
-    table.on('tool(lineBar)', function(obj) { // 注：tool
-        // 是工具条事件名，test
-        // 是 table
-        // 原始容器的属性
-        // lay-filter='对应的值'
+    table.on('tool(lineBar)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         var data = obj.data, // 获得当前行数据
             layEvent = obj.event; // 获得 lay-event 对应的值
         if (layEvent === 'select') {
@@ -355,7 +351,8 @@ layui.use(['table', 'layer', 'jquery','laydate', 'fast'], function() {
             data: null,
             success: function (res) {//res表示是否与服务器连接成功
                     var jsons=res.data;
-                    $("#thePerson").val(jsons[0].name);
+                    $("#thePerson").val(jsons[0].
+);
             },
             error: function (e) {
 

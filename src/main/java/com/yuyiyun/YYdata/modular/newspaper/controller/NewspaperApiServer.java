@@ -46,6 +46,7 @@ public class NewspaperApiServer extends BaseController {
 	@Autowired
 	DataNewsService dataNewsService;
 
+
 	/**
 	 * @Description: API添加数据
 	 * @author duhao

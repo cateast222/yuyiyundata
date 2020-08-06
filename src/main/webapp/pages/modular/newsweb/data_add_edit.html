@@ -1,0 +1,65 @@
+@layout("/common/_container.html",{js:["/assets/modular/newsweb/data_add_edit.js"]}){
+<div class="layui-fluid " style="">
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<form id="dataEditForm" lay-filter="dataEditForm" class="layui-form layui-form-pane">
+				<input name="uuid" id="uuid" type="hidden" />
+				<input name="updateBy" id="updateBy" type="hidden" /> 
+				<div class="layui-form-item">
+					<label class="layui-form-label">媒体名称<span style="color: red;">*</span></label>
+					<div class="layui-input-block">
+						<input name="websiteName" id="websiteName" placeholder="媒体名称" type="text" class="layui-input" Readonly="true" />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">网站名称</label>
+					<div class="layui-input-block">
+						<input name="websiteSubName" id="websiteSubName" placeholder="网站名称" type="text" class="layui-input" Readonly="true"/>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">频道名称<span style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<input name="moduleName" id="moduleName" placeholder="频道名称" type="text" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">频道网址<span style="color: red;"></span></label>
+					<div class="layui-input-block">
+						<input name="subModuleUrl" id="subModuleUrl" placeholder="频道网址" type="text" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">采集状态</label>
+					<div class="layui-input-block">
+						<select id="collectState" name="collectState" >
+							<option value="0">请选择</option> 
+							<option value="5">启用</option> 
+							<option value="4">正常</option>
+							<option value="3">通过</option>  
+							<option value="6">暂停</option> 
+							<option value="7">废弃</option> 
+							<option value="1">未采集</option> 
+							<option value="2">采集中</option> 
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">状态</label>
+					<div class="layui-input-block">
+						<select id="state" name="state" >
+							<option value="0">请选择</option> 
+							<option value="1">启用</option> 
+							<option value="2">弃用</option> 
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item text-center">
+					<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+					<button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+@}

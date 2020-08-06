@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyiyun.YYdata.modular.SiteTest.mapper.CjMediaInfoMapper">
+
+	<sql id="Base">
+		MEDIA_ID media_id ,
+		MNAME mname,
+		DOM_FOR dom_for,
+		COUNTRY_CODE country_code,
+		PROVINCE_CODE province_code,
+		CITY_CODE city_code,
+		AREA_CODE area_code,
+		LABEL label,
+		STATE state 
+	</sql>
+  
+	<select id="findAll" resultType="com.yuyiyun.YYdata.modular.SiteTest.entity.CjMediaInfoEntity" parameterType="com.yuyiyun.YYdata.modular.SiteTest.vo.CjMediaInfoVo" >
+		select MEDIA_ID media_id ,
+		MNAME mname,
+		DOM_FOR dom_for,
+		COUNTRY_CODE country_code,
+		PROVINCE_CODE province_code,
+		CITY_CODE city_code,
+		AREA_CODE area_code,
+		LABEL label,
+		STATE state 
+		from cj_Media_info 
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(*) from cj_Media_info 
+	</select>
+	
+	<select id="selectPage" resultType="com.yuyiyun.YYdata.modular.SiteTest.entity.CjMediaInfoEntity">
+		select <include refid="Base"/> from cj_Media_info 
+	</select>
+	
+	<select id="findBy" resultType="com.yuyiyun.YYdata.modular.SiteTest.entity.CjMediaInfoEntity">
+		select <include refid="Base"/> from cj_Media_info where 1=1
+		<if test="mediaid != null">AND media_id=#{mediaid}</if>
+		<if test="mname != null">AND mname LIKE '%${mname}%'</if>
+		<if test="domfor != null">AND dom_for=#{domfor}</if>
+		<if test="countrycode != null">AND country_code LIKE '${countrycode}'</if>
+		<if test="provincecode != null">AND province_code=#{provincecode}</if>
+		<if test="citycode != null">AND city_code=#{citycode}</if>
+		<if test="areacode != null">AND area_code=#{areacode}</if>
+		<if test="label != null">AND LABEL=#{label}</if>
+		<if test="state != null">AND state=#{state}</if>	
+	</select>
+	
+	<select id="findById" resultType="com.yuyiyun.YYdata.modular.SiteTest.entity.CjMediaInfoEntity" parameterType="com.yuyiyun.YYdata.modular.SiteTest.vo.CjMediaInfoVo">
+		select MEDIA_ID media_id ,
+		MNAME mname,
+		DOM_FOR dom_for,
+		COUNTRY_CODE country_code,
+		PROVINCE_CODE province_code,
+		CITY_CODE city_code,
+		AREA_CODE area_code,
+		LABEL label,
+		STATE state 
+		from cj_Media_info where media_id=#{id}
+	</select>
+	
+	<delete id="delete">
+		delete from cj_media_info where media_id=#{id}
+	</delete>
+	<!--  -->
+	<update id="update" parameterType="com.yuyiyun.YYdata.modular.SiteTest.entity.CjMediaInfoEntity">
+		update cj_media_info
+		<trim prefix="set" suffixOverrides=",">
+			<if test="mediaid != null">media_id=#{mediaid},</if>
+			<if test="mname != null">mname=#{mname},</if>
+			<if test="domfor != null">dom_for=#{domfor},</if>
+			<if test="countrycode != null">country_code=#{countrycode},</if>
+			<if test="provincecode != null">province_code=#{provincecode},</if>
+			<if test="citycode != null">city_code=#{citycode},</if>
+			<if test="areacode != null">area_code=#{areacode},</if>
+			<if test="label != null">LABEL=#{label},</if>
+			<if test="state != null">state=#{state}</if>
+		</trim>
+			where media_id=#{mediaid}
+	</update>
+	
+	
+	
+	
+	<insert id="add" parameterType="com.yuyiyun.YYdata.modular.SiteTest.entity.CjMediaInfoEntity">
+		insert into cj_media_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mediaid != null">media_id,</if>
+			<if test="mname != null">mname,</if>
+			<if test="domfor != null">dom_for,</if>
+			<if test="countrycode != null">country_code,</if>
+			<if test="provincecode != null">province_code,</if>
+			<if test="citycode != null">city_code,</if>
+			<if test="areacode != null">area_code,</if>
+			<if test="label != null">label,</if>
+			<if test="state != null">state,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mediaid != null">#{mediaid},</if>
+			<if test="mname != null">#{mname},</if>
+			<if test="domfor != null">#{domfor},</if>
+			<if test="countrycode != null">#{countrycode},</if>
+			<if test="provincecode != null">#{provincecode},</if>
+			<if test="citycode != null">#{citycode},</if>
+			<if test="areacode != null">#{areacode},</if>
+			<if test="label != null">#{label},</if>
+			<if test="state != null">#{state}</if>
+		</trim>
+	</insert>
+	<!--
+	
+	<select id="findById" parameterType="map" resultMap="studentMap">
+		select * from cj_media_info where media_id=#{id}
+	</select>	
+	
+	<delete id="delete">
+		delete from cj_media_info where media_id=#{media_id}
+	</delete>
+	
+	<delete id="deleteBacth" parameterType="list">
+		delete from cj_media_info where media_id in
+		<foreach collection="list" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>		
+	</delete>
+	
+	<resultMap type="com.yuyiyun.YYdata.modular.SiteTest.entity.CjMediaInfoEntity" id="studentMap">
+		 <id property="media_id" column="media_id"/>
+			<result property="mname" column="mname"/>
+			<result property="dom_for" column="dom_for"/>
+			<result property="country_code" column="country_code"/>
+			<result property="province_code" column="province_code"/>
+			<result property="city_code" column="city_code"/>
+			<result property="area_code" column="area_code"/>
+			<result property="label" column="label"/>
+			<result property="state" column="state"/>
+	</resultMap>
+	
+	
+	
+	<insert id="add">
+		insert into cj_media_info 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="media_id != null">media_id,</if>
+			<if test="mname != null">mname,</if>
+			<if test="dom_for != null">dom_for,</if>
+			<if test="country_code != null">country_code,</if>
+			<if test="province_code != null">province_code,</if>
+			<if test="city_code != null">city_code,</if>
+			<if test="area_code != null">area_code,</if>
+			<if test="label != null">label,</if>
+			<if test="state != null">state,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="media_id != null">#{media_id},</if>
+			<if test="mname != null">#{mname},</if>
+			<if test="dom_for != null">#{dom_for},</if>
+			<if test="country_code != null">#{country_code},</if>
+			<if test="province_code != null">#{province_code},</if>
+			<if test="city_code != null">#{city_code},</if>
+			<if test="area_code != null">#{area_code},</if>
+			<if test="label != null">#{label},</if>
+			<if test="state != null">#{state}</if>
+		</trim>
+	</insert>
+	
+	<select id="findByMediaId" parameterType="map" resultMap="cjmap">
+	select A.*,B.* from cj_Media_info  A INNER JOIN cj_site_info B ON (A.MEDIA_ID=B.MEDIA_ID)  WHERE A.MEDIA_ID = #{mediaId}
+	</select>
+		<resultMap type="com.yyy.entity.CjMediaInfoEntity" id="cjmap">
+			<id property="media_id" column="media_id"/>
+			<result property="mname" column="mname"/>
+			<result property="dom_for" column="dom_for"/>
+			<result property="country_code" column="country_code"/>
+			<result property="province_code" column="province_code"/>
+			<result property="city_code" column="city_code"/>
+			<result property="area_code" column="area_code"/>
+			<result property="label" column="label"/>
+			<result property="state" column="state"/>
+		<collection property="cjSiteInfos" ofType="com.yyy.entity.CjSiteInfo" column="media_id">
+			<id property="site_id" column="site_id"/>
+			<result property="media_id" column="media_id"/>
+			<result property="name" column="name"/>
+			<result property="dom_for" column="dom_for"/>
+			<result property="website" column="website"/>
+			<result property="domain" column="domain"/>
+			<result property="host_label" column="host_label"/>
+			<result property="language" column="language"/>
+			<result property="state" column="state"/>
+			<result property="task_state" column="task_state"/>
+			<result property="rule_state" column="rule_state"/>
+		</collection>
+	</resultMap>
+	-->	
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyiyun.YYdata.modular.newsweb.mapper.DataWebChannelMapper">
+	<!-- 频道表通用sql列段 -->
+	<sql id="Base">
+		UUID uuid,
+		WEBSITE_NAME website_name,
+		DATA_WEB_WEBSITE data_web_website,
+		WEBSITE_SUB_NAME website_sub_name,
+		MODULE_NAME module_name,
+		SUB_MODULE_URL sub_module_url,
+		COLLECT_STATE collect_state,
+		STATE state,
+		REMARK remark,
+		CREATE_BY create_by,
+		CREATE_TIME create_time,
+		UPDATE_BY update_by,
+		UPDATE_TIME update_time 
+	</sql>
+		
+	<!-- 搜索框附加条件列段 -->	
+	<sql id="baseWhere">
+		<trim prefix="and" prefixOverrides="and | or">
+		   <if test="param.moduleName != null and param.moduleName != ''">
+		      and module_name LIKE '%${param.moduleName}%'
+		   </if>
+		   <if test="param.subModuleUrl != null and param.subModuleUrl != ''">
+		      and sub_module_url LIKE '%${param.subModuleUrl}%' 
+		   </if>
+		</trim>
+	</sql>
+  
+	<!-- 分页查询 -->
+	<select id="selectPage" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+		select<include refid="Base"/> from  data_web_channel where data_web_website=#{id} 
+		<include refid="baseWhere" />
+	</select>
+	
+	<!-- 查询当前登录用户 -->
+	<select id="selectUser" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo" resultType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
+		SELECT  `name` FROM sys_user WHERE user_id=#{userid}
+	</select>
+	
+	<!-- 查询媒体、网站名称 -->
+	<select id="selectWebSiteName" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo" resultType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
+		SELECT website_name, website_sub_name FROM data_web_website WHERE uuid=#{uuid}
+	</select>
+	
+	<!-- 根据id查询，编辑数据回显 -->
+	<select id="findById" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
+		select 
+		<include refid="Base"/>
+		from data_web_channel where uuid=#{id}
+	</select>
+	
+	<!-- 删除 -->
+	<delete id="delete">
+		delete from data_web_channel where uuid=#{id}
+	</delete>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteBacth" parameterType="java.lang.String">
+		delete from data_web_channel where uuid in
+		<foreach collection="ids" item="ids" open="(" close=")" separator=",">
+			#{ids}
+		</foreach>		
+	</delete>
+	
+	<!-- 批量更新 -->
+	<update id="updateBacth" parameterType="java.lang.String">
+		update data_web_channel set collect_state = "3"
+		<!--  
+		<trim prefix="," suffixOverrides=",">
+		<if test="updateBy != null">update_by=#{updateBy}</if>
+		</trim>
+		-->
+		 where uuid in
+		<foreach collection="ids" item="ids" open="(" close=")" separator=",">
+			#{ids}
+		</foreach>
+	</update>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+		update data_web_channel
+		<trim prefix="set" suffixOverrides=",">
+			<if test="uuid != null">uuid=#{uuid},</if>
+			<if test="websiteName != null">website_name=#{websiteName},</if>
+			<if test="dataWebWebsite != null">data_web_website=#{dataWebWebsite},</if>
+			<if test="websiteSubName != null">website_sub_name=#{websiteSubName},</if>
+			<if test="moduleName != null">module_name=#{moduleName},</if>
+			<if test="subModuleUrl != null">sub_module_url=#{subModuleUrl},</if>
+			<if test="collectState != null">collect_state=#{collectState},</if>
+			<if test="state != null">state=#{state},</if>
+			<if test="updateBy != null">update_by=#{updateBy},</if>
+			<if test="updateTime != null">update_time=#{updateTime},</if>
+		</trim>
+			where uuid=#{uuid}
+	</update>
+	
+	
+	<!-- 新增 -->
+	<insert id="add" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+		insert into data_web_channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uuid != null">uuid,</if>
+			<if test="websiteName != null">website_name,</if>
+			<if test="dataWebWebsite != null">data_web_website,</if>
+			<if test="websiteSubName != null">website_sub_name,</if>
+			<if test="moduleName != null">module_name,</if>
+			<if test="subModuleUrl != null">sub_module_url,</if>
+			<if test="collectState != null">collect_state,</if>
+			<if test="state != null">state,</if>
+			<if test="createBy != null">create_by,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uuid != null">#{uuid},</if>
+			<if test="websiteName != null">#{websiteName},</if>
+			<if test="dataWebWebsite != null">#{dataWebWebsite},</if>
+			<if test="websiteSubName != null">#{websiteSubName},</if>
+			<if test="moduleName != null">#{moduleName},</if>
+			<if test="subModuleUrl != null">#{subModuleUrl},</if>
+			<if test="collectState != null">#{collectState},</if>
+			<if test="state != null">#{state},</if>
+			<if test="createBy != null">#{createBy},</if>
+			<if test="createTime != null">#{createTime}</if>
+		</trim>
+	</insert>
+</mapper>
