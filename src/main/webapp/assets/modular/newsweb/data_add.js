@@ -64,7 +64,7 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 			            }
 			        });
 			    });
-		     //查询媒体名称和网站名称
+		     //查询媒体uuid、媒体名称、网站名称
 		     $(function() {
 		        $.ajax({
 		            url: fast.ctxPath + '/datawebchannel/dataSelectWebeSiteName', // 数据接口
@@ -72,6 +72,7 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 		            data: null,
 		            success: function (res) {//res表示是否与服务器连接成功
 		                    var jsons=res.data;
+		                    $("#dataWebMedia").val(jsons.dataWebMedia);
 		                    $("#websiteName").val(jsons.websiteName);
 		                    $("#websiteSubName").val(jsons.websiteSubName);
 		            },
@@ -80,5 +81,4 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 		            }
 		        });
 		    });
-					
-});
+		});

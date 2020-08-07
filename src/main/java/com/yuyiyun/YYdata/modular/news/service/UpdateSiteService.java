@@ -14,7 +14,7 @@ public class UpdateSiteService extends ServiceImpl<UpdateSiteMapper, DataWebSite
 	@Resource
 	private UpdateSiteMapper updateSiteMapper;
 	
-	public DataWebSite updateSiteById(Long id) {
+	public DataWebSite updateSiteById(String id) {
 		DataWebSite dataWebSite=updateSiteMapper.updateSiteById(id);
 		return dataWebSite;
 	}
@@ -23,7 +23,7 @@ public class UpdateSiteService extends ServiceImpl<UpdateSiteMapper, DataWebSite
 		return updateSiteMapper.updateSite(dataWebSite);
 	}
 	
-	public int deleteSite(Long id) {
+	public int deleteSite(String id) {
 		return updateSiteMapper.delete(id);
 	}
 }

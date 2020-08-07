@@ -18,7 +18,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
-import com.yuyiyun.YYdata.modular.newspaper.service.DataNewsService;
 import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity;
 import com.yuyiyun.YYdata.modular.newsweb.model.param.DataWebChannelParam;
 import com.yuyiyun.YYdata.modular.newsweb.service.DataWebChannelService;
@@ -27,7 +26,8 @@ import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 
 /**
- * @author meiren
+ * @author WuXiangDong
+ * @author TangJianRong
  *  频道列表控制器
  */
 @Controller
@@ -35,21 +35,20 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
 public class DataWebChannelController {
 	private String PREFIX = "/modular/newsweb";
 	@Autowired
-	DataNewsService dataNewsService;
-	@Autowired
 	private DataWebChannelService channelService ;
-	
+
 	/**
 	 * 跳转到频道列表
 	 * 
 	 * 
 	 * */
 	@GetMapping("/dataweb")
-	public String datawebchannel(String id,HttpSession session) {
+	public String datawebchannel(String id,HttpSession session){
+		//网站列表跳转到频道列表传入网站的UUID保存在session中
 		session.setAttribute("dataId", id);
 		return PREFIX + "/datawebchannel.html";
 	}
-	
+
 	/**
 	 * 跳转到新增页面
 	 * 
@@ -59,7 +58,7 @@ public class DataWebChannelController {
 	public String add() {
 		return PREFIX + "/data_add.html";
 	}
-	
+
 	/**
 	 * 跳转到修改页面
 	 * 
@@ -67,10 +66,11 @@ public class DataWebChannelController {
 	 * */
 	@GetMapping(value = "/dataAddEdit")
 	public String addEdit(String id,HttpSession session) {
-		    session.setAttribute("id", id);
-			return PREFIX + "/data_add_edit.html";
+		//点击编辑按钮获取当前行的UUID并保存在Session中
+		session.setAttribute("id", id);
+		return PREFIX + "/data_add_edit.html";
 	}
-	
+
 
 	/**
 	 * 分页查询
@@ -80,28 +80,30 @@ public class DataWebChannelController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/dataSelectPage")
 	@ResponseBody
-	public LayuiPageInfo listFromNewspaper(DataWebChannelParam param,HttpSession session) {
-		String  attribute = (String)session.getAttribute("dataId");
+	public LayuiPageInfo selectPage(DataWebChannelParam param,HttpSession session) {
+		//获取跳转过来的UUID
+		String  id = (String)session.getAttribute("dataId");
 		Page page = LayuiPageFactory.defaultPage();
-		List<Map<String, Object>> list = this.channelService.selectPage(page, param,attribute);
+		List<Map<String, Object>> list = this.channelService.selectPage(page, param,id);
 		page.setRecords(list);
 		return LayuiPageFactory.createPageInfo(page);
 	}
-	
-	
+
+
 	/**
-	 * 点击编辑根据id查询数据回显
+	 * 点击编辑根据频道id查询、用于数据回显
 	 * 
 	 * 
 	 * */
 	@ResponseBody
 	@RequestMapping(value = "/dataSelectById")
 	public ResponseData selectById(HttpSession session) {
-        String id = (String)session.getAttribute("id");
-		DataWebChannelEntity list = channelService.findById(id);
+		//获取点击编辑拿到的UUID并根据此id查询出当前行的所有数据
+		String id = (String)session.getAttribute("id");
+		DataWebChannelEntity list = channelService.selectById(id);
 		return ResponseData.success(0, "11", list);
 	}
-	
+
 	/**
 	 * 删除
 	 * 
@@ -117,7 +119,7 @@ public class DataWebChannelController {
 			return ResponseData.error("删除失败");
 		}
 	}
-	
+
 	/**
 	 * 批量删除
 	 * 
@@ -133,7 +135,7 @@ public class DataWebChannelController {
 			return ResponseData.error("删除失败");
 		}
 	}
-	
+
 	/**
 	 * 批量更新
 	 * 
@@ -149,8 +151,8 @@ public class DataWebChannelController {
 			return ResponseData.error("更新失败");
 		}
 	}
-	
-	
+
+
 	/**
 	 * 修改
 	 * 
@@ -167,8 +169,8 @@ public class DataWebChannelController {
 			return ResponseData.error("修改失败");
 		}
 	}
-	
-	
+
+
 	/**
 	 * 新增
 	 * 
@@ -176,9 +178,12 @@ public class DataWebChannelController {
 	 * */
 	@ResponseBody
 	@RequestMapping(value = "/dataInsert" , method = RequestMethod.POST)
-	public ResponseData add(DataWebChannelEntity data) {
+	public ResponseData add(DataWebChannelEntity data,HttpSession session) {
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		//获取跳转过来的UUID,将其设置为频道表的data_web_website
+		String webWebsite = (String)session.getAttribute("dataId");
 		data.setUuid(uuid);
+		data.setDataWebWebsite(webWebsite);
 		data.setCreateTime(new Date());
 		int i = channelService.add(data);
 		if(i>0) {
@@ -187,8 +192,8 @@ public class DataWebChannelController {
 			return ResponseData.error("新增失败");
 		}
 	}
-	
-	
+
+
 	/**
 	 * 查询当前登录用户名
 	 * 
@@ -202,21 +207,20 @@ public class DataWebChannelController {
 		DataWebChannelVo user = channelService.selectUser(datavo);
 		return ResponseData.success(0, "11", user);
 	}
-	
-	
+
+
 	/**
-	 * 查询网站名称
+	 * 查询媒体UUID、媒体名称、网站名称
 	 * @param datavo
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/dataSelectWebeSiteName")
 	public ResponseData selectWebeSiteName(DataWebChannelVo datavo,HttpSession session){
+		//获取跳转过来的网站UUID，根据此id查询出对应的媒体UUID、媒体名称、网站名称
 		String id = (String)session.getAttribute("dataId");
 		datavo.setUuid(id);
 		DataWebChannelVo siteName = channelService.selectWebeSiteName(datavo);
 		return ResponseData.success(0, "11", siteName);
-		
 	}
-	
 }

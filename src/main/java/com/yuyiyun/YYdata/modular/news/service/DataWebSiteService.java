@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yuyiyun.YYdata.core.common.constant.factory.ConstantFactory;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.news.entity.DataWebMedia;
 import com.yuyiyun.YYdata.modular.news.mapper.DataWebSiteMapper;
@@ -65,7 +64,7 @@ DataWebMediaService dataWebMediaService;
 
         if (dataWebMedia==null){throw new RuntimeException("媒体名称不存在");}
 
-        dataWebSite.setDataWebMedia(Long.parseLong(dataWebMedia.getUuid()));
+        dataWebSite.setDataWebMedia(dataWebMedia.getUuid());
 
         dealState(dataWebSite);
         String name = ShiroKit.getUser().getName();

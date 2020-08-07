@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 频道表通用sql列段 -->
 	<sql id="Base">
 		UUID uuid,
+		DATA_WEB_MEDIA data_web_media,
 		WEBSITE_NAME website_name,
 		DATA_WEB_WEBSITE data_web_website,
 		WEBSITE_SUB_NAME website_sub_name,
@@ -38,18 +39,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="baseWhere" />
 	</select>
 	
+	<!-- 根据网站id查询 -->
+	<select id="selectBySiteId" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+		select<include refid="Base"/> from  data_web_channel where data_web_website=#{id} 
+	</select>
+	
 	<!-- 查询当前登录用户 -->
 	<select id="selectUser" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo" resultType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
 		SELECT  `name` FROM sys_user WHERE user_id=#{userid}
 	</select>
 	
-	<!-- 查询媒体、网站名称 -->
+	<!-- 查询媒体id,媒体、网站名称 -->
 	<select id="selectWebSiteName" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo" resultType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
-		SELECT website_name, website_sub_name FROM data_web_website WHERE uuid=#{uuid}
+		SELECT data_web_media,website_name, website_sub_name FROM data_web_website WHERE uuid=#{uuid}
 	</select>
 	
 	<!-- 根据id查询，编辑数据回显 -->
-	<select id="findById" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
+	<select id="selectById" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
 		select 
 		<include refid="Base"/>
 		from data_web_channel where uuid=#{id}
@@ -58,6 +64,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 删除 -->
 	<delete id="delete">
 		delete from data_web_channel where uuid=#{id}
+	</delete>
+	
+	<!-- 根据媒体id删除 -->
+	<delete id="deleteByMediaId">
+		delete from data_web_channel where data_web_media=#{id}
+	</delete>
+	
+	<!-- 根据网站id删除 -->
+	<delete id="deleteBySiteId">
+		delete from data_web_channel where data_web_website=#{id}
 	</delete>
 	
 	<!-- 批量删除 -->
@@ -106,6 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into data_web_channel
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="uuid != null">uuid,</if>
+			<if test="dataWebMedia != null">data_web_media,</if>
 			<if test="websiteName != null">website_name,</if>
 			<if test="dataWebWebsite != null">data_web_website,</if>
 			<if test="websiteSubName != null">website_sub_name,</if>
@@ -118,6 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="uuid != null">#{uuid},</if>
+			<if test="dataWebMedia != null">#{dataWebMedia},</if>
 			<if test="websiteName != null">#{websiteName},</if>
 			<if test="dataWebWebsite != null">#{dataWebWebsite},</if>
 			<if test="websiteSubName != null">#{websiteSubName},</if>

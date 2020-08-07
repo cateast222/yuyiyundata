@@ -38,8 +38,9 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
                     }           
                     }) ;         
                  return false;
-            }); 
-            
+            });
+             
+           //查询当前登录用户
            $(function() {
 		        $.ajax({
 		            url: fast.ctxPath + '/datawebchannel/dataSelectUser', // 数据接口
@@ -54,5 +55,4 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 		            }
 		        });
 		    });
-					    
-});
+		});

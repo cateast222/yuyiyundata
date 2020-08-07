@@ -29,7 +29,7 @@ public class DataWebChannelVo extends DataWebChannelEntity{
 			this.name = name;
 		}
 
-		private Long data_web_media;
+		private String data_web_media;
 	    /** 媒体名称 */
 	    private String website_name;
 
@@ -48,11 +48,12 @@ public class DataWebChannelVo extends DataWebChannelEntity{
 	    /** 采集状态 */
 	    private String collect_state;
 
-		public Long getData_web_media() {
+
+		public String getData_web_media() {
 			return data_web_media;
 		}
 
-		public void setData_web_media(Long data_web_media) {
+		public void setData_web_media(String data_web_media) {
 			this.data_web_media = data_web_media;
 		}
 
@@ -105,7 +106,8 @@ public class DataWebChannelVo extends DataWebChannelEntity{
 			this.collect_state = collect_state;
 		}
 
-		public DataWebChannelVo(Long userid, String name, Long data_web_media, String website_name,
+
+		public DataWebChannelVo(Long userid, String name, String data_web_media, String website_name,
 				String data_web_website, String website_sub_name, String module_name, String sub_module_url,
 				String collect_state) {
 			super();

@@ -160,14 +160,6 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
 				resize:false
 			});
         }else if(layEvent === 'Jump'){
-        	//$.ajax({
-//    		      url:fast.ctxPath + "/datawebchannel/dataweb?id=" + obj.data.uuid,       
-//                method:'get',       
-//                data:null,        
-//                dataType:'JSON',
-//                success: function(res){
-//               		 }
-//    			})
 					layer.open({
 						type: 2, 
 						content: fast.ctxPath + "/datawebchannel/dataweb?id=" + obj.data.uuid,
@@ -191,8 +183,10 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
 	                    layer.msg('删除成功！', {icon: 1,time:2000,shade:0.2});
 					    table.reload('logTable');   	    
                         }                
-                    else            
-                        alert(res.msg);   
+                    else {
+                    	layer.close(index);   
+                    	layer.msg('请先删除频道！', {icon: 2,time:2000,shade:0.2});
+                    	}           
                     }   
                  });             
         	})

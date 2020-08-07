@@ -16,9 +16,11 @@ import com.yuyiyun.YYdata.modular.newsweb.mapper.DataWebChannelMapper;
 import com.yuyiyun.YYdata.modular.newsweb.model.param.DataWebChannelParam;
 import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo;
 
+
 /**
- * @author meiren
- *
+ * @author WuXiangDong
+ * @author TangJianRong
+ *  频道列表服务层
  */
 @Service
 public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, DataWebChannelEntity>{
@@ -36,9 +38,18 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	}
 	
 	
+	/**
+	 * 根据网站id查询
+	 * @return
+	 */
+	public List<DataWebChannelEntity> selectBySiteId(String id){
+		List<DataWebChannelEntity> list = channelMapper.selectBySiteId(id);
+		return list;
+	}
+	
 	
 	/**
-	 * 查询网站名称
+	 * 查询媒体UUID、媒体名称、网站名称
 	 * @param datavo
 	 * @return
 	 */
@@ -81,11 +92,11 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 
 	
 	/**
-	 * 根据id查询
+	 * 根据频道id查询
 	 * 
 	 * */
-	public DataWebChannelEntity findById(String id) {
-		DataWebChannelEntity list = channelMapper.findById(id);
+	public DataWebChannelEntity selectById(String id) {
+		DataWebChannelEntity list = channelMapper.selectById(id);
 		return list;
 	}
 	
@@ -95,6 +106,22 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	 * */
 	public int delete(String id) {
 		return channelMapper.delete(id);
+	}
+	
+	/**
+	 * 根据媒体id删除
+	 * 
+	 * */
+	public int deleteByMediaId(String id) {
+		return channelMapper.deleteByMediaId(id);
+	}
+	
+	/**
+	 * 根据网站id删除
+	 * 
+	 * */
+	public int deleteBySiteId(String id) {
+		return channelMapper.deleteBySiteId(id);
 	}
 	
 	/**

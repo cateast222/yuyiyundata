@@ -14,7 +14,7 @@ public class DataWebChannelEntity extends DataWebBasic {
 
 	/** 所属媒体(关联媒体) */
     @TableField("data_web_media")
-    private Long dataWebMedia;
+    private String dataWebMedia;
 
     /** 媒体名称 */
     @TableField("website_name")
