@@ -1,4 +1,4 @@
-package com.yuyiyun.YYdata.modular.news.entity;
+package com.yuyiyun.YYdata.modular.newsweb.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;

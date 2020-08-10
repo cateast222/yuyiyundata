@@ -132,7 +132,7 @@ layui.use(['table', 'layer', 'jquery','laydate', 'fast','admin','laypage'], func
 					           type: 2, 
 							   title:'新增数据',
 					           content: 'dataAdd',   
-					           area: ['450px', '300px'],
+					           area: ['450px', '370px'],
 					          resize:false
 					       });
 					     });   

@@ -1,8 +1,8 @@
-package com.yuyiyun.YYdata.modular.news.mapper;
+package com.yuyiyun.YYdata.modular.newsweb.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yuyiyun.YYdata.modular.news.entity.DataWebSite;
+import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -16,5 +16,9 @@ import java.util.Map;
 public interface DataWebSiteMapper extends BaseMapper<DataWebSite> {
 
     List<Map<String, Object>> getSites(@Param("page") Page page,@Param("dataWebSite")DataWebSite dataWebSite);
+    DataWebSite	updateSiteById(String id);
+	
+	int updateSite(DataWebSite dataWebSite);
+	int delete(String id);
 
 }

@@ -1,13 +1,13 @@
-package com.yuyiyun.YYdata.modular.news.service;
+package com.yuyiyun.YYdata.modular.newsweb.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
-import com.yuyiyun.YYdata.modular.news.entity.DataWebMedia;
-import com.yuyiyun.YYdata.modular.news.mapper.DataWebSiteMapper;
-import com.yuyiyun.YYdata.modular.news.entity.DataWebSite;
+import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia;
+import com.yuyiyun.YYdata.modular.newsweb.mapper.DataWebSiteMapper;
+import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 @Service
 public class DataWebSiteService extends ServiceImpl<DataWebSiteMapper, DataWebSite> {
 
-@Autowired
-DataWebMediaService dataWebMediaService;
-
+	@Autowired
+	private DataWebMediaService dataWebMediaService;
+	
+	@Resource
+	private DataWebSiteMapper datawebmapper;
 
     public List<Map<String, Object>> getSites(Page page, DataWebSite dataWebSite) {
 
@@ -96,4 +100,18 @@ DataWebMediaService dataWebMediaService;
         DataWebMedia dataWebMedia = dataWebMediaService.getOne(webMediaWrapper);
        return dataWebMedia==null;
     }
+    
+    public DataWebSite updateSiteById(String id) {
+		DataWebSite dataWebSite=datawebmapper.updateSiteById(id);
+		return dataWebSite;
+	}
+	
+	public int updateSite(DataWebSite dataWebSite) {
+		return datawebmapper.updateSite(dataWebSite);
+	}
+	
+	public int deleteSite(String id) {
+		return datawebmapper.delete(id);
+	}
+    
 }

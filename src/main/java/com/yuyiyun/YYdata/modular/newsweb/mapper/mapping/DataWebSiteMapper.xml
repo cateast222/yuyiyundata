@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yuyiyun.YYdata.modular.news.mapper.UpdateSiteMapper">
+<mapper namespace="com.yuyiyun.YYdata.modular.newsweb.mapper.DataWebSiteMapper">
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.yuyiyun.YYdata.modular.news.entity.DataWebSite">
+    <resultMap id="BaseResultMap" type="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite">
         <id column="uuid" property="uuid" />
         <result column="data_web_media" property="dataWebMedia" />
         <result column="website_name" property="websiteName" />
@@ -18,6 +18,7 @@
         <result column="update_by" property="updateBy" />
         <result column="update_time" property="updateTime" />
     </resultMap>
+    
 
 
     <!-- 通用查询结果列 -->
@@ -43,8 +44,48 @@
 
         </trim>
     </sql>
+
+
+    <!-- 分页查询 -->
+    <!--<select id="selectPage" resultType="com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth">
+        select <include refid="BaseColumnList"/>
+        from data_apiauth
+        <include refid="BaseWhere"/>
+    </select>-->
+    <select id="getSites" resultType="map">
+    	select
+	    <include refid="BaseColumnList" />
+	    from data_web_website where 1 = 1
+	        <if test="dataWebSite.websiteName != null and dataWebSite.websiteName != ''">
+	            and website_name like CONCAT('%',#{dataWebSite.websiteName},'%')
+	        </if>
+	        <if test="dataWebSite.websiteSubName != null and dataWebSite.websiteSubName != ''">
+	            and website_sub_name like CONCAT('%',#{dataWebSite.websiteSubName},'%')
+	        </if>
+	
+	        <if test="dataWebSite.subHost != null and dataWebSite.subHost != ''">
+	            and sub_host = #{dataWebSite.subHost}
+	        </if>
+	
+	        <if test="dataWebSite.websiteSubUrl != null and dataWebSite.websiteSubUrl != ''">
+	            and website_sub_url = #{dataWebSite.websiteSubUrl}
+	        </if>
+	
+	        <if test="dataWebSite.proxy != null and dataWebSite.proxy != ''">
+	            and proxy = #{dataWebSite.proxy}
+	        </if>
+	
+	        <if test="dataWebSite.state != null and dataWebSite.state != ''">
+	            and state = #{dataWebSite.state}
+	        </if>
+    </select>
     
-    <select id="updateSiteById" resultType="com.yuyiyun.YYdata.modular.news.entity.DataWebSite" parameterType="com.yuyiyun.YYdata.modular.news.entity.DataWebSite">
+    
+    
+
+
+   
+    <select id="updateSiteById" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite">
     	select * from data_web_website 
     	where uuid=#{id}
     </select>

@@ -1,9 +1,8 @@
-package com.yuyiyun.YYdata.modular.news.mapper;
+package com.yuyiyun.YYdata.modular.newsweb.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yuyiyun.YYdata.modular.news.entity.DataWebMedia;
-import com.yuyiyun.YYdata.modular.news.entity.DataWebSite;
+import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
