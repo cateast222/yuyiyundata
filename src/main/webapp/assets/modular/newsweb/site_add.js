@@ -1,89 +1,72 @@
-/**
- * 详情对话框
- */
-var SiteInfoDlg = {
-    data: {
-        website_sub_name: "",
-        website_sub_url: "",
-        sub_host: "",
-        language: "",
-        state: "",
-        proxy:""
-    }
-};
-
-layui.use(['layer', 'form', 'admin', 'ax'], function () {
+layui.use(['layer', 'form', 'admin', 'ax','fast'], function () {
     var $ = layui.jquery;
     var $ax = layui.ax;
     var form = layui.form;
     var admin = layui.admin;
-    admin.iframeAuto();
+    var fast = layui.fast;
+    
+    //表单验证
+	form.verify({
+	  websiteSubName: function(value, item){ //value：表单的值、item：表单的DOM对象
+		    if(value==""){
+		        return '网站名称不能为空';
+		  }
+	  	},
+	  websiteSubUrl:function(value, item){
+		  	if(/[\u4E00-\u9FA5]/g.test(value)){
+		  	    return '网址不能为中文';
+		  		}else if(value==""){
+		  		return '网址不能为空';
+		  	 }
+		  	},
+	  subHost:function(value, item){
+		  	if(/[\u4E00-\u9FA5]/g.test(value)){
+		  	    return '域名不能为中文';
+		  		}else if(value==""){
+		  		return '域名不能为空';
+		  	 }
+		  	}	  	
+		});      
+	
     //表单提交事件
-    form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/site/add", function (data) {
-            Feng.success("添加成功！");
-            //传给上个页面，刷新table用
-            admin.putTempData('formOk', true);
-            //关掉对话框
-            admin.closeThisDialog();
-        }, function (data) {
-            Feng.error("添加失败！" + data.responseJSON.message)
-        });
-        ajax.set(data.field);
-        ajax.start();
+    form.on('submit(btnSubmit)', function (data) {	
+    	 $.ajax({   
+                url:fast.ctxPath + "/site/add",       
+                method:'post',       
+                data:data.field,        
+                dataType:'JSON',         
+                success:function(res){ 
+                     if(res.code=='200'){       
+                        admin.putTempData('formOk', true);
+						// 关掉对话框
+						admin.closeThisDialog();
+						parent.location.reload()
+                        }else{
+                         layer.msg("网址已经存在",{icon:5})
+                    	 return false;
+                       }                
+                    },              
+                error:function (e) {
+                    }           
+                    }) ;         
+                 return false;
     });
 
     //返回按钮
     $("#backupPage").click(function () {
         window.location.href = Feng.ctxPath + "/site/list";
     });
-
-
-      $('#website_name').blur(function () {
-        var mediaName=$('#website_name').val();
-        if (mediaName!=null && mediaName!=''){
-            $.ajax({
-                type:'GET', // 规定请求的类型（GET 或 POST）
-                url:Feng.ctxPath + "/site/condition", // 请求的url地址
-                dataType:'json', //预期的服务器响应的数据类型
-                data:{
-                   "medianame": mediaName
-                },//规定要发送到服务器的数据
-                beforeSend:function(){ //发送请求前运行的函数（发送之前就会进入这个函数）
-                    $('#block').hide();
-                    // ....
-                },
-                success: function(result){ // 当请求成功时运行的函数
-                    //...
-                },
-                error:function(result){ //失败的函数
-                    if(result.responseJSON.code==500){
-                        $('#block').show();
-                    }
-                },
-                complete:function(){ //请求完成时运行的函数（在请求成功或失败之后均调用，即在 success 和 error 函数之后，不管成功还是失败 都会进这个函数）
-                    // ...
-                }
-            });
-
-        }
-   });
-
-    //父级字典时
-    /*$('#parentName').click(function () {
-        var formName = encodeURIComponent("parent.DictInfoDlg.data.parentName");
-        var formId = encodeURIComponent("parent.DictInfoDlg.data.parentId");
-        var treeUrl = encodeURIComponent("/dict/ztree?dictTypeId=" + $("#dictTypeId").val());
-
-        layer.open({
-            type: 2,
-            title: '父级字典',
-            area: ['300px', '400px'],
-            content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
-            end: function () {
-                $("#parentId").val(DictInfoDlg.data.parentId);
-                $("#parentName").val(DictInfoDlg.data.parentName);
-            }
-        });
-    });*/
+	
+	         //查询媒体名称
+		     $(function() {
+		        $.ajax({
+		            url: fast.ctxPath + '/site/SelectMediaName', // 数据接口
+		            type: "POST",
+		            data: null,
+		            success: function (res) {//res表示是否与服务器连接成功
+		                    var jsons=res.data;
+		                    $("#websiteName").val(jsons.websiteName);
+		            },
+		        });
+		    });
 });

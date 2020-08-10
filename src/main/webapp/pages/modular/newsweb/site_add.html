@@ -3,14 +3,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">媒体名称<span style="color: red;">*</span></label>
         <div class="layui-input-block" >
-            <input id="website_name"  name="website_name" placeholder="请输入媒体名称" type="text" class="layui-input" lay-verify="required" required/>
-            <span style="color: red;display: none" id="block">媒体名称不存在</span></label>
+            <input id="websiteName"  name="websiteName" placeholder="请输入媒体名称" type="text" class="layui-input" ReadOnly="true"/>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">网站名称<span style="color: red;">*</span></label>
         <div class="layui-input-block">
-            <input id="website_sub_name" name="website_sub_name" placeholder="请输入网站名称" type="text" class="layui-input" lay-verify="required" required/>
+            <input id="websiteSubName" name="websiteSubName" placeholder="请输入网站名称" type="text" class="layui-input" lay-verify="websiteSubName" />
         </div>
     </div>
 
@@ -18,14 +17,14 @@
         <label class="layui-form-label">网站网址<span style="color: red;">*</span></label>
         <div class="layui-input-block">
             <input id="uuid" name="uuid" type="hidden">
-            <input id="website_sub_url" name="website_sub_url" placeholder="请输入网站网址" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+            <input id="websiteSubUrl" name="websiteSubUrl" placeholder="请输入网站网址" type="text" class="layui-input" lay-verify="websiteSubUrl"  autocomplete="off"/>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">域名<span style="color: red;">*</span></label>
         <div class="layui-input-block">
-            <input id="sub_host" name="sub_host" placeholder="请输入域名" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+            <input id="subHost" name="subHost" placeholder="请输入域名" type="text" class="layui-input" lay-verify="subHost"  autocomplete="off"/>
         </div>
     </div>
 

@@ -1,0 +1,46 @@
+@layout("/common/_container.html",{js:["/assets/modular/newsweb/media.js"]}){
+<div id="box" >
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-form toolbar">
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <input id="webSiteName" name="webSiteName" class="layui-input" type="search" placeholder="媒体名称"/>
+                            </div>
+                            <div class="layui-input-inline">
+                                <input id="webSiteUrl" name="webSiteUrl" class="layui-input" type="search" placeholder="媒体网址"/>
+                            </div>
+                            <div class="layui-input-inline">
+                                <input id="host" name="host" class="layui-input" type="search" placeholder="域名"/>
+                            </div>
+                            <div class="layui-inline">
+                                <button id="searchSysUserBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                <button id="addUrl" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>添加</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="layui-table" id="selectSelf" lay-filter="lineBar"></table>
+                    <table class="layui-table" id="selectsSelf" lay-filter="lineBars"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+<!-- 数据行工具栏 -->
+<script type="text/html" id="lineBar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="delPer" id="delPar">删除</a>
+</script>
+<script type="text/html" id="lineBars">
+    <a class="layui-btn layui-btn-xs" lay-event="editss">配置</a>
+    <a class="layui-btn layui-btn-xs" lay-event="delPers" id="delPars">配置</a>
+</script>
+</script>
+@}
+
+
+

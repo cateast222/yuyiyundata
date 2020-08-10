@@ -7,7 +7,7 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
     var admin = layui.admin;
 	var fast= layui.fast;
     /**
-     * 系统管理--操作日志
+     * 
      */
     var Site = {
         tableId: "logTable"   //表格id
@@ -47,71 +47,7 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
         table.reload(Site.tableId, {where: queryData});
     };
 
-    /**
-     * 导出excel按钮
-     */
-    Site.exportExcel = function () {
-        var checkRows = table.checkStatus(Site.tableId);
-        if (checkRows.data.length === 0) {
-            Feng.error("请选择要导出的数据");
-        } else {
-            table.exportFile(tableResult.config.id, checkRows.data, 'xls');
-        }
-    };
-    
-    
 
-   /* /!**
-     * 日志详情
-     *!/
-    Site.logDetail = function (param) {
-       /!* var ajax = new $ax(Feng.ctxPath + "/log/detail/" + param.operationLogId, function (data) {
-            Feng.infoDetail("日志详情", data);
-        }, function (data) {
-            Feng.error("获取详情失败!");
-        });
-        ajax.start();*!/
-        admin.putTempData('formOk', false);
-        top.layui.admin.open({
-            type: 2,
-            title: '修改日志',
-            content: Feng.ctxPath + '/log/detail/' + param.operationLogId,
-            end: function () {
-                admin.getTempData('formOk') && table.reload(Role.tableId);
-            }
-        });
-    };
-
-    /!**
-     * 清空日志
-     *!/
-    Site.cleanLog = function () {
-        Feng.confirm("是否清空所有日志?", function () {
-            var ajax = new $ax(Feng.ctxPath + "/log/delLog", function (data) {
-                Feng.success("清空日志成功!");
-                Site.search();
-            }, function (data) {
-                Feng.error("清空日志失败!");
-            });
-            ajax.start();
-        });
-    };*/
-
-    /**
-     * 弹出添加对话框
-     */
-    Site.openAddDlg = function () {
-        admin.putTempData('formOk', false);
-        top.layui.admin.open({
-            type: 2,
-            area: ['597px', '673px'],
-            title: '添加站点信息',
-            content: Feng.ctxPath + '/site/add_prefix',
-            end: function () {
-                admin.getTempData('formOk') && Site.initTable(Site.tableId);
-            }
-        });
-    };
 
     //渲染时间选择框
     laydate.render({
@@ -135,7 +71,12 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
 
     // 添加按钮点击事件
     $('#btnAdd').click(function () {
-        Site.openAddDlg();
+    	layer.open({
+    		type: 2,
+            area: ['597px', '520px'],
+            title: '添加站点信息',
+            content: Feng.ctxPath + '/site/add_prefix',
+    	})
     });
 
     // 搜索按钮点击事件

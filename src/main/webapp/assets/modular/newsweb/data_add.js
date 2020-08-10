@@ -15,7 +15,7 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 	  	},
 	  subModuleUrl:function(value, item){
 		  	if(/[\u4E00-\u9FA5]/g.test(value)){
-		  	    return 'url不能为中文';
+		  	    return '网址不能为中文';
 		  		}else if(value==""){
 		  		return '网址不能为空';
 		  	 }
@@ -30,7 +30,6 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
                 data:data.field,        
                 dataType:'JSON',         
                 success:function(res){ 
-                	 console.log(res);
                      if(res.code=='200'){       
                         admin.putTempData('formOk', true);
 						// 关掉对话框
@@ -49,21 +48,6 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
                     }) ;         
                  return false;
             });   
-		 	 //查询当前登录用户
-			 $(function() {
-			        $.ajax({
-			            url: fast.ctxPath + '/datawebchannel/dataSelectUser', // 数据接口
-			            type: "POST",
-			            data: null,
-			            success: function (res) {//res表示是否与服务器连接成功
-			                    var jsons=res.data;
-			                    $("#createBy").val(jsons.name);
-			            },
-			            error: function (e) {
-			
-			            }
-			        });
-			    });
 		     //查询媒体uuid、媒体名称、网站名称
 		     $(function() {
 		        $.ajax({

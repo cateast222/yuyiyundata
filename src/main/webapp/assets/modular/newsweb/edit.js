@@ -41,21 +41,4 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
                     }) ;         
                  return false;
             }); 
-            
-           $(function() {
-		        $.ajax({
-		            url: fast.ctxPath + '/datawebchannel/dataSelectUser', // 数据接口
-		            type: "POST",
-		            data: null,
-		            success: function (res) {//res表示是否与服务器连接成功
-		                    var jsons=res.data;
-		                    console.info(res.data);
-		                    $("#updateBy").val(jsons.name);
-		            },
-		            error: function (e) {
-		
-		            }
-		        });
-		    });
-					    
 });

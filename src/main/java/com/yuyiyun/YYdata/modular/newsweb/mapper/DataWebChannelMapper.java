@@ -93,12 +93,6 @@ public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
 	 * */
 	List<DataWebChannelEntity> selectBySiteId(String id);
 	
-	/**
-	 * 查询当前登录用户
-	 * 
-	 * 
-	 * */
-	DataWebChannelVo selectUser(DataWebChannelVo DataWebChannelVo);
 	
 	/**
 	 * 查询媒体UUID、媒体名称、网站名称

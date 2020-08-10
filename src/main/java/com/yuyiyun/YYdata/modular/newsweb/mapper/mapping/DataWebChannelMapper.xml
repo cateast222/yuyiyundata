@@ -44,11 +44,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select<include refid="Base"/> from  data_web_channel where data_web_website=#{id} 
 	</select>
 	
-	<!-- 查询当前登录用户 -->
-	<select id="selectUser" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo" resultType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
-		SELECT  `name` FROM sys_user WHERE user_id=#{userid}
-	</select>
-	
 	<!-- 查询媒体id,媒体、网站名称 -->
 	<select id="selectWebSiteName" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo" resultType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
 		SELECT data_web_media,website_name, website_sub_name FROM data_web_website WHERE uuid=#{uuid}

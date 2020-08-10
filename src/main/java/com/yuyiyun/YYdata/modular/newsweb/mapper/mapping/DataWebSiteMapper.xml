@@ -55,7 +55,7 @@
     <select id="getSites" resultType="map">
     	select
 	    <include refid="BaseColumnList" />
-	    from data_web_website where 1 = 1
+	    from data_web_website where data_web_media = #{id}
 	        <if test="dataWebSite.websiteName != null and dataWebSite.websiteName != ''">
 	            and website_name like CONCAT('%',#{dataWebSite.websiteName},'%')
 	        </if>
@@ -81,15 +81,18 @@
     </select>
     
     
-    
+    <!-- 查询媒体名称 -->
+	<select id="selectMediaName" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebsiteVo" resultType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebsiteVo">
+		SELECT website_name FROM data_web_media WHERE uuid=#{uuid}
+	</select>
 
-
+	
    
     <select id="updateSiteById" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite">
     	select * from data_web_website 
     	where uuid=#{id}
     </select>
-
+    
 	<update id="updateSite">
 		UPDATE data_web_website SET
 		website_name = #{websiteName},
@@ -106,4 +109,35 @@
    	<delete id="delete">
    		delete from data_web_website where uuid=#{id}
    	</delete>
+   	
+   	
+   	<insert id="add" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite">
+		insert into data_web_website
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uuid != null">uuid,</if>
+			<if test="dataWebMedia != null">data_web_media,</if>
+			<if test="websiteName != null">website_name,</if>
+			<if test="websiteSubName != null">website_sub_name,</if>
+			<if test="websiteSubUrl != null">website_sub_url,</if>
+			<if test="subHost != null">sub_host,</if>
+			<if test="language != null">language,</if>
+			<if test="proxy != null">proxy,</if>
+			<if test="state != null">state,</if>
+			<if test="createBy != null">create_by,</if>
+			<if test="createTime != null">create_time</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uuid != null">#{uuid},</if>
+			<if test="dataWebMedia != null">#{dataWebMedia},</if>
+			<if test="websiteName != null">#{websiteName},</if>
+			<if test="websiteSubName != null">#{websiteSubName},</if>
+			<if test="websiteSubUrl != null">#{websiteSubUrl},</if>
+			<if test="subHost != null">#{subHost},</if>
+			<if test="language != null">#{language},</if>
+			<if test="proxy != null">#{proxy},</if>
+			<if test="state != null">#{state},</if>
+			<if test="createBy != null">#{createBy},</if>
+			<if test="createTime != null">#{createTime}</if>
+		</trim>
+	</insert>
 </mapper>

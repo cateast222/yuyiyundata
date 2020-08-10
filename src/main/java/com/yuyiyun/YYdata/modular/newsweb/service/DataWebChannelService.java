@@ -28,15 +28,6 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	private DataWebChannelMapper channelMapper;
 	
 	
-	/**
-	 * 查询当前登录用户
-	 * 
-	 * */
-	public DataWebChannelVo selectUser(DataWebChannelVo datavo){
-		DataWebChannelVo user = channelMapper.selectUser(datavo);
-		return user;
-	}
-	
 	
 	/**
 	 * 根据网站id查询

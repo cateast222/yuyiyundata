@@ -6,8 +6,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuyiyun.YYdata.core.common.annotion.Permission;
 import com.yuyiyun.YYdata.core.common.constant.Const;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
+import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite;
 import com.yuyiyun.YYdata.modular.newsweb.service.DataWebSiteService;
+import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo;
+import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebsiteVo;
 import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity;
 import com.yuyiyun.YYdata.modular.newsweb.service.DataWebChannelService;
 import com.yuyiyun.YYdata.modular.system.warpper.LogWrapper;
@@ -16,11 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,18 +41,11 @@ public class DataWebSiteController {
 	private DataWebChannelService datawebservice;
 
     @RequestMapping("/website")
-    public String indexs() {
+    public String indexs(String id,HttpSession session) {
+    	session.setAttribute("uuid",id);
         return PREFIX + "/site.html";
     }
 
-    @RequestMapping("condition")
-    public ResponseData condition(@RequestParam(required = false) String medianame) {
-        boolean flag = dataWebSiteService.condition(medianame);
-        if (flag) {
-            throw new RuntimeException("媒体名称不存在");
-        }
-        return ResponseData.success();
-    }
     
     @GetMapping(value = "/dataEdit")
 	public String addEdit(String id,HttpSession session) {
@@ -61,20 +58,30 @@ public class DataWebSiteController {
     public String addPrefix() {
         return PREFIX + "/site_add.html";
     }
-
+    
+    
+    @ResponseBody
     @RequestMapping("/add")
-    public String add(DataWebSite dataWebSite) {
-        dataWebSiteService.add(dataWebSite);
-        return PREFIX + "/site_add.html";
+    public ResponseData add(DataWebSite data,HttpSession session) {
+    	 String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+    	 String name = ShiroKit.getUser().getName();
+    	 String webMedia = (String)session.getAttribute("uuid");
+    	 data.setUuid(uuid);
+    	 data.setDataWebMedia(webMedia);
+    	 data.setCreateBy(name);
+    	 data.setCreateTime(new Date());
+         dataWebSiteService.add(data);
+        return ResponseData.success();
     }
     @SuppressWarnings({"unchecked", "rawtypes"})
     @RequestMapping("/list")
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
-    public Object list(DataWebSite dataWebSite) {
+    public Object list(DataWebSite dataWebSite,HttpSession session) {
+    	String  id = (String)session.getAttribute("uuid");
         //获取分页参数
         Page page = LayuiPageFactory.defaultPage();
-        List<Map<String, Object>> result = dataWebSiteService.getSites(page, dataWebSite);
+        List<Map<String, Object>> result = dataWebSiteService.getSites(page, dataWebSite,id);
         page.setRecords(new LogWrapper(result).wrap());
         return LayuiPageFactory.createPageInfo(page);
     }
@@ -146,4 +153,13 @@ public class DataWebSiteController {
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping("/SelectMediaName")
+	public ResponseData selectMediaName(DataWebsiteVo sitevo,HttpSession session){
+		//获取跳转过来的网站UUID，根据此id查询出对应的媒体UUID、媒体名称、网站名称
+		String id = (String)session.getAttribute("uuid");
+		sitevo.setUuid(id);
+		DataWebsiteVo selectMediaName = dataWebSiteService.selectMediaName(sitevo);
+		return ResponseData.success(0, "11", selectMediaName);
+	}
 }

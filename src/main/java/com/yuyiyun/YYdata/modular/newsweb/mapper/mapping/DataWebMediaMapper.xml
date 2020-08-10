@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyiyun.YYdata.modular.newsweb.mapper.DataWebMediaMapper">
+    
+    <resultMap type="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia" id="DataWebMedia">
+        <result property="uuid"    column="uuid"    />
+        <result property="webSiteName"    column="website_name"    />
+        <result property="webSiteUrl"    column="website_url"    />
+        <result property="host"    column="host"    />
+        <result property="country"    column="country"    />
+        <result property="region"    column="region"    />
+        <result property="proxy"    column="proxy"    />
+        <result property="state"    column="state"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <!-- 搜索框判断条件 -->
+    <sql id="basemedia">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="param.webSiteName != null and param.webSiteName != ''">
+                and website_name like CONCAT('%',#{param.webSiteName},'%')
+            </if>
+            <if test="param.webSiteUrl != null and param.webSiteUrl != ''">
+                and website_url like CONCAT('%',#{param.webSiteUrl},'%')
+            </if>
+            <if test="param.host != null and param.host != ''">
+                and host   like CONCAT('%',#{param.host},'%')
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="BaseColumnListMedia">
+         uuid  uuid,
+        website_name  webSiteName,
+        website_url  webSiteUrl,
+        host  host,
+        country  country,
+        region  region,
+        proxy  proxy,
+        state  state,
+        remark  remark,
+        create_time  createTime,
+        create_by  createBy,
+        update_time  updateTime,
+        update_by  updateBy
+    </sql>
+
+
+    <!--查询所有的媒体uuid,website_name,website_url,host,country,region,proxy,state,remark,create_time,create_by,update_time,update_by-->
+    <select id="AllMedia" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia" >
+        select <include refid="BaseColumnListMedia"></include>
+       from data_web_media
+       <include refid="basemedia"></include>
+
+    </select>
+<!--修改媒体信息-->
+    <update id="updatemedia"  parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia">
+        UPDATE data_web_media SET website_name=#{webSiteName},website_url=#{webSiteUrl},
+        host=#{host}, country=#{country},region=#{region},
+           proxy=#{proxy},state=#{state},remark=#{remark},update_by=#{updateBy},update_time=#{updateTime} WHERE uuid=#{uuid}
+    </update>
+    <!--查询指定ID的媒体-->
+    <select id="ByidMedia" resultType="map" resultMap="DataWebMedia">
+        SELECT * FROM data_web_media WHERE uuid=#{uuid}
+    </select>
+    <!--新增媒体-->
+    <insert id="inSerMedia" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia">
+INSERT INTO data_web_media
+(`uuid`, `website_name`, `website_url`, `host`, `country`, `region`, `proxy`, `state`, `remark`, `create_by`, `create_time`)
+values (#{uuid}, #{webSiteName}, #{webSiteUrl}, #{host}, #{country},#{region}, #{proxy},#{state}, #{remark},#{createBy},#{createTime})
+
+    </insert>
+    <!--    查询出当前用户-->
+    <select id="selectUser" resultType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo"  parameterType="com.yuyiyun.YYdata.modular.perfoapp.vo.PerfoAppVo">
+        SELECT  `name`FROM sys_user WHERE user_id=#{userid}
+    </select>
+    <!--    查询媒体列段是否存在-->
+    <select id="selectMedia" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia"  parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia">
+       SELECT * FROM data_web_media WHERE website_name =#{webSiteName} OR website_url =#{webSiteUrl} OR `host` =#{host}
+    </select>
+    <!--    查询媒体列段是否存在-->
+    <select id="selectAllMedia" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia"  parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia">
+       SELECT count(*) FROM(SELECT * FROM data_web_media WHERE website_name =#{webSiteName}  OR website_url =#{webSiteUrl} OR `host` =#{host}) t
+    </select>
+
+
+
+
+
+
+</mapper>

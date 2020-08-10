@@ -161,6 +161,9 @@ public class DataWebChannelController {
 	@ResponseBody
 	@RequestMapping(value = "/dataUpdate")
 	public ResponseData update(DataWebChannelEntity data) {
+		//获取当前登录用户名
+		String updateBy = ShiroKit.getUser().getName();
+		data.setUpdateBy(updateBy);
 		data.setUpdateTime(new Date());
 		int i = channelService.update(data);
 		if(i>0) {
@@ -179,11 +182,15 @@ public class DataWebChannelController {
 	@ResponseBody
 	@RequestMapping(value = "/dataInsert" , method = RequestMethod.POST)
 	public ResponseData add(DataWebChannelEntity data,HttpSession session) {
+		//获取当前登录用户名
+		String createBy = ShiroKit.getUser().getName();
+		//UUID生成
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 		//获取跳转过来的UUID,将其设置为频道表的data_web_website
 		String webWebsite = (String)session.getAttribute("dataId");
 		data.setUuid(uuid);
 		data.setDataWebWebsite(webWebsite);
+		data.setCreateBy(createBy);
 		data.setCreateTime(new Date());
 		int i = channelService.add(data);
 		if(i>0) {
@@ -191,21 +198,6 @@ public class DataWebChannelController {
 		}else {
 			return ResponseData.error("新增失败");
 		}
-	}
-
-
-	/**
-	 * 查询当前登录用户名
-	 * 
-	 * 
-	 * */
-	@ResponseBody
-	@RequestMapping(value = "/dataSelectUser")
-	public ResponseData selectUser(DataWebChannelVo datavo){
-		Long userId = ShiroKit.getUser().getId();
-		datavo.setUserid(Long.valueOf(userId));
-		DataWebChannelVo user = channelService.selectUser(datavo);
-		return ResponseData.success(0, "11", user);
 	}
 
 
