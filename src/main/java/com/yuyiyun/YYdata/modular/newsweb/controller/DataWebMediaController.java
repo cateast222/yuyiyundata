@@ -108,9 +108,10 @@ public class DataWebMediaController extends BaseController {
     @ResponseBody
     @RequestMapping("/updateMedia")
     public ResponseData updatemedia(DataWebMedia dataWebMedia){
-        System.err.println(dataWebMedia.toString());
+        //获取当前登录用户名
+		String updateBy = ShiroKit.getUser().getName();
+    	dataWebMedia.setUpdateBy(updateBy);
         List<Map> s = dataWebMediaService.selectAllMedia(dataWebMedia);
-        System.err.println(s.size());
         if (s.size()==1){
             List<Map> a = dataWebMediaService.selectMedia(dataWebMedia);
             if (a.size()==1){
@@ -140,12 +141,15 @@ public class DataWebMediaController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/insertMedia")
-    public ResponseData insertMedia(DataWebMedia mediavo){
-        List<Map> s = dataWebMediaService.selectMedia(mediavo);
+    public ResponseData insertMedia(DataWebMedia media){
+        List<Map> s = dataWebMediaService.selectMedia(media);
         if (ToolsUtil.isEmpty(s)){
             String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-            mediavo.setUuid(uuid);
-            int i = dataWebMediaService.inSerMedia(mediavo);
+            //获取当前登录用户名
+    		String createBy = ShiroKit.getUser().getName();
+            media.setUuid(uuid);
+            media.setCreateBy(createBy);
+            int i = dataWebMediaService.inSerMedia(media);
             return ResponseData.success(200, "11", i);
         }else{
             return ResponseData.success(500, "11", 12);
@@ -154,19 +158,6 @@ public class DataWebMediaController extends BaseController {
     }
 
 
-    /**
-     * 查询当前登录用户名
-     * @param mediavo
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/selectUser")
-    public ResponseData selectUser(Mediavo mediavo){
-        Long userId = ShiroKit.getUser().getId();
-        mediavo.setUserid(Long.valueOf(userId));
-        List<Mediavo> mediavos = dataWebMediaService.selectUser(mediavo);
-        return ResponseData.success(0, "11", mediavos);
-    }
 
     /**
      * 根据ID删除媒体

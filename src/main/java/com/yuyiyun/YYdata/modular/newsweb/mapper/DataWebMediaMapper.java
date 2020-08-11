@@ -40,11 +40,6 @@ public interface DataWebMediaMapper extends BaseMapper<DataWebMedia> {
      */
     int inSerMedia(DataWebMedia media);
 
-    /**
-     * 查询出当前用户
-     * @return
-     */
-    List<Mediavo> selectUser(Mediavo mediavo);
 
     /**
      * 根据id修改媒体

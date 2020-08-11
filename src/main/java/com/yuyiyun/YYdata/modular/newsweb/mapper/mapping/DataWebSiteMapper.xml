@@ -19,7 +19,33 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
     
-
+    <!-- 搜索框附加条件列段 -->	
+	<sql id="baseWhere">
+		<trim prefix="and" prefixOverrides="and | or">
+			<if test="param.websiteName != null and param.websiteName != ''">
+	            and website_name like CONCAT('%',#{param.websiteName},'%')
+	        </if>
+	        <if test="param.websiteSubName != null and param.websiteSubName != ''">
+	            and website_sub_name like CONCAT('%',#{param.websiteSubName},'%')
+	        </if>
+	
+	        <if test="param.subHost != null and param.subHost != ''">
+	            and sub_host = #{param.subHost}
+	        </if>
+	
+	        <if test="param.websiteSubUrl != null and param.websiteSubUrl != ''">
+	            and website_sub_url like CONCAT('%',#{param.websiteSubUrl},'%')
+	        </if>
+	
+	        <if test="param.proxy != null and param.proxy != ''">
+	            and proxy = #{param.proxy}
+	        </if>
+	
+	        <if test="param.state != null and param.state != ''">
+	            and state = #{param.state}
+	        </if>
+		</trim>
+	</sql>
 
     <!-- 通用查询结果列 -->
     <sql id="BaseColumnList">
@@ -38,46 +64,12 @@
         create_by as create_by,
         update_time as update_time
     </sql>
-    <!-- 通用查询条件 -->
-    <sql id="BaseWhere">
-        <trim prefix="where" prefixOverrides="and | or">
-
-        </trim>
-    </sql>
-
-
-    <!-- 分页查询 -->
-    <!--<select id="selectPage" resultType="com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth">
-        select <include refid="BaseColumnList"/>
-        from data_apiauth
-        <include refid="BaseWhere"/>
-    </select>-->
-    <select id="getSites" resultType="map">
+     <!-- 分页查询加搜索框条件 -->
+    <select id="getSites" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite">
     	select
 	    <include refid="BaseColumnList" />
 	    from data_web_website where data_web_media = #{id}
-	        <if test="dataWebSite.websiteName != null and dataWebSite.websiteName != ''">
-	            and website_name like CONCAT('%',#{dataWebSite.websiteName},'%')
-	        </if>
-	        <if test="dataWebSite.websiteSubName != null and dataWebSite.websiteSubName != ''">
-	            and website_sub_name like CONCAT('%',#{dataWebSite.websiteSubName},'%')
-	        </if>
-	
-	        <if test="dataWebSite.subHost != null and dataWebSite.subHost != ''">
-	            and sub_host = #{dataWebSite.subHost}
-	        </if>
-	
-	        <if test="dataWebSite.websiteSubUrl != null and dataWebSite.websiteSubUrl != ''">
-	            and website_sub_url = #{dataWebSite.websiteSubUrl}
-	        </if>
-	
-	        <if test="dataWebSite.proxy != null and dataWebSite.proxy != ''">
-	            and proxy = #{dataWebSite.proxy}
-	        </if>
-	
-	        <if test="dataWebSite.state != null and dataWebSite.state != ''">
-	            and state = #{dataWebSite.state}
-	        </if>
+	    <include refid="baseWhere"/>
     </select>
     
     
@@ -87,12 +79,13 @@
 	</select>
 
 	
-   
-    <select id="updateSiteById" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite">
+    <!-- 根据id查询网站信息 -->
+    <select id="selectSiteById" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite">
     	select * from data_web_website 
     	where uuid=#{id}
     </select>
     
+     <!-- 修改 -->
 	<update id="updateSite">
 		UPDATE data_web_website SET
 		website_name = #{websiteName},
@@ -106,11 +99,17 @@
 		WHERE uuid = #{uuid}
 	</update>
    
+    <!-- 网站删除 -->
    	<delete id="delete">
    		delete from data_web_website where uuid=#{id}
    	</delete>
    	
+   	 <!-- 根据媒体id删除 -->
+   	<delete id="deleteByMediaId">
+   		delete from data_web_website where data_web_media=#{id}
+   	</delete>
    	
+   	 <!-- 新增 -->
    	<insert id="add" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite">
 		insert into data_web_website
 		<trim prefix="(" suffix=")" suffixOverrides=",">

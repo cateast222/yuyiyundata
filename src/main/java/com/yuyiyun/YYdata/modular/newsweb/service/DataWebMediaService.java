@@ -2,29 +2,16 @@ package com.yuyiyun.YYdata.modular.newsweb.service;
 
 
 
-import cn.stylefeng.roses.kernel.model.page.PageResult;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yuyiyun.YYdata.core.common.constant.Const;
-import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
-import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
-import com.yuyiyun.YYdata.core.util.DateTimeUtil;
-import com.yuyiyun.YYdata.core.util.ToolsUtil;
-import com.yuyiyun.YYdata.modular.datasource.entity.DataApiauth;
-import com.yuyiyun.YYdata.modular.newspaper.entity.DataNews;
-import com.yuyiyun.YYdata.modular.newspaper.wrapper.DataNewsWrapper;
 import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebMedia;
 import com.yuyiyun.YYdata.modular.newsweb.mapper.DataWebMediaMapper;
-import com.yuyiyun.YYdata.modular.newsweb.model.param.DataWebChannelParam;
 import com.yuyiyun.YYdata.modular.newsweb.model.param.DataWebMediaParam;
 import com.yuyiyun.YYdata.modular.newsweb.vo.Mediavo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 @Service
@@ -33,6 +20,9 @@ public class DataWebMediaService extends ServiceImpl<DataWebMediaMapper, DataWeb
 
     @Autowired
     private  DataWebMediaMapper dataWebMediaMapper;
+    
+    @Autowired
+    private DataWebSiteService dataWebMediaService;
 
     @Autowired
     private  DataWebChannelService dataWebChannelService;
@@ -76,6 +66,7 @@ public class DataWebMediaService extends ServiceImpl<DataWebMediaMapper, DataWeb
     @Transactional
     public boolean delMedia(DataWebMedia dataWebMedia){
         boolean b = this.removeById(dataWebMedia.getUuid());
+        dataWebMediaService.deleteByMediaId(dataWebMedia.getUuid());
         dataWebChannelService.deleteByMediaId(dataWebMedia.getUuid());
         return b;
     }
@@ -90,15 +81,6 @@ public class DataWebMediaService extends ServiceImpl<DataWebMediaMapper, DataWeb
         return i;
     }
 
-    /**
-     * 查询出当前用户
-     * @param p
-     * @return
-     */
-    public List<Mediavo> selectUser(Mediavo p){
-        List<Mediavo> perfoAppVos = dataWebMediaMapper.selectUser(p);
-        return perfoAppVos;
-    }
     /**
      * 根据ID查询
      * @param p

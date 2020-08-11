@@ -212,7 +212,7 @@ public class DataWebChannelController {
 		//获取跳转过来的网站UUID，根据此id查询出对应的媒体UUID、媒体名称、网站名称
 		String id = (String)session.getAttribute("dataId");
 		datavo.setUuid(id);
-		DataWebChannelVo siteName = channelService.selectWebeSiteName(datavo);
+		DataWebChannelVo siteName = channelService.selectWebSiteName(datavo);
 		return ResponseData.success(0, "11", siteName);
 	}
 }

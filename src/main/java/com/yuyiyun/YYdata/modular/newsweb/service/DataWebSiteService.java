@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuyiyun.YYdata.modular.newsweb.mapper.DataWebSiteMapper;
+import com.yuyiyun.YYdata.modular.newsweb.model.param.DataWebSiteParam;
 import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebsiteVo;
-import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity;
 import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +15,32 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+/**
+ * @author YiZhiLong
+ * @author WangShiPing
+ */
 @Service
 public class DataWebSiteService extends ServiceImpl<DataWebSiteMapper, DataWebSite> {
 	
 	@Resource
 	private DataWebSiteMapper datawebmapper;
-
-    public List<Map<String, Object>> getSites(Page page, DataWebSite dataWebSite,String id) {
-        return this.baseMapper.getSites(page,dataWebSite,id);
+	
+	
+	/**
+     * 分页查询
+     * @param sitevo
+     * @return
+     */
+	@SuppressWarnings("rawtypes")
+    public List<Map<String, Object>> getSites(Page page, DataWebSiteParam param,String id) {
+        return baseMapper.getSites(page,param,id);
     }
     
+    /**
+     * 查询媒体名称
+     * @param sitevo
+     * @return
+     */
     public DataWebsiteVo selectMediaName(DataWebsiteVo sitevo){
     	DataWebsiteVo mediaName = datawebmapper.selectMediaName(sitevo);
 		return mediaName ;
@@ -53,7 +69,7 @@ public class DataWebSiteService extends ServiceImpl<DataWebSiteMapper, DataWebSi
     
     
     /**
-     * 添加
+     * 添加，判断重复
      * @param dataWebSite
      * @return
      */
@@ -68,17 +84,42 @@ public class DataWebSiteService extends ServiceImpl<DataWebSiteMapper, DataWebSi
     }
 
     
-    public DataWebSite updateSiteById(String id) {
-		DataWebSite dataWebSite=datawebmapper.updateSiteById(id);
+    /**
+     * 根据id查询当前网站的信息
+     * @param id
+     * @return
+     */
+    public DataWebSite selectSiteById(String id) {
+		DataWebSite dataWebSite=datawebmapper.selectSiteById(id);
 		return dataWebSite;
 	}
 	
+	/**
+	 * 修改网站
+	 * @param dataWebSite
+	 * @return
+	 */
 	public int updateSite(DataWebSite dataWebSite) {
 		return datawebmapper.updateSite(dataWebSite);
 	}
 	
+	
+	/**
+	 * 网站删除
+	 * @param id
+	 * @return
+	 */
 	public int deleteSite(String id) {
 		return datawebmapper.delete(id);
+	}
+	
+	/**
+	 * 根据媒体id删除
+	 * @param id
+	 * @return
+	 */
+	public int deleteByMediaId(String id) {
+		return datawebmapper.deleteByMediaId(id);
 	}
     
 }

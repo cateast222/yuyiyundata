@@ -44,7 +44,7 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	 * @param datavo
 	 * @return
 	 */
-	public DataWebChannelVo selectWebeSiteName(DataWebChannelVo datavo){
+	public DataWebChannelVo selectWebSiteName(DataWebChannelVo datavo){
 		DataWebChannelVo siteName = channelMapper.selectWebSiteName(datavo);
 		return siteName;
 		

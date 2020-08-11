@@ -5,6 +5,29 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 	var admin = layui.admin;
 	var form = layui.form;
 	var laydate = layui.laydate;
+	
+	//表单验证
+	form.verify({
+	  webSiteName: function(value, item){ //value：表单的值、item：表单的DOM对象
+		    if(value==""){
+		        return '媒体名称不能为空';
+		  }
+	  	},
+	  webSiteUrl:function(value, item){
+		  	if(/[\u4E00-\u9FA5]/g.test(value)){
+		  	    return '网址不能为中文';
+		  		}else if(value==""){
+		  		return '网址不能为空';
+		  	 }
+		  	},
+	  host:function(value, item){
+		  	if(/[\u4E00-\u9FA5]/g.test(value)){
+		  	    return '域名不能为中文';
+		  		}else if(value==""){
+		  		return '域名不能为空';
+		  	 }
+		  	}	  	
+		});      
 
 
 
@@ -24,7 +47,8 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 						parent.location.reload();
                         }                
                     else            
-                        alert(res.msg);   
+                        layer.msg("添加失败",{icon:2});
+                        return false;  
                     },              
                     error:function (data) {
                         
@@ -33,20 +57,4 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
                  return false;
             });   
 	
-		 $(function() {
-		        $.ajax({
-		            url: fast.ctxPath + '/newsweb/selectUser', // 数据接口
-		            type: "POST",
-		            data: null,
-		            success: function (res) {//res表示是否与服务器连接成功
-		                    var jsons=res.data;
-		                    console.info(res.data);
-		                    $("#createBy").val(jsons[0].name);
-		            },
-		            error: function (e) {
-		
-		            }
-		        });
-		    });
-					
 });

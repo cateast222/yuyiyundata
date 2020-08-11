@@ -20,11 +20,11 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'uuid', hide: true, sort: true, title: 'id'},
-            {field: 'website_name', sort: true, title: '媒体名称'},
-            {field: 'website_sub_name', sort: true, title: '网站名称'},
-            {field: 'website_sub_url', sort: true, title: '网址'},
-            {field: 'sub_host', sort: true, title: '域名',templet: function(d) {
-    			return '<a style="color: #01AAED;" lay-event="Jump">' + d.sub_host + '</a>';
+            {field: 'websiteName', sort: true, title: '媒体名称'},
+            {field: 'websiteSubName', sort: true, title: '网站名称'},
+            {field: 'websiteSubUrl', sort: true, title: '网址'},
+            {field: 'subHost', sort: true, title: '域名',templet: function(d) {
+    			return '<a style="color: #01AAED;" lay-event="Jump">' + d.subHost + '</a>';
 				}},
             {field: 'proxy', sort: true, title: '境内外'},
             {field: 'language', sort: true, title: '语种'},
@@ -38,10 +38,10 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
      */
     Site.search = function () {
         var queryData = {};
-        queryData['website_name'] = $("#website_name").val();
-        queryData['website_sub_name'] = $("#website_sub_name").val();
-        queryData['website_sub_url'] = $("#website_sub_url").val();
-        queryData['sub_host'] = $("#sub_host").val();
+        queryData['websiteName'] = $("#websiteName").val();
+        queryData['websiteSubName'] = $("#websiteSubName").val();
+        queryData['websiteSubUrl'] = $("#websiteSubUrl").val();
+        queryData['subHost'] = $("#subHost").val();
         queryData['proxy'] = $("#proxy").val();
         queryData['state'] = $("#state").val();
         table.reload(Site.tableId, {where: queryData});
@@ -126,7 +126,7 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
                         }                
                     else {
                     	layer.close(index);   
-                    	layer.msg('请先删除频道！', {icon: 2,time:2000,shade:0.2});
+                    	layer.msg('删除失败！', {icon: 2,time:2000,shade:0.2});
                     	}           
                     }   
                  });             

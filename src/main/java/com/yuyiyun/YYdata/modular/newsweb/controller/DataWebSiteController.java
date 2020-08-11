@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuyiyun.YYdata.core.common.annotion.Permission;
 import com.yuyiyun.YYdata.core.common.constant.Const;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
+import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite;
+import com.yuyiyun.YYdata.modular.newsweb.model.param.DataWebSiteParam;
 import com.yuyiyun.YYdata.modular.newsweb.service.DataWebSiteService;
 import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebsiteVo;
 import com.yuyiyun.YYdata.modular.newsweb.service.DataWebChannelService;
@@ -15,6 +17,7 @@ import com.yuyiyun.YYdata.modular.system.warpper.LogWrapper;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +29,11 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * @author YiZhiLong
+ * @author WangShiPing
+ *
+ */
 @Controller
 @Api(value = "站点controller", tags = {"站点操作接口"})
 @RequestMapping("/site")
@@ -36,8 +44,15 @@ public class DataWebSiteController {
     @Autowired
     private DataWebSiteService dataWebSiteService;
 	@Autowired
-	private DataWebChannelService datawebservice;
-
+	private DataWebChannelService datachannelservice;
+	
+	
+	 /**
+	 * 网站页面入口
+     * @param id
+     * @param session
+     * @return
+     */
     @RequestMapping("/website")
     public String indexs(String id,HttpSession session) {
     	session.setAttribute("uuid",id);
@@ -45,6 +60,12 @@ public class DataWebSiteController {
     }
 
     
+    /**
+     * 跳转到编辑页面
+     * @param id
+     * @param session
+     * @return
+     */
     @GetMapping(value = "/dataEdit")
 	public String addEdit(String id,HttpSession session) {
 		    session.setAttribute("id", id);
@@ -52,12 +73,22 @@ public class DataWebSiteController {
 	}
 	
 
+    /**
+     * 跳转到新增页面
+     * @return
+     */
     @RequestMapping("/add_prefix")
     public String addPrefix() {
         return PREFIX + "/site_add.html";
     }
     
     
+    /**
+     * 新增
+     * @param data
+     * @param session
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/add")
     public ResponseData add(DataWebSite data,HttpSession session) {
@@ -75,62 +106,55 @@ public class DataWebSiteController {
         	 return ResponseData.error("网址已经存在");
          }
     }
+    
+    
+    /**
+     * 分页查询
+     * @param dataWebSite
+     * @param session
+     * @return
+     */
     @SuppressWarnings({"unchecked", "rawtypes"})
     @RequestMapping("/list")
-    @Permission(Const.ADMIN_NAME)
     @ResponseBody
-    public Object list(DataWebSite dataWebSite,HttpSession session) {
+    public LayuiPageInfo list(DataWebSiteParam param,HttpSession session) {
     	String  id = (String)session.getAttribute("uuid");
         //获取分页参数
         Page page = LayuiPageFactory.defaultPage();
-        List<Map<String, Object>> result = dataWebSiteService.getSites(page, dataWebSite,id);
-        page.setRecords(new LogWrapper(result).wrap());
+        List<Map<String, Object>> result = dataWebSiteService.getSites(page, param,id);
+        page.setRecords(result);
         return LayuiPageFactory.createPageInfo(page);
     }
 
 	
 	
 	
+	/**
+	 * 根据id查询网站
+	 * @param session
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/updateById")
-	public ResponseData updateSiteById(HttpSession session) {
+	public ResponseData selectSiteById(HttpSession session) {
 		String id=(String)session.getAttribute("id");
-		DataWebSite dataWebSite = dataWebSiteService.updateSiteById(id);
+		DataWebSite dataWebSite = dataWebSiteService.selectSiteById(id);
 		return ResponseData.success(dataWebSite);
 	}
 	
-	/**
-	 * 删除网站时提示先删除频道才能执行网站删除
-	 * @param id
-	 * @return
-	 */
-	/**
-	 * 
-	 */
-	
-//	@ResponseBody
-//	@RequestMapping("/deleteSite")
-//	public ResponseData deleteSite(String id) {
-//		List<DataWebChannelEntity> list = datawebservice.selectBySiteId(id);
-//		if(list.isEmpty()) {
-//			dataWebSiteService.deleteSite(id);
-//			return ResponseData.success();
-//		}else {
-//			return ResponseData.error("请先删除频道");
-//		}
-//	}
 	
 	/**
 	 * 删除网站时强制删除所属频道
 	 * @param id
 	 * @return
 	 */
+	@Transactional
 	@ResponseBody
 	@RequestMapping("/deleteSite")
 	public ResponseData deleteSite(String id) {
-		int deleteBySiteId = datawebservice.deleteBySiteId(id);
-		if(deleteBySiteId>0) {
-			dataWebSiteService.deleteSite(id);
+		datachannelservice.deleteBySiteId(id);
+		int i = dataWebSiteService.deleteSite(id);
+		if(i>0) {
 			return  ResponseData.success();
 		}else {
 			return ResponseData.error("删除失败");
@@ -140,7 +164,7 @@ public class DataWebSiteController {
 	
 	
 	/**
-	 * 修改
+	 * 修改网站
 	 * @param dataWebSite
 	 * @return
 	 */
@@ -155,10 +179,17 @@ public class DataWebSiteController {
 		}
 	}
 	
+	
+	/**
+	 * 查询出当前网站的媒体名称
+	 * @param sitevo
+	 * @param session
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("/SelectMediaName")
 	public ResponseData selectMediaName(DataWebsiteVo sitevo,HttpSession session){
-		//获取跳转过来的网站UUID，根据此id查询出对应的媒体UUID、媒体名称、网站名称
+		//获取跳转过来的网站UUID，根据此id查询出对应的媒体名称
 		String id = (String)session.getAttribute("uuid");
 		sitevo.setUuid(id);
 		DataWebsiteVo selectMediaName = dataWebSiteService.selectMediaName(sitevo);

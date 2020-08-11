@@ -6,11 +6,6 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 	var form = layui.form;
 	var laydate = layui.laydate;
 
-
-
-
-
-
 	// 获取详情信息，填充表单
 	var ajax = new $ax(Feng.ctxPath + "/newsweb/selectByidMedia");
 	ajax.set({
@@ -43,22 +38,6 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 			}
 		}) ;
 		return false;
-	});
-
-	$(function() {
-		$.ajax({
-			url: fast.ctxPath + '/newsweb/selectUser', // 数据接口
-			type: "POST",
-			data: null,
-			success: function (res) {//res表示是否与服务器连接成功
-				var jsons=res.data;
-				console.info(res.data);
-				$("#updateBy").val(jsons[0].name);
-			},
-			error: function (e) {
-
-			}
-		});
 	});
 
 });
