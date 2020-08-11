@@ -9,9 +9,7 @@ import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
 import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite;
 import com.yuyiyun.YYdata.modular.newsweb.service.DataWebSiteService;
-import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo;
 import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebsiteVo;
-import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity;
 import com.yuyiyun.YYdata.modular.newsweb.service.DataWebChannelService;
 import com.yuyiyun.YYdata.modular.system.warpper.LogWrapper;
 import io.swagger.annotations.Api;
@@ -70,8 +68,12 @@ public class DataWebSiteController {
     	 data.setDataWebMedia(webMedia);
     	 data.setCreateBy(name);
     	 data.setCreateTime(new Date());
-         dataWebSiteService.add(data);
-        return ResponseData.success();
+         int i = dataWebSiteService.add(data);
+         if(i>0) {
+        	 return ResponseData.success();
+         }else {
+        	 return ResponseData.error("网址已经存在");
+         }
     }
     @SuppressWarnings({"unchecked", "rawtypes"})
     @RequestMapping("/list")
@@ -106,34 +108,34 @@ public class DataWebSiteController {
 	 * 
 	 */
 	
-	@ResponseBody
-	@RequestMapping("/deleteSite")
-	public ResponseData deleteSite(String id) {
-		List<DataWebChannelEntity> list = datawebservice.selectBySiteId(id);
-		if(list.isEmpty()) {
-			dataWebSiteService.deleteSite(id);
-			return ResponseData.success();
-		}else {
-			return ResponseData.error("请先删除频道");
-		}
-	}
+//	@ResponseBody
+//	@RequestMapping("/deleteSite")
+//	public ResponseData deleteSite(String id) {
+//		List<DataWebChannelEntity> list = datawebservice.selectBySiteId(id);
+//		if(list.isEmpty()) {
+//			dataWebSiteService.deleteSite(id);
+//			return ResponseData.success();
+//		}else {
+//			return ResponseData.error("请先删除频道");
+//		}
+//	}
 	
 	/**
 	 * 删除网站时强制删除所属频道
 	 * @param id
 	 * @return
 	 */
-//	@ResponseBody
-//	@RequestMapping("/deleteSite")
-//	public ResponseData deleteSite(String id) {
-//		int deleteBySiteId = datawebservice.deleteBySiteId(id);
-//		if(deleteBySiteId>0) {
-//			updateSiteService.deleteSite(id);
-//			return  ResponseData.success();
-//		}else {
-//			return ResponseData.error("删除失败");
-//		}
-//	}
+	@ResponseBody
+	@RequestMapping("/deleteSite")
+	public ResponseData deleteSite(String id) {
+		int deleteBySiteId = datawebservice.deleteBySiteId(id);
+		if(deleteBySiteId>0) {
+			dataWebSiteService.deleteSite(id);
+			return  ResponseData.success();
+		}else {
+			return ResponseData.error("删除失败");
+		}
+	}
 	
 	
 	

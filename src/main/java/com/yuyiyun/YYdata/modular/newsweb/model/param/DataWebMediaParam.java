@@ -1,10 +1,6 @@
 package com.yuyiyun.YYdata.modular.newsweb.model.param;
 
 import cn.stylefeng.roses.kernel.model.validator.BaseValidatingParam;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@ApiModel(value = "DataWebMediaParam", description = "频道输入实体")
+@ApiModel(value = "DataWebMediaParam", description = "媒体输入实体")
 public class DataWebMediaParam implements Serializable,BaseValidatingParam  {
 	/**
 	 * 
@@ -28,7 +24,7 @@ public class DataWebMediaParam implements Serializable,BaseValidatingParam  {
 
     /** 媒体网址 */
 	@ApiModelProperty(value = "媒体网址")
-    private Long webSiteUrl;
+    private String webSiteUrl;
 
     /** 一级域名 */
 	@ApiModelProperty(value = "一级域名")

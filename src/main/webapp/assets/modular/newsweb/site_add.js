@@ -36,6 +36,7 @@ layui.use(['layer', 'form', 'admin', 'ax','fast'], function () {
                 data:data.field,        
                 dataType:'JSON',         
                 success:function(res){ 
+                	 console.log(res);
                      if(res.code=='200'){       
                         admin.putTempData('formOk', true);
 						// 关掉对话框
@@ -45,10 +46,12 @@ layui.use(['layer', 'form', 'admin', 'ax','fast'], function () {
                          layer.msg("网址已经存在",{icon:5})
                     	 return false;
                        }                
-                    },              
+                   	},
                 error:function (e) {
-                    }           
-                    }) ;         
+                    	 var res = $.parseJSON(e.responseText);
+               			 layer.msg(res.msg);
+                    }                         
+                 });         
                  return false;
     });
 

@@ -17,7 +17,7 @@ public class DataWebChannelParam implements Serializable,BaseValidatingParam  {
 	
 	  /** 所属媒体(关联媒体) */
 	@ApiModelProperty(value = "所属媒体")
-    private Long dataWebMedia;
+    private String dataWebMedia;
 
     /** 媒体名称 */
 	@ApiModelProperty(value = "媒体名称")

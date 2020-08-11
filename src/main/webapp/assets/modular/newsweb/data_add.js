@@ -45,7 +45,7 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
                     	 var res = $.parseJSON(e.responseText);
                			 layer.msg(res.msg);
                     }           
-                    }) ;         
+                 });         
                  return false;
             });   
 		     //查询媒体uuid、媒体名称、网站名称
