@@ -147,7 +147,15 @@ layui.use(['table', 'layer', 'jquery','laydate', 'fast','admin','laypage'], func
 					           area: ['450px', '370px'],
 					          resize:false
 					       });
-					     });   
+					     });
+					// 关闭页面
+					$('#back').click(function() {
+						// 获取当前iframe层的索引
+						var index = parent.layer.getFrameIndex(window.name);
+						// 关闭弹窗
+						parent.layer.close(index);
+					});
+					   
 
 					
     				

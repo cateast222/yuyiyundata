@@ -27,12 +27,12 @@ public interface DataWebSiteMapper extends BaseMapper<DataWebSite> {
 	 * 删除网站
 	 *
 	 */
-	int delete(String id);
+	int delete(Long id);
 	/**
 	 * 根据媒体id删除
 	 *
 	 */
-	int deleteByMediaId(String id);
+	int deleteByMediaId(Long id);
 	/**
 	 * 新增
 	 *
@@ -43,7 +43,7 @@ public interface DataWebSiteMapper extends BaseMapper<DataWebSite> {
 	 *
 	 */
 	@SuppressWarnings("rawtypes")
-	List<Map<String, Object>> getSites(@Param("page") Page page,@Param("param")DataWebSiteParam param,String id);
+	List<Map<String, Object>> getSites(@Param("page") Page page,@Param("param")DataWebSiteParam param,Long id);
 	/**
 	 * 查询媒体名称
 	 *
@@ -53,7 +53,7 @@ public interface DataWebSiteMapper extends BaseMapper<DataWebSite> {
 	 * 根据id查询网站信息
 	 *
 	 */
-	DataWebSite	selectSiteById(String id);
+	DataWebSite	selectSiteById(Long id);
 
 
 }

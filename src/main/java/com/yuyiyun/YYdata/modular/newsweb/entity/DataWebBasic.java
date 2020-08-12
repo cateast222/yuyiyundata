@@ -15,7 +15,7 @@ public class DataWebBasic implements Serializable {
 	 * 主键
 	 */
 	@TableId(value = "uuid", type = IdType.ID_WORKER)
-	private String uuid;
+	private Long uuid;
 	
 	/**
 	 * 状态
@@ -48,12 +48,12 @@ public class DataWebBasic implements Serializable {
 	private String updateBy;
 	
 	
-	
-	public String getUuid() {
+
+	public Long getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(String uuid) {
+	public void setUuid(Long uuid) {
 		this.uuid = uuid;
 	}
 

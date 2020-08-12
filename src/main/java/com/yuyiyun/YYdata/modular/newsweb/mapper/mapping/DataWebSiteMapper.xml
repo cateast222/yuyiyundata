@@ -111,32 +111,8 @@
    	
    	 <!-- 新增 -->
    	<insert id="add" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebSite">
-		insert into data_web_website
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="uuid != null">uuid,</if>
-			<if test="dataWebMedia != null">data_web_media,</if>
-			<if test="websiteName != null">website_name,</if>
-			<if test="websiteSubName != null">website_sub_name,</if>
-			<if test="websiteSubUrl != null">website_sub_url,</if>
-			<if test="subHost != null">sub_host,</if>
-			<if test="language != null">language,</if>
-			<if test="proxy != null">proxy,</if>
-			<if test="state != null">state,</if>
-			<if test="createBy != null">create_by,</if>
-			<if test="createTime != null">create_time</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="uuid != null">#{uuid},</if>
-			<if test="dataWebMedia != null">#{dataWebMedia},</if>
-			<if test="websiteName != null">#{websiteName},</if>
-			<if test="websiteSubName != null">#{websiteSubName},</if>
-			<if test="websiteSubUrl != null">#{websiteSubUrl},</if>
-			<if test="subHost != null">#{subHost},</if>
-			<if test="language != null">#{language},</if>
-			<if test="proxy != null">#{proxy},</if>
-			<if test="state != null">#{state},</if>
-			<if test="createBy != null">#{createBy},</if>
-			<if test="createTime != null">#{createTime}</if>
-		</trim>
+		insert into data_web_website(uuid,data_web_media,website_name,website_sub_name,
+		website_sub_url,sub_host,language,proxy,state,create_by,create_time) 
+		value(#{uuid},#{dataWebMedia},#{websiteName},#{websiteSubName},#{websiteSubUrl},#{subHost},#{language},#{proxy},#{state},#{createBy},#{createTime})
 	</insert>
 </mapper>

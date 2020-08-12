@@ -18,7 +18,7 @@ public class DataWebSiteParam extends DataWebBasic implements Serializable,BaseV
 	private static final long serialVersionUID = 1L;
 	
 	@ApiModelProperty(value = "所属媒体")
-	private String dataWebMedia; //所属媒体
+	private Long dataWebMedia; //所属媒体
 
 	@ApiModelProperty(value = "媒体名称")
 	private String websiteName;  //媒体名称

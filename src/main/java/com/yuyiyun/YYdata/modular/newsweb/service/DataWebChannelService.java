@@ -33,7 +33,7 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	 * 根据网站id查询
 	 * @return
 	 */
-	public List<DataWebChannelEntity> selectBySiteId(String id){
+	public List<DataWebChannelEntity> selectBySiteId(Long id){
 		List<DataWebChannelEntity> list = channelMapper.selectBySiteId(id);
 		return list;
 	}
@@ -55,7 +55,7 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	 * 
 	 * */
 	@SuppressWarnings("rawtypes")
-	public List<Map<String, Object>> selectPage(Page page, DataWebChannelParam param,String id) {
+	public List<Map<String, Object>> selectPage(Page page, DataWebChannelParam param,Long id) {
 		return this.channelMapper.selectPage(page, param,id);
 	}
 
@@ -89,7 +89,7 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	 * 根据频道id查询
 	 * 
 	 * */
-	public DataWebChannelEntity selectById(String id) {
+	public DataWebChannelEntity selectById(Long id) {
 		DataWebChannelEntity list = channelMapper.selectById(id);
 		return list;
 	}
@@ -98,7 +98,7 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	 * 删除
 	 * 
 	 * */
-	public int delete(String id) {
+	public int delete(Long id) {
 		return channelMapper.delete(id);
 	}
 
@@ -106,7 +106,7 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	 * 根据媒体id删除
 	 * 
 	 * */
-	public int deleteByMediaId(String id) {
+	public int deleteByMediaId(Long id) {
 		return channelMapper.deleteByMediaId(id);
 	}
 
@@ -114,7 +114,7 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	 * 根据网站id删除
 	 * 
 	 * */
-	public int deleteBySiteId(String id) {
+	public int deleteBySiteId(Long id) {
 		return channelMapper.deleteBySiteId(id);
 	}
 
@@ -122,7 +122,7 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	 * 批量删除
 	 * 
 	 * */
-	public int deleteBacth(String[] id) {
+	public int deleteBacth(Long[] id) {
 		return channelMapper.deleteBacth(id);
 	}
 
@@ -130,7 +130,7 @@ public class DataWebChannelService  extends ServiceImpl<DataWebChannelMapper, Da
 	 * 批量更新
 	 * 
 	 * */
-	public int updateBacth(String[] id) {
+	public int updateBacth(Long[] id) {
 		return channelMapper.updateBacth(id);
 	}
 

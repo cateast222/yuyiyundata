@@ -32,7 +32,7 @@ public class DataWebSiteService extends ServiceImpl<DataWebSiteMapper, DataWebSi
      * @return
      */
 	@SuppressWarnings("rawtypes")
-    public List<Map<String, Object>> getSites(Page page, DataWebSiteParam param,String id) {
+    public List<Map<String, Object>> getSites(Page page, DataWebSiteParam param,Long id) {
         return baseMapper.getSites(page,param,id);
     }
     
@@ -89,7 +89,7 @@ public class DataWebSiteService extends ServiceImpl<DataWebSiteMapper, DataWebSi
      * @param id
      * @return
      */
-    public DataWebSite selectSiteById(String id) {
+    public DataWebSite selectSiteById(Long id) {
 		DataWebSite dataWebSite=datawebmapper.selectSiteById(id);
 		return dataWebSite;
 	}
@@ -109,7 +109,7 @@ public class DataWebSiteService extends ServiceImpl<DataWebSiteMapper, DataWebSi
 	 * @param id
 	 * @return
 	 */
-	public int deleteSite(String id) {
+	public int deleteSite(Long id) {
 		return datawebmapper.delete(id);
 	}
 	
@@ -118,7 +118,7 @@ public class DataWebSiteService extends ServiceImpl<DataWebSiteMapper, DataWebSi
 	 * @param id
 	 * @return
 	 */
-	public int deleteByMediaId(String id) {
+	public int deleteByMediaId(Long id) {
 		return datawebmapper.deleteByMediaId(id);
 	}
     

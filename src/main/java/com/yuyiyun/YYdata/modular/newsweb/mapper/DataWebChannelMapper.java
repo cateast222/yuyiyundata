@@ -25,21 +25,21 @@ public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
 	 * 
 	 * 
 	 * */
-	int delete(String id);
+	int delete(Long id);
 	
 	/**
 	 * 根据媒体id删除
 	 * @param id
 	 * @return
 	 */
-	int deleteByMediaId(String id);
+	int deleteByMediaId(Long id);
 	
 	/**
 	 * 根据网站id删除
 	 * @param id
 	 * @return
 	 */
-	int deleteBySiteId(String id);
+	int deleteBySiteId(Long id);
 	
 	/**
 	 * 修改
@@ -60,14 +60,14 @@ public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
 	 * @param ids
 	 * @return
 	 */
-	int deleteBacth(@Param("ids") String[] ids);
+	int deleteBacth(@Param("ids") Long[] ids);
 	
 	/**
 	 * 批量更新
 	 * @param ids
 	 * @return
 	 */
-	int updateBacth(@Param("ids") String[] ids);
+	int updateBacth(@Param("ids") Long[] ids);
 	
 	
 	/**
@@ -75,7 +75,7 @@ public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
 	 * 
 	 * 
 	 * */
-	DataWebChannelEntity selectById(String id);
+	DataWebChannelEntity selectById(Long id);
 	
 	
 	/**
@@ -84,14 +84,14 @@ public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
 	 * 
 	 * */
 	@SuppressWarnings("rawtypes")
-	List<Map<String, Object>> selectPage(@Param("page") Page page,@Param("param") DataWebChannelParam param,String id);
+	List<Map<String, Object>> selectPage(@Param("page") Page page,@Param("param") DataWebChannelParam param,Long id);
 	
 	/**
 	 * 根据网站id查询
 	 * 
 	 * 
 	 * */
-	List<DataWebChannelEntity> selectBySiteId(String id);
+	List<DataWebChannelEntity> selectBySiteId(Long id);
 	
 	
 	/**

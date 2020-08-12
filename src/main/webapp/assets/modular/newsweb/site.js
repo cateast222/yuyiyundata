@@ -79,6 +79,14 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
             content: Feng.ctxPath + '/site/add_prefix',
     	})
     });
+    
+    // 关闭页面
+	$('#back').click(function() {
+	// 获取当前iframe层的索引
+	var index = parent.layer.getFrameIndex(window.name);
+	// 关闭弹窗
+	parent.layer.close(index);
+	});
 
     // 搜索按钮点击事件
     $('#btnSearch').click(function () {

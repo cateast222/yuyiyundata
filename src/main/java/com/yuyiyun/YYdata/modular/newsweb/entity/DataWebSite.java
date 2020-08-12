@@ -22,7 +22,7 @@ public class DataWebSite extends DataWebBasic implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@TableField("data_web_media")
-	private String dataWebMedia; //所属媒体
+	private Long dataWebMedia; //所属媒体
 
 	@TableField("website_name")
 	private String websiteName;  //媒体名称

@@ -84,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<!-- 批量删除 -->
-	<delete id="deleteBacth" parameterType="java.lang.String">
+	<delete id="deleteBacth" parameterType="java.lang.Long">
 		delete from data_web_channel where uuid in
 		<foreach collection="ids" item="ids" open="(" close=")" separator=",">
 			#{ids}
@@ -92,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<!-- 批量更新 -->
-	<update id="updateBacth" parameterType="java.lang.String">
+	<update id="updateBacth" parameterType="java.lang.Long">
 		update data_web_channel set collect_state = "3"
 		<!--  
 		<trim prefix="," suffixOverrides=",">
@@ -127,31 +127,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 新增 -->
 	<insert id="add" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
 		insert into data_web_channel
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="uuid != null">uuid,</if>
-			<if test="dataWebMedia != null">data_web_media,</if>
-			<if test="websiteName != null">website_name,</if>
-			<if test="dataWebWebsite != null">data_web_website,</if>
-			<if test="websiteSubName != null">website_sub_name,</if>
-			<if test="moduleName != null">module_name,</if>
-			<if test="subModuleUrl != null">sub_module_url,</if>
-			<if test="collectState != null">collect_state,</if>
-			<if test="state != null">state,</if>
-			<if test="createBy != null">create_by,</if>
-			<if test="createTime != null">create_time,</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="uuid != null">#{uuid},</if>
-			<if test="dataWebMedia != null">#{dataWebMedia},</if>
-			<if test="websiteName != null">#{websiteName},</if>
-			<if test="dataWebWebsite != null">#{dataWebWebsite},</if>
-			<if test="websiteSubName != null">#{websiteSubName},</if>
-			<if test="moduleName != null">#{moduleName},</if>
-			<if test="subModuleUrl != null">#{subModuleUrl},</if>
-			<if test="collectState != null">#{collectState},</if>
-			<if test="state != null">#{state},</if>
-			<if test="createBy != null">#{createBy},</if>
-			<if test="createTime != null">#{createTime}</if>
-		</trim>
+		(uuid,data_web_media,website_name,data_web_website,website_sub_name,module_name,sub_module_url,
+		collect_state,state,create_by,create_time) 
+		values(#{uuid},#{dataWebMedia},#{websiteName},#{dataWebWebsite},#{websiteSubName},
+		#{moduleName},#{subModuleUrl},#{collectState},#{state},#{createBy},#{createTime})
 	</insert>
 </mapper>

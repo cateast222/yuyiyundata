@@ -69,7 +69,7 @@ public class DataWebMediaController extends BaseController {
     @ResponseBody
     @RequestMapping("/selectByidMedia")
     public ResponseData selectByidMedia(DataWebMedia mediavo,HttpSession session){
-        String attribute = (String)session.getAttribute("uuid");
+    	Long attribute = (Long)session.getAttribute("uuid");
         mediavo.setUuid(attribute);
         List<Map> result = dataWebMediaService.ByidMedia(mediavo);
         return ResponseData.success(result);
@@ -144,10 +144,8 @@ public class DataWebMediaController extends BaseController {
     public ResponseData insertMedia(DataWebMedia media){
         List<Map> s = dataWebMediaService.selectMedia(media);
         if (ToolsUtil.isEmpty(s)){
-            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
             //获取当前登录用户名
     		String createBy = ShiroKit.getUser().getName();
-            media.setUuid(uuid);
             media.setCreateBy(createBy);
             int i = dataWebMediaService.inSerMedia(media);
             return ResponseData.success(200, "11", i);

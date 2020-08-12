@@ -54,7 +54,7 @@ public class DataWebSiteController {
      * @return
      */
     @RequestMapping("/website")
-    public String indexs(String id,HttpSession session) {
+    public String indexs(Long id,HttpSession session) {
     	session.setAttribute("uuid",id);
         return PREFIX + "/site.html";
     }
@@ -67,7 +67,7 @@ public class DataWebSiteController {
      * @return
      */
     @GetMapping(value = "/dataEdit")
-	public String addEdit(String id,HttpSession session) {
+	public String addEdit(Long id,HttpSession session) {
 		    session.setAttribute("id", id);
 			return PREFIX + "/edit.html";
 	}
@@ -92,10 +92,8 @@ public class DataWebSiteController {
     @ResponseBody
     @RequestMapping("/add")
     public ResponseData add(DataWebSite data,HttpSession session) {
-    	 String uuid = UUID.randomUUID().toString().replaceAll("-", "");
     	 String name = ShiroKit.getUser().getName();
-    	 String webMedia = (String)session.getAttribute("uuid");
-    	 data.setUuid(uuid);
+    	 Long webMedia = (Long)session.getAttribute("uuid");
     	 data.setDataWebMedia(webMedia);
     	 data.setCreateBy(name);
     	 data.setCreateTime(new Date());
@@ -118,7 +116,7 @@ public class DataWebSiteController {
     @RequestMapping("/list")
     @ResponseBody
     public LayuiPageInfo list(DataWebSiteParam param,HttpSession session) {
-    	String  id = (String)session.getAttribute("uuid");
+    	Long  id = (Long)session.getAttribute("uuid");
         //获取分页参数
         Page page = LayuiPageFactory.defaultPage();
         List<Map<String, Object>> result = dataWebSiteService.getSites(page, param,id);
@@ -137,7 +135,7 @@ public class DataWebSiteController {
 	@ResponseBody
 	@RequestMapping(value = "/updateById")
 	public ResponseData selectSiteById(HttpSession session) {
-		String id=(String)session.getAttribute("id");
+		Long id=(Long)session.getAttribute("id");
 		DataWebSite dataWebSite = dataWebSiteService.selectSiteById(id);
 		return ResponseData.success(dataWebSite);
 	}
@@ -151,7 +149,7 @@ public class DataWebSiteController {
 	@Transactional
 	@ResponseBody
 	@RequestMapping("/deleteSite")
-	public ResponseData deleteSite(String id) {
+	public ResponseData deleteSite(Long id) {
 		datachannelservice.deleteBySiteId(id);
 		int i = dataWebSiteService.deleteSite(id);
 		if(i>0) {
@@ -190,7 +188,7 @@ public class DataWebSiteController {
 	@RequestMapping("/SelectMediaName")
 	public ResponseData selectMediaName(DataWebsiteVo sitevo,HttpSession session){
 		//获取跳转过来的网站UUID，根据此id查询出对应的媒体名称
-		String id = (String)session.getAttribute("uuid");
+		Long id = (Long)session.getAttribute("uuid");
 		sitevo.setUuid(id);
 		DataWebsiteVo selectMediaName = dataWebSiteService.selectMediaName(sitevo);
 		return ResponseData.success(0, "11", selectMediaName);
