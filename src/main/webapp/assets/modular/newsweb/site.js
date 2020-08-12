@@ -19,6 +19,7 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
     Site.initColumn = function () {
         return [[
             {type: 'checkbox'},
+            {title: '序号',align: 'center',type: 'numbers'},
             {field: 'uuid', hide: true, sort: true, title: 'id'},
             {field: 'websiteName', sort: true, title: '媒体名称'},
             {field: 'websiteSubName', sort: true, title: '网站名称'},

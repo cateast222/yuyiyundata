@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,8 @@ import com.yuyiyun.YYdata.modular.newsweb.service.DataWebChannelService;
 import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * @author WuXiangDong
@@ -31,6 +34,7 @@ import cn.stylefeng.roses.core.reqres.response.ResponseData;
  *  频道列表控制器
  */
 @Controller
+@Api(value = "频道权限controller", tags = { "频道权限操作接口" })
 @RequestMapping("datawebchannel")
 public class DataWebChannelController {
 	private String PREFIX = "/modular/newsweb";
@@ -95,13 +99,18 @@ public class DataWebChannelController {
 	 * 
 	 * 
 	 * */
+	@ApiOperation(value = "获取数据权限", notes = "动态查询调取数据权限")
 	@ResponseBody
-	@RequestMapping(value = "/dataSelectById")
+	@PostMapping(value = "/dataSelectById")
 	public ResponseData selectById(HttpSession session) {
 		//获取点击编辑拿到的UUID并根据此id查询出当前行的所有数据
 		String id = (String)session.getAttribute("id");
-		DataWebChannelEntity list = channelService.selectById(id);
-		return ResponseData.success(0, "11", list);
+		DataWebChannelEntity data = channelService.selectById(id);
+		if(data!=null) {
+			return ResponseData.success(200, "获取数据成功", data);
+		}else {
+			return ResponseData.error(500, "获取数据失败", data);
+		}
 	}
 
 	/**
@@ -160,12 +169,23 @@ public class DataWebChannelController {
 	 * */
 	@ResponseBody
 	@RequestMapping(value = "/dataUpdate")
-	public ResponseData update(DataWebChannelEntity data) {
+	public ResponseData update(DataWebChannelEntity data,HttpSession session) {
+		String  dataWebSite = (String)session.getAttribute("dataId");
 		//获取当前登录用户名
 		String updateBy = ShiroKit.getUser().getName();
+		data.setDataWebWebsite(dataWebSite);
 		data.setUpdateBy(updateBy);
 		data.setUpdateTime(new Date());
-		int i = channelService.update(data);
+		int i = 0;
+		List<Map> list = channelService.selectAllChannel(data);
+		System.err.println(list.size());
+		if(list.size()==1) {
+			List<Map> channel = channelService.selectChannel(data);
+			System.err.println(channel.size());
+			if(channel.size()==1) {
+				 i = channelService.update(data);
+			}
+		}
 		if(i>0) {
 			return ResponseData.success();
 		}else {

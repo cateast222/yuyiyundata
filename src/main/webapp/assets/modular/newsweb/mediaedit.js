@@ -24,14 +24,15 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 			data:data.field,
 			dataType:'JSON',
 			success:function(res){
-				if(res.code='0'){
+				if(res.code=='200'){
 					admin.putTempData('formOk', true);
 					// 关掉对话框
 					admin.closeThisDialog();
 					parent.location.reload();
 				}
 				else
-					alert(res.msg);
+					layer.msg("修改失败")
+					return false;
 			},
 			error:function (data) {
 

@@ -100,4 +100,19 @@ public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
 	 * @return
 	 */
 	DataWebChannelVo selectWebSiteName(DataWebChannelVo DataWebChannelVo);
+	
+	 /**
+     * 判断新增频道是否存在
+     * @param dataWebMedia
+     * @return
+     */
+    List<Map> selectChannel(DataWebChannelEntity data);
+
+    /**
+     * 判断频道总数是否存在
+     * @param dataWebMedia
+     * @return
+     */
+    List<Map> selectAllChannel(DataWebChannelEntity data);
+
 }

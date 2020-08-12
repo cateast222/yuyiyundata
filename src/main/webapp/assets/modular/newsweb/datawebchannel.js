@@ -21,6 +21,18 @@ layui.use(['table', 'layer', 'jquery','laydate', 'fast','admin','laypage'], func
                  align: 'center',
                  type: 'numbers'
             	},
+            	{
+                 field: 'websiteName',
+                    align: 'center',
+                    sort: true,
+                    title: '媒体名称'
+                   },
+                {
+                 field: 'websiteSubName',
+                    align: 'center',
+                    sort: true,
+                    title: '网站名称'
+                   },
                 {
                  field: 'moduleName',
                     align: 'center',

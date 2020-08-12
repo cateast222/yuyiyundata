@@ -30,7 +30,7 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 						parent.location.reload();
                         }                
                     else            
-                        layer.msg("url已经存在",{icon:5});
+                        layer.msg("修改失败,改频道已存在",{icon:5});
                         return false;
                     },              
                     error:function (data) {

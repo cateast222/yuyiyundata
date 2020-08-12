@@ -29,7 +29,8 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
                 method:'post',       
                 data:data.field,        
                 dataType:'JSON',         
-                success:function(res){ 
+                success:function(res){
+                	 console.log(res); 
                      if(res.code=='200'){       
                         admin.putTempData('formOk', true);
 						// 关掉对话框
@@ -37,7 +38,7 @@ layui.use(['form', 'admin', 'ax', 'laydate','fast'], function () {
 						layer.msg("添加成功",{icon:6})
 						parent.location.reload();
                         }else{
-                         layer.msg("网址已经存在",{icon:5})
+                         layer.msg("频道已经存在",{icon:5})
                     	 return false;
                        }                
                     },              

@@ -33,6 +33,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 	</sql>
   
+  	 <!-- 查询频道是否存在-->
+    <select id="selectChannel" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity"  parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+       SELECT * FROM data_web_channel WHERE data_web_website = #{dataWebWebsite} and module_name =#{moduleName} OR sub_module_url =#{subModuleUrl}  
+    </select>
+     <!--  查询频道，网址是否存在-->
+    <select id="selectAllChannel" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity"  parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+       SELECT count(*) FROM(SELECT * FROM data_web_channel WHERE data_web_website = #{dataWebWebsite} and module_name =#{moduleName}  OR sub_module_url =#{subModuleUrl}) t
+    </select>
+  	
+  
+  
+  
 	<!-- 分页查询 -->
 	<select id="selectPage" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
 		select<include refid="Base"/> from  data_web_channel where data_web_website=#{id} 
