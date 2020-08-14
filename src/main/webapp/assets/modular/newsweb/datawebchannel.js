@@ -51,6 +51,12 @@ layui.use(['table', 'layer', 'jquery','laydate', 'fast','admin','laypage'], func
 							+ d.subModuleUrl + '</a>';
 					}
                 },
+                {
+                 field: 'collectSign',
+                 align: 'center',
+                 sort: true,
+                 title: '采集标识'
+                },
                  {
                  field: 'collectState',
                  align: 'center',
@@ -140,7 +146,7 @@ layui.use(['table', 'layer', 'jquery','laydate', 'fast','admin','laypage'], func
 					    
 					 //新增按钮点击事件   
 					 $(document).on('click','#addUrl',function(){
-					           layer.open({
+					   layer.open({
 					           type: 2, 
 							   title:'新增数据',
 					           content: 'dataAdd',   
@@ -195,11 +201,23 @@ layui.use(['table', 'layer', 'jquery','laydate', 'fast','admin','laypage'], func
 					           resize:false
 					       });
 						 }else if(layEvent === 'details'){ 
-	          	 				//详情配置
-	          	 				layer.msg("详情配置",{icon : 6});
+	          	 			 //详情配置
+		          	 		 layer.open({
+						           type: 2, 
+								   title:'详情配置',
+						           content: Feng.ctxPath + '/dwc?code=pdpzmb&uuid=' + data.uuid,   
+						           area: ['450px', '370px'],
+						           resize:false
+						       });
 						 }else if(layEvent === 'channel'){ 
-							 	//频道配置
-							 	layer.msg("频道配置",{icon : 6});
+							 //频道配置
+							 layer.open({
+						           type: 2, 
+								   title:'频道配置',
+						           content: Feng.ctxPath + '/dwc?code=xqpzmb&uuid=' + data.uuid, 
+						           area: ['450px', '370px'],
+						           resize:false
+						       });	 	
 						 }
 					});
 			

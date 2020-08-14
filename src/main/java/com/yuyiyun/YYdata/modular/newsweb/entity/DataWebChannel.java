@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 @Data
 @TableName("data_web_channel")
-public class DataWebChannelEntity extends DataWebBasic {
+public class DataWebChannel extends DataWebBasic {
 	  /**
 	 * 
 	 */
@@ -35,6 +35,10 @@ public class DataWebChannelEntity extends DataWebBasic {
     /** 频道网址 */
     @TableField("sub_module_url")
     private String subModuleUrl;
+    
+    /** 采集标识 */
+    @TableField("collect_sign")
+    private String collectSign;
 
     /** 采集状态 */
     @TableField("collect_state")

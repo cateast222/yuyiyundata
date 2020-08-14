@@ -102,23 +102,40 @@ layui.use(['layer', 'table', 'ax', 'laydate','admin','fast'], function () {
     table.on('tool(' + Site.tableId + ')', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
-        if(layEvent === 'detail'){
+        if(layEvent === 'content'){
         	layer.open({
-				type: 2, 
-				content: fast.ctxPath + "/site/dataEdit?id=" + obj.data.uuid,
-				area: ['450px', '480px'],
-				resize:false
-			});
-        }else if(layEvent === 'Jump'){
-					layer.open({
-						type: 2, 
-						content: fast.ctxPath + "/datawebchannel/dataweb?id=" + obj.data.uuid,
-						title:'频道管理',
-						area: ['100%', '100%'],
-						resize:false
-					});
-        	}else if(layEvent === 'delete'){
-          	layer.confirm('真的删除行么', function (index) {
+			type: 2, 
+			title:'详情配置',
+			content: Feng.ctxPath + '/dwc?code=pdpzmb&uuid=' + data.uuid,   
+			area: ['450px', '370px'],
+			resize:false
+			});	     
+        }else if(layEvent === 'channel'){
+          layer.open({
+			type: 2, 
+			title:'频道配置',
+			content: Feng.ctxPath + '/dwc?code=xqpzmb&uuid=' + data.uuid,    
+			area: ['450px', '370px'],
+			resize:false
+			});	   
+        }else if(layEvent === 'detail'){
+        	layer.open({
+			type: 2, 
+			title:'网站编辑',
+			content: Feng.ctxPath + '/site/dataEdit?id=' + data.uuid,    
+			area: ['450px', '400px'],
+			resize:false
+			});	
+		}else if(layEvent === 'Jump'){
+		  layer.open({
+			type: 2, 
+			content: fast.ctxPath + "/datawebchannel/dataweb?id=" + obj.data.uuid,
+			title:'频道管理',
+			area: ['100%', '100%'],
+			resize:false
+		 });
+        }else if(layEvent === 'delete'){
+          layer.confirm('真的删除行么', function (index) {
         	$.ajax({
         		url:fast.ctxPath + "/site/deleteSite?id=" + obj.data.uuid,       
                 method:'post',       

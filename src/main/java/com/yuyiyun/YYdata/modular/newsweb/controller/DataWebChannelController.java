@@ -3,7 +3,6 @@ package com.yuyiyun.YYdata.modular.newsweb.controller;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,14 +18,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageFactory;
 import com.yuyiyun.YYdata.core.common.page.LayuiPageInfo;
 import com.yuyiyun.YYdata.core.shiro.ShiroKit;
-import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity;
+import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel;
 import com.yuyiyun.YYdata.modular.newsweb.model.param.DataWebChannelParam;
 import com.yuyiyun.YYdata.modular.newsweb.service.DataWebChannelService;
 import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo;
 
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * @author WuXiangDong
@@ -34,7 +31,6 @@ import io.swagger.annotations.ApiOperation;
  *  频道列表控制器
  */
 @Controller
-@Api(value = "频道权限controller", tags = { "频道权限操作接口" })
 @RequestMapping("datawebchannel")
 public class DataWebChannelController {
 	private String PREFIX = "/modular/newsweb";
@@ -99,13 +95,12 @@ public class DataWebChannelController {
 	 * 
 	 * 
 	 * */
-	@ApiOperation(value = "获取数据权限", notes = "动态查询调取数据权限")
 	@ResponseBody
-	@PostMapping(value = "/dataSelectById")
+	@RequestMapping(value = "/dataSelectById")
 	public ResponseData selectById(HttpSession session) {
 		//获取点击编辑拿到的UUID并根据此id查询出当前行的所有数据
 		Long id = (Long)session.getAttribute("id");
-		DataWebChannelEntity data = channelService.selectById(id);
+		DataWebChannel data = channelService.selectById(id);
 		if(data!=null) {
 			return ResponseData.success(200, "获取数据成功", data);
 		}else {
@@ -169,7 +164,7 @@ public class DataWebChannelController {
 	 * */
 	@ResponseBody
 	@RequestMapping(value = "/dataUpdate")
-	public ResponseData update(DataWebChannelEntity data,HttpSession session) {
+	public ResponseData update(DataWebChannel data,HttpSession session) {
 		Long  dataWebSite = (Long)session.getAttribute("dataId");
 		//获取当前登录用户名
 		String updateBy = ShiroKit.getUser().getName();
@@ -178,10 +173,8 @@ public class DataWebChannelController {
 		data.setUpdateTime(new Date());
 		int i = 0;
 		List<Map> list = channelService.selectAllChannel(data);
-		System.err.println(list.size());
 		if(list.size()==1) {
 			List<Map> channel = channelService.selectChannel(data);
-			System.err.println(channel.size());
 			if(channel.size()==1) {
 				 i = channelService.update(data);
 			}
@@ -201,7 +194,7 @@ public class DataWebChannelController {
 	 * */
 	@ResponseBody
 	@RequestMapping(value = "/dataInsert" , method = RequestMethod.POST)
-	public ResponseData add(DataWebChannelEntity data,HttpSession session) {
+	public ResponseData add(DataWebChannel data,HttpSession session) {
 		//获取当前登录用户名
 		String createBy = ShiroKit.getUser().getName();
 		//获取跳转过来的UUID,将其设置为频道表的data_web_website

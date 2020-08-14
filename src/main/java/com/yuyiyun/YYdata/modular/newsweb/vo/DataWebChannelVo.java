@@ -1,8 +1,8 @@
 package com.yuyiyun.YYdata.modular.newsweb.vo;
 
-import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity;
+import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel;
 
-public class DataWebChannelVo extends DataWebChannelEntity{
+public class DataWebChannelVo extends DataWebChannel{
 		/**
 	     * 用户主键ID
 	     */
@@ -28,13 +28,13 @@ public class DataWebChannelVo extends DataWebChannelEntity{
 		public void setName(String name) {
 			this.name = name;
 		}
-
-		private String data_web_media;
+		 /** 所属媒体 */
+		private Long data_web_media;
 	    /** 媒体名称 */
 	    private String website_name;
 
 	    /** 所属网站(关联网站表) */
-	    private String data_web_website;
+	    private Long data_web_website;
 
 	    /** 网站名称 */
 	    private String website_sub_name;
@@ -44,17 +44,20 @@ public class DataWebChannelVo extends DataWebChannelEntity{
 
 	    /** 频道网址 */
 	    private String sub_module_url;
+	    
+	    /** 采集标识 */
+	    private String collect_sign;
 
-	    /** 采集状态 */
+
+		/** 采集状态 */
 	    private String collect_state;
 
-
-		public String getData_web_media() {
-			return data_web_media;
+	    public String getCollect_sign() {
+			return collect_sign;
 		}
 
-		public void setData_web_media(String data_web_media) {
-			this.data_web_media = data_web_media;
+		public void setCollect_sign(String collect_sign) {
+			this.collect_sign = collect_sign;
 		}
 
 		public String getWebsite_name() {
@@ -66,13 +69,6 @@ public class DataWebChannelVo extends DataWebChannelEntity{
 		}
 
 
-		public String getData_web_website() {
-			return data_web_website;
-		}
-
-		public void setData_web_website(String data_web_website) {
-			this.data_web_website = data_web_website;
-		}
 
 		public String getWebsite_sub_name() {
 			return website_sub_name;
@@ -107,9 +103,12 @@ public class DataWebChannelVo extends DataWebChannelEntity{
 		}
 
 
-		public DataWebChannelVo(Long userid, String name, String data_web_media, String website_name,
-				String data_web_website, String website_sub_name, String module_name, String sub_module_url,
-				String collect_state) {
+		
+		
+
+		public DataWebChannelVo(Long userid, String name, Long data_web_media, String website_name,
+				Long data_web_website, String website_sub_name, String module_name, String sub_module_url,
+				String collect_sign, String collect_state) {
 			super();
 			this.userid = userid;
 			this.name = name;
@@ -119,6 +118,7 @@ public class DataWebChannelVo extends DataWebChannelEntity{
 			this.website_sub_name = website_sub_name;
 			this.module_name = module_name;
 			this.sub_module_url = sub_module_url;
+			this.collect_sign = collect_sign;
 			this.collect_state = collect_state;
 		}
 
@@ -132,9 +132,10 @@ public class DataWebChannelVo extends DataWebChannelEntity{
 			return "DataWebChannelVo [userid=" + userid + ", name=" + name + ", data_web_media=" + data_web_media
 					+ ", website_name=" + website_name + ", data_web_website=" + data_web_website
 					+ ", website_sub_name=" + website_sub_name + ", module_name=" + module_name + ", sub_module_url="
-					+ sub_module_url + ", collect_state=" + collect_state + "]";
+					+ sub_module_url + ", collect_sign=" + collect_sign + ", collect_state=" + collect_state + "]";
 		}
 
+		
 		
 		
 	

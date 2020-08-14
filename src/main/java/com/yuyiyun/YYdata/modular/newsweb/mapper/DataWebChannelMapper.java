@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity;
+import com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel;
 import com.yuyiyun.YYdata.modular.newsweb.model.param.DataWebChannelParam;
 import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo;
 
@@ -17,7 +17,7 @@ import com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo;
  * @author TangJianRong
  *  频道管理接口
  */
-public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
+public interface DataWebChannelMapper extends BaseMapper<DataWebChannel> {
 	
 	
 	/**
@@ -46,14 +46,14 @@ public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
 	 * @param data
 	 * @return
 	 */
-	int update(DataWebChannelEntity data);
+	int update(DataWebChannel data);
 	
 	/**
 	 * 添加
 	 * @param data
 	 * @return
 	 */
-	int add(DataWebChannelEntity data);
+	int add(DataWebChannel data);
 	
 	/**
 	 * 批量删除
@@ -75,7 +75,7 @@ public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
 	 * 
 	 * 
 	 * */
-	DataWebChannelEntity selectById(Long id);
+	DataWebChannel selectById(Long id);
 	
 	
 	/**
@@ -91,7 +91,7 @@ public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
 	 * 
 	 * 
 	 * */
-	List<DataWebChannelEntity> selectBySiteId(Long id);
+	List<DataWebChannel> selectBySiteId(Long id);
 	
 	
 	/**
@@ -106,13 +106,20 @@ public interface DataWebChannelMapper extends BaseMapper<DataWebChannelEntity> {
      * @param dataWebMedia
      * @return
      */
-    List<Map> selectChannel(DataWebChannelEntity data);
+    List<Map> selectChannel(DataWebChannel data);
 
     /**
      * 判断频道总数是否存在
      * @param dataWebMedia
      * @return
      */
-    List<Map> selectAllChannel(DataWebChannelEntity data);
+    List<Map> selectAllChannel(DataWebChannel data);
+    
+    /**
+	 * 分页查询加搜索
+	 * 
+	 * 
+	 * */
+	List<Map<String, Object>> selectPageByApi(int page,int limit,Long id);
 
 }

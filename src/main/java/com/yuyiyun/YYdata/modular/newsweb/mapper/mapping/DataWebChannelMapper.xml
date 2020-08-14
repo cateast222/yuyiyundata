@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WEBSITE_SUB_NAME website_sub_name,
 		MODULE_NAME module_name,
 		SUB_MODULE_URL sub_module_url,
+		COLLECT_SIGN collect_sign,
 		COLLECT_STATE collect_state,
 		STATE state,
 		REMARK remark,
@@ -34,11 +35,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</sql>
   
   	 <!-- 查询频道是否存在-->
-    <select id="selectChannel" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity"  parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+    <select id="selectChannel" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel"  parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel">
        SELECT * FROM data_web_channel WHERE data_web_website = #{dataWebWebsite} and module_name =#{moduleName} OR sub_module_url =#{subModuleUrl}  
     </select>
      <!--  查询频道，网址是否存在-->
-    <select id="selectAllChannel" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity"  parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+    <select id="selectAllChannel" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel"  parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel">
        SELECT count(*) FROM(SELECT * FROM data_web_channel WHERE data_web_website = #{dataWebWebsite} and module_name =#{moduleName}  OR sub_module_url =#{subModuleUrl}) t
     </select>
   	
@@ -46,13 +47,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   
 	<!-- 分页查询 -->
-	<select id="selectPage" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+	<select id="selectPage" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel">
 		select<include refid="Base"/> from  data_web_channel where data_web_website=#{id} 
 		<include refid="baseWhere" />
 	</select>
 	
+	
+	<!-- 接口分页查询 -->
+	<select id="selectPageByApi" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel">
+		select <include refid="Base"/> from  data_web_channel where data_web_website=#{id} <include refid="baseWhere" /> LIMIT #{page},#{limit}
+	</select>
+	
 	<!-- 根据网站id查询 -->
-	<select id="selectBySiteId" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+	<select id="selectBySiteId" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel">
 		select<include refid="Base"/> from  data_web_channel where data_web_website=#{id} 
 	</select>
 	
@@ -62,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 根据id查询，编辑数据回显 -->
-	<select id="selectById" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
+	<select id="selectById" resultType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel" parameterType="com.yuyiyun.YYdata.modular.newsweb.vo.DataWebChannelVo">
 		select 
 		<include refid="Base"/>
 		from data_web_channel where uuid=#{id}
@@ -106,7 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 修改 -->
-	<update id="update" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+	<update id="update" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel">
 		update data_web_channel
 		<trim prefix="set" suffixOverrides=",">
 			<if test="uuid != null">uuid=#{uuid},</if>
@@ -115,6 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="websiteSubName != null">website_sub_name=#{websiteSubName},</if>
 			<if test="moduleName != null">module_name=#{moduleName},</if>
 			<if test="subModuleUrl != null">sub_module_url=#{subModuleUrl},</if>
+			<if test="collectSign != null">collect_sign=#{collectSign},</if>
 			<if test="collectState != null">collect_state=#{collectState},</if>
 			<if test="state != null">state=#{state},</if>
 			<if test="updateBy != null">update_by=#{updateBy},</if>
@@ -125,11 +133,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 新增 -->
-	<insert id="add" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannelEntity">
+	<insert id="add" parameterType="com.yuyiyun.YYdata.modular.newsweb.entity.DataWebChannel">
 		insert into data_web_channel
-		(uuid,data_web_media,website_name,data_web_website,website_sub_name,module_name,sub_module_url,
+		(uuid,data_web_media,website_name,data_web_website,website_sub_name,module_name,sub_module_url,collect_sign,
 		collect_state,state,create_by,create_time) 
 		values(#{uuid},#{dataWebMedia},#{websiteName},#{dataWebWebsite},#{websiteSubName},
-		#{moduleName},#{subModuleUrl},#{collectState},#{state},#{createBy},#{createTime})
+		#{moduleName},#{subModuleUrl},#{collectSign},#{collectState},#{state},#{createBy},#{createTime})
 	</insert>
 </mapper>
